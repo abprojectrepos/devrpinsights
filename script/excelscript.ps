@@ -1,0 +1,30 @@
+$excel = New-Object -ComObject excel.application
+$excel.visible = $True
+
+$src = "U:"
+$dst = "E:\RPDW\Source_Files\External"
+
+Get-ChildItem -Path $src -File -Filter *.xlsx -Recurse | 
+ForEach-Object { 
+    $fullName = $_.FullName
+    $baseName = $_.BaseName
+
+    $workBook = $excel.Workbooks.Open($fullName)
+    $Data = $workbook.WorkSheets.Item(1)
+    #$Data.Cells.Item(1,1) = 'Asset'
+    #$Data.Cells.Item(1,2) = 'Hostname'
+    
+    $Excel.DisplayAlerts = $False
+    $workbook.SaveAs("E:\RPDW\Source_Files\External\$baseName" + ".xlsx")
+    $workbook.Close()
+
+    # Copy-Item -Path $_.FullName -Filter "*.xlsx" -Destination $dst
+
+}
+
+$excel.Quit()
+Remove-Item U:\*.xlsx
+
+    
+   
+    
