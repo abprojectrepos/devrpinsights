@@ -1,0 +1,340 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/30/2019 1:46:31 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-110119GM22"
+  DTS:CreatorName="NCS\P0500388"
+  DTS:DTSID="{04BDBADA-F1FC-43EF-B0D0-3C08B7FE2394}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="STG_OASIS_EVALUATION_SUMMARY_old"
+  DTS:PackageType="5"
+  DTS:VersionBuild="26"
+  DTS:VersionGUID="{F9745664-614F-4139-9602-20E97070ADC2}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PSTG]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{DF41259E-95D3-4726-B221-C343E11091CD}"
+      DTS:ObjectName="PSTG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::PreStaging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=10.70.58.116\RPDWD1;User ID=etluser1;Initial Catalog=RPDW_DEV_PSTG;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAS+g4bE5S00qMoocSxYboGgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACZ/hdpTyHqw/uQu7gBZ+D6AAAAAASAAACgAAAAEAAAAAQknuvEvz484e5PCa6oLb8YAAAAmh3zMnqS1fhYupCziCf/dJZjrcD8oVIrFAAAAHK7EFnJ5WEb4HCHYzOdyPCGFwrs</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[STG]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{807DCB61-1D66-48DB-9A9C-6035993FC24F}"
+      DTS:ObjectName="STG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::Staging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=10.70.58.116\RPDWD1;User ID=etluser1;Initial Catalog=RPDW_DEV_STG;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAS+g4bE5S00qMoocSxYboGgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABQj5bgGkxerW6QhcTUd961AAAAAASAAACgAAAAEAAAABmLHaAvUGbyEdUr1UhQ+3YYAAAAxix9fzFop3txSIccGaASuEVmVhcZGilHFAAAAJN8Hu1Yn+Rse1k6dK2z3aGaHT7b</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9CC83733-E9D3-4679-A98F-1A796A51943E}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;------------------------------------------------&#xA;&#xA;INSERT&#x9;INTO [dbo].[TMP_STG_OASIS_TERM_SETUP] WITH(TABLOCK)&#xA;SELECT&#x9; &#xA;&#x9;&#x9;REPLACE(Ltrim(RTRIM([Qual_Type])),'NULL','')&#xA;&#x9;&#x9;,REPLACE(Ltrim(RTRIM([Term])),'NULL','')&#xA;&#x9;&#x9;,[Desc]&#xA;&#x9;&#x9;,[Short_Desc]&#xA;&#x9;&#x9;,[Term_Begin_Date]&#xA;&#x9;&#x9;,[Term_End_Date] &#xA;&#x9;&#x9;,[Acad_Year]&#xA;&#x9;&#x9;,[Semester]&#xA;&#x9;&#x9;&#xA;FROM&#x9;&quot;+ @[$Project::PreStaging_Initial_Catalog] +&quot;.[dbo].[PSTG_OASIS_TERM_SETUP]&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;END CATCH  &#xA;GO&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Insert_Temp_Table">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+------------------------------------------------
+
+INSERT	INTO [dbo].[TMP_STG_OASIS_TERM_SETUP] WITH(TABLOCK)
+SELECT	 
+		REPLACE(Ltrim(RTRIM([Qual_Type])),'NULL','')
+		,REPLACE(Ltrim(RTRIM([Term])),'NULL','')
+		,[Desc]
+		,[Short_Desc]
+		,[Term_Begin_Date]
+		,[Term_End_Date] 
+		,[Acad_Year]
+		,[Semester]
+		
+FROM	RPDW_DEV_PSTG.[dbo].[PSTG_OASIS_TERM_SETUP]
+		
+		
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+  ROLLBACK TRANSACTION
+END CATCH  
+GO</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Drop TEMP Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{3E297EBC-C78C-4D9F-8CD7-E5A41F7E1293}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Drop TEMP Table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{807DCB61-1D66-48DB-9A9C-6035993FC24F}"
+          SQLTask:SqlStatementSource="DROP table [dbo].[TMP_STG_OASIS_EVALUATION_SUMMARY]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Into STG"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{B4A7F699-FA64-48D0-AA37-57AA75B7C66E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Into STG"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{807DCB61-1D66-48DB-9A9C-6035993FC24F}"
+          SQLTask:SqlStatementSource="BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;--------------------------------------&#xA;&#xA;INSERT INTO [dbo].[STG_OASIS_EVALUATION_SUMMARY] (Applicant_Id,Qual_Type,App_Number,Raw_Hsc,Raw_Arch,Raw_Gpa,Highest_Qual,Nettech,&#xA;Net_Ntech,Net_Hsc,Net_Arch,Net_Gpa,El1_Bgrd,El2_Bgrd,Gp_Bgrd,Avg_Marks,Avg_Grd_Pnt,Gpb4,Test_indicator,Prog,Batch_Id,Test_Type,&#xA;Eng_Mark,Oral,Math_Mark,Overall,Sci_Mark,Raw_Posted_Agg,Course_Offered,Net_Posted_Agg,Dpa_Offered_Course&#xA;, Valid_Fr, Valid_To, Latest_Ind, Created_On,Modified_On)&#xA;SELECT Applicant_Id,Qual_Type,App_Number,Raw_Hsc,Raw_Arch,Raw_Gpa,Highest_Qual,Nettech,&#xA;Net_Ntech,Net_Hsc,Net_Arch,Net_Gpa,El1_Bgrd,El2_Bgrd,Gp_Bgrd,Avg_Marks,Avg_Grd_Pnt,Gpb4,Test_indicator,Prog,Batch_Id,Test_Type,&#xA;Eng_Mark,Oral,Math_Mark,Overall,Sci_Mark,Raw_Posted_Agg,Course_Offered,Net_Posted_Agg,Dpa_Offered_Course&#xA;,  convert(Varchar(10), getdate(),120), '9999-12-31', 'Y', getdate(),getdate()&#xA;FROM&#xA;(&#xA;-- Merge statement&#xA;MERGE INTO [dbo].[STG_OASIS_EVALUATION_SUMMARY] AS DST&#xA;USING [dbo].[TMP_STG_OASIS_EVALUATION_SUMMARY] AS SRC&#xA;ON (SRC.Applicant_Id = DST.Applicant_Id and SRC.Qual_Type = DST.Qual_Type AND SRC.App_Number = DST.App_Number )&#xA;-- New records inserted&#xA;WHEN NOT MATCHED THEN &#xA;INSERT (Applicant_Id,Qual_Type,App_Number,Raw_Hsc,Raw_Arch,Raw_Gpa,Highest_Qual,Nettech,&#xA;Net_Ntech,Net_Hsc,Net_Arch,Net_Gpa,El1_Bgrd,El2_Bgrd,Gp_Bgrd,Avg_Marks,Avg_Grd_Pnt,Gpb4,Test_indicator,Prog,Batch_Id,Test_Type,&#xA;Eng_Mark,Oral,Math_Mark,Overall,Sci_Mark,Raw_Posted_Agg,Course_Offered,Net_Posted_Agg,Dpa_Offered_Course&#xA;,Valid_Fr,Valid_To,Latest_Ind,Created_On,Modified_On)&#xA;VALUES (SRC.Applicant_Id, SRC.Qual_Type, SRC.App_Number, SRC.Raw_Hsc, SRC.Raw_Arch,&#xA; SRC.Raw_Gpa,  SRC.Highest_Qual, SRC.Nettech,SRC.Net_Ntech,SRC.Net_Hsc,SRC.Net_Arch,SRC.Net_Gpa,SRC.El1_Bgrd,&#xA; SRC.El2_Bgrd,SRC.Gp_Bgrd,SRC.Avg_Marks,SRC.Avg_Grd_Pnt,SRC.Gpb4,SRC.Test_indicator,SRC.Prog,SRC.Batch_Id,SRC.Test_Type,&#xA;SRC.Eng_Mark,SRC.Oral,SRC.Math_Mark,SRC.Overall,SRC.Sci_Mark,SRC.Raw_Posted_Agg,SRC.Course_Offered,SRC.Net_Posted_Agg,&#xA;SRC.Dpa_Offered_Course,convert(Varchar(10), getdate(),120), '9999-12-31', 'Y', getdate(),getdate())&#xA;-- Existing records updated if data changes&#xA;WHEN MATCHED &#xA;AND Latest_Ind = 'Y'&#xA;AND (&#xA; ISNULL(DST.Raw_Hsc,'') &lt;&gt; ISNULL(SRC.Raw_Hsc,'') &#xA; OR ISNULL(DST.Raw_Arch,'') &lt;&gt; ISNULL(SRC.Raw_Arch,'') &#xA; OR ISNULL(DST.Raw_Gpa,'') &lt;&gt; ISNULL(SRC.Raw_Gpa,'')&#xA; OR ISNULL(DST.Highest_Qual,'') &lt;&gt; ISNULL(SRC.Highest_Qual,'')&#xA; OR ISNULL(DST.Nettech,'') &lt;&gt; ISNULL(SRC.Nettech,'')&#xA; OR ISNULL(DST.Net_Ntech,'') &lt;&gt; ISNULL(SRC.Net_Ntech,'')&#xA;  OR ISNULL(DST.Net_Hsc,'') &lt;&gt; ISNULL(SRC.Net_Hsc,'')&#xA; OR ISNULL(DST.Net_Arch,'') &lt;&gt; ISNULL(SRC.Net_Arch,'')&#xA; OR ISNULL(DST.Net_Gpa,'') &lt;&gt; ISNULL(SRC.Net_Gpa,'')&#xA; OR ISNULL(DST.El1_Bgrd,'') &lt;&gt; ISNULL(SRC.El1_Bgrd,'')&#xA; OR ISNULL(DST.El2_Bgrd,'') &lt;&gt; ISNULL(SRC.El2_Bgrd,'')&#xA; OR ISNULL(DST.Gp_Bgrd,'') &lt;&gt; ISNULL(SRC.Gp_Bgrd,'')&#xA; OR ISNULL(DST.Avg_Marks,'') &lt;&gt; ISNULL(SRC.Avg_Marks,'')&#xA;OR ISNULL(DST.Avg_Grd_Pnt,'') &lt;&gt; ISNULL(SRC.Avg_Grd_Pnt,'')&#xA; OR ISNULL(DST.Gpb4,'') &lt;&gt; ISNULL(SRC.Gpb4,'')&#xA;   OR ISNULL(DST.Test_indicator,'') &lt;&gt; ISNULL(SRC.Test_indicator,'')&#xA;  OR ISNULL(DST.Prog,'') &lt;&gt; ISNULL(SRC.Prog,'')&#xA; OR ISNULL(DST.Batch_Id,'') &lt;&gt; ISNULL(SRC.Batch_Id,'')&#xA; OR ISNULL(DST.Test_Type,'') &lt;&gt; ISNULL(SRC.Test_Type,'')&#xA; OR ISNULL(DST.Eng_Mark,'') &lt;&gt; ISNULL(SRC.Eng_Mark,'')&#xA; OR ISNULL(DST.Oral,'') &lt;&gt; ISNULL(SRC.Oral,'')&#xA; OR ISNULL(DST.Math_Mark,'') &lt;&gt; ISNULL(SRC.Math_Mark,'')&#xA; OR ISNULL(DST.Overall,'') &lt;&gt; ISNULL(SRC.Overall,'')&#xA;OR ISNULL(DST.Sci_Mark,'') &lt;&gt; ISNULL(SRC.Sci_Mark,'')&#xA; OR ISNULL(DST.Raw_Posted_Agg,'') &lt;&gt; ISNULL(SRC.Raw_Posted_Agg,'')&#xA; OR ISNULL(DST.Course_Offered,'') &lt;&gt; ISNULL(SRC.Course_Offered,'')&#xA; OR ISNULL(DST.Net_Posted_Agg,'') &lt;&gt; ISNULL(SRC.Net_Posted_Agg,'')&#xA;OR ISNULL(DST.Dpa_Offered_Course,'') &lt;&gt; ISNULL(SRC.Dpa_Offered_Course,'')&#xA;&#x9;&#x9;&#x9;&#x9;    &#xA;&#xA; )&#xA;-- Update statement for a changed dimension record, to flag as no longer active&#xA;THEN UPDATE &#xA;SET DST.Latest_Ind = 'N', DST.Valid_To = convert(Varchar(10), getdate()-1,120),Created_On=getdate(),Modified_On=getdate()&#xA;OUTPUT SRC.Applicant_Id, SRC.Qual_Type, SRC.App_Number, SRC.Raw_Hsc, SRC.Raw_Arch,&#xA; SRC.Raw_Gpa,  SRC.Highest_Qual, SRC.Nettech,SRC.Net_Ntech,SRC.Net_Hsc,SRC.Net_Arch,SRC.Net_Gpa,SRC.El1_Bgrd,&#xA; SRC.El2_Bgrd,SRC.Gp_Bgrd,SRC.Avg_Marks,SRC.Avg_Grd_Pnt,SRC.Gpb4,SRC.Test_indicator,SRC.Prog,SRC.Batch_Id,SRC.Test_Type,&#xA;SRC.Eng_Mark,SRC.Oral,SRC.Math_Mark,SRC.Overall,SRC.Sci_Mark,SRC.Raw_Posted_Agg,SRC.Course_Offered,SRC.Net_Posted_Agg,&#xA;SRC.Dpa_Offered_Course,$Action AS MergeAction&#xA;) AS MRG&#xA;WHERE MRG.MergeAction = 'UPDATE'&#xA;;&#xA;&#xA;--------------------------------------&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;END CATCH  &#xA;GO" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Preparing Temp Tables (STG)"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{9F03A3C0-8F17-4E07-AAA1-BF84BBCF7596}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Preparing Temp Tables (STG)">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Preparing Temp Tables (STG)\Drop and Create Temp Table"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:Disabled="True"
+          DTS:DTSID="{ED5E78D6-8590-4A46-A6EE-785C1B413421}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Drop and Create Temp Table"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{807DCB61-1D66-48DB-9A9C-6035993FC24F}"
+              SQLTask:SqlStatementSource="IF EXISTS (SELECT 1 FROM sys.tables WHERE NAME = 'TMP_STG_OASIS_EVALUATION_SUMMARY') DROP TABLE TMP_STG_OASIS_EVALUATION_SUMMARY&#xA;GO&#xA;&#xA;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;&#xA;CREATE TABLE [dbo].[TMP_STG_OASIS_EVALUATION_SUMMARY](&#xA;&#x9;[Applicant_Id] [varchar](11) NOT NULL,&#xA;&#x9;[Qual_Type] [varchar](4) NOT NULL,&#xA;&#x9;[App_Number] [varchar](8) NOT NULL,&#xA;&#x9;[Raw_Hsc] [decimal](10,4) NULL,&#xA;&#x9;[Raw_Arch] [decimal](10,4) NULL,&#xA;&#x9;[Raw_Gpa] [decimal](10,4) NULL,&#xA;&#x9;[Highest_Qual] [decimal](10,4) NULL,&#xA;&#x9;[Nettech] [decimal](10,4) NULL,&#xA;&#x9;[Net_Ntech] [decimal](10,4) NULL,&#xA;&#x9;[Net_Hsc] [decimal](10,4) NULL,&#xA;&#x9;[Net_Arch] [decimal](10,4) NULL,&#xA;&#x9;[Net_Gpa] [decimal](10,4) NULL,&#xA;&#x9;[El1_Bgrd] [decimal](10,4) NULL,&#xA;&#x9;[El2_Bgrd] [decimal](10,4) NULL,&#xA;&#x9;[Gp_Bgrd] [decimal](10,4) NULL,&#xA;&#x9;[Avg_Marks] [decimal](10,4) NULL,&#xA;&#x9;[Avg_Grd_Pnt] [decimal](10,4) NULL,&#xA;&#x9;[Gpb4] [decimal](10,4) NULL,&#xA;&#x9;[Test_indicator] [varchar](1) NULL,&#xA;&#x9;[Prog] [varchar](5) NULL,&#xA;&#x9;[Batch_Id] [varchar](12) NULL,&#xA;&#x9;[Test_Type] [varchar](4) NULL,&#xA;&#x9;[Eng_Mark] [varchar](3) NULL,&#xA;&#x9;[Oral] [varchar](4) NULL,--P&#xA;&#x9;[Math_Mark] [varchar](3) NULL,&#xA;&#x9;[Overall] [varchar](4) NULL,---P&#xA;&#x9;[Sci_Mark] [varchar](3) NULL,&#xA;&#x9;[Raw_Posted_Agg] [decimal](10,4) NULL,&#xA;&#x9;[Course_Offered] [varchar](5) NULL,&#xA;&#x9;[Net_Posted_Agg] [decimal](10,4) NULL,&#xA;&#x9;[Dpa_Offered_Course] [varchar](6) NULL&#xA;) ON [PRIMARY]&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;END CATCH  &#xA;GO" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Preparing Temp Tables (STG)\Insert into Temp Table"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{7F69C22E-6D93-4008-AE24-3B42B1127651}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Insert into Temp Table"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{807DCB61-1D66-48DB-9A9C-6035993FC24F}"
+              SQLTask:SqlStatementSource="BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;------------------------------------------------&#xA;&#xA;INSERT&#x9;INTO [dbo].[TMP_STG_OASIS_EVALUATION_SUMMARY] WITH(TABLOCK)&#xA;SELECT&#x9; &#xA;REPLACE(Ltrim(RTRIM(APPLICANT_ID)),'NULL','')&#xA;,REPLACE(Ltrim(RTRIM(QUAL_TYPE)),'NULL','')&#xA;,REPLACE(Ltrim(RTRIM(APP_NUMBER)),'NULL','')&#xA;,CAST(RAW_HSC as decimal(10,4))&#xA;,CAST(RAW_ARCH as decimal(10,4))&#xA;,CAST(RAW_GPA as decimal(10,4)) &#xA;,CAST(HIGHEST_QUAL as decimal(10,4)) &#xA;,CAST(NETTECH as decimal(10,4))&#xA;,CAST(NET_NTECH as decimal(10,4))&#xA;,CAST(NET_HSC as decimal(10,4))&#xA;,CAST(NET_ARCH as decimal(10,4))&#xA;,CAST(NET_GPA as decimal(10,4))&#xA;,CAST(EL1_BGRD as decimal(10,4))&#xA;,CAST(EL2_BGRD as decimal(10,4))&#xA;,CAST(GP_BGRD as decimal(10,4))&#xA;,CAST(AVG_MARKS as decimal(10,4))&#xA;,CAST(AVG_GRD_PNT as decimal(10,4))&#xA;,CAST(GPB4 as decimal(10,4))&#xA;&#xA;,LTRIM(RTRIM(REPLACE(TEST_INDICATOR,'&quot; &quot;','')))&#xA;,LTRIM(RTRIM(REPLACE(PROG,'&quot; &quot;','')))&#xA;,REPLACE(BATCH_ID,'NULL','')&#xA;,LTRIM(RTRIM(REPLACE(TEST_TYPE,'&quot; &quot;','')))&#xA;,LTRIM(RTRIM(REPLACE(ENG_MARK,'NULL','')))&#xA;,LTRIM(RTRIM(REPLACE(ORAL,'NULL',''))) AS ORAL&#xA;,LTRIM(RTRIM(REPLACE(MATH_MARK,'NULL','')))&#xA;--,LTRIM(RTRIM(REPLACE(OVERALL,'NULL','')))&#xA;,REPLACE(Ltrim(RTRIM(OVERALL)),'NULL','') AS OVERALL&#xA;,LTRIM(RTRIM(REPLACE(SCI_MARK,'NULL','')))&#xA;,CAST(RAW_POSTED_AGG as decimal(10,4))&#xA;,REPLACE(COURSE_OFFERED,'&quot; &quot;','')&#xA;,CAST(NET_POSTED_AGG as decimal(10,4)) &#xA;,REPLACE(DPA_OFFERED_COURSE,'&quot; &quot;','')&#xA;&#xA;&#x9;&#xA;&#x9;&#x9;&#xA;FROM&#x9;[RPDW_DEV_PSTG].[dbo].[PSTG_OASIS_EVALUATION_SUMMARY]&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;ROLLBACK TRANSACTION&#xA;END CATCH  &#xA;GO" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Preparing Temp Tables (STG).PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{61D346B5-E481-4176-99D0-0DD319972362}"
+          DTS:From="Package\Preparing Temp Tables (STG)\Drop and Create Temp Table"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Preparing Temp Tables (STG)\Insert into Temp Table" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{54022A16-0623-41B9-A7DC-CE557530CF0C}"
+      DTS:From="Package\Preparing Temp Tables (STG)"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Load Into STG" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{78A905E2-A96E-4C0C-A1F8-3D3905B7D3B2}"
+      DTS:From="Package\Load Into STG"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Drop TEMP Table" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="161,42"
+          Id="Package\Drop TEMP Table"
+          TopLeft="378,209" />
+        <NodeLayout
+          Size="147,42"
+          Id="Package\Load Into STG"
+          TopLeft="373,118" />
+        <NodeLayout
+          Size="216,42"
+          Id="Package\Preparing Temp Tables (STG)\Drop and Create Temp Table"
+          TopLeft="30,15" />
+        <NodeLayout
+          Size="187,42"
+          Id="Package\Preparing Temp Tables (STG)\Insert into Temp Table"
+          TopLeft="52,93" />
+        <EdgeLayout
+          Id="Package\Preparing Temp Tables (STG).PrecedenceConstraints[Constraint]"
+          TopLeft="141.75,57">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,36"
+              Start="0,0"
+              End="0,28.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="303,190"
+          Size="303,233"
+          Id="Package\Preparing Temp Tables (STG)"
+          TopLeft="24,41" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="327,157.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="46,-18.5"
+              Start="0,0"
+              End="38.5,-18.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="19,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="19,0"
+                    Point2="23,0"
+                    Point3="23,-4" />
+                  <mssgle:LineSegment
+                    End="23,-14.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="23,-14.5"
+                    Point2="23,-18.5"
+                    Point3="27,-18.5" />
+                  <mssgle:LineSegment
+                    End="38.5,-18.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="446.5,160">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="12,49"
+              Start="0,0"
+              End="12,41.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.5"
+                    Point2="0,24.5"
+                    Point3="4,24.5" />
+                  <mssgle:LineSegment
+                    End="8,24.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="8,24.5"
+                    Point2="12,24.5"
+                    Point3="12,28.5" />
+                  <mssgle:LineSegment
+                    End="12,41.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

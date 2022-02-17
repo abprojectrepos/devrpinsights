@@ -1,0 +1,3142 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/31/2019 4:40:18 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-140119GM07"
+  DTS:CreatorName="NCS\P0500450"
+  DTS:DTSID="{734932F5-8B9B-4670-8E14-F2ED2D18705B}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="STG_EXT_NMC"
+  DTS:PackageType="5"
+  DTS:VersionBuild="199"
+  DTS:VersionGUID="{697703EC-E0C7-4282-8EA3-820403DD940A}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_DEV_PSTG]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{384E0647-CFB7-4E28-8F7C-F6BAE237014A}"
+      DTS:ObjectName="RPDW_DEV_PSTG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::PreStaging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.22.2.38;User ID=svc-dw-prod-etl;Initial Catalog=RPDW_PRD_PSTG;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiTCZiygZU0CFUIPafxRImQAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADhnaentfokM+Uxc5NDjLXFAAAAAASAAACgAAAAEAAAALsGScY+BhXoAK34AZHXFmYYAAAAUk3e79Km4XEzRTwIvMsbsMZJbH7UdKB8FAAAAICBzoVqEB1sEvRDH2ohfSob/3SF</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_DEV_STG]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{9678C382-64F3-433E-9E36-CCA5E5C3D70A}"
+      DTS:ObjectName="RPDW_DEV_STG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::Staging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.22.2.38;User ID=svc-dw-prod-etl;Initial Catalog=RPDW_PRD_STG;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiTCZiygZU0CFUIPafxRImQAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAC4GS6LP56yDBJ9PTrT5OXJAAAAAASAAACgAAAAEAAAAEiwphqLzUWOYMAEj/Y1TnQYAAAA1dPjy1cklwgPc5sVsSPnGr8rQBma7dgSFAAAAE5vCIo/3S+S+cRe9rFS564Nnb3O</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{40811C6E-F78B-4C05-9AD5-FE14EB32D6B9}"
+      DTS:ObjectName="RPDW_DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.22.2.38;User ID=svc-dw-prod-etl;Initial Catalog=RPDW_PRD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiTCZiygZU0CFUIPafxRImQAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADF9J8qRCeRFwd6AlWUuL4hAAAAAASAAACgAAAAEAAAAALMFLC9jIFmLLhhLYAHUzkYAAAAiU5IeDLYwsaxSIm20OBtNf1sOuIeE/hbFAAAAHO5buOR67+NvyL3yBVxabeaM4LI</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DAE2983E-1413-40D4-BC1B-CDCE47C4C183}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;------------&#xA;--------------DECLARE PROCESS DATE--------&#xA;DECLARE @PROCESSDATE DATETIME&#xA;,@jobstatusid varchar(5)&#xA;SELECT @PROCESSDATE=GETDATE()&#xA;select @jobstatusid=&quot;+ (DT_STR, 5,1252) @[User::JobStatusId] +&quot;&#xA;&#xA;INSERT INTO &#xA;[dbo].STG_EXT_NMC&#xA;([Poly]&#xA;      ,[JAE_Code]&#xA;      ,[NMC_Cluster]&#xA;      ,[Year]&#xA;      ,[Actual_Intake]&#xA;  --    ,[Planned]&#xA;      ,[Course_title]&#xA;      ,[RP_Course_Code]&#xA;      ,[Planned_Intake]&#xA;&#x9;  ,[SCHOOL]&#xA;      ,[Full_DIP]&#xA;,[Latest_Ind]&#xA;,[Created_On]&#xA;,[Modified_On]&#xA;,[Internal_Poly_Course_Code]&#xA;      ,[Planned_Cluster_Floor_Tgt]&#xA;      ,[Planned_Cluster_Cap_Tgt]&#xA;      ,[Planned_Dip_Floor_Tgt]&#xA;      ,[Planned_Dip_Cap_Tgt]&#xA;      ,[Dip_Status]&#xA;      ,[JAE_Intake]&#xA;      ,[EAE_O_Lvl_Intake]&#xA;      ,[EAE_ITE_Intake]&#xA;      ,[JPAE_DPP_Intake]&#xA;      ,[PFP_Intake]&#xA;      ,[DAE_Intake])&#xA;SELECT &#xA;[Poly]&#xA;      ,[JAE_Code]&#xA;      ,[NMC_Cluster]&#xA;      ,[Year]&#xA;      ,[Actual_Intake]&#xA;  --    ,[Planned]&#xA;      ,[Course_title]&#xA;      ,[RP_Course_Code]&#xA;      ,[Planned_Intake]&#xA;&#x9;  ,[SCHOOL]&#xA;      ,[Full_DIP]&#xA;,'Y', GETDATE(),GETDATE()&#xA;,[Internal_Poly_Course_Code]&#xA;      ,[Planned_Cluster_Floor_Tgt]&#xA;      ,[Planned_Cluster_Cap_Tgt]&#xA;      ,[Planned_Dip_Floor_Tgt]&#xA;      ,[Planned_Dip_Cap_Tgt]&#xA;      ,[Dip_Status]&#xA;      ,[JAE_Intake]&#xA;      ,[EAE_O_Lvl_Intake]&#xA;      ,[EAE_ITE_Intake]&#xA;      ,[JPAE_DPP_Intake]&#xA;      ,[PFP_Intake]&#xA;      ,[DAE_Intake]&#xA;FROM&#xA;   (&#xA;   MERGE INTO STG_EXT_NMC AS dst&#xA;   USING TMP_STG_EXT_NMC AS src&#xA;   ON( dst.[Poly]=src.[Poly]&#xA;   and  dst.[Year]=src.[Year]&#xA;   and  dst.[JAE_Code]=src.[JAE_Code]  &#xA;   and dst.NMC_Cluster=src.NMC_Cluster)&#xA;    &#xA;&#x9;&#xA;   WHEN NOT MATCHED THEN&#xA;   INSERT&#xA;   ( [Poly]&#xA;      ,[JAE_Code]&#xA;      ,[NMC_Cluster]&#xA;      ,[Year]&#xA;      ,[Actual_Intake]&#xA;    --  ,[Planned]&#xA;      ,[Course_title]&#xA;      ,[RP_Course_Code]&#xA;      ,[Planned_Intake]&#xA;&#x9;  ,[SCHOOL]&#xA;      ,[Full_DIP]&#xA;,[Latest_Ind]&#xA;      ,[Created_On]&#xA;      ,[Modified_On]&#xA;&#x9;   ,[Internal_Poly_Course_Code]&#xA;&#xA;      ,[Planned_Cluster_Floor_Tgt]&#xA;&#xA;      ,[Planned_Cluster_Cap_Tgt]&#xA;&#xA;      ,[Planned_Dip_Floor_Tgt]&#xA;&#xA;      ,[Planned_Dip_Cap_Tgt]&#xA;&#xA;      ,[Dip_Status]&#xA;&#xA;      ,[JAE_Intake]&#xA;&#xA;      ,[EAE_O_Lvl_Intake]&#xA;&#xA;      ,[EAE_ITE_Intake]&#xA;&#xA;      ,[JPAE_DPP_Intake]&#xA;&#xA;      ,[PFP_Intake]&#xA;&#xA;      ,[DAE_Intake])&#xA;   VALUES(&#xA; src.[Poly]&#xA;,src.[JAE_Code]&#xA;,src.[NMC_Cluster]&#xA;,src.[Year]&#xA;,src.[Actual_Intake]&#xA;--,src.[Planned]&#xA;,src.[Course_title]&#xA;,src.[RP_Course_Code]&#xA;,src.[Planned_Intake]&#xA;,src.[SCHOOL]&#xA;,src.[Full_DIP]&#xA; ,'Y', GETDATE(),GETDATE()&#xA; ,src.[Internal_Poly_Course_Code]&#xA;      ,src.[Planned_Cluster_Floor_Tgt]&#xA;      ,src.[Planned_Cluster_Cap_Tgt]&#xA;      ,src.[Planned_Dip_Floor_Tgt]&#xA;      ,src.[Planned_Dip_Cap_Tgt]&#xA;      ,src.[Dip_Status]&#xA;      ,src.[JAE_Intake]&#xA;      ,src.[EAE_O_Lvl_Intake]&#xA;      ,src.[EAE_ITE_Intake]&#xA;      ,src.[JPAE_DPP_Intake]&#xA;      ,src.[PFP_Intake]&#xA;      ,src.[DAE_Intake])&#xA;   WHEN MATCHED&#xA;   AND dst.Latest_Ind='Y'&#xA;   and( &#xA;&#xA;--isnull(src.NMC_Cluster,'')&lt;&gt; isnull(dst.NMC_Cluster,'') OR &#xA;isnull(src.Actual_Intake,'')&lt;&gt; isnull(dst.Actual_Intake,'') OR &#xA;--isnull(src.Planned,'')&lt;&gt; isnull(dst.Planned,'') OR&#xA;isnull(src.Course_title,'')&lt;&gt; isnull(dst.Course_title,'') OR&#xA;isnull(src.RP_Course_Code,'')&lt;&gt; isnull(dst.RP_Course_Code,'')OR&#xA;&#xA;isnull(src.Internal_Poly_Course_Code,'')&lt;&gt; isnull(dst.Internal_Poly_Course_Code,'')OR&#xA;isnull(src.Planned_Cluster_Floor_Tgt,'')&lt;&gt; isnull(dst.Planned_Cluster_Floor_Tgt,'')OR&#xA;isnull(src.Planned_Cluster_Cap_Tgt,'')&lt;&gt; isnull(dst.Planned_Cluster_Cap_Tgt,'')OR&#xA;isnull(src.Planned_Dip_Floor_Tgt,'')&lt;&gt; isnull(dst.Planned_Dip_Floor_Tgt,'')OR&#xA;isnull(src.Planned_Dip_Cap_Tgt,'')&lt;&gt; isnull(dst.Planned_Dip_Cap_Tgt,'')OR&#xA;isnull(src.Dip_Status,'')&lt;&gt; isnull(dst.Dip_Status,'')OR&#xA;isnull(src.JAE_Intake,'')&lt;&gt; isnull(dst.JAE_Intake,'')OR&#xA;isnull(src.EAE_O_Lvl_Intake,'')&lt;&gt; isnull(dst.EAE_O_Lvl_Intake,'')OR&#xA;isnull(src.EAE_ITE_Intake,'')&lt;&gt; isnull(dst.EAE_ITE_Intake,'')OR&#xA;isnull(src.JPAE_DPP_Intake,'')&lt;&gt; isnull(dst.JPAE_DPP_Intake,'')OR&#xA;isnull(src.PFP_Intake,'')&lt;&gt; isnull(dst.PFP_Intake,'')OR&#xA;isnull(src.DAE_Intake,'')&lt;&gt; isnull(dst.DAE_Intake,'')OR&#xA;&#xA;&#xA;&#xA;isnull(src.Planned_Intake,'')&lt;&gt; isnull(dst.Planned_Intake,'') ) &#xA;&#xA;   THEN UPDATE&#xA;   SET DST.Latest_Ind = 'N', Modified_On=GETDATE()&#xA;OUTPUT    &#xA;  src.[Poly]&#xA;,src.[JAE_Code]&#xA;,src.[NMC_Cluster]&#xA;,src.[Year]&#xA;,src.[Actual_Intake]&#xA;&#xA;,src.[Course_title]&#xA;,src.[RP_Course_Code]&#xA;,src.[Planned_Intake]&#xA;,src.[SCHOOL]&#xA;,src.[Full_DIP]&#xA;,src.[Internal_Poly_Course_Code]&#xA;      ,src.[Planned_Cluster_Floor_Tgt]&#xA;      ,src.[Planned_Cluster_Cap_Tgt]&#xA;      ,src.[Planned_Dip_Floor_Tgt]&#xA;      ,src.[Planned_Dip_Cap_Tgt]&#xA;      ,src.[Dip_Status]&#xA;      ,src.[JAE_Intake]&#xA;      ,src.[EAE_O_Lvl_Intake]&#xA;      ,src.[EAE_ITE_Intake]&#xA;      ,src.[JPAE_DPP_Intake]&#xA;      ,src.[PFP_Intake]&#xA;      ,src.[DAE_Intake]&#xA;,$Action AS MergeAction&#xA;) AS MRG&#xA;WHERE MRG.MergeAction = 'UPDATE'&#xA;;&#xA;--------------------------------------&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;INSERT INTO &quot;+@[$Project::DW_Initial_Catalog]+&quot;..ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,@PROCESSDATE  as created_on&#xA;  &#xA;  &#xA;END CATCH  &#xA;GO&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="InsertQuery">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+------------
+--------------DECLARE PROCESS DATE--------
+DECLARE @PROCESSDATE DATETIME
+,@jobstatusid varchar(5)
+SELECT @PROCESSDATE=GETDATE()
+select @jobstatusid=0
+
+INSERT INTO 
+[dbo].STG_EXT_NMC
+([Poly]
+      ,[JAE_Code]
+      ,[NMC_Cluster]
+      ,[Year]
+      ,[Actual_Intake]
+  --    ,[Planned]
+      ,[Course_title]
+      ,[RP_Course_Code]
+      ,[Planned_Intake]
+	  ,[SCHOOL]
+      ,[Full_DIP]
+,[Latest_Ind]
+,[Created_On]
+,[Modified_On]
+,[Internal_Poly_Course_Code]
+      ,[Planned_Cluster_Floor_Tgt]
+      ,[Planned_Cluster_Cap_Tgt]
+      ,[Planned_Dip_Floor_Tgt]
+      ,[Planned_Dip_Cap_Tgt]
+      ,[Dip_Status]
+      ,[JAE_Intake]
+      ,[EAE_O_Lvl_Intake]
+      ,[EAE_ITE_Intake]
+      ,[JPAE_DPP_Intake]
+      ,[PFP_Intake]
+      ,[DAE_Intake])
+SELECT 
+[Poly]
+      ,[JAE_Code]
+      ,[NMC_Cluster]
+      ,[Year]
+      ,[Actual_Intake]
+  --    ,[Planned]
+      ,[Course_title]
+      ,[RP_Course_Code]
+      ,[Planned_Intake]
+	  ,[SCHOOL]
+      ,[Full_DIP]
+,'Y', GETDATE(),GETDATE()
+,[Internal_Poly_Course_Code]
+      ,[Planned_Cluster_Floor_Tgt]
+      ,[Planned_Cluster_Cap_Tgt]
+      ,[Planned_Dip_Floor_Tgt]
+      ,[Planned_Dip_Cap_Tgt]
+      ,[Dip_Status]
+      ,[JAE_Intake]
+      ,[EAE_O_Lvl_Intake]
+      ,[EAE_ITE_Intake]
+      ,[JPAE_DPP_Intake]
+      ,[PFP_Intake]
+      ,[DAE_Intake]
+FROM
+   (
+   MERGE INTO STG_EXT_NMC AS dst
+   USING TMP_STG_EXT_NMC AS src
+   ON( dst.[Poly]=src.[Poly]
+   and  dst.[Year]=src.[Year]
+   and  dst.[JAE_Code]=src.[JAE_Code]  
+   and dst.NMC_Cluster=src.NMC_Cluster)
+    
+	
+   WHEN NOT MATCHED THEN
+   INSERT
+   ( [Poly]
+      ,[JAE_Code]
+      ,[NMC_Cluster]
+      ,[Year]
+      ,[Actual_Intake]
+    --  ,[Planned]
+      ,[Course_title]
+      ,[RP_Course_Code]
+      ,[Planned_Intake]
+	  ,[SCHOOL]
+      ,[Full_DIP]
+,[Latest_Ind]
+      ,[Created_On]
+      ,[Modified_On]
+	   ,[Internal_Poly_Course_Code]
+
+      ,[Planned_Cluster_Floor_Tgt]
+
+      ,[Planned_Cluster_Cap_Tgt]
+
+      ,[Planned_Dip_Floor_Tgt]
+
+      ,[Planned_Dip_Cap_Tgt]
+
+      ,[Dip_Status]
+
+      ,[JAE_Intake]
+
+      ,[EAE_O_Lvl_Intake]
+
+      ,[EAE_ITE_Intake]
+
+      ,[JPAE_DPP_Intake]
+
+      ,[PFP_Intake]
+
+      ,[DAE_Intake])
+   VALUES(
+ src.[Poly]
+,src.[JAE_Code]
+,src.[NMC_Cluster]
+,src.[Year]
+,src.[Actual_Intake]
+--,src.[Planned]
+,src.[Course_title]
+,src.[RP_Course_Code]
+,src.[Planned_Intake]
+,src.[SCHOOL]
+,src.[Full_DIP]
+ ,'Y', GETDATE(),GETDATE()
+ ,src.[Internal_Poly_Course_Code]
+      ,src.[Planned_Cluster_Floor_Tgt]
+      ,src.[Planned_Cluster_Cap_Tgt]
+      ,src.[Planned_Dip_Floor_Tgt]
+      ,src.[Planned_Dip_Cap_Tgt]
+      ,src.[Dip_Status]
+      ,src.[JAE_Intake]
+      ,src.[EAE_O_Lvl_Intake]
+      ,src.[EAE_ITE_Intake]
+      ,src.[JPAE_DPP_Intake]
+      ,src.[PFP_Intake]
+      ,src.[DAE_Intake])
+   WHEN MATCHED
+   AND dst.Latest_Ind='Y'
+   and( 
+
+--isnull(src.NMC_Cluster,'')&lt;&gt; isnull(dst.NMC_Cluster,'') OR 
+isnull(src.Actual_Intake,'')&lt;&gt; isnull(dst.Actual_Intake,'') OR 
+--isnull(src.Planned,'')&lt;&gt; isnull(dst.Planned,'') OR
+isnull(src.Course_title,'')&lt;&gt; isnull(dst.Course_title,'') OR
+isnull(src.RP_Course_Code,'')&lt;&gt; isnull(dst.RP_Course_Code,'')OR
+
+isnull(src.Internal_Poly_Course_Code,'')&lt;&gt; isnull(dst.Internal_Poly_Course_Code,'')OR
+isnull(src.Planned_Cluster_Floor_Tgt,'')&lt;&gt; isnull(dst.Planned_Cluster_Floor_Tgt,'')OR
+isnull(src.Planned_Cluster_Cap_Tgt,'')&lt;&gt; isnull(dst.Planned_Cluster_Cap_Tgt,'')OR
+isnull(src.Planned_Dip_Floor_Tgt,'')&lt;&gt; isnull(dst.Planned_Dip_Floor_Tgt,'')OR
+isnull(src.Planned_Dip_Cap_Tgt,'')&lt;&gt; isnull(dst.Planned_Dip_Cap_Tgt,'')OR
+isnull(src.Dip_Status,'')&lt;&gt; isnull(dst.Dip_Status,'')OR
+isnull(src.JAE_Intake,'')&lt;&gt; isnull(dst.JAE_Intake,'')OR
+isnull(src.EAE_O_Lvl_Intake,'')&lt;&gt; isnull(dst.EAE_O_Lvl_Intake,'')OR
+isnull(src.EAE_ITE_Intake,'')&lt;&gt; isnull(dst.EAE_ITE_Intake,'')OR
+isnull(src.JPAE_DPP_Intake,'')&lt;&gt; isnull(dst.JPAE_DPP_Intake,'')OR
+isnull(src.PFP_Intake,'')&lt;&gt; isnull(dst.PFP_Intake,'')OR
+isnull(src.DAE_Intake,'')&lt;&gt; isnull(dst.DAE_Intake,'')OR
+
+
+
+isnull(src.Planned_Intake,'')&lt;&gt; isnull(dst.Planned_Intake,'') ) 
+
+   THEN UPDATE
+   SET DST.Latest_Ind = 'N', Modified_On=GETDATE()
+OUTPUT    
+  src.[Poly]
+,src.[JAE_Code]
+,src.[NMC_Cluster]
+,src.[Year]
+,src.[Actual_Intake]
+
+,src.[Course_title]
+,src.[RP_Course_Code]
+,src.[Planned_Intake]
+,src.[SCHOOL]
+,src.[Full_DIP]
+,src.[Internal_Poly_Course_Code]
+      ,src.[Planned_Cluster_Floor_Tgt]
+      ,src.[Planned_Cluster_Cap_Tgt]
+      ,src.[Planned_Dip_Floor_Tgt]
+      ,src.[Planned_Dip_Cap_Tgt]
+      ,src.[Dip_Status]
+      ,src.[JAE_Intake]
+      ,src.[EAE_O_Lvl_Intake]
+      ,src.[EAE_ITE_Intake]
+      ,src.[JPAE_DPP_Intake]
+      ,src.[PFP_Intake]
+      ,src.[DAE_Intake]
+,$Action AS MergeAction
+) AS MRG
+WHERE MRG.MergeAction = 'UPDATE'
+;
+--------------------------------------
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+  ROLLBACK TRANSACTION
+INSERT INTO RPDW_PRD..ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,@PROCESSDATE  as created_on
+  
+  
+END CATCH  
+GO</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{658A7929-CBB8-4F7B-B56B-701E47DF4A2F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JobStatusId">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{212409CA-9D55-4D45-9A9F-1FD840C1A364}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="MndColumncheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F90C3E35-6DCC-467E-B626-8791DEB82A66}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="PrevJobStatus">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5D2D585F-5285-4B0F-A512-308813915FEF}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;--------------------------------------&#xA;&#xA;declare @MandColValidation int,&#xA;@NoDuplicates int,&#xA;@Job_Status_ID int&#xA;SELECT  @NoDuplicates=?&#xA;SELECT @MandColValidation=?&#xA;SELECT @Job_Status_ID=?&#xA;&#xA;if(@NoDuplicates&lt;&gt;0 or @MandColValidation&lt;&gt;0)&#xA;&#xA;begin &#xA;insert into [dbo].[ETL_ERROR_LOG](JOB_STATUS_ID,ERROR_RECORD,created_on) &#xA;SELECT  @Job_Status_ID JOB_STATUS_ID, '[Year] ='+[Year]+', Poly ='+Poly+' , JAE_Code ='+JAE_Code+' &#xA;is duplicate primary key in source file' as ErrorColValues,GETDATE() AS CREATED_ON&#xA;FROM &quot;+ @[$Project::PreStaging_Initial_Catalog] +&quot;.[dbo].[PSTG_EXT_NMC]&#xA;GROUP&#xA;BY   [Year],Poly,[JAE_Code]&#xA;having count(1)&gt;1&#xA;union all&#xA;SELECT  @Job_Status_ID JOB_STATUS_ID,'[Year] ='+[Year]+', Poly ='+Poly+' , JAE_Code ='+JAE_Code+' &#xA;is  Mandatory key violation' as ErrorColValues,GETDATE() AS CREATED_ON&#xA;FROM &quot;+ @[$Project::PreStaging_Initial_Catalog] +&quot;.[dbo].[PSTG_EXT_NMC]&#xA;where  ([Year]='' or Poly=''  or [Year] IS NULL &#xA;or Poly IS NULL or  JAE_Code IS NULL OR JAE_Code='')&#xA;GROUP BY   [Year],Poly,[JAE_Code]&#xA;END&#xA;else&#xA;select 'Unknown Error','Check the file and rerun the package'&#xA;&#xA;&#xA;IF @NoDuplicates&lt;&gt;0&#xA;&#xA;UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET [JOB_STATUS]='Fail',&#xA;[ERROR_MSG]='Duplicate primary key found in PSTG table'&#xA;WHERE JOB_STATUS_ID=@Job_Status_ID&#xA;&#xA;ELSE IF @MandColValidation&lt;&gt;0&#xA;UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET [JOB_STATUS]='Fail',&#xA;[ERROR_MSG]='Mandatory Column constraint failed in PSTG table'&#xA;WHERE JOB_STATUS_ID=@Job_Status_ID&#xA;&#xA;ELSE&#xA;SELECT 'UNKNOWN'&#xA;&#xA;&#xA;--------------------------------------&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;END CATCH  &#xA;GO&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="QryErrorLog">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+--------------------------------------
+
+declare @MandColValidation int,
+@NoDuplicates int,
+@Job_Status_ID int
+SELECT  @NoDuplicates=?
+SELECT @MandColValidation=?
+SELECT @Job_Status_ID=?
+
+if(@NoDuplicates&lt;&gt;0 or @MandColValidation&lt;&gt;0)
+
+begin 
+insert into [dbo].[ETL_ERROR_LOG](JOB_STATUS_ID,ERROR_RECORD,created_on) 
+SELECT  @Job_Status_ID JOB_STATUS_ID, '[Year] ='+[Year]+', Poly ='+Poly+' , JAE_Code ='+JAE_Code+' 
+is duplicate primary key in source file' as ErrorColValues,GETDATE() AS CREATED_ON
+FROM RPDW_PRD_PSTG.[dbo].[PSTG_EXT_NMC]
+GROUP
+BY   [Year],Poly,[JAE_Code]
+having count(1)&gt;1
+union all
+SELECT  @Job_Status_ID JOB_STATUS_ID,'[Year] ='+[Year]+', Poly ='+Poly+' , JAE_Code ='+JAE_Code+' 
+is  Mandatory key violation' as ErrorColValues,GETDATE() AS CREATED_ON
+FROM RPDW_PRD_PSTG.[dbo].[PSTG_EXT_NMC]
+where  ([Year]='' or Poly=''  or [Year] IS NULL 
+or Poly IS NULL or  JAE_Code IS NULL OR JAE_Code='')
+GROUP BY   [Year],Poly,[JAE_Code]
+END
+else
+select 'Unknown Error','Check the file and rerun the package'
+
+
+IF @NoDuplicates&lt;&gt;0
+
+UPDATE [dbo].[ETL_JOB_STATUS]
+SET [JOB_STATUS]='Fail',
+[ERROR_MSG]='Duplicate primary key found in PSTG table'
+WHERE JOB_STATUS_ID=@Job_Status_ID
+
+ELSE IF @MandColValidation&lt;&gt;0
+UPDATE [dbo].[ETL_JOB_STATUS]
+SET [JOB_STATUS]='Fail',
+[ERROR_MSG]='Mandatory Column constraint failed in PSTG table'
+WHERE JOB_STATUS_ID=@Job_Status_ID
+
+ELSE
+SELECT 'UNKNOWN'
+
+
+--------------------------------------
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+  ROLLBACK TRANSACTION
+END CATCH  
+GO</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4E937797-FFF9-41C6-BE0A-83DD73F78CEB}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprimarykeycheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5363AABE-9D91-4904-BDBC-E07584D84465}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprocesseddate">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{78D02A94-2858-4C04-AB3E-C617266DC42C}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SrcTable">
+      <DTS:VariableValue
+        DTS:DataType="8">PSTG_EXT_NMC</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E3C61F87-6865-4604-92FA-AFF1995E2D2C}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Stage">
+      <DTS:VariableValue
+        DTS:DataType="8">STG</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{73930F44-30D0-4E18-9B0B-811F361AAF3D}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTable">
+      <DTS:VariableValue
+        DTS:DataType="8">STG_EXT_NMC</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\check previous job status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{48FFD9E0-84BA-4EC4-8DE8-C6CF1C917342}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="check previous job status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{40811C6E-F78B-4C05-9AD5-FE14EB32D6B9}"
+          SQLTask:SqlStatementSource="&#xA;SELECT CASE WHEN [JOB_STATUS] ='SUCCESS' THEN 1 ELSE 0 END AS PrevJobStatus&#xA;FROM [DBO].[ETL_JOB_STATUS] WHERE [JOB_STATUS_ID]=&#xA;(SELECT MAX([JOB_STATUS_ID]) FROM [DBO].[ETL_JOB_STATUS]&#xA;WHERE [TARGET_TABLENAME]=?&#xA;AND [STAGE]='PSTG')&#xA;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::PrevJobStatus" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create ETL Job Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9A9B1055-AD3E-4BBA-8782-DD3A7F71EF63}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create ETL Job Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{40811C6E-F78B-4C05-9AD5-FE14EB32D6B9}"
+          SQLTask:SqlStatementSource="&#xA;EXEC dbo.[usp_InsertETLJobLog]  ?,?,?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::Stage"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Error Log On Key Violation"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C08633B1-BFE9-4542-9DB4-7754606B76EF}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Error Log On Key Violation"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{40811C6E-F78B-4C05-9AD5-FE14EB32D6B9}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::QryErrorLog" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::sqlprimarykeycheck"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::MndColumncheck"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Error Log On PSTG job fail"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D4625E68-E5D8-40D8-863E-1CA86212EB2B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Error Log On PSTG job fail"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{40811C6E-F78B-4C05-9AD5-FE14EB32D6B9}"
+          SQLTask:SqlStatementSource="update [ETL_JOB_STATUS]&#xA;set Job_Status='Fail'&#xA;,Error_Msg='&quot;Previous PSTG load is not complete&quot;'&#xA;where job_status_id=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\get Job Status Id"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{043090E0-349B-4117-A261-4694B6B91A96}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="get Job Status Id"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{40811C6E-F78B-4C05-9AD5-FE14EB32D6B9}"
+          SQLTask:SqlStatementSource="declare  @JobstatusID int&#xA;&#xA;select @JobstatusID=max(job_status_id) from [ETL_JOB_STATUS]&#xA;where [TARGET_TABLENAME]=?&#xA;&#xA;&#xA;Select @JobstatusID "
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JobStatusId" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\getprocesseddate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C874A3AD-7B4E-45DF-89E7-AC6501AA2B8F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="getprocesseddate"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9678C382-64F3-433E-9E36-CCA5E5C3D70A}"
+          SQLTask:SqlStatementSource="SELECT GETDATE()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::sqlprocesseddate" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\insert into main table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{BBCADCEB-BE9F-4EB7-ABA2-36F6767A808E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="insert into main table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9678C382-64F3-433E-9E36-CCA5E5C3D70A}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::InsertQuery" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load in temp table"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{37F57CBF-DB55-4209-91AD-B607D2DBA5EC}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load in temp table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load in temp table\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load in temp table\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load in temp table\Data Conversion.Inputs[Data Conversion Input].Columns[Internal_Poly_Course_Code]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="Internal_Poly_Course_Code"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Internal_Poly_Course_Code]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\Data Conversion.Inputs[Data Conversion Input].Columns[Planned_Cluster_Cap_Tgt]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="Planned_Cluster_Cap_Tgt"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Cluster_Cap_Tgt]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\Data Conversion.Inputs[Data Conversion Input].Columns[Planned_Dip_Floor_Tgt]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="Planned_Dip_Floor_Tgt"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Dip_Floor_Tgt]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\Data Conversion.Inputs[Data Conversion Input].Columns[Planned_Dip_Cap_Tgt]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="Planned_Dip_Cap_Tgt"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Dip_Cap_Tgt]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\Data Conversion.Inputs[Data Conversion Input].Columns[Dip_Status]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="Dip_Status"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Dip_Status]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\Data Conversion.Inputs[Data Conversion Input].Columns[JAE_Intake]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="JAE_Intake"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[JAE_Intake]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\Data Conversion.Inputs[Data Conversion Input].Columns[EAE_O_Lvl_Intake]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="EAE_O_Lvl_Intake"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[EAE_O_Lvl_Intake]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\Data Conversion.Inputs[Data Conversion Input].Columns[EAE_ITE_Intake]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="EAE_ITE_Intake"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[EAE_ITE_Intake]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\Data Conversion.Inputs[Data Conversion Input].Columns[JPAE_DPP_Intake]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="JPAE_DPP_Intake"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[JPAE_DPP_Intake]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\Data Conversion.Inputs[Data Conversion Input].Columns[PFP_Intake]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="PFP_Intake"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[PFP_Intake]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\Data Conversion.Inputs[Data Conversion Input].Columns[DAE_Intake]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="DAE_Intake"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[DAE_Intake]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\Data Conversion.Inputs[Data Conversion Input].Columns[Planned_Cluster_Floor_Tgt]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="Planned_Cluster_Floor_Tgt"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Cluster_Floor_Tgt]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Load in temp table\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Internal_Poly_Course_Code]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Internal_Poly_Course_Code]"
+                      name="Copy of Internal_Poly_Course_Code"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Internal_Poly_Course_Code]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Planned_Cluster_Cap_Tgt]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Planned_Cluster_Cap_Tgt]"
+                      name="Copy of Planned_Cluster_Cap_Tgt"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Cluster_Cap_Tgt]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Planned_Dip_Floor_Tgt]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Planned_Dip_Floor_Tgt]"
+                      name="Copy of Planned_Dip_Floor_Tgt"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Dip_Floor_Tgt]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Planned_Dip_Cap_Tgt]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Planned_Dip_Cap_Tgt]"
+                      name="Copy of Planned_Dip_Cap_Tgt"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Dip_Cap_Tgt]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Dip_Status]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Dip_Status]"
+                      name="Copy of Dip_Status"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Dip_Status]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of JAE_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of JAE_Intake]"
+                      name="Copy of JAE_Intake"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[JAE_Intake]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of EAE_O_Lvl_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of EAE_O_Lvl_Intake]"
+                      name="Copy of EAE_O_Lvl_Intake"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[EAE_O_Lvl_Intake]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of EAE_ITE_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of EAE_ITE_Intake]"
+                      name="Copy of EAE_ITE_Intake"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[EAE_ITE_Intake]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of JPAE_DPP_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of JPAE_DPP_Intake]"
+                      name="Copy of JPAE_DPP_Intake"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[JPAE_DPP_Intake]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of PFP_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of PFP_Intake]"
+                      name="Copy of PFP_Intake"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[PFP_Intake]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of DAE_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of DAE_Intake]"
+                      name="Copy of DAE_Intake"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[DAE_Intake]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Planned_Cluster_Floor_Tgt]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Planned_Cluster_Floor_Tgt]"
+                      name="Copy of Planned_Cluster_Floor_Tgt"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Cluster_Floor_Tgt]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Load in temp table\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load in temp table\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Poly]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Poly"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Poly]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACENULL]([RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Poly]},"\""," "),"NULL","")))," ")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACENULL(RTRIM(LTRIM(REPLACE(REPLACE(Poly,"\""," "),"NULL","")))," ")</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[JAE_Code]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="JAE_Code"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[JAE_Code]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACENULL]([RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[JAE_Code]},"\""," "),"NULL","")))," ")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACENULL(RTRIM(LTRIM(REPLACE(REPLACE(JAE_Code,"\""," "),"NULL","")))," ")</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[NMC_Cluster]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="NMC_Cluster"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[NMC_Cluster]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACENULL]([RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[NMC_Cluster]},"\""," "),"NULL","")))," ")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACENULL(RTRIM(LTRIM(REPLACE(REPLACE(NMC_Cluster,"\""," "),"NULL","")))," ")</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Year]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="Year"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Year]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACENULL]([RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Year]},"\""," "),"NULL","")))," ")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACENULL(RTRIM(LTRIM(REPLACE(REPLACE(Year,"\""," "),"NULL","")))," ")</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Actual_Intake]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="Actual_Intake"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Actual_Intake]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACENULL]([RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Actual_Intake]},"\""," "),"NULL","")))," ")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACENULL(RTRIM(LTRIM(REPLACE(REPLACE(Actual_Intake,"\""," "),"NULL","")))," ")</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Course_title]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="115"
+                      cachedName="Course_title"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Course_title]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACENULL]([RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Course_title]},"\""," "),"NULL","")))," ")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACENULL(RTRIM(LTRIM(REPLACE(REPLACE(Course_title,"\""," "),"NULL","")))," ")</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[RP_Course_Code]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="RP_Course_Code"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[RP_Course_Code]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACENULL]([RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[RP_Course_Code]},"\""," "),"NULL","")))," ")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACENULL(RTRIM(LTRIM(REPLACE(REPLACE(RP_Course_Code,"\""," "),"NULL","")))," ")</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Planned_Intake]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="Planned_Intake"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Intake]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACENULL]([RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Intake]},"\""," "),"NULL","")))," ")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACENULL(RTRIM(LTRIM(REPLACE(REPLACE(Planned_Intake,"\""," "),"NULL","")))," ")</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load in temp table\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load in temp table\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load in temp table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load in temp table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load in temp table\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[TMP_STG_EXT_NMC]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load in temp table\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[RPDW_DEV_STG]"
+                  connectionManagerRefId="Package.ConnectionManagers[RPDW_DEV_STG]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Poly]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Poly"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Poly]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Poly]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[JAE_Code]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="JAE_Code"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[JAE_Code]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[JAE_Code]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[NMC_Cluster]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="NMC_Cluster"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NMC_Cluster]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[NMC_Cluster]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Year]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="Year"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Year]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Year]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Actual_Intake]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="Actual_Intake"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Actual_Intake]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Actual_Intake]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Course_title]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="115"
+                      cachedName="Course_title"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Course_title]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Course_title]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[RP_Course_Code]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="RP_Course_Code"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RP_Course_Code]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[RP_Course_Code]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Planned_Intake]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="Planned_Intake"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Planned_Intake]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Intake]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SCHOOL]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="SCHOOL"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SCHOOL]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[SCHOOL]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Full_DIP]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="500"
+                      cachedName="Full_DIP"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Full_DIP]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Full_DIP]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of Internal_Poly_Course_Code]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of Internal_Poly_Course_Code"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Internal_Poly_Course_Code]"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Internal_Poly_Course_Code]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of Planned_Dip_Cap_Tgt]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of Planned_Dip_Cap_Tgt"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Planned_Dip_Cap_Tgt]"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Planned_Dip_Cap_Tgt]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of Planned_Dip_Floor_Tgt]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of Planned_Dip_Floor_Tgt"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Planned_Dip_Floor_Tgt]"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Planned_Dip_Floor_Tgt]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of Planned_Cluster_Cap_Tgt]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of Planned_Cluster_Cap_Tgt"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Planned_Cluster_Cap_Tgt]"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Planned_Cluster_Cap_Tgt]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of Dip_Status]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of Dip_Status"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Dip_Status]"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Dip_Status]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of JAE_Intake]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of JAE_Intake"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[JAE_Intake]"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of JAE_Intake]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of EAE_O_Lvl_Intake]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of EAE_O_Lvl_Intake"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[EAE_O_Lvl_Intake]"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of EAE_O_Lvl_Intake]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of EAE_ITE_Intake]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of EAE_ITE_Intake"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[EAE_ITE_Intake]"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of EAE_ITE_Intake]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of JPAE_DPP_Intake]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of JPAE_DPP_Intake"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[JPAE_DPP_Intake]"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of JPAE_DPP_Intake]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of PFP_Intake]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of PFP_Intake"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PFP_Intake]"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of PFP_Intake]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of DAE_Intake]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of DAE_Intake"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DAE_Intake]"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of DAE_Intake]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of Planned_Cluster_Floor_Tgt]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of Planned_Cluster_Floor_Tgt"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Planned_Cluster_Floor_Tgt]"
+                      lineageId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Planned_Cluster_Floor_Tgt]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Poly]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Poly" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[JAE_Code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="JAE_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NMC_Cluster]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="NMC_Cluster" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Year]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="Year" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Actual_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="Actual_Intake" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Course_title]"
+                      codePage="1252"
+                      dataType="str"
+                      length="115"
+                      name="Course_title" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RP_Course_Code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="RP_Course_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Planned_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="Planned_Intake" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SCHOOL]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="SCHOOL" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Full_DIP]"
+                      codePage="1252"
+                      dataType="str"
+                      length="500"
+                      name="Full_DIP" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Internal_Poly_Course_Code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Internal_Poly_Course_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Planned_Cluster_Cap_Tgt]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Planned_Cluster_Cap_Tgt" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Planned_Dip_Floor_Tgt]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Planned_Dip_Floor_Tgt" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Planned_Dip_Cap_Tgt]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Planned_Dip_Cap_Tgt" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Dip_Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Dip_Status" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[JAE_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="JAE_Intake" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[EAE_O_Lvl_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="EAE_O_Lvl_Intake" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[EAE_ITE_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="EAE_ITE_Intake" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[JPAE_DPP_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="JPAE_DPP_Intake" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PFP_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="PFP_Intake" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DAE_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="DAE_Intake" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Planned_Cluster_Floor_Tgt]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Planned_Cluster_Floor_Tgt" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load in temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load in temp table\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[PSTG_EXT_NMC]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT 
+CAST([ID] AS UNIQUEIDENTIFIER) ID
+,CAST([MODULE_ID] AS UNIQUEIDENTIFIER) [MODULE_ID]
+,[StudentId]
+,[Qualification_Type]
+,[Academic_Year]
+,[Semester]
+,[SemesterCode]
+,[Cohort],
+[Supervisor]
+,[Team_Coordinator]
+,[Project_ID]
+,[Project_Title]
+FROM [dbo].[PSTG_LEO_STUDENT_INFO_FYP_SP]</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load in temp table\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[RPDW_DEV_PSTG]"
+                  connectionManagerRefId="Package.ConnectionManagers[RPDW_DEV_PSTG]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Poly]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Poly]"
+                      length="50"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Poly]"
+                      name="Poly"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[JAE_Code]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[JAE_Code]"
+                      length="4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[JAE_Code]"
+                      name="JAE_Code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[NMC_Cluster]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NMC_Cluster]"
+                      length="50"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[NMC_Cluster]"
+                      name="NMC_Cluster"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Year]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Year]"
+                      length="4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Year]"
+                      name="Year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Actual_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Actual_Intake]"
+                      length="4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Actual_Intake]"
+                      name="Actual_Intake"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[created_ON]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[created_ON]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[created_ON]"
+                      name="created_ON"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Modified_on]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Modified_on]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Modified_on]"
+                      name="Modified_on"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Course_title]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Course_title]"
+                      length="115"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Course_title]"
+                      name="Course_title"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[RP_Course_Code]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RP_Course_Code]"
+                      length="50"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[RP_Course_Code]"
+                      name="RP_Course_Code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Planned_Intake]"
+                      length="4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Intake]"
+                      name="Planned_Intake"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[SCHOOL]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SCHOOL]"
+                      length="100"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[SCHOOL]"
+                      name="SCHOOL"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Full_DIP]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Full_DIP]"
+                      length="500"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Full_DIP]"
+                      name="Full_DIP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Internal_Poly_Course_Code]"
+                      codePage="1252"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Internal_Poly_Course_Code]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Internal_Poly_Course_Code]"
+                      name="Internal_Poly_Course_Code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Cluster_Cap_Tgt]"
+                      codePage="1252"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Planned_Cluster_Cap_Tgt]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Cluster_Cap_Tgt]"
+                      name="Planned_Cluster_Cap_Tgt"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Dip_Floor_Tgt]"
+                      codePage="1252"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Planned_Dip_Floor_Tgt]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Dip_Floor_Tgt]"
+                      name="Planned_Dip_Floor_Tgt"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Dip_Cap_Tgt]"
+                      codePage="1252"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Planned_Dip_Cap_Tgt]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Dip_Cap_Tgt]"
+                      name="Planned_Dip_Cap_Tgt"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Dip_Status]"
+                      codePage="1252"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Dip_Status]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Dip_Status]"
+                      name="Dip_Status"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[JAE_Intake]"
+                      codePage="1252"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[JAE_Intake]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[JAE_Intake]"
+                      name="JAE_Intake"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[EAE_O_Lvl_Intake]"
+                      codePage="1252"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[EAE_O_Lvl_Intake]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[EAE_O_Lvl_Intake]"
+                      name="EAE_O_Lvl_Intake"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[EAE_ITE_Intake]"
+                      codePage="1252"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[EAE_ITE_Intake]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[EAE_ITE_Intake]"
+                      name="EAE_ITE_Intake"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[JPAE_DPP_Intake]"
+                      codePage="1252"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[JPAE_DPP_Intake]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[JPAE_DPP_Intake]"
+                      name="JPAE_DPP_Intake"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[PFP_Intake]"
+                      codePage="1252"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PFP_Intake]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[PFP_Intake]"
+                      name="PFP_Intake"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[DAE_Intake]"
+                      codePage="1252"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DAE_Intake]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[DAE_Intake]"
+                      name="DAE_Intake"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Cluster_Floor_Tgt]"
+                      codePage="1252"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Planned_Cluster_Floor_Tgt]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Planned_Cluster_Floor_Tgt]"
+                      name="Planned_Cluster_Floor_Tgt"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Poly]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Poly" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[JAE_Code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="JAE_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NMC_Cluster]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="NMC_Cluster" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Year]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="Year" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Actual_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="Actual_Intake" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[created_ON]"
+                      dataType="dbTimeStamp"
+                      name="created_ON" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Modified_on]"
+                      dataType="dbTimeStamp"
+                      name="Modified_on" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Course_title]"
+                      codePage="1252"
+                      dataType="str"
+                      length="115"
+                      name="Course_title" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RP_Course_Code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="RP_Course_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Planned_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="Planned_Intake" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SCHOOL]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="SCHOOL" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Full_DIP]"
+                      codePage="1252"
+                      dataType="str"
+                      length="500"
+                      name="Full_DIP" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Internal_Poly_Course_Code]"
+                      codePage="1252"
+                      dataType="text"
+                      name="Internal_Poly_Course_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Planned_Cluster_Cap_Tgt]"
+                      codePage="1252"
+                      dataType="text"
+                      name="Planned_Cluster_Cap_Tgt" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Planned_Dip_Floor_Tgt]"
+                      codePage="1252"
+                      dataType="text"
+                      name="Planned_Dip_Floor_Tgt" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Planned_Dip_Cap_Tgt]"
+                      codePage="1252"
+                      dataType="text"
+                      name="Planned_Dip_Cap_Tgt" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Dip_Status]"
+                      codePage="1252"
+                      dataType="text"
+                      name="Dip_Status" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[JAE_Intake]"
+                      codePage="1252"
+                      dataType="text"
+                      name="JAE_Intake" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[EAE_O_Lvl_Intake]"
+                      codePage="1252"
+                      dataType="text"
+                      name="EAE_O_Lvl_Intake" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[EAE_ITE_Intake]"
+                      codePage="1252"
+                      dataType="text"
+                      name="EAE_ITE_Intake" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[JPAE_DPP_Intake]"
+                      codePage="1252"
+                      dataType="text"
+                      name="JPAE_DPP_Intake" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PFP_Intake]"
+                      codePage="1252"
+                      dataType="text"
+                      name="PFP_Intake" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DAE_Intake]"
+                      codePage="1252"
+                      dataType="text"
+                      name="DAE_Intake" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Planned_Cluster_Floor_Tgt]"
+                      codePage="1252"
+                      dataType="text"
+                      name="Planned_Cluster_Floor_Tgt" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Poly]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Poly]"
+                      name="Poly" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[JAE_Code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[JAE_Code]"
+                      name="JAE_Code" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NMC_Cluster]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NMC_Cluster]"
+                      name="NMC_Cluster" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Year]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Year]"
+                      name="Year" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Actual_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Actual_Intake]"
+                      name="Actual_Intake" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[created_ON]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[created_ON]"
+                      name="created_ON" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Modified_on]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Modified_on]"
+                      name="Modified_on" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Course_title]"
+                      codePage="1252"
+                      dataType="str"
+                      length="115"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Course_title]"
+                      name="Course_title" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SCHOOL]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SCHOOL]"
+                      name="SCHOOL" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Full_DIP]"
+                      codePage="1252"
+                      dataType="str"
+                      length="500"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Full_DIP]"
+                      name="Full_DIP" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Internal_Poly_Course_Code]"
+                      codePage="1252"
+                      dataType="text"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Internal_Poly_Course_Code]"
+                      name="Internal_Poly_Course_Code" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Planned_Cluster_Floor_Tgt]"
+                      codePage="1252"
+                      dataType="text"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Planned_Cluster_Floor_Tgt]"
+                      name="Planned_Cluster_Floor_Tgt" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Planned_Cluster_Cap_Tgt]"
+                      codePage="1252"
+                      dataType="text"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Planned_Cluster_Cap_Tgt]"
+                      name="Planned_Cluster_Cap_Tgt" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Planned_Dip_Floor_Tgt]"
+                      codePage="1252"
+                      dataType="text"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Planned_Dip_Floor_Tgt]"
+                      name="Planned_Dip_Floor_Tgt" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Planned_Dip_Cap_Tgt]"
+                      codePage="1252"
+                      dataType="text"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Planned_Dip_Cap_Tgt]"
+                      name="Planned_Dip_Cap_Tgt" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Dip_Status]"
+                      codePage="1252"
+                      dataType="text"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Dip_Status]"
+                      name="Dip_Status" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[JAE_Intake]"
+                      codePage="1252"
+                      dataType="text"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[JAE_Intake]"
+                      name="JAE_Intake" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[EAE_O_Lvl_Intake]"
+                      codePage="1252"
+                      dataType="text"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[EAE_O_Lvl_Intake]"
+                      name="EAE_O_Lvl_Intake" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[EAE_ITE_Intake]"
+                      codePage="1252"
+                      dataType="text"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[EAE_ITE_Intake]"
+                      name="EAE_ITE_Intake" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[JPAE_DPP_Intake]"
+                      codePage="1252"
+                      dataType="text"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[JPAE_DPP_Intake]"
+                      name="JPAE_DPP_Intake" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PFP_Intake]"
+                      codePage="1252"
+                      dataType="text"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PFP_Intake]"
+                      name="PFP_Intake" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DAE_Intake]"
+                      codePage="1252"
+                      dataType="text"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DAE_Intake]"
+                      name="DAE_Intake" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RP_Course_Code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RP_Course_Code]"
+                      name="RP_Course_Code" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Planned_Intake]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Planned_Intake]"
+                      name="Planned_Intake" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load in temp table.Paths[Data Conversion Output]"
+              endId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Data Conversion Output"
+              startId="Package\Load in temp table\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Load in temp table.Paths[Derived Column Output]"
+              endId="Package\Load in temp table\Data Conversion.Inputs[Data Conversion Input]"
+              name="Derived Column Output"
+              startId="Package\Load in temp table\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load in temp table.Paths[OLE DB Source Output]"
+              endId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PSTG Primary Key Validation"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E9F98D69-8CB7-481B-83C8-1D6F9F4579C7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PSTG Primary Key Validation"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{384E0647-CFB7-4E28-8F7C-F6BAE237014A}"
+          SQLTask:SqlStatementSource="&#xA;&#xA;WITH PSTG_VALIDATION&#xA;&#xA;AS&#xA;(&#xA;SELECT  REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [Year])),''),'NULL','') [Year],&#xA;REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM JAE_Code)),''),'NULL','') JAE_Code,&#xA;REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM Poly)),''),'NULL','') Poly&#xA;&#xA;FROM [PSTG_EXT_NMC])&#xA;&#xA;, PSTG_VALIDATION1 &#xA;AS&#xA;(&#xA;SELECT REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [Year])),''),'NULL','') [Year],&#xA;REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM JAE_Code)),''),'NULL','') JAE_Code,&#xA;REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM Poly)),''),'NULL','') Poly&#xA;FROM  [PSTG_EXT_NMC])&#xA;SELECT&#xA;CASE WHEN EXISTS (SELECT  COUNT(1) COUNTOFPK, [Year],Poly,JAE_Code&#xA;FROM PSTG_VALIDATION&#xA;GROUP&#xA;BY  [Year],Poly,JAE_Code&#xA;HAVING COUNT(1)&gt;1)&#xA;THEN 1 &#xA;ELSE 0  &#xA;END NoDuplicates&#xA;,&#xA; CASE WHEN EXISTS(select * from  PSTG_VALIDATION1&#xA;where ([Year]='' or [Year] is null OR JAE_Code IS NULL OR JAE_Code=''OR Poly IS NULL OR Poly=''&#xA;))&#xA;THEN 1 &#xA;ELSE 0&#xA;END  as MandColValidation&#xA;&#xA;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="NoDuplicates"
+            SQLTask:DtsVariableName="User::sqlprimarykeycheck" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="MandColValidation"
+            SQLTask:DtsVariableName="User::MndColumncheck" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Temp Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E2271872-FE26-462E-8593-97175E91B429}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Temp Table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9678C382-64F3-433E-9E36-CCA5E5C3D70A}"
+          SQLTask:SqlStatementSource="Truncate Table TMP_STG_EXT_NMC" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\update ETL Job log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{070B9031-3481-4867-B2C2-2D3FB52F13AD}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="update ETL Job log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{40811C6E-F78B-4C05-9AD5-FE14EB32D6B9}"
+          SQLTask:SqlStatementSource="&#xA; &#xA;&#xA;DECLARE &#xA;@jobstatusid INT&#xA;select @jobstatusid=?&#xA;IF EXISTS(SELECT * FROM dbo.ETL_ERROR_LOG WHERE [JOB_STATUS_ID]=@jobstatusid)&#xA;&#xA; BEGIN&#xA;&#xA;&#xA;&#xA; UPDATE [dbo].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='FAIL'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;  END&#xA;&#xA;ELSE&#xA;&#xA;BEGIN&#xA;&#xA;UPDATE [DBO].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='Success'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;END&#xA;&#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{FC0419AC-84C0-40CB-B018-C94A8461D55E}"
+      DTS:From="Package\Create ETL Job Log"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\get Job Status Id" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{243ED8B4-6139-470D-A61D-1B965A69B7C4}"
+      DTS:From="Package\get Job Status Id"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\check previous job status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 10]"
+      DTS:CreationName=""
+      DTS:DTSID="{D2924F13-DE01-41DA-B931-AE8D0927FC1C}"
+      DTS:From="Package\Truncate Temp Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 10"
+      DTS:To="Package\update ETL Job log" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{A1F3CC16-A011-4B0E-9DA2-11571E1F6743}"
+      DTS:From="Package\getprocesseddate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\PSTG Primary Key Validation" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{E3361095-CE97-4EB7-A1F9-33D6C34E9B2C}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::MndColumncheck]==0  &amp;&amp; @[User::sqlprimarykeycheck]==0"
+      DTS:From="Package\PSTG Primary Key Validation"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Load in temp table"
+      DTS:Value="2" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{29C3D102-9C5C-4B06-948E-6BBA9FA9A0E6}"
+      DTS:From="Package\Load in temp table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\insert into main table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{8C7C438D-7E39-42A3-ABE5-3594E1941338}"
+      DTS:From="Package\insert into main table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Truncate Temp Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{2486A1C1-3B01-4C5E-9BE8-AAF83C42E05D}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::PrevJobStatus]==1"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\getprocesseddate" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{6B8E4170-D622-4382-98E1-C4EF9AF01B40}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::PrevJobStatus]==0"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\Error Log On PSTG job fail" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
+      DTS:CreationName=""
+      DTS:DTSID="{B7B01D4C-CDE8-4DD6-8923-B22F1D0013E9}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::MndColumncheck]!=0  &amp;&amp; @[User::sqlprimarykeycheck]!=0"
+      DTS:From="Package\PSTG Primary Key Validation"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 8"
+      DTS:To="Package\Error Log On Key Violation" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{D62046FB-6B60-49CF-AEE3-0C09F8FB5E1D}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{8C386196-DC9A-484C-ABA6-45B3F04D2990}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\Error Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{DB7A636B-7DB6-4D85-A1E2-FAB0F4ED99A9}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Error Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{40811C6E-F78B-4C05-9AD5-FE14EB32D6B9}"
+              SQLTask:SqlStatementSource="  insert into [dbo].[ETL_ERROR_LOG]([JOB_STATUS_ID],[ERROR_RECORD],[CREATED_ON] )&#xA;  select ?,?,getdate()" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL Job Status Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{3E00EB33-D70C-4995-AEA4-F5743709763B}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL Job Status Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{40811C6E-F78B-4C05-9AD5-FE14EB32D6B9}"
+              SQLTask:SqlStatementSource="update [ETL_JOB_STATUS]&#xA;set Job_Status='Fail'&#xA;,Error_Msg=?&#xA;where job_status_id=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{C338E724-9265-4C07-A7D2-19108C7015ED}"
+          DTS:From="Package.EventHandlers[OnError]\ETL Job Status Log"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package.EventHandlers[OnError]\Error Log" />
+      </DTS:PrecedenceConstraints>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="198,42"
+          Id="Package\check previous job status"
+          TopLeft="413,27" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Create ETL Job Log"
+          TopLeft="7,23" />
+        <NodeLayout
+          Size="204,42"
+          Id="Package\Error Log On Key Violation"
+          TopLeft="399,195" />
+        <NodeLayout
+          Size="203,42"
+          Id="Package\Error Log On PSTG job fail"
+          TopLeft="401,101" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\get Job Status Id"
+          TopLeft="217,25" />
+        <NodeLayout
+          Size="162,42"
+          Id="Package\getprocesseddate"
+          TopLeft="666,20" />
+        <NodeLayout
+          Size="179,42"
+          Id="Package\insert into main table"
+          TopLeft="699,267" />
+        <NodeLayout
+          Size="167,42"
+          Id="Package\Load in temp table"
+          TopLeft="698,204" />
+        <NodeLayout
+          Size="213,42"
+          Id="Package\PSTG Primary Key Validation"
+          TopLeft="641,104" />
+        <NodeLayout
+          Size="180,42"
+          Id="Package\Truncate Temp Table"
+          TopLeft="700,335" />
+        <NodeLayout
+          Size="169,42"
+          Id="Package\update ETL Job log"
+          TopLeft="490,385" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="177,45">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="40,0"
+              Start="0,0"
+              End="32.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="32.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="376,47">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="37,0"
+              Start="0,0"
+              End="29.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="29.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 10]"
+          TopLeft="700,356">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-41,50"
+              Start="0,0"
+              End="-33.5,50">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-16.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-16.5,0"
+                    Point2="-20.5,0"
+                    Point3="-20.5,4" />
+                  <mssgle:LineSegment
+                    End="-20.5,46" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-20.5,46"
+                    Point2="-20.5,50"
+                    Point3="-24.5,50" />
+                  <mssgle:LineSegment
+                    End="-33.5,50" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="747.25,62">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42"
+              Start="0,0"
+              End="0,34.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="781.583333333333,146">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,58"
+              Start="0,0"
+              End="0,50.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,50.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,17.25,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="698,225">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="1,63"
+              Start="0,0"
+              End="-6.5,63">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-18.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-18.5,0"
+                    Point2="-22.5,0"
+                    Point3="-22.5,4" />
+                  <mssgle:LineSegment
+                    End="-22.5,59" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-22.5,59"
+                    Point2="-22.5,63"
+                    Point3="-18.5,63" />
+                  <mssgle:LineSegment
+                    End="-6.5,63" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="789.25,309">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,26"
+              Start="0,0"
+              End="0,18.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="611,44.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="55,0"
+              Start="0,0"
+              End="47.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="47.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="15.75,5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="512,69">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-9.5,32"
+              Start="0,0"
+              End="-9.5,24.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12"
+                    Point2="0,16"
+                    Point3="-4,16" />
+                  <mssgle:LineSegment
+                    End="-5.5,16" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-5.5,16"
+                    Point2="-9.5,16"
+                    Point3="-9.5,20" />
+                  <mssgle:LineSegment
+                    End="-9.5,24.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-12.75,21,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 8]"
+          TopLeft="713.333333333333,146">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-212.333333333333,49"
+              Start="0,0"
+              End="-212.333333333333,41.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.8191985088537" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.8191985088537"
+                    Point2="0,19.8191985088537"
+                    Point3="-4,19.8191985088537" />
+                  <mssgle:LineSegment
+                    End="-208.333333333333,19.8191985088537" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-208.333333333333,19.8191985088537"
+                    Point2="-212.333333333333,19.8191985088537"
+                    Point3="-212.333333333333,23.8191985088537" />
+                  <mssgle:LineSegment
+                    End="-212.333333333333,41.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-114.166666666667,24.8191985088537,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package.EventHandlers[OnError]\Error Log"
+          TopLeft="246,158" />
+        <NodeLayout
+          Size="169,42"
+          Id="Package.EventHandlers[OnError]\ETL Job Status Log"
+          TopLeft="60,60" />
+        <EdgeLayout
+          Id="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          TopLeft="144.5,102">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="163,56"
+              Start="0,0"
+              End="163,48.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24"
+                    Point2="0,28"
+                    Point3="4,28" />
+                  <mssgle:LineSegment
+                    End="159,28" />
+                  <mssgle:CubicBezierSegment
+                    Point1="159,28"
+                    Point2="163,28"
+                    Point3="163,32" />
+                  <mssgle:LineSegment
+                    End="163,48.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\Load in temp table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Load in temp table\OLE DB Destination"
+          TopLeft="214,257" />
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Load in temp table\OLE DB Source"
+          TopLeft="79,13" />
+        <NodeLayout
+          Size="156,42"
+          Id="Package\Load in temp table\Data Conversion"
+          TopLeft="609,190" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\Load in temp table\Derived Column"
+          TopLeft="363,42" />
+        <EdgeLayout
+          Id="Package\Load in temp table.Paths[OLE DB Source Output]"
+          TopLeft="229,34">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="134,29"
+              Start="0,0"
+              End="126.5,29">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="63,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="63,0"
+                    Point2="67,0"
+                    Point3="67,4" />
+                  <mssgle:LineSegment
+                    End="67,25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="67,25"
+                    Point2="67,29"
+                    Point3="71,29" />
+                  <mssgle:LineSegment
+                    End="126.5,29" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load in temp table.Paths[Derived Column Output]"
+          TopLeft="440,84">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="247,106"
+              Start="0,0"
+              End="247,98.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,49"
+                    Point2="0,53"
+                    Point3="4,53" />
+                  <mssgle:LineSegment
+                    End="243,53" />
+                  <mssgle:CubicBezierSegment
+                    Point1="243,53"
+                    Point2="247,53"
+                    Point3="247,57" />
+                  <mssgle:LineSegment
+                    End="247,98.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load in temp table.Paths[Data Conversion Output]"
+          TopLeft="687,232">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-387.5,25"
+              Start="0,0"
+              End="-387.5,17.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,8.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,8.5"
+                    Point2="0,12.5"
+                    Point3="-4,12.5" />
+                  <mssgle:LineSegment
+                    End="-383.5,12.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-383.5,12.5"
+                    Point2="-387.5,12.5"
+                    Point3="-387.5,16.5" />
+                  <mssgle:LineSegment
+                    End="-387.5,17.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load in temp table\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load in temp table\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,798 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/30/2019 1:46:31 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-110119GM22"
+  DTS:CreatorName="NCS\P0500388"
+  DTS:DelayValidation="True"
+  DTS:DTSID="{66DB8BB8-D1AC-48E3-8684-3A3E35C36DE3}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="DW_CRMS_SPONSORSHIPS"
+  DTS:PackageType="5"
+  DTS:VersionBuild="151"
+  DTS:VersionGUID="{C6801779-3EBA-4380-80C8-4353BE184DA2}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{DD70A7B8-74D2-4E74-8CED-74DA5818735C}"
+      DTS:ObjectName="DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.22.2.38;User ID=svc-dw-prod-etl;Initial Catalog=RPDW_PRD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiTCZiygZU0CFUIPafxRImQAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAA4cOj0KQpkP4GNLqFSA/fiAAAAAASAAACgAAAAEAAAANrNvHrCnkMycFsb4Xb2UhAYAAAAeG2XQwZCfMjlxjpH6bB23UHibtXUAD/PFAAAAOJAsOKqWfpWLldCPMN9V5g5WoYW</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ErrorLog]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3D039E91-933D-44F2-B44D-1B6E9ECDB68F}"
+      DTS:ObjectName="ErrorLog">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.22.2.38;User ID=svc-dw-prod-etl;Initial Catalog=RPDW_PRD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiTCZiygZU0CFUIPafxRImQAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACYvEYNdT1WFS8KqtP01uIuAAAAAASAAACgAAAAEAAAAFGP4FMptwZbtr2xg6C5CCcYAAAAZdFSNnY/aA59S+xXtCW0zXZ6qywFhC8HFAAAALaIqrnH0Qp7s/qeDuGKsZz/3S6P</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{51DF2EAB-4CA8-4A8C-A4C2-DBD064377F66}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Duplicate_Check">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DF9F0610-5C54-45E1-849B-844365DC342A}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_name">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_CRMS_SPONSORSHIPS</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0E780FB5-B294-41FF-950C-ED10092AD689}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_Status">
+      <DTS:VariableValue
+        DTS:DataType="3">1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{83FC7B64-F88F-48AA-B78F-FAAC97FD9CC8}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JOB_STATUS_ID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2B8622BA-C122-4A26-92FF-37680FF5FC5E}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Mandatory_constraint_Check">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DE50921E-ED91-439C-8DAA-7882A4768C7E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PreStage">
+      <DTS:VariableValue
+        DTS:DataType="8">STG</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{FF1D77A7-E9C2-47C8-8315-4F6D8DDACA2A}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Process_date">
+      <DTS:VariableValue
+        DTS:DataType="7">2/1/2019 2:58:00 PM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AA03FA26-2A92-4B68-AC4E-BE9624FBE3FF}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SourceTable">
+      <DTS:VariableValue
+        DTS:DataType="8">STG_CRMS_SPONSORSHIP</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{54503A14-8043-4D64-86EA-756CB203A5BE}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;------------&#xA;DECLARE @LastDWProcessdate datetime&#xA;,@processeddatetime datetime&#xA;,@jobstatusid varchar(10)&#xA;select @jobstatusid=&quot;+ (DT_STR, 5,1252) @[User::JOB_STATUS_ID] +&quot;&#xA;select @LastDWProcessdate= Isnull(max(Modified_on),'1990-01-01 00:00:00.000') from [dbo].[DW_CRMS_SPONSORSHIPS]--dw table&#xA;--select  @processeddatetime=?&#xA;--select @LastDWProcessdate&#xA;&#xA;&#xA;;with TMP_DW_CRMS_SPONSORSHIPS (&#xA;&#x9;&#x9;[Sponsorship_ID]&#xA;      ,[Acct_ID]&#xA;      ,[Acct_Name]&#xA;      ,[Award_Name]&#xA;      ,[Effective_Date]&#xA;      ,[RP_Dept]&#xA;      ,[Award_ID]&#xA;      ,[Owner]&#xA;      ,[CRMS_Created_On]&#xA;      ,[CRMS_Modified_On]&#xA;      )&#xA;         as&#xA;  (&#xA;SELECT &#x9;&#xA;&#x9;&#x9;[Sponsorship_ID]&#xA;      ,[Acct_ID]&#xA;      ,[Acct_Name]&#xA;      ,[Award_Name]&#xA;      ,[Effective_Date]&#xA;      ,[RP_Dept]&#xA;      ,[Award_ID]&#xA;      ,[Owner]&#xA;      ,[CRMS_Created_On]&#xA;      ,[CRMS_Modified_On]&#xA;  FROM &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_CRMS_SPONSORSHIP]&#xA;  where [Latest_Ind]='Y'  and [Modified_On]&gt;@LastDWProcessdate)&#xA;&#xA;       &#xA;&#xA;MERGE INTO dbo.DW_CRMS_SPONSORSHIPS AS dst&#xA;   USING TMP_DW_CRMS_SPONSORSHIPS AS src&#xA;   ON( dst.[Sponsorship_ID]=src.[Sponsorship_ID] )&#xA;&#xA;   WHEN NOT MATCHED THEN&#xA;   INSERT&#xA;&#x9;&#x9;( &#x9;&#xA;&#x9;&#x9;[Sponsorship_ID]&#xA;&#x9;&#x9;,[Acct_ID]&#xA;&#x9;&#x9;,[Acct_Name]&#xA;&#x9;&#x9;,[Award_Name]&#xA;&#x9;&#x9;,[Effective_Date]&#xA;&#x9;&#x9;,[RP_Dept]&#xA;&#x9;&#x9;,[Award_ID]&#xA;&#x9;&#x9;,[Owner]&#xA;&#x9;&#x9;,[CRMS_Created_On]&#xA;&#x9;&#x9;,[CRMS_Modified_On]&#xA;&#x9;&#x9;,[Created_On]&#xA;&#x9;&#x9;,[Modified_On] )&#xA;   VALUES(  &#xA;&#x9;&#x9;src.[Sponsorship_ID]&#xA;&#x9;&#x9;,src.[Acct_ID]&#xA;&#x9;&#x9;,src.[Acct_Name]&#xA;&#x9;&#x9;,src.[Award_Name]&#xA;&#x9;&#x9;,src.[Effective_Date]&#xA;&#x9;&#x9;,src.[RP_Dept]&#xA;&#x9;&#x9;,src.[Award_ID]&#xA;&#x9;&#x9;,src.[Owner]&#xA;&#x9;&#x9;,src.[CRMS_Created_On]&#xA;&#x9;&#x9;,src.[CRMS_Modified_On]&#xA;&#x9;&#x9;,getdate()&#xA;&#x9;&#x9;,getdate()&#xA;&#x9;   )&#xA;   WHEN MATCHED&#xA;   &#xA;   THEN UPDATE&#xA;   SET   &#xA;&#x9;&#x9;dst.[Acct_ID]=src.[Acct_ID]&#xA;&#x9;&#x9;,dst.[Acct_Name]=src.[Acct_Name]&#xA;&#x9;&#x9;,dst.[Award_Name]=src.[Award_Name]&#xA;&#x9;&#x9;,dst.[Effective_Date]=src.[Effective_Date]&#xA;&#x9;&#x9;,dst.[RP_Dept]=src.[RP_Dept]&#xA;&#x9;&#x9;,dst.[Award_ID]=src.[Award_ID]&#xA;&#x9;&#x9;,dst.[Owner]=src.[Owner]&#xA;&#x9;&#x9;,dst.[CRMS_Created_On]=src.[CRMS_Created_On]&#xA;&#x9;&#x9;,dst.[CRMS_Modified_On]=src.[CRMS_Modified_On]&#xA;&#x9;&#x9;,dst.Modified_On=getdate();&#xA;&#x9;&#xA;--------------------------------------&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;&#xA;  ROLLBACK TRANSACTION&#xA;&#xA;  INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,getdate()  as created_on&#xA;  &#xA;END CATCH  &#xA;GO&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_DW_Load">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+------------
+DECLARE @LastDWProcessdate datetime
+,@processeddatetime datetime
+,@jobstatusid varchar(10)
+select @jobstatusid=0
+select @LastDWProcessdate= Isnull(max(Modified_on),'1990-01-01 00:00:00.000') from [dbo].[DW_CRMS_SPONSORSHIPS]--dw table
+--select  @processeddatetime=?
+--select @LastDWProcessdate
+
+
+;with TMP_DW_CRMS_SPONSORSHIPS (
+		[Sponsorship_ID]
+      ,[Acct_ID]
+      ,[Acct_Name]
+      ,[Award_Name]
+      ,[Effective_Date]
+      ,[RP_Dept]
+      ,[Award_ID]
+      ,[Owner]
+      ,[CRMS_Created_On]
+      ,[CRMS_Modified_On]
+      )
+         as
+  (
+SELECT 	
+		[Sponsorship_ID]
+      ,[Acct_ID]
+      ,[Acct_Name]
+      ,[Award_Name]
+      ,[Effective_Date]
+      ,[RP_Dept]
+      ,[Award_ID]
+      ,[Owner]
+      ,[CRMS_Created_On]
+      ,[CRMS_Modified_On]
+  FROM RPDW_PRD_STG.[dbo].[STG_CRMS_SPONSORSHIP]
+  where [Latest_Ind]='Y'  and [Modified_On]&gt;@LastDWProcessdate)
+
+       
+
+MERGE INTO dbo.DW_CRMS_SPONSORSHIPS AS dst
+   USING TMP_DW_CRMS_SPONSORSHIPS AS src
+   ON( dst.[Sponsorship_ID]=src.[Sponsorship_ID] )
+
+   WHEN NOT MATCHED THEN
+   INSERT
+		( 	
+		[Sponsorship_ID]
+		,[Acct_ID]
+		,[Acct_Name]
+		,[Award_Name]
+		,[Effective_Date]
+		,[RP_Dept]
+		,[Award_ID]
+		,[Owner]
+		,[CRMS_Created_On]
+		,[CRMS_Modified_On]
+		,[Created_On]
+		,[Modified_On] )
+   VALUES(  
+		src.[Sponsorship_ID]
+		,src.[Acct_ID]
+		,src.[Acct_Name]
+		,src.[Award_Name]
+		,src.[Effective_Date]
+		,src.[RP_Dept]
+		,src.[Award_ID]
+		,src.[Owner]
+		,src.[CRMS_Created_On]
+		,src.[CRMS_Modified_On]
+		,getdate()
+		,getdate()
+	   )
+   WHEN MATCHED
+   
+   THEN UPDATE
+   SET   
+		dst.[Acct_ID]=src.[Acct_ID]
+		,dst.[Acct_Name]=src.[Acct_Name]
+		,dst.[Award_Name]=src.[Award_Name]
+		,dst.[Effective_Date]=src.[Effective_Date]
+		,dst.[RP_Dept]=src.[RP_Dept]
+		,dst.[Award_ID]=src.[Award_ID]
+		,dst.[Owner]=src.[Owner]
+		,dst.[CRMS_Created_On]=src.[CRMS_Created_On]
+		,dst.[CRMS_Modified_On]=src.[CRMS_Modified_On]
+		,dst.Modified_On=getdate();
+	
+--------------------------------------
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+
+  ROLLBACK TRANSACTION
+
+  INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,getdate()  as created_on
+  
+END CATCH  
+GO</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C5E78E48-AC54-4E89-BAB1-CF6CFD98F9F5}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="STAGE">
+      <DTS:VariableValue
+        DTS:DataType="8">DW</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2BB3649C-FC9E-4749-8E5D-6BD916058756}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTableName">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_CRMS_SPONSORSHIPS</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create ETL Job Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3837BD26-56CA-4CEF-9AF9-53E4A1D74AAC}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create ETL Job Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3D039E91-933D-44F2-B44D-1B6E9ECDB68F}"
+          SQLTask:SqlStatementSource="Exec [dbo].[usp_InsertETLJobLog] ?, ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Job_name"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::STAGE"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::SourceTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::TgtTableName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Error Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{50469D09-4A23-450C-A705-F979BC593BC0}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Error Log"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3D039E91-933D-44F2-B44D-1B6E9ECDB68F}"
+          SQLTask:SqlStatementSource="UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET&#xA;ERROR_MSG = 'STG table is not completed',&#xA;JOB_STATUS ='Fail'&#xA;--PROCESSED_ON =getdate()&#xA;WHERE JOB_STATUS_ID=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\JOB_STATUS_ID"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{6422AA35-A603-4828-B91E-C4BF9E1A7817}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="JOB_STATUS_ID"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3D039E91-933D-44F2-B44D-1B6E9ECDB68F}"
+          SQLTask:SqlStatementSource="SELECT max([JOB_STATUS_ID])&#xA;      &#xA;  FROM [dbo].[ETL_JOB_STATUS] where [SOURCE_FILENAME]=? &#xA;---and convert(varchar(8),CREATED_ON,112)=convert--(varchar(8) ,getdate(),112)"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::SourceTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Into DW"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3B236309-D154-4089-8063-72AD191D849E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Into DW"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{DD70A7B8-74D2-4E74-8CED-74DA5818735C}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::SQL_DW_Load" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Process_Date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{41B73391-638D-4675-8329-56B127033313}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Process_Date"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{DD70A7B8-74D2-4E74-8CED-74DA5818735C}"
+          SQLTask:SqlStatementSource="Select getdate()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::Process_date" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Process_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="135"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update Job Status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{6AD6F340-87E5-4D1D-A580-212A660F858B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Job Status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3D039E91-933D-44F2-B44D-1B6E9ECDB68F}"
+          SQLTask:SqlStatementSource="DECLARE &#xA;@jobstatusid INT &#xA;select @jobstatusid=?&#xA;IF exists(select * from dbo.ETL_ERROR_LOG where [JOB_STATUS_ID]=@jobstatusid)&#xA; BEGIN&#xA; Update [dbo].[ETL_JOB_STATUS]&#xA;SET [PROCESSED_ON] =getdate(),&#xA;[JOB_STATUS]='Fail'&#xA;where [JOB_STATUS_ID]=@jobstatusid&#xA;  END&#xA;ELSE&#xA;BEGIN&#xA;Update [dbo].[ETL_JOB_STATUS]&#xA;SET [PROCESSED_ON] =getdate(),&#xA;[JOB_STATUS]='Success'&#xA;where [JOB_STATUS_ID]=@jobstatusid&#xA;END" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Validate job status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{FD2CDC87-1A0C-41A1-9B22-CB197EA4EFB1}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Validate job status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3D039E91-933D-44F2-B44D-1B6E9ECDB68F}"
+          SQLTask:SqlStatementSource="declare @STAGE varchar(100),&#xA;@TARGET_TABLENAME varchar(100)&#xA;select   @STAGE=?&#xA;select   @TARGET_TABLENAME=?&#xA;&#xA;select CASE WHEN JOB_STATUS='Success' then 0 ELSE 1 END AS  JOB_STATUS&#xA;&#xA;from [dbo].[ETL_JOB_STATUS]&#xA;  where STAGE=@STAGE and TARGET_TABLENAME=@TARGET_TABLENAME and &#xA;  JOB_STATUS_ID in (Select max(JOB_STATUS_ID) from [dbo].[ETL_JOB_STATUS]&#xA;  where STAGE=@STAGE and TARGET_TABLENAME=@TARGET_TABLENAME)"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::Job_Status" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::PreStage"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::SourceTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{B9E428CB-3372-4E0D-8547-060EDBFA81B9}"
+      DTS:From="Package\Process_Date"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Load Into DW" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{5393AC7B-56C9-4F39-B982-A2BA24980566}"
+      DTS:From="Package\Create ETL Job Log"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\JOB_STATUS_ID" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{66461044-7B68-4F8F-B3DC-4CAC1D384B7E}"
+      DTS:From="Package\JOB_STATUS_ID"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Validate job status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{2EF22B0A-0CCF-4347-9ECC-655B276013DE}"
+      DTS:From="Package\Load Into DW"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Update Job Status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[False]"
+      DTS:CreationName=""
+      DTS:DTSID="{53A6623D-DFEC-4A26-A0ED-48F26F7AD2BD}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::Job_Status]==1"
+      DTS:From="Package\Validate job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="False"
+      DTS:To="Package\Error Log" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[True]"
+      DTS:CreationName=""
+      DTS:DTSID="{09223FA7-37E2-4955-BA99-162C33CD48B3}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::Job_Status]==0"
+      DTS:From="Package\Validate job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="True"
+      DTS:To="Package\Process_Date" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{84BD69D8-E1A6-4FDB-B517-2F5E360B1381}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{9166C337-5110-4886-A1F8-91C777E8A030}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL_ERROR_LOG"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{D0E0EF76-B9E5-4CFC-BDEF-03C74F60A563}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL_ERROR_LOG">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{3D039E91-933D-44F2-B44D-1B6E9ECDB68F}"
+              SQLTask:SqlStatementSource="[dbo].[usp_InsertETLErrorLog] ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="131"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="157,42"
+          Id="Package\Create ETL Job Log"
+          TopLeft="17,13" />
+        <NodeLayout
+          Size="123,42"
+          Id="Package\Error Log"
+          TopLeft="699,21" />
+        <NodeLayout
+          Size="142,42"
+          Id="Package\JOB_STATUS_ID"
+          TopLeft="230,18" />
+        <NodeLayout
+          Size="144,42"
+          Id="Package\Load Into DW"
+          TopLeft="487,221" />
+        <NodeLayout
+          Size="142,42"
+          Id="Package\Process_Date"
+          TopLeft="487,131" />
+        <NodeLayout
+          Size="165,42"
+          Id="Package\Update Job Status"
+          TopLeft="526,322" />
+        <NodeLayout
+          Size="166,42"
+          Id="Package\Validate job status"
+          TopLeft="446,22" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="558.5,173">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48"
+              Start="0,0"
+              End="0,40.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="174,36.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="56,0"
+              Start="0,0"
+              End="48.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="48.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="372,41">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="74,0"
+              Start="0,0"
+              End="66.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="66.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="559,263">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="49.5,59"
+              Start="0,0"
+              End="49.5,51.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25.5"
+                    Point2="0,29.5"
+                    Point3="4,29.5" />
+                  <mssgle:LineSegment
+                    End="45.5,29.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="45.5,29.5"
+                    Point2="49.5,29.5"
+                    Point3="49.5,33.5" />
+                  <mssgle:LineSegment
+                    End="49.5,51.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[False]"
+          TopLeft="612,42.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="87,0"
+              Start="0,0"
+              End="79.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="79.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="19.145,5,41.21,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[True]"
+          TopLeft="529,64">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="29,67"
+              Start="0,0"
+              End="29,59.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.5"
+                    Point2="0,33.5"
+                    Point3="4,33.5" />
+                  <mssgle:LineSegment
+                    End="25,33.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="25,33.5"
+                    Point2="29,33.5"
+                    Point3="29,37.5" />
+                  <mssgle:LineSegment
+                    End="29,59.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-5.01,38.5,39.02,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="162,42"
+          Id="Package.EventHandlers[OnError]\ETL_ERROR_LOG"
+          TopLeft="370,98" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PrecedenceConstraint
+    design-time-name="Package.PrecedenceConstraints[False]">
+    <ShowAnnotation>ConstraintName</ShowAnnotation>
+  </PrecedenceConstraint>
+  <PrecedenceConstraint
+    design-time-name="Package.PrecedenceConstraints[True]">
+    <ShowAnnotation>ConstraintName</ShowAnnotation>
+  </PrecedenceConstraint>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

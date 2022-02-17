@@ -1,0 +1,2445 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/31/2019 4:40:18 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-140119GM07"
+  DTS:CreatorName="NCS\P0500450"
+  DTS:DTSID="{106886D3-7F92-4B67-BF78-CC72F74B5BDB}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="STG_EXT_DEPARTMENT"
+  DTS:PackageType="5"
+  DTS:VersionBuild="170"
+  DTS:VersionGUID="{F060CB5C-AEAE-4EDB-B450-D0AFDF7117B1}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_DEV_PSTG]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{6FED8D9A-4822-4B46-89FA-84E9C8459968}"
+      DTS:ObjectName="RPDW_DEV_PSTG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::PreStaging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=RP-DW-STG;User ID=svc-dw-prod-etl;Initial Catalog=RPDW_STG_PSTG;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAz7uooMg0jEChNz7374ZDEgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACs8dO20wlsgLcUdIQpHJ0DAAAAAASAAACgAAAAEAAAAINH9mw56oZ5VkRPxKshI24YAAAALnBWSVupCS1HfIrFrtnMGKSgVIgSE8hVFAAAAA1zMa1hJunAWcRj5D4NN561XAnz</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_DEV_STG]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{B5E62A9E-7520-4F26-BFE2-6F90BFC2F8C2}"
+      DTS:ObjectName="RPDW_DEV_STG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::Staging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=RP-DW-STG;User ID=svc-dw-prod-etl;Initial Catalog=RPDW_STG_STG;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAz7uooMg0jEChNz7374ZDEgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACApv8rxhFj6DlJ/bzPkZx7AAAAAASAAACgAAAAEAAAAABcS4DTFzwkav1S/TRYZC4YAAAAoKU/UQkA2P1VF9be/2E9vQUdkc8zZGZMFAAAAHNr4DQoIA/hlksLQ9kqdb4h676U</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A45D8298-C415-445B-8CA9-B8705764B895}"
+      DTS:ObjectName="RPDW_DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=RP-DW-STG;User ID=svc-dw-prod-etl;Initial Catalog=RPDW_STG;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAz7uooMg0jEChNz7374ZDEgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABatAXjs+X/aaODdzdw3c/lAAAAAASAAACgAAAAEAAAAP+9yNvjgJfR3RO9/V7i87wYAAAA/a93T2EXmEjmnLg94yUGajQBUCCBkkP/FAAAAE7i16BbUC1BfavYFI734U67ol5Q</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B59DB754-ED25-49BF-98A2-7A4E0EB04F6A}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;------------&#xA;--------------DECLARE PROCESS DATE--------&#xA;DECLARE @PROCESSDATE DATETIME&#xA;,@jobstatusid varchar(5)&#xA;SELECT @PROCESSDATE=GETDATE()&#xA;select @jobstatusid=&quot;+ (DT_STR, 5,1252) @[User::JobStatusId] +&quot;&#xA;--------------------------------------&#xA;&#xA;&#xA;delete from  [dbo].[STG_EXT_DEPARTMENT]&#xA;&#xA;insert into [dbo].[STG_EXT_DEPARTMENT]&#xA;&#xA;SELECT  [Department]&#xA;      ,[Descr]&#xA;,getdate()&#xA;,getdate()&#xA;&#xA;FROM &quot;+ @[$Project::PreStaging_Initial_Catalog] +&quot;.[dbo].[PSTG_EXT_DEPARTMENT]&#xA;--------------------------------------&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;INSERT INTO &quot;+@[$Project::DW_Initial_Catalog]+&quot;..ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,@PROCESSDATE  as created_on&#xA;  &#xA;  &#xA;END CATCH  &#xA;GO&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Insertquery">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+------------
+--------------DECLARE PROCESS DATE--------
+DECLARE @PROCESSDATE DATETIME
+,@jobstatusid varchar(5)
+SELECT @PROCESSDATE=GETDATE()
+select @jobstatusid=0
+--------------------------------------
+
+
+delete from  [dbo].[STG_EXT_DEPARTMENT]
+
+insert into [dbo].[STG_EXT_DEPARTMENT]
+
+SELECT  [Department]
+      ,[Descr]
+,getdate()
+,getdate()
+
+FROM RPDW_STG_PSTG.[dbo].[PSTG_EXT_DEPARTMENT]
+--------------------------------------
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+  ROLLBACK TRANSACTION
+INSERT INTO RPDW_STG..ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,@PROCESSDATE  as created_on
+  
+  
+END CATCH  
+GO</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{52F81536-B169-4E63-9F67-738967B4CE73}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JobStatusId">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E1B0AF88-F774-4B6E-856A-F75B354E2910}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="MndColumncheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5BCC1177-BB11-4BD5-A3FC-891AA53FA11B}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="PrevJobStatus">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5248653D-35BA-4AAA-9BD7-FB48762B6C95}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;--------------------------------------&#xA;&#xA;declare @MandColValidation int,&#xA;@NoDuplicates int,&#xA;@Job_Status_ID int&#xA;SELECT  @NoDuplicates=?&#xA;SELECT @MandColValidation=?&#xA;SELECT @Job_Status_ID=?&#xA;&#xA;if(@NoDuplicates&lt;&gt;0 or @MandColValidation&lt;&gt;0)&#xA;&#xA;begin &#xA;insert into [dbo].[ETL_ERROR_LOG](JOB_STATUS_ID,ERROR_RECORD,created_on) &#xA;SELECT  @Job_Status_ID JOB_STATUS_ID,''+'Module_ID ='+[Module_ID]+', Term ='+[Term]+',&#xA;Lecturer_ID ='+[Lecturer_ID]+',&#xA;Acad_Day ='+[Acad_Day]+',&#xA;RP_Class ='+[RP_Class]+',&#xA;[Class_ID] ='+[Class_ID]+',&#xA;is duplicate primary key in source file' as ErrorColValues,GETDATE() AS CREATED_ON&#xA;FROM &quot;+ @[$Project::PreStaging_Initial_Catalog] +&quot;.[dbo].[PSTG_EXT_CLASS_SCHEDULE]&#xA;GROUP&#xA;BY   [Module_ID],[Term],[Lecturer_ID],Acad_Day,[Class_ID],RP_Class&#xA;having count(1)&gt;1&#xA;union all&#xA;SELECT  @Job_Status_ID JOB_STATUS_ID,''+'Module_ID ='+[Module_ID]+', Term ='+[Term]+',&#xA;Lecturer_ID ='+[Lecturer_ID]+',&#xA;Acad_Day ='+[Acad_Day]+',&#xA;RP_Class ='+[RP_Class]+',&#xA;[Class_ID] ='+[Class_ID]+', is Violation of Mandatory key' as ErrorColValues,GETDATE() AS CREATED_ON&#xA;FROM &quot;+ @[$Project::PreStaging_Initial_Catalog] +&quot;.[dbo].[PSTG_EXT_CLASS_SCHEDULE]&#xA;where  ([Module_ID]='' or [Module_ID] is null OR [Term] IS NULL OR [Term]='' &#xA;--OR [Lecturer_ID]=''&#xA; OR [Lecturer_ID] IS NULL OR [Acad_Day] IS NULL OR [Acad_Day]=''&#xA;OR [Class_ID] IS NULL OR [Class_ID]='' or [RP_Class] is null or [RP_Class]=''&#xA;  )&#xA;GROUP BY   [Module_ID],[Term],[Lecturer_ID],Acad_Day,[Class_ID],RP_Class&#xA;END&#xA;else&#xA;select 'Unknown Error','Check the file and rerun the package'&#xA;&#xA;&#xA;IF @NoDuplicates&lt;&gt;0&#xA;&#xA;UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET [JOB_STATUS]='Fail',&#xA;[ERROR_MSG]='Duplicate primary key found in PSTG table'&#xA;WHERE JOB_STATUS_ID=@Job_Status_ID&#xA;&#xA;ELSE IF @MandColValidation&lt;&gt;0&#xA;UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET [JOB_STATUS]='Fail',&#xA;[ERROR_MSG]='Mandatory Column constraint failed in PSTG table'&#xA;WHERE JOB_STATUS_ID=@Job_Status_ID&#xA;&#xA;ELSE&#xA;SELECT 'UNKNOWN'&#xA;&#xA;&#xA;--------------------------------------&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;END CATCH  &#xA;GO&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="QryErrorLog">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+--------------------------------------
+
+declare @MandColValidation int,
+@NoDuplicates int,
+@Job_Status_ID int
+SELECT  @NoDuplicates=?
+SELECT @MandColValidation=?
+SELECT @Job_Status_ID=?
+
+if(@NoDuplicates&lt;&gt;0 or @MandColValidation&lt;&gt;0)
+
+begin 
+insert into [dbo].[ETL_ERROR_LOG](JOB_STATUS_ID,ERROR_RECORD,created_on) 
+SELECT  @Job_Status_ID JOB_STATUS_ID,''+'Module_ID ='+[Module_ID]+', Term ='+[Term]+',
+Lecturer_ID ='+[Lecturer_ID]+',
+Acad_Day ='+[Acad_Day]+',
+RP_Class ='+[RP_Class]+',
+[Class_ID] ='+[Class_ID]+',
+is duplicate primary key in source file' as ErrorColValues,GETDATE() AS CREATED_ON
+FROM RPDW_STG_PSTG.[dbo].[PSTG_EXT_CLASS_SCHEDULE]
+GROUP
+BY   [Module_ID],[Term],[Lecturer_ID],Acad_Day,[Class_ID],RP_Class
+having count(1)&gt;1
+union all
+SELECT  @Job_Status_ID JOB_STATUS_ID,''+'Module_ID ='+[Module_ID]+', Term ='+[Term]+',
+Lecturer_ID ='+[Lecturer_ID]+',
+Acad_Day ='+[Acad_Day]+',
+RP_Class ='+[RP_Class]+',
+[Class_ID] ='+[Class_ID]+', is Violation of Mandatory key' as ErrorColValues,GETDATE() AS CREATED_ON
+FROM RPDW_STG_PSTG.[dbo].[PSTG_EXT_CLASS_SCHEDULE]
+where  ([Module_ID]='' or [Module_ID] is null OR [Term] IS NULL OR [Term]='' 
+--OR [Lecturer_ID]=''
+ OR [Lecturer_ID] IS NULL OR [Acad_Day] IS NULL OR [Acad_Day]=''
+OR [Class_ID] IS NULL OR [Class_ID]='' or [RP_Class] is null or [RP_Class]=''
+  )
+GROUP BY   [Module_ID],[Term],[Lecturer_ID],Acad_Day,[Class_ID],RP_Class
+END
+else
+select 'Unknown Error','Check the file and rerun the package'
+
+
+IF @NoDuplicates&lt;&gt;0
+
+UPDATE [dbo].[ETL_JOB_STATUS]
+SET [JOB_STATUS]='Fail',
+[ERROR_MSG]='Duplicate primary key found in PSTG table'
+WHERE JOB_STATUS_ID=@Job_Status_ID
+
+ELSE IF @MandColValidation&lt;&gt;0
+UPDATE [dbo].[ETL_JOB_STATUS]
+SET [JOB_STATUS]='Fail',
+[ERROR_MSG]='Mandatory Column constraint failed in PSTG table'
+WHERE JOB_STATUS_ID=@Job_Status_ID
+
+ELSE
+SELECT 'UNKNOWN'
+
+
+--------------------------------------
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+  ROLLBACK TRANSACTION
+END CATCH  
+GO</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7D84E804-DB9A-41B7-BF6D-B6D34AB66C40}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprimarykeycheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{10005776-DF0C-48BE-9392-BD00FE422D3D}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprocesseddate">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E2E5D77A-1883-49EA-8649-159EBB8C6669}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SrcTable">
+      <DTS:VariableValue
+        DTS:DataType="8">PSTG_EXT_DEPARTMENT</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1D9B5552-51D6-4E7A-80F4-0B86BCA47AF0}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Stage">
+      <DTS:VariableValue
+        DTS:DataType="8">STG</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F28243A4-CC4F-4637-803D-857E43A0C2D3}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTable">
+      <DTS:VariableValue
+        DTS:DataType="8">STG_EXT_DEPARTMENT</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\check previous job status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D7D6AC26-8A15-48E4-93E7-AFD584192A83}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="check previous job status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A45D8298-C415-445B-8CA9-B8705764B895}"
+          SQLTask:SqlStatementSource="&#xA;SELECT CASE WHEN [JOB_STATUS] ='SUCCESS' THEN 1 ELSE 0 END AS PrevJobStatus&#xA;FROM [DBO].[ETL_JOB_STATUS] WHERE [JOB_STATUS_ID]=&#xA;(SELECT MAX([JOB_STATUS_ID]) FROM [DBO].[ETL_JOB_STATUS]&#xA;WHERE [TARGET_TABLENAME]=?&#xA;AND [STAGE]='PSTG')&#xA;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::PrevJobStatus" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create ETL Job Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{362EC9AE-ADD2-4A97-8BD2-A946AE819647}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create ETL Job Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A45D8298-C415-445B-8CA9-B8705764B895}"
+          SQLTask:SqlStatementSource="&#xA;EXEC dbo.[usp_InsertETLJobLog]  ?,?,?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::Stage"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Error Log On Key Violation"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{A2D1861D-6AB1-40F8-808F-32B863E60A04}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Error Log On Key Violation"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A45D8298-C415-445B-8CA9-B8705764B895}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::QryErrorLog" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::sqlprimarykeycheck"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::MndColumncheck"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Error Log On PSTG job fail"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{A89A7B4A-F3B7-494A-B04C-37D4E01A6DC6}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Error Log On PSTG job fail"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A45D8298-C415-445B-8CA9-B8705764B895}"
+          SQLTask:SqlStatementSource="update [ETL_JOB_STATUS]&#xA;set Job_Status='Fail'&#xA;,Error_Msg='&quot;Previous PSTG load is not complete&quot;'&#xA;where job_status_id=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\get Job Status Id"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{76743990-2773-4DAD-B9DC-1CF5E6C966A1}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="get Job Status Id"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A45D8298-C415-445B-8CA9-B8705764B895}"
+          SQLTask:SqlStatementSource="declare  @JobstatusID int&#xA;&#xA;select @JobstatusID=max(job_status_id) from [ETL_JOB_STATUS]&#xA;where [TARGET_TABLENAME]=?&#xA;&#xA;&#xA;Select @JobstatusID "
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JobStatusId" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\getprocesseddate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{4A2CC5D2-84B1-40C4-9695-4EB998881921}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="getprocesseddate"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B5E62A9E-7520-4F26-BFE2-6F90BFC2F8C2}"
+          SQLTask:SqlStatementSource="SELECT GETDATE()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::sqlprocesseddate" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\insert into main table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E504AC07-FA92-493A-80C5-E202CEF0D696}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="insert into main table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B5E62A9E-7520-4F26-BFE2-6F90BFC2F8C2}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::Insertquery" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load in temp table"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{D899C8AA-4658-406A-8DAF-A311C62F3979}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load in temp table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load in temp table\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Inst]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Inst"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Inst]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Inst]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(Inst,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Qual_Type]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Qual_Type"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Qual_Type]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Qual_Type]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(Qual_Type,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Term]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Term"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Term]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Term]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(Term,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Sch_Ctr_of_Module]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Sch_Ctr_of_Module"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Sch_Ctr_of_Module]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Sch_Ctr_of_Module]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(Sch_Ctr_of_Module,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Acad_Day]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Acad_Day"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Acad_Day]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Acad_Day]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(Acad_Day,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Module_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Module_ID"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Module_ID]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Module_ID]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(Module_ID,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Lecturer_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Lecturer_ID"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Lecturer_ID]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Lecturer_ID]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(Lecturer_ID,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Module_Code]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Module_Code"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Module_Code]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Module_Code]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(Module_Code,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Module_Desc]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Module_Desc"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Module_Desc]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Module_Desc]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(Module_Desc,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Class_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Class_ID"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Class_ID]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Class_ID]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(Class_ID,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[RP_Class]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="RP_Class"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[RP_Class]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[RP_Class]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(RP_Class,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Lecturer_Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Lecturer_Name"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Lecturer_Name]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Lecturer_Name]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(Lecturer_Name,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Sch_of_Lecturer]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Sch_of_Lecturer"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Sch_of_Lecturer]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Sch_of_Lecturer]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(Sch_of_Lecturer,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Lecturer_Type]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Lecturer_Type"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Lecturer_Type]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Lecturer_Type]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(Lecturer_Type,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load in temp table\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load in temp table\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load in temp table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load in temp table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load in temp table\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[TMP_STG_EXT_CLASS_SCHEDULE]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load in temp table\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[RPDW_DEV_STG]"
+                  connectionManagerRefId="Package.ConnectionManagers[RPDW_DEV_STG]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Module_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Module_ID"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Module_ID]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Module_ID]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Inst]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Inst"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Inst]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Inst]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Term]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Term"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Term]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Term]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Sch_Ctr_of_Module]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Sch_Ctr_of_Module"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sch_Ctr_of_Module]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Sch_Ctr_of_Module]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Acad_Day]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Acad_Day"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Acad_Day]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Acad_Day]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Module_Code]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Module_Code"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Module_Code]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Module_Code]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Lecturer_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Lecturer_ID"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Lecturer_ID]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Lecturer_ID]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Qual_Type]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Qual_Type"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Qual_Type]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Qual_Type]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Module_Desc]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Module_Desc"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Module_Desc]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Module_Desc]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Class_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Class_ID"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Class_ID]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Class_ID]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[RP_Class]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="RP_Class"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RP_Class]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[RP_Class]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Lecturer_Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Lecturer_Name"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Lecturer_Name]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Lecturer_Name]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Sch_of_Lecturer]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Sch_of_Lecturer"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sch_of_Lecturer]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Sch_of_Lecturer]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Lecturer_Type]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="Lecturer_Type"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Lecturer_Type]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Lecturer_Type]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Class_Capacity]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Class_Capacity"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Class_Capacity]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Class_Capacity]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Class_Vacancy]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Class_Vacancy"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Class_Vacancy]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Class_Vacancy]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Module_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Module_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Qual_Type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Qual_Type" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Inst]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Inst" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Term]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Term" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sch_Ctr_of_Module]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Sch_Ctr_of_Module" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Acad_Day]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Acad_Day" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Lecturer_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Lecturer_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Module_Code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Module_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Module_Desc]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="Module_Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Class_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Class_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RP_Class]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="RP_Class" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Lecturer_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="Lecturer_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Sch_of_Lecturer]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="Sch_of_Lecturer" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Lecturer_Type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="Lecturer_Type" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Class_Capacity]"
+                      dataType="i4"
+                      name="Class_Capacity" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Class_Vacancy]"
+                      dataType="i4"
+                      name="Class_Vacancy" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load in temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load in temp table\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[PSTG_EXT_CLASS_SCHEDULE]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT 
+CAST([MODULE_ID] AS UNIQUEIDENTIFIER) [MODULE_ID]
+ ,[Academic_Year]
+      ,[Semester]
+      ,[SemesterCode]
+      ,[Cohort]
+      ,[StudentId]
+      ,[Qualification_Type]
+      ,[Class_Code]
+      ,[Lesson_No]
+      ,[Attendance_Status]
+      ,[LOA_Status]
+      ,[Remarks]
+      ,[Debarment_Status]
+      ,[CREATED_ON]
+      ,[MODIFIED_ON]
+FROM [dbo].[PSTG_LEO_REGULAR_ATTENDANCE]</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load in temp table\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[RPDW_DEV_PSTG]"
+                  connectionManagerRefId="Package.ConnectionManagers[RPDW_DEV_PSTG]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[CREATED_ON]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CREATED_ON]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[CREATED_ON]"
+                      name="CREATED_ON"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[MODIFIED_ON]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MODIFIED_ON]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[MODIFIED_ON]"
+                      name="MODIFIED_ON"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Inst]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Inst]"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Inst]"
+                      name="Inst"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Qual_Type]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Qual_Type]"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Qual_Type]"
+                      name="Qual_Type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Term]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Term]"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Term]"
+                      name="Term"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Sch_Ctr_of_Module]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Sch_Ctr_of_Module]"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Sch_Ctr_of_Module]"
+                      name="Sch_Ctr_of_Module"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Acad_Day]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Acad_Day]"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Acad_Day]"
+                      name="Acad_Day"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Module_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Module_ID]"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Module_ID]"
+                      name="Module_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Lecturer_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Lecturer_ID]"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Lecturer_ID]"
+                      name="Lecturer_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Module_Code]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Module_Code]"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Module_Code]"
+                      name="Module_Code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Module_Desc]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Module_Desc]"
+                      length="100"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Module_Desc]"
+                      name="Module_Desc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Class_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Class_ID]"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Class_ID]"
+                      name="Class_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[RP_Class]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RP_Class]"
+                      length="100"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[RP_Class]"
+                      name="RP_Class"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Lecturer_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Lecturer_Name]"
+                      length="100"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Lecturer_Name]"
+                      name="Lecturer_Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Sch_of_Lecturer]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Sch_of_Lecturer]"
+                      length="100"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Sch_of_Lecturer]"
+                      name="Sch_of_Lecturer"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Lecturer_Type]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Lecturer_Type]"
+                      length="100"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Lecturer_Type]"
+                      name="Lecturer_Type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Class_Capacity]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Class_Capacity]"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Class_Capacity]"
+                      name="Class_Capacity"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Class_Vacancy]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Class_Vacancy]"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Class_Vacancy]"
+                      name="Class_Vacancy"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CREATED_ON]"
+                      dataType="dbTimeStamp"
+                      name="CREATED_ON" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MODIFIED_ON]"
+                      dataType="dbTimeStamp"
+                      name="MODIFIED_ON" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Inst]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Inst" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Qual_Type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Qual_Type" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Term]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Term" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Sch_Ctr_of_Module]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Sch_Ctr_of_Module" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Acad_Day]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Acad_Day" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Module_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Module_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Lecturer_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Lecturer_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Module_Code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Module_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Module_Desc]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="Module_Desc" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Class_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Class_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RP_Class]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="RP_Class" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Lecturer_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="Lecturer_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Sch_of_Lecturer]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="Sch_of_Lecturer" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Lecturer_Type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="Lecturer_Type" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Class_Capacity]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Class_Capacity" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Class_Vacancy]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Class_Vacancy" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Inst]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Inst]"
+                      name="Inst" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Qual_Type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Qual_Type]"
+                      name="Qual_Type" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Term]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Term]"
+                      name="Term" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Sch_Ctr_of_Module]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Sch_Ctr_of_Module]"
+                      name="Sch_Ctr_of_Module" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Acad_Day]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Acad_Day]"
+                      name="Acad_Day" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Module_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Module_ID]"
+                      name="Module_ID" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Lecturer_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Lecturer_ID]"
+                      name="Lecturer_ID" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Module_Code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Module_Code]"
+                      name="Module_Code" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Module_Desc]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Module_Desc]"
+                      name="Module_Desc" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Class_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Class_ID]"
+                      name="Class_ID" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RP_Class]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RP_Class]"
+                      name="RP_Class" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Lecturer_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Lecturer_Name]"
+                      name="Lecturer_Name" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Sch_of_Lecturer]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Sch_of_Lecturer]"
+                      name="Sch_of_Lecturer" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Lecturer_Type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Lecturer_Type]"
+                      name="Lecturer_Type" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Class_Capacity]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Class_Capacity]"
+                      name="Class_Capacity" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Class_Vacancy]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Class_Vacancy]"
+                      name="Class_Vacancy" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CREATED_ON]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CREATED_ON]"
+                      name="CREATED_ON" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MODIFIED_ON]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MODIFIED_ON]"
+                      name="MODIFIED_ON" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load in temp table.Paths[Derived Column Output]"
+              endId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Load in temp table\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load in temp table.Paths[OLE DB Source Output]"
+              endId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PSTG Primary Key Validation"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{B25E3B45-826D-465B-A967-946788C18ABC}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PSTG Primary Key Validation"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6FED8D9A-4822-4B46-89FA-84E9C8459968}"
+          SQLTask:SqlStatementSource="&#xA;&#xA;WITH PSTG_VALIDATION&#xA;&#xA;AS&#xA;(&#xA;SELECT  REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [Module_ID])),''),'NULL','') [Module_ID],&#xA;REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [Term])),''),'NULL','') [Term],&#xA;REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [Lecturer_ID])),''),'NULL','') [Lecturer_ID],&#xA;REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [Acad_Day])),''),'NULL','') [Acad_Day],&#xA;REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [RP_Class])),''),'NULL','') [RP_Class],&#xA;REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [Class_ID])),''),'NULL','') [Class_ID]&#xA;&#xA;&#xA;FROM [PSTG_EXT_CLASS_SCHEDULE])&#xA;&#xA;, PSTG_VALIDATION1 &#xA;AS&#xA;(&#xA;SELECT REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [Module_ID])),''),'NULL','') [Module_ID],&#xA;REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [Term])),''),'NULL','') [Term],&#xA;REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [Lecturer_ID])),''),'NULL','') [Lecturer_ID],&#xA;REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [Acad_Day])),''),'NULL','') [Acad_Day],&#xA;REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [RP_Class])),''),'NULL','') [RP_Class],&#xA;REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [Class_ID])),''),'NULL','') [Class_ID]&#xA;&#xA;&#xA;FROM  [PSTG_EXT_CLASS_SCHEDULE])&#xA;SELECT&#xA;CASE WHEN EXISTS (SELECT  COUNT(1) COUNTOFPK, [Module_ID],[Term],[Lecturer_ID],[Acad_Day],[Class_ID],[RP_Class]&#xA;FROM PSTG_VALIDATION&#xA;GROUP&#xA;BY  [Module_ID],[Term],[Lecturer_ID],[Acad_Day],[Class_ID],[RP_Class]&#xA;HAVING COUNT(1)&gt;1)&#xA;THEN 1 &#xA;ELSE 0  &#xA;END NoDuplicates&#xA;,&#xA; CASE WHEN EXISTS(select * from  PSTG_VALIDATION1&#xA;where ([Module_ID]='' or [Module_ID] is null OR [Term] IS NULL OR [Term]='' &#xA;--OR [Lecturer_ID]=''&#xA; OR [Lecturer_ID] IS NULL OR [Acad_Day] IS NULL OR [Acad_Day]=''&#xA;OR [Class_ID] IS NULL OR [Class_ID]='' or [RP_Class] is null or [RP_Class]=''))&#xA;THEN 1 &#xA;ELSE 0&#xA;END  as MandColValidation&#xA;&#xA;&#xA;&#xA;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="NoDuplicates"
+            SQLTask:DtsVariableName="User::sqlprimarykeycheck" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="MandColValidation"
+            SQLTask:DtsVariableName="User::MndColumncheck" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Temp Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{FB8F3B14-39B7-4EAD-ABB3-1F1389F1162C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Temp Table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B5E62A9E-7520-4F26-BFE2-6F90BFC2F8C2}"
+          SQLTask:SqlStatementSource="Truncate Table TMP_STG_EXT_CLASS_SCHEDULE" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\update ETL Job log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{73CA70C4-F0A3-4B5C-BDCA-147159EE950C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="update ETL Job log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A45D8298-C415-445B-8CA9-B8705764B895}"
+          SQLTask:SqlStatementSource="&#xA; &#xA;&#xA;DECLARE &#xA;@jobstatusid INT&#xA;select @jobstatusid=?&#xA;IF EXISTS(SELECT * FROM dbo.ETL_ERROR_LOG WHERE [JOB_STATUS_ID]=@jobstatusid)&#xA;&#xA; BEGIN&#xA;&#xA;&#xA;&#xA; UPDATE [dbo].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='FAIL'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;  END&#xA;&#xA;ELSE&#xA;&#xA;BEGIN&#xA;&#xA;UPDATE [DBO].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='Success'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;END&#xA;&#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{842CA3AD-6915-47F7-8EBE-DA3B6945288F}"
+      DTS:From="Package\Create ETL Job Log"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\get Job Status Id" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{B74DEDA3-1BC3-4FB9-9C0E-65B95CA47550}"
+      DTS:From="Package\get Job Status Id"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\check previous job status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 10]"
+      DTS:CreationName=""
+      DTS:DTSID="{1B6014A2-8B3C-47EA-9D04-CB4BA36076C3}"
+      DTS:From="Package\Truncate Temp Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 10"
+      DTS:To="Package\update ETL Job log" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{9B5D0C53-492A-48A6-AE56-8B83F9FA62CE}"
+      DTS:From="Package\getprocesseddate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\PSTG Primary Key Validation" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{DD7926DF-E249-4F37-AB86-6B2D8692B29C}"
+      DTS:Expression="@[User::MndColumncheck]==0  &amp;&amp; @[User::sqlprimarykeycheck]==0"
+      DTS:From="Package\PSTG Primary Key Validation"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Load in temp table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{A648C8B6-FEF1-4BB1-BC24-C4D4C6FBCCB7}"
+      DTS:From="Package\Load in temp table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\insert into main table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{057CB5F0-19B3-435D-8408-3F582B9DDF30}"
+      DTS:From="Package\insert into main table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Truncate Temp Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{EE636241-097C-409D-8E60-53CADBFB9D9D}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::PrevJobStatus]==1"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\getprocesseddate" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{5BB5CFA2-8A81-43D5-ABF0-F53FCF2BFD49}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::PrevJobStatus]==0"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\Error Log On PSTG job fail" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
+      DTS:CreationName=""
+      DTS:DTSID="{8F8164BF-3D51-4C2D-AD2D-F11175E80E00}"
+      DTS:Expression="@[User::MndColumncheck]!=0  &amp;&amp; @[User::sqlprimarykeycheck]!=0"
+      DTS:From="Package\PSTG Primary Key Validation"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 8"
+      DTS:To="Package\Error Log On Key Violation" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{B6346CC1-B050-4931-B3E3-4C15D99F5448}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{F5093632-7B32-467A-9D88-0AB7060240FF}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\Error Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{CD0F9FD0-1BCC-4A30-A63B-E74554D647F4}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Error Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A45D8298-C415-445B-8CA9-B8705764B895}"
+              SQLTask:SqlStatementSource="  insert into [dbo].[ETL_ERROR_LOG]([JOB_STATUS_ID],[ERROR_RECORD],[CREATED_ON] )&#xA;  select ?,?,getdate()" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL Job Status Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{BB6815B6-5D58-4ADA-A593-ECE93D26EE19}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL Job Status Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A45D8298-C415-445B-8CA9-B8705764B895}"
+              SQLTask:SqlStatementSource="update [ETL_JOB_STATUS]&#xA;set Job_Status='Fail'&#xA;,Error_Msg=?&#xA;where job_status_id=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{13034FDA-43AA-4A36-8606-FFD50CBA7884}"
+          DTS:From="Package.EventHandlers[OnError]\ETL Job Status Log"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package.EventHandlers[OnError]\Error Log" />
+      </DTS:PrecedenceConstraints>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="198,42"
+          Id="Package\check previous job status"
+          TopLeft="413,27" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Create ETL Job Log"
+          TopLeft="7,23" />
+        <NodeLayout
+          Size="204,42"
+          Id="Package\Error Log On Key Violation"
+          TopLeft="450,200" />
+        <NodeLayout
+          Size="203,42"
+          Id="Package\Error Log On PSTG job fail"
+          TopLeft="416,104" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\get Job Status Id"
+          TopLeft="217,25" />
+        <NodeLayout
+          Size="162,42"
+          Id="Package\getprocesseddate"
+          TopLeft="666,20" />
+        <NodeLayout
+          Size="179,42"
+          Id="Package\insert into main table"
+          TopLeft="699,269" />
+        <NodeLayout
+          Size="167,42"
+          Id="Package\Load in temp table"
+          TopLeft="698,204" />
+        <NodeLayout
+          Size="213,42"
+          Id="Package\PSTG Primary Key Validation"
+          TopLeft="641,104" />
+        <NodeLayout
+          Size="180,42"
+          Id="Package\Truncate Temp Table"
+          TopLeft="701,335" />
+        <NodeLayout
+          Size="169,42"
+          Id="Package\update ETL Job log"
+          TopLeft="489,342" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="177,45">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="40,0"
+              Start="0,0"
+              End="32.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="32.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="376,47">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="37,0"
+              Start="0,0"
+              End="29.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="29.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 10]"
+          TopLeft="701,359.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-43,0"
+              Start="0,0"
+              End="-35.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-35.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="747.25,62">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42"
+              Start="0,0"
+              End="0,34.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="781.583333333333,146">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,58"
+              Start="0,0"
+              End="0,50.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,50.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="785,246">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,23"
+              Start="0,0"
+              End="0,15.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="789.75,311">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,24"
+              Start="0,0"
+              End="0,16.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="611,44.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="55,0"
+              Start="0,0"
+              End="47.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="47.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="15.75,5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="514.75,69">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35"
+              Start="0,0"
+              End="0,27.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,5.75,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 8]"
+          TopLeft="713.333333333333,146">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-161.333333333333,54"
+              Start="0,0"
+              End="-161.333333333333,46.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.8415657036347" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.8415657036347"
+                    Point2="0,21.8415657036347"
+                    Point3="-4,21.8415657036347" />
+                  <mssgle:LineSegment
+                    End="-157.333333333333,21.8415657036347" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-157.333333333333,21.8415657036347"
+                    Point2="-161.333333333333,21.8415657036347"
+                    Point3="-161.333333333333,25.8415657036347" />
+                  <mssgle:LineSegment
+                    End="-161.333333333333,46.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package.EventHandlers[OnError]\Error Log"
+          TopLeft="246,158" />
+        <NodeLayout
+          Size="169,42"
+          Id="Package.EventHandlers[OnError]\ETL Job Status Log"
+          TopLeft="60,60" />
+        <EdgeLayout
+          Id="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          TopLeft="144.5,102">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="163,56"
+              Start="0,0"
+              End="163,48.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24"
+                    Point2="0,28"
+                    Point3="4,28" />
+                  <mssgle:LineSegment
+                    End="159,28" />
+                  <mssgle:CubicBezierSegment
+                    Point1="159,28"
+                    Point2="163,28"
+                    Point3="163,32" />
+                  <mssgle:LineSegment
+                    End="163,48.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\Load in temp table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Load in temp table\OLE DB Source"
+          TopLeft="76,17" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\Load in temp table\Derived Column"
+          TopLeft="77,84" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Load in temp table\OLE DB Destination"
+          TopLeft="71,151" />
+        <EdgeLayout
+          Id="Package\Load in temp table.Paths[OLE DB Source Output]"
+          TopLeft="152.5,59">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,25"
+              Start="0,0"
+              End="0,17.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load in temp table.Paths[Derived Column Output]"
+          TopLeft="155.25,126">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,25"
+              Start="0,0"
+              End="0,17.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load in temp table\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load in temp table\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

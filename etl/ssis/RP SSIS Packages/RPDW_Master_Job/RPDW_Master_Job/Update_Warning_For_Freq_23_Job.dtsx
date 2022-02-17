@@ -1,0 +1,76 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="3/26/2020 6:56:07 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="RP-ETL-DW-UAT"
+  DTS:CreatorName="RP\svc-dw-uat-etl"
+  DTS:DTSID="{A207AADD-01F7-401C-ABB1-820C1F0CD81D}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Update_Warning_For_Freq_14_Job"
+  DTS:PackageType="5"
+  DTS:VersionBuild="10"
+  DTS:VersionGUID="{859017B1-8CA7-45B9-9021-0F683DCD6E99}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{97B356FC-D873-4C54-A852-DEA44BC03DE3}"
+      DTS:ObjectName="RPDW">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT;Provider=SQLNCLI11.1;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiAXqJL5xwkap+hp6D6sPxwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABqpYyyAk/PPI1bRlMDhqEKe6HrOp9ej6v+GaT2OVLJHwAAAAAOgAAAAAIAACAAAACkoJe2lf30lFt7dwvRC4QEn2dZENMqnte/4LYZVMycUTAAAAABj+A9iYpbr6VaAx6Z59pmplRRvKLr+I3eXK0xS4Gs+81QFkUFsnqU7kpsUP02yG5AAAAArGCWdlMZYQYJz9MaIzY808i/8cEQFCEtA7VVciIhqwo7n0OQyxUOwmJ9sBx4zLExbuShjES8G1FFvSSG2mQjIA</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Update Warning in ETL Job Status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{8AA1DF0C-0D91-4528-90BE-048E8822A92F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Warning in ETL Job Status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{97B356FC-D873-4C54-A852-DEA44BC03DE3}"
+          SQLTask:SqlStatementSource="WAITFOR DELAY '00:01:10'&#xA;&#xA;&#xA;update ETL_JOB_STATUS&#xA;set JOB_STATUS='Warning'&#xA;where JOB_STATUS='Fail' &#xA;and (ERROR_MSG like'%Input file missing%' or ERROR_MSG like '%PSTG table is not%' or ERROR_MSG like '%File Missing%'&#xA;or ERROR_MSG like '%STG table is not%' or ERROR_MSG like'%Previous%' or ERROR_MSG like'%Last Job not completed sucessfully%')&#xA;and TARGET_TABLENAME in ('PSTG_EXT_ACE_CET_REGULAR',&#xA;'PSTG_EXT_ACE_CUSTOM_WORKSHOP',&#xA;'PSTG_EXT_ACE_ELP_COHORT','PSTG_EXT_ACE_ELP_PARTICIPANT','PSTG_EXT_ACE_EXEC_COURSE'&#xA;,'STG_EXT_ACE_CET_REGULAR','STG_EXT_ACE_CUSTOM_WORKSHOP','STG_EXT_ACE_ELP_COHORT'&#xA;,'STG_EXT_ACE_ELP_PARTICIPANT','STG_EXT_ACE_EXEC_COURSE'&#xA;)&#xA;and convert(varchar(8),CREATED_ON,112)=CONVERT(varchar(8),getdate(),112)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="240,42"
+          Id="Package\Update Warning in ETL Job Status"
+          TopLeft="312,85" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

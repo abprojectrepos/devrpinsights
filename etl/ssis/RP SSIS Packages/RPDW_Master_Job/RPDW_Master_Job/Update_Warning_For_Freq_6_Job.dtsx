@@ -1,0 +1,76 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/12/2020 3:59:05 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="RP-ETL-STG"
+  DTS:CreatorName="RP\svc-dw-stg-etl"
+  DTS:DTSID="{32C532AA-0A41-4387-B2EC-393EB426F618}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Update_Warning_For_Freq_6_Job"
+  DTS:PackageType="5"
+  DTS:VersionBuild="9"
+  DTS:VersionGUID="{8ED26A17-C60D-41BD-BEC0-313AE797173B}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{05DBC485-82E8-4B59-860F-26BBC86106CD}"
+      DTS:ObjectName="RPDW">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT;Provider=SQLNCLI11.1;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiAXqJL5xwkap+hp6D6sPxwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABWFqGYkH//DXOviZ8gqEQsiReoQIVeF1T2wjd6M7hGbAAAAAAOgAAAAAIAACAAAADMusZ1vbANE7CT3rFKdQQi4GtCmbukubdIBJjZfVKoJzAAAAApcLJheBez7RL+DMD0YTUDOZkpLNsrmBXn8iav3OaWSZxm5pDVcuCIIh8q0zePUtdAAAAA4g5zq9kCfP+RxENF8lECVDVcJrdZfiuW292BjLfZrzo0sXWFf68nNSL6kTLbQPC4giKvkzApUGMsrWoKtRzMDg</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Update Warning in ETL Job Status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{e4f5d33e-6616-4932-824b-5925502a29f2}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Warning in ETL Job Status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{05DBC485-82E8-4B59-860F-26BBC86106CD}"
+          SQLTask:SqlStatementSource="WAITFOR DELAY '00:01:10'&#xA;&#xA;update ETL_JOB_STATUS&#xA;set JOB_STATUS='Warning'&#xA;where JOB_STATUS='Fail' and (ERROR_MSG like'%Input file missing%' or ERROR_MSG like'%File Missing%'&#xA;or ERROR_MSG like '%PSTG table is not%' or ERROR_MSG like '%STG table is not%' or  ERROR_MSG like'%Previous%'or ERROR_MSG like'%Last Job not completed sucessfully%')&#xA;and TARGET_TABLENAME in ('PSTG_EXT_DEPARTMENT',&#xA;'[PSTG_EXT_DPAEAE_CCA]','[PSTG_EXT_DPAEAE_APPLICANTS]',&#xA;'[PSTG_EXT_DPAEAE_CDP]','PSTG_EXT_CLASS_SCHEDULE'&#xA;,'[PSTG_EXT_DPAEAE_JAE2]','[PSTG_EXT_DPAEAE_PREVRESULTS]','[PSTG_EXT_DPAEAE_Strength]','PSTG_EXT_ENTRY_QUAL_TYPE'&#xA;,'[PSTG_EXT_EXPOLY_ALL]','PSTG_EXT_GEC_DATA','PSTG_EXT_IIP_COMPANY_QUESTION_MAPPING'&#xA;,'[PSTG_EXT_JAE_APPEAL]','[PSTG_EXT_EAE]','[PSTG_EXT_JPAE_POSTFILE]',&#xA;'PSTG_EXT_NMC','[PSTG_EXT_PFP]','[PSTG_EXT_JAE_POSTFILE]'&#xA;,'STG_EXT_CLASS_SCHEDULE','STG_EXT_DEPARTMENT','STG_EXT_DPAEAE_APPLICANTS'&#xA;,'STG_EXT_DPAEAE_CCA',&#xA;'STG_EXT_DPAEAE_CDP','STG_EXT_DPAEAE_JAE2',&#xA;'[STG_EXT_DPAEAE_PREVRESULTS]','STG_EXT_DPAEAE_STRENGTH'&#xA;,'STG_EXT_ENTRY_QUAL_TYPE','STG_EXT_EXPOLY_ALL','STG_EXT_GES_DATA','STG_EXT_IIP_COMPANY_QUESTION_MAPPING'&#xA;,'STG_EXT_JAE_APPEAL','STG_EXT_JPAE_POSTFILE','STG_EXT_NMC'&#xA;,'STG_EXT_EAE','STG_EXT_PFP','STG_EXT_JAE_POSTFILE',&#xA;'DW_EXT_CLASS_SCHEDULE_SETUP','DW_EXT_DEPARTMENT','DW_EXT_DPAEAE_APPLICANTS'&#xA;,'DW_EXT_DPAEAE_CCA','DW_EXT_DPAEAE_CDP','DW_EXT_DPAEAE_JAE'&#xA;,'DW_EXT_DPAEAE_PREVRESULTS','DW_EXT_DPAEAE_STRENGTH','DW_EXT_EAE','DW_EXT_EXPOLY_ALL','DW_EXT_GES_DATA'&#xA;,'DW_EXT_IIP_COMPANY_QUESTION_MAPPING','DW_EXT_JAE','DW_EXT_JAE_APPEAL','DW_EXT_JPAE_POSTFILE','DW_EXT_PFP'&#xA;,'DW_EXT_NMC','DW_EXT_ENTRY_QUAL_TYPE',&#xA;'PSTG_EXT_FIN_SCHEME_ID','PSTG_EXT_FIN_SCHEME_ELIGIBILITY','PSTG_EXT_FIN_AID_OUTCOME_STATUS'&#xA;,'PSTG_EXT_SURVEY_ICARE_MAPPING','PSTG_EXT_SURVEY_ICARE_RES','PSTG_EXT_STUDENT_CARE','PSTG_EXT_AGG_DATA'&#xA;,'STG_EXT_FIN_SCHEME_ID','STG_EXT_FIN_SCHEME_ELIGIBILITY','STG_EXT_FIN_AID_OUTCOME_STATUS'&#xA;,'STG_EXT_SURVEY_ICARE_MAPPING','STG_EXT_SURVEY_ICARE_RES','STG_EXT_STUDENT_CARE','STG_EXT_AGG_DATA'&#xA;,'DW_FINANCIAL_SCHEME_ID','DW_FINANCIAL_SCHEME_ELIGIBILITY','DW_EXT_FINANCIAL_AID_OUTCOME',&#xA;'DW_ICARE_SURVEY_RESPONSE','DW_ICARE_SURVEY_QN_MAPPING','DW_OSS_SUMMARY_DATA','DW_FINANCIAL_AID_OUTCOME_CONSOLIDATED'&#xA;)&#xA;&#xA;and convert(varchar(8),CREATED_ON,112)=CONVERT(varchar(8),getdate(),112)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="248,42"
+          Id="Package\Update Warning in ETL Job Status"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

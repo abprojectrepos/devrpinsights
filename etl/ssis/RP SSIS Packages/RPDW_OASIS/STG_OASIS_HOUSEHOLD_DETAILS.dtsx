@@ -1,0 +1,2185 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/31/2019 4:40:18 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-140119GM07"
+  DTS:CreatorName="NCS\P0500450"
+  DTS:DTSID="{DCBA2AB0-1E80-49C5-889C-80C6B5355D2E}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="STG_OASIS_HOUSEHOLD_DETAILS"
+  DTS:PackageType="5"
+  DTS:VersionBuild="93"
+  DTS:VersionGUID="{F8A07D6B-C992-4D68-B6D8-A5576A4BFC5A}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{5d1e87c4-e4bd-492d-98df-0c443179879a}"
+      DTS:ObjectName="RPDW_DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=10.168.212.13;User ID=svc-dw-uat-etl;Initial Catalog=RPDW;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAygkblgCNE0qKYU9Ts2BJIwAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADzGPCJKZcygQh6Gzfm0OtrAAAAAASAAACgAAAAEAAAAGvIAIHr0stsNPVKjxq+cU0YAAAAZALcPhlrgARX2jCBFPm8sQxhRK3O9v+xFAAAAAzgt0zr/Vx6XFx/clLtseECVD0X</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_PSTG]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{D67BC058-2F6C-405E-A040-22AA0FF6C715}"
+      DTS:ObjectName="RPDW_PSTG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::PreStaging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=10.168.212.13;User ID=svc-dw-uat-etl;Initial Catalog=RPDW_PSTG;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAygkblgCNE0qKYU9Ts2BJIwAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADPUVbdM+rA0zhaYni9DHePAAAAAASAAACgAAAAEAAAAJZzD0//M7PaxE1xGbzJcKUYAAAAH9zUw6saQc3w3SYRMqgF77Mfg6ZlJyIzFAAAALkNTb3V4Xc66wup30/xJmVtamJ+</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_STG]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{D6225CD8-4143-42DD-B201-D49739B417B3}"
+      DTS:ObjectName="RPDW_STG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::Staging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=10.168.212.13;User ID=svc-dw-uat-etl;Initial Catalog=RPDW_STG;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAygkblgCNE0qKYU9Ts2BJIwAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABZI/jfatzlN+ETXNDPKsXhAAAAAASAAACgAAAAEAAAAAX4q/ESKYWM0+QId+KOXKkYAAAAy+HnRHqSnKPfjpk82unYHi8AI+N9TnWXFAAAAD3yMEYbr/ey+UrejYTxsRK/0bbt</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F7D66751-3572-4833-9470-FB6517B11972}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;------------&#xA;DECLARE @LastDWProcessdate datetime&#xA;,@processeddatetime datetime&#xA;,@jobstatusid varchar(5)&#xA;select @jobstatusid=&quot;+ (DT_STR, 5,1252) @[User::JobStatusId] +&quot;&#xA;----------------------------------------------------------&#xA;INSERT INTO &#xA;STG_OASIS_HOUSEHOLD_DETAILS&#xA;([Applicant_ID]&#xA;      ,[No_of_Siblings]&#xA;      ,[Household_Size]&#xA;      ,[Type_of_residence]&#xA;      ,[House_Ownership]&#xA;      ,[Total_Mth_Family_Household_Income]&#xA;      ,[Place_of_Birth]&#xA;      ,[Latest_Ind]&#xA;      ,[Created_On]&#xA;      ,[Modified_On])&#xA;SELECT [Applicant_ID]&#xA;      ,[No_of_Siblings]&#xA;      ,[Household_Size]&#xA;      ,[Type_of_residence]&#xA;      ,[House_Ownership]&#xA;      ,[Total_Mth_Family_Household_Income]&#xA;      ,[Place_of_Birth],&#xA;    'Y', GETDATE(),GETDATE()&#xA;   FROM&#xA;   (&#xA;   MERGE INTO STG_OASIS_HOUSEHOLD_DETAILS AS dst&#xA;   USING TMP_STG_OASIS_HOUSEHOLD_DETAILS AS src&#xA;   ON( dst.[Applicant_ID]=src.[Applicant_ID] )&#xA;    &#xA;&#xA;   WHEN NOT MATCHED THEN&#xA;   INSERT&#xA;   ([Applicant_ID]&#xA;      ,[No_of_Siblings]&#xA;      ,[Household_Size]&#xA;      ,[Type_of_residence]&#xA;      ,[House_Ownership]&#xA;      ,[Total_Mth_Family_Household_Income]&#xA;      ,[Place_of_Birth]&#xA;      ,[Latest_Ind]&#xA;      ,[Created_On]&#xA;      ,[Modified_On])&#xA;   VALUES(&#xA;   &#xA;src.[Applicant_ID]&#xA;,src.[No_of_Siblings]&#xA;,src.[Household_Size]&#xA;,src.[Type_of_residence]&#xA;,src.[House_Ownership]&#xA;,src.[Total_Mth_Family_Household_Income]&#xA;,src.[Place_of_Birth]&#xA; ,'Y', GETDATE(),GETDATE())&#xA;   WHEN MATCHED&#xA;   AND dst.Latest_Ind='Y'&#xA;   and( src.[No_of_Siblings]&lt;&gt;dst.[No_of_Siblings]&#xA;      OR src.[Household_Size] &lt;&gt; dst.[Household_Size]&#xA;      OR src.[Type_of_residence]&lt;&gt;dst.[Type_of_residence]&#xA;      OR src.[House_Ownership]&lt;&gt;dst.[House_Ownership]&#xA;      OR src.[Total_Mth_Family_Household_Income]&lt;&gt;dst.[Total_Mth_Family_Household_Income]&#xA;      OR src.[Place_of_Birth]&lt;&gt;dst.[Place_of_Birth]&#xA;     )&#xA;   THEN UPDATE&#xA;   SET DST.Latest_Ind = 'N', Modified_On=GETDATE()&#xA;OUTPUT src.[Applicant_ID]&#xA;,src.[No_of_Siblings]&#xA;,src.[Household_Size]&#xA;,src.[Type_of_residence]&#xA;,src.[House_Ownership]&#xA;,src.[Total_Mth_Family_Household_Income]&#xA;,src.[Place_of_Birth],  $Action AS MergeAction&#xA;) AS MRG&#xA;WHERE MRG.MergeAction = 'UPDATE'&#xA;;&#xA;--------------------------------------&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;INSERT INTO  &quot;+@[$Project::DW_Initial_Catalog]+&quot;..ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,@processeddatetime  as created_on&#xA;  &#xA;  &#xA;END CATCH  &#xA;GO&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="InsertQuery">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+------------
+DECLARE @LastDWProcessdate datetime
+,@processeddatetime datetime
+,@jobstatusid varchar(5)
+select @jobstatusid=0
+----------------------------------------------------------
+INSERT INTO 
+STG_OASIS_HOUSEHOLD_DETAILS
+([Applicant_ID]
+      ,[No_of_Siblings]
+      ,[Household_Size]
+      ,[Type_of_residence]
+      ,[House_Ownership]
+      ,[Total_Mth_Family_Household_Income]
+      ,[Place_of_Birth]
+      ,[Latest_Ind]
+      ,[Created_On]
+      ,[Modified_On])
+SELECT [Applicant_ID]
+      ,[No_of_Siblings]
+      ,[Household_Size]
+      ,[Type_of_residence]
+      ,[House_Ownership]
+      ,[Total_Mth_Family_Household_Income]
+      ,[Place_of_Birth],
+    'Y', GETDATE(),GETDATE()
+   FROM
+   (
+   MERGE INTO STG_OASIS_HOUSEHOLD_DETAILS AS dst
+   USING TMP_STG_OASIS_HOUSEHOLD_DETAILS AS src
+   ON( dst.[Applicant_ID]=src.[Applicant_ID] )
+    
+
+   WHEN NOT MATCHED THEN
+   INSERT
+   ([Applicant_ID]
+      ,[No_of_Siblings]
+      ,[Household_Size]
+      ,[Type_of_residence]
+      ,[House_Ownership]
+      ,[Total_Mth_Family_Household_Income]
+      ,[Place_of_Birth]
+      ,[Latest_Ind]
+      ,[Created_On]
+      ,[Modified_On])
+   VALUES(
+   
+src.[Applicant_ID]
+,src.[No_of_Siblings]
+,src.[Household_Size]
+,src.[Type_of_residence]
+,src.[House_Ownership]
+,src.[Total_Mth_Family_Household_Income]
+,src.[Place_of_Birth]
+ ,'Y', GETDATE(),GETDATE())
+   WHEN MATCHED
+   AND dst.Latest_Ind='Y'
+   and( src.[No_of_Siblings]&lt;&gt;dst.[No_of_Siblings]
+      OR src.[Household_Size] &lt;&gt; dst.[Household_Size]
+      OR src.[Type_of_residence]&lt;&gt;dst.[Type_of_residence]
+      OR src.[House_Ownership]&lt;&gt;dst.[House_Ownership]
+      OR src.[Total_Mth_Family_Household_Income]&lt;&gt;dst.[Total_Mth_Family_Household_Income]
+      OR src.[Place_of_Birth]&lt;&gt;dst.[Place_of_Birth]
+     )
+   THEN UPDATE
+   SET DST.Latest_Ind = 'N', Modified_On=GETDATE()
+OUTPUT src.[Applicant_ID]
+,src.[No_of_Siblings]
+,src.[Household_Size]
+,src.[Type_of_residence]
+,src.[House_Ownership]
+,src.[Total_Mth_Family_Household_Income]
+,src.[Place_of_Birth],  $Action AS MergeAction
+) AS MRG
+WHERE MRG.MergeAction = 'UPDATE'
+;
+--------------------------------------
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+  ROLLBACK TRANSACTION
+INSERT INTO  RPDW..ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,@processeddatetime  as created_on
+  
+  
+END CATCH  
+GO</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F0B0C8EF-484C-4572-87F4-7CB06BC72915}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JobStatusId">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{575B4DC9-0A2B-44D5-9AE7-ACB94290643E}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="MndColumncheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1F018F6B-C81C-47A0-B369-CF0F1419C709}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="PrevJobStatus">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E5F5E32C-A01B-40EC-93F6-524433A50589}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;&#xA;declare @MandColValidation int,&#xA;@NoDuplicates int,&#xA;@Job_Status_ID int&#xA;SELECT  @NoDuplicates=?&#xA;SELECT @MandColValidation=?&#xA;SELECT @Job_Status_ID=?&#xA; &#xA;if(@NoDuplicates&lt;&gt;0 or @MandColValidation&lt;&gt;0)&#xA;&#xA;begin &#xA;insert into [dbo].[ETL_ERROR_LOG](JOB_STATUS_ID,ERROR_RECORD,created_on) &#xA;&#xA;SELECT  @Job_Status_ID JOB_STATUS_ID, 'Applicant_ID='+[Applicant_ID]+'&#xA;is duplicate primary key in source file' as ErrorColValues,GETDATE() AS CREATED_ON&#xA;FROM &quot;+ @[$Project::PreStaging_Initial_Catalog] +&quot;.[dbo].[PSTG_OASIS_HOUSEHOLD_DETAILS]&#xA;GROUP&#xA;BY   [Applicant_ID]&#xA;having count(1)&gt;1&#xA;union all&#xA;SELECT  @Job_Status_ID JOB_STATUS_ID, 'Applicant_ID='+[Applicant_ID]+' &#xA;is Mandatory key Violation' as ErrorColValues,GETDATE() AS CREATED_ON&#xA;FROM &quot;+ @[$Project::PreStaging_Initial_Catalog] +&quot;.[dbo].[PSTG_OASIS_HOUSEHOLD_DETAILS]&#xA;where  ( [Applicant_ID]=''  or [Applicant_ID] IS NULL&#xA;  &#xA;&#x9; &#xA; )&#xA;GROUP BY   [Applicant_ID]&#xA;END&#xA;else&#xA;select 'Unknown Error','Check the file and rerun the package'&#xA;&#xA;&#xA;IF @NoDuplicates&lt;&gt;0&#xA;&#xA;UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET [JOB_STATUS]='Fail',&#xA;[ERROR_MSG]='Duplicate primary key found in PSTG table'&#xA;WHERE JOB_STATUS_ID=@Job_Status_ID&#xA;&#xA;ELSE IF @MandColValidation&lt;&gt;0&#xA;UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET [JOB_STATUS]='Fail',&#xA;[ERROR_MSG]='Mandatory Column constraint failed in PSTG table'&#xA;WHERE JOB_STATUS_ID=@Job_Status_ID&#xA;&#xA;ELSE&#xA;&#xA;UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET [JOB_STATUS]='Fail',&#xA;[ERROR_MSG]='Please refer the Error Table for details'&#xA;WHERE JOB_STATUS_ID=@Job_Status_ID&#xA;&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="QryErrorLog">
+      <DTS:VariableValue
+        DTS:DataType="8">
+declare @MandColValidation int,
+@NoDuplicates int,
+@Job_Status_ID int
+SELECT  @NoDuplicates=?
+SELECT @MandColValidation=?
+SELECT @Job_Status_ID=?
+ 
+if(@NoDuplicates&lt;&gt;0 or @MandColValidation&lt;&gt;0)
+
+begin 
+insert into [dbo].[ETL_ERROR_LOG](JOB_STATUS_ID,ERROR_RECORD,created_on) 
+
+SELECT  @Job_Status_ID JOB_STATUS_ID, 'Applicant_ID='+[Applicant_ID]+'
+is duplicate primary key in source file' as ErrorColValues,GETDATE() AS CREATED_ON
+FROM RPDW_PSTG.[dbo].[PSTG_OASIS_HOUSEHOLD_DETAILS]
+GROUP
+BY   [Applicant_ID]
+having count(1)&gt;1
+union all
+SELECT  @Job_Status_ID JOB_STATUS_ID, 'Applicant_ID='+[Applicant_ID]+' 
+is Mandatory key Violation' as ErrorColValues,GETDATE() AS CREATED_ON
+FROM RPDW_PSTG.[dbo].[PSTG_OASIS_HOUSEHOLD_DETAILS]
+where  ( [Applicant_ID]=''  or [Applicant_ID] IS NULL
+  
+	 
+ )
+GROUP BY   [Applicant_ID]
+END
+else
+select 'Unknown Error','Check the file and rerun the package'
+
+
+IF @NoDuplicates&lt;&gt;0
+
+UPDATE [dbo].[ETL_JOB_STATUS]
+SET [JOB_STATUS]='Fail',
+[ERROR_MSG]='Duplicate primary key found in PSTG table'
+WHERE JOB_STATUS_ID=@Job_Status_ID
+
+ELSE IF @MandColValidation&lt;&gt;0
+UPDATE [dbo].[ETL_JOB_STATUS]
+SET [JOB_STATUS]='Fail',
+[ERROR_MSG]='Mandatory Column constraint failed in PSTG table'
+WHERE JOB_STATUS_ID=@Job_Status_ID
+
+ELSE
+
+UPDATE [dbo].[ETL_JOB_STATUS]
+SET [JOB_STATUS]='Fail',
+[ERROR_MSG]='Please refer the Error Table for details'
+WHERE JOB_STATUS_ID=@Job_Status_ID
+</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2E65FA2D-483C-41BA-AEC3-4CDE803BC373}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprimarykeycheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F7A9A68B-0991-4E17-83F5-FC0CB6D18C95}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprocesseddate">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B391A1CF-ED65-4119-A3C2-B1D11D9A2BC7}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SrcTable">
+      <DTS:VariableValue
+        DTS:DataType="8">PSTG_OASIS_HOUSEHOLD_DETAILS</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BE4D0030-8541-42C0-AD33-EEF45467A1D8}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Stage">
+      <DTS:VariableValue
+        DTS:DataType="8">STG</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0C3785F6-1123-448B-8E96-C704FC9AB073}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTable">
+      <DTS:VariableValue
+        DTS:DataType="8">STG_OASIS_HOUSEHOLD_DETAILS</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\check previous job status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{98bde9a0-0adf-4f8b-995f-20366eb0c28f}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="check previous job status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{5d1e87c4-e4bd-492d-98df-0c443179879a}"
+          SQLTask:SqlStatementSource="&#xA;SELECT CASE WHEN [JOB_STATUS] ='SUCCESS' THEN 1 ELSE 0 END AS PrevJobStatus&#xA;FROM [DBO].[ETL_JOB_STATUS] WHERE [JOB_STATUS_ID]=&#xA;(SELECT MAX([JOB_STATUS_ID]) FROM [DBO].[ETL_JOB_STATUS]&#xA;WHERE [TARGET_TABLENAME]=?&#xA;AND [STAGE]='PSTG')&#xA;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::PrevJobStatus" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create ETL Job Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{53e0157a-99d8-417f-ad9a-0983b3e6d9e4}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create ETL Job Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{5d1e87c4-e4bd-492d-98df-0c443179879a}"
+          SQLTask:SqlStatementSource="&#xA;EXEC dbo.[usp_InsertETLJobLog]  ?,?,?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::Stage"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Error Log On Primary Key Voilation"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{6F5705AD-8495-4399-9D72-405DB48B1380}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Error Log On Primary Key Voilation"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{5d1e87c4-e4bd-492d-98df-0c443179879a}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::QryErrorLog" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::sqlprimarykeycheck"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::MndColumncheck"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Error Log On PSTG job fail"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{428a08b4-98da-454f-a251-13c1b0535a72}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Error Log On PSTG job fail"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{5d1e87c4-e4bd-492d-98df-0c443179879a}"
+          SQLTask:SqlStatementSource="update [ETL_JOB_STATUS]&#xA;set Job_Status='Fail'&#xA;,Error_Msg='&quot;Previous PSTG load is not complete&quot;'&#xA;where job_status_id=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\get Job Status Id"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{b6ad2e9e-ff84-4615-bc92-2e1ebcd076e8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="get Job Status Id"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{5d1e87c4-e4bd-492d-98df-0c443179879a}"
+          SQLTask:SqlStatementSource="declare  @JobstatusID int&#xA;&#xA;select @JobstatusID=max(job_status_id) from [ETL_JOB_STATUS]&#xA;where [TARGET_TABLENAME]=?&#xA;&#xA;&#xA;Select @JobstatusID "
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JobStatusId" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\getprocesseddate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{4F87A678-38E0-4948-8D5C-E1EBC0DD541B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="getprocesseddate"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D67BC058-2F6C-405E-A040-22AA0FF6C715}"
+          SQLTask:SqlStatementSource="SELECT GETDATE()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::sqlprocesseddate" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\insert into main table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{944F7E82-1745-49F9-87A3-2F27D3118B62}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="insert into main table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D6225CD8-4143-42DD-B201-D49739B417B3}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::InsertQuery" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load in temp table"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{43AA45C5-16D0-43F3-AC1A-4048567F94C8}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load in temp table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load in temp table\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Applicant_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="11"
+                      cachedName="Applicant_ID"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Applicant_ID]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Applicant_ID]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(Applicant_ID,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[No_of_Siblings]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="No_of_Siblings"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[No_of_Siblings]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[No_of_Siblings]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(No_of_Siblings,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Household_Size]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="Household_Size"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Household_Size]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Household_Size]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(Household_Size,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Type_of_residence]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="Type_of_residence"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Type_of_residence]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Type_of_residence]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(Type_of_residence,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[House_Ownership]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="House_Ownership"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[House_Ownership]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[House_Ownership]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(House_Ownership,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Total_Mth_Family_Household_Income]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="Total_Mth_Family_Household_Income"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Total_Mth_Family_Household_Income]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Total_Mth_Family_Household_Income]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(Total_Mth_Family_Household_Income,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input].Columns[Place_of_Birth]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="Place_of_Birth"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Place_of_Birth]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Place_of_Birth]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(Place_of_Birth,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load in temp table\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load in temp table\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load in temp table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load in temp table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load in temp table\Derived Column 1"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column 1"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load in temp table\Derived Column 1.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column 1.Inputs[Derived Column Input].Columns[No_of_Siblings]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="No_of_Siblings"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[No_of_Siblings]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\Derived Column 1.Inputs[Derived Column Input].Columns[Total_Mth_Family_Household_Income]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="Total_Mth_Family_Household_Income"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Total_Mth_Family_Household_Income]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load in temp table\Derived Column 1.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Load in temp table\Derived Column 1.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load in temp table\Derived Column 1.Outputs[Derived Column Output].Columns[Der_No_of_Siblings]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\Derived Column 1.Outputs[Derived Column Output].Columns[Der_No_of_Siblings]"
+                      name="Der_No_of_Siblings"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[No_of_Siblings]} == "" ? NULL(DT_I4) : (DT_I4)#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[No_of_Siblings]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">No_of_Siblings == "" ? NULL(DT_I4) : (DT_I4)No_of_Siblings</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load in temp table\Derived Column 1.Outputs[Derived Column Output].Columns[Der_Total_Mth_Family_Household_Income]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load in temp table\Derived Column 1.Outputs[Derived Column Output].Columns[Der_Total_Mth_Family_Household_Income]"
+                      name="Der_Total_Mth_Family_Household_Income"
+                      precision="8"
+                      scale="2"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Total_Mth_Family_Household_Income]} == "" ? NULL(DT_NUMERIC,8,2) : (DT_NUMERIC,8,2)#{Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Total_Mth_Family_Household_Income]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">Total_Mth_Family_Household_Income == "" ? NULL(DT_NUMERIC,8,2) : (DT_NUMERIC,8,2)Total_Mth_Family_Household_Income</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load in temp table\Derived Column 1.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Load in temp table\Derived Column 1.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load in temp table\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load in temp table\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load in temp table\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[TMP_STG_OASIS_HOUSEHOLD_DETAILS]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load in temp table\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[RPDW_STG]"
+                  connectionManagerRefId="Package.ConnectionManagers[RPDW_STG]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Applicant_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="11"
+                      cachedName="Applicant_ID"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Applicant_ID]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Applicant_ID]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Household_Size]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="Household_Size"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Household_Size]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Household_Size]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Type_of_residence]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="Type_of_residence"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Type_of_residence]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Type_of_residence]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[House_Ownership]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="House_Ownership"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[House_Ownership]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[House_Ownership]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Place_of_Birth]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="Place_of_Birth"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Place_of_Birth]"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Place_of_Birth]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Der_Total_Mth_Family_Household_Income]"
+                      cachedDataType="numeric"
+                      cachedName="Der_Total_Mth_Family_Household_Income"
+                      cachedPrecision="8"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Total_Mth_Family_Household_Income]"
+                      lineageId="Package\Load in temp table\Derived Column 1.Outputs[Derived Column Output].Columns[Der_Total_Mth_Family_Household_Income]" />
+                    <inputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Der_No_of_Siblings]"
+                      cachedDataType="i4"
+                      cachedName="Der_No_of_Siblings"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[No_of_Siblings]"
+                      lineageId="Package\Load in temp table\Derived Column 1.Outputs[Derived Column Output].Columns[Der_No_of_Siblings]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Applicant_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      name="Applicant_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[No_of_Siblings]"
+                      dataType="i4"
+                      name="No_of_Siblings" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Household_Size]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="Household_Size" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Type_of_residence]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="Type_of_residence" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[House_Ownership]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="House_Ownership" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Total_Mth_Family_Household_Income]"
+                      dataType="numeric"
+                      name="Total_Mth_Family_Household_Income"
+                      precision="8"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Place_of_Birth]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="Place_of_Birth" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load in temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load in temp table\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[PSTG_OASIS_HOUSEHOLD_DETAILS]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT  [Applicant_ID]
+      ,[No_of_Siblings]
+      ,[Household_Size]
+      ,[Type_of_residence]
+      ,[House_Ownership]
+      ,[Total_Mth_Family_Household_Income]
+      ,[Place_of_Birth]
+  
+
+  FROM  [dbo].[PSTG_OASIS_HOUSEHOLD_DETAILS]</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load in temp table\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[RPDW_PSTG]"
+                  connectionManagerRefId="Package.ConnectionManagers[RPDW_PSTG]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Applicant_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Applicant_ID]"
+                      length="11"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Applicant_ID]"
+                      name="Applicant_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[No_of_Siblings]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[No_of_Siblings]"
+                      length="4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[No_of_Siblings]"
+                      name="No_of_Siblings"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Household_Size]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Household_Size]"
+                      length="4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Household_Size]"
+                      name="Household_Size"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Type_of_residence]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Type_of_residence]"
+                      length="4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Type_of_residence]"
+                      name="Type_of_residence"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[House_Ownership]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[House_Ownership]"
+                      length="4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[House_Ownership]"
+                      name="House_Ownership"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Total_Mth_Family_Household_Income]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Total_Mth_Family_Household_Income]"
+                      length="30"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Total_Mth_Family_Household_Income]"
+                      name="Total_Mth_Family_Household_Income"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Place_of_Birth]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Place_of_Birth]"
+                      length="4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[Place_of_Birth]"
+                      name="Place_of_Birth"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Applicant_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      name="Applicant_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[No_of_Siblings]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="No_of_Siblings" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Household_Size]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="Household_Size" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Type_of_residence]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="Type_of_residence" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[House_Ownership]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="House_Ownership" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Total_Mth_Family_Household_Income]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="Total_Mth_Family_Household_Income" />
+                    <externalMetadataColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Place_of_Birth]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="Place_of_Birth" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Applicant_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Applicant_ID]"
+                      name="Applicant_ID" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[No_of_Siblings]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[No_of_Siblings]"
+                      name="No_of_Siblings" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Household_Size]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Household_Size]"
+                      name="Household_Size" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Type_of_residence]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Type_of_residence]"
+                      name="Type_of_residence" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[House_Ownership]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[House_Ownership]"
+                      name="House_Ownership" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Total_Mth_Family_Household_Income]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Total_Mth_Family_Household_Income]"
+                      name="Total_Mth_Family_Household_Income" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Place_of_Birth]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Place_of_Birth]"
+                      name="Place_of_Birth" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load in temp table.Paths[Derived Column Output]"
+              endId="Package\Load in temp table\Derived Column 1.Inputs[Derived Column Input]"
+              name="Derived Column Output"
+              startId="Package\Load in temp table\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load in temp table.Paths[Derived Column Output1]"
+              endId="Package\Load in temp table\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Load in temp table\Derived Column 1.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load in temp table.Paths[OLE DB Source Output]"
+              endId="Package\Load in temp table\Derived Column.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load in temp table\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PSTG Primary Key Validation"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{ADDA0D7B-D0E9-4231-B6B6-21F0009D33F2}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PSTG Primary Key Validation"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D67BC058-2F6C-405E-A040-22AA0FF6C715}"
+          SQLTask:SqlStatementSource="WITH PSTG_VALIDATION&#xA;&#xA;AS&#xA;(&#xA;SELECT  REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [Applicant_ID])),''),'NULL','') [Applicant_ID]&#xA;FROM [PSTG_OASIS_HOUSEHOLD_DETAILS])&#xA;&#xA;, PSTG_VALIDATION1 &#xA;AS&#xA;(&#xA;SELECT REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [Applicant_ID])),''),'NULL','') [Applicant_ID]&#xA;FROM  [PSTG_OASIS_HOUSEHOLD_DETAILS])&#xA;&#xA;SELECT&#xA;CASE WHEN EXISTS (SELECT  COUNT(1) COUNTOFPK, [Applicant_ID]&#xA;FROM PSTG_VALIDATION&#xA;GROUP&#xA;BY  [Applicant_ID]&#xA;HAVING COUNT(1)&gt;1)&#xA;THEN 1 &#xA;ELSE 0  &#xA;END NoDuplicates&#xA;,&#xA; CASE WHEN EXISTS(select * from  PSTG_VALIDATION1&#xA;where ([Applicant_ID]='' or [Applicant_ID] is null  ))&#xA;THEN 1 &#xA;ELSE 0&#xA;END  as MandColValidation&#xA;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="NoDuplicates"
+            SQLTask:DtsVariableName="User::sqlprimarykeycheck" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="MandColValidation"
+            SQLTask:DtsVariableName="User::MndColumncheck" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Temp Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0747972A-A097-4708-8C7D-3712F4C7F9B7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Temp Table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D6225CD8-4143-42DD-B201-D49739B417B3}"
+          SQLTask:SqlStatementSource="Truncate Table TMP_STG_OASIS_HOUSEHOLD_DETAILS " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\update ETL Job log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{03291d90-47d1-4532-b699-814eeb6f6906}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="update ETL Job log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{5d1e87c4-e4bd-492d-98df-0c443179879a}"
+          SQLTask:SqlStatementSource="&#xA;&#xA;&#xA;&#xA;DECLARE &#xA;@jobstatusid INT&#xA;SELECT @jobstatusid=?&#xA;IF EXISTS(SELECT * FROM dbo.ETL_ERROR_LOG WHERE [JOB_STATUS_ID]=@jobstatusid)&#xA;&#xA;BEGIN&#xA;UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;[JOB_STATUS]='FAIL'&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;END&#xA;&#xA;ELSE&#xA;&#xA;BEGIN&#xA;UPDATE [DBO].[ETL_JOB_STATUS]&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;[JOB_STATUS]='Success'&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;END&#xA;&#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{A5994380-BDB0-4477-8002-3F7681AFB6BD}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::PrevJobStatus]==0"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Error Log On PSTG job fail" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{1B3C1FF7-E5B8-4B0C-A51F-67DFBE8060EC}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::PrevJobStatus]==1"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\getprocesseddate" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{E01C2D71-443C-4E91-958E-C7A852C97AD7}"
+      DTS:From="Package\getprocesseddate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\PSTG Primary Key Validation" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{E58EA572-B914-4A26-A3AA-8D9B4CB0EAED}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::MndColumncheck]==0  &amp;&amp; @[User::sqlprimarykeycheck]==0"
+      DTS:From="Package\PSTG Primary Key Validation"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Load in temp table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{8E507BEA-876F-4DFB-ADB0-682D6F433B9B}"
+      DTS:From="Package\Load in temp table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\insert into main table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{F405F014-8106-4338-8FE4-BC4BEE662738}"
+      DTS:From="Package\insert into main table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Truncate Temp Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{7df565e2-b586-47d7-a4ef-fa690598d811}"
+      DTS:From="Package\Create ETL Job Log"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\get Job Status Id" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{b7871555-516a-4358-82b5-9b0a33d6b900}"
+      DTS:From="Package\get Job Status Id"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\check previous job status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
+      DTS:CreationName=""
+      DTS:DTSID="{70645957-95F4-475A-8FA6-5DDF5A91B958}"
+      DTS:From="Package\Truncate Temp Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 8"
+      DTS:To="Package\update ETL Job log" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Fail on duplicate primary key]"
+      DTS:CreationName=""
+      DTS:DTSID="{A0E38130-03A9-4114-B407-EAE2CAFA11EA}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::sqlprimarykeycheck]==1 ||  @[User::sqlprimarykeycheck]==1"
+      DTS:From="Package\PSTG Primary Key Validation"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Fail on duplicate primary key"
+      DTS:To="Package\Error Log On Primary Key Voilation" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{810EC8C8-2A03-495B-9D7D-3D4D123AFEA4}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{A95E2DF4-673C-422B-B22F-5558329CAE72}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\Error Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{b835ceae-5223-486f-b20f-c3a650c8b1b9}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Error Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{5d1e87c4-e4bd-492d-98df-0c443179879a}"
+              SQLTask:SqlStatementSource="  insert into [dbo].[ETL_ERROR_LOG]([JOB_STATUS_ID],[ERROR_RECORD],[CREATED_ON] )&#xA;  select ?,?,getdate()" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL Job Status Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{8c255ed0-2361-4f31-9520-575fdadef4ee}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL Job Status Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{5d1e87c4-e4bd-492d-98df-0c443179879a}"
+              SQLTask:SqlStatementSource="update [ETL_JOB_STATUS]&#xA;set Job_Status='Fail'&#xA;,Error_Msg=?&#xA;where job_status_id=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{d3ceee59-c491-4a67-80a5-20291bd9c73f}"
+          DTS:From="Package.EventHandlers[OnError]\ETL Job Status Log"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package.EventHandlers[OnError]\Error Log" />
+      </DTS:PrecedenceConstraints>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="198,42"
+          Id="Package\check previous job status"
+          TopLeft="390,15" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Create ETL Job Log"
+          TopLeft="0,19" />
+        <NodeLayout
+          Size="243,42"
+          Id="Package\Error Log On Primary Key Voilation"
+          TopLeft="621,265" />
+        <NodeLayout
+          Size="203,42"
+          Id="Package\Error Log On PSTG job fail"
+          TopLeft="304,135" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\get Job Status Id"
+          TopLeft="208,22" />
+        <NodeLayout
+          Size="162,42"
+          Id="Package\getprocesseddate"
+          TopLeft="711,23" />
+        <NodeLayout
+          Size="179,42"
+          Id="Package\insert into main table"
+          TopLeft="1039,249" />
+        <NodeLayout
+          Size="167,42"
+          Id="Package\Load in temp table"
+          TopLeft="1045,158" />
+        <NodeLayout
+          Size="213,42"
+          Id="Package\PSTG Primary Key Validation"
+          TopLeft="963,47" />
+        <NodeLayout
+          Size="180,42"
+          Id="Package\Truncate Temp Table"
+          TopLeft="1023,323" />
+        <NodeLayout
+          Size="169,42"
+          Id="Package\update ETL Job log"
+          TopLeft="995,398" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="489,57">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-83.5,78"
+              Start="0,0"
+              End="-83.5,70.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,35"
+                    Point2="0,39"
+                    Point3="-4,39" />
+                  <mssgle:LineSegment
+                    End="-79.5,39" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-79.5,39"
+                    Point2="-83.5,39"
+                    Point3="-83.5,43" />
+                  <mssgle:LineSegment
+                    End="-83.5,70.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-49.75,44,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="588,36">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="123,8"
+              Start="0,0"
+              End="115.5,8">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="57.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="57.5,0"
+                    Point2="61.5,0"
+                    Point3="61.5,4" />
+                  <mssgle:LineSegment
+                    End="61.5,4" />
+                  <mssgle:CubicBezierSegment
+                    Point1="61.5,4"
+                    Point2="61.5,8"
+                    Point3="65.5,8" />
+                  <mssgle:LineSegment
+                    End="115.5,8" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="53.5,9,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="873,44">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="90,24"
+              Start="0,0"
+              End="82.5,24">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="41,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="41,0"
+                    Point2="45,0"
+                    Point3="45,4" />
+                  <mssgle:LineSegment
+                    End="45,20" />
+                  <mssgle:CubicBezierSegment
+                    Point1="45,20"
+                    Point2="45,24"
+                    Point3="49,24" />
+                  <mssgle:LineSegment
+                    End="82.5,24" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="1103.66666666667,89">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="24.8333333333334,69"
+              Start="0,0"
+              End="24.8333333333334,61.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.9086672879776" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.9086672879776"
+                    Point2="0,27.9086672879776"
+                    Point3="4,27.9086672879776" />
+                  <mssgle:LineSegment
+                    End="20.8333333333334,27.9086672879776" />
+                  <mssgle:CubicBezierSegment
+                    Point1="20.8333333333334,27.9086672879776"
+                    Point2="24.8333333333334,27.9086672879776"
+                    Point3="24.8333333333334,31.9086672879776" />
+                  <mssgle:LineSegment
+                    End="24.8333333333334,61.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="4.41666666666669,32.9086672879776,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="1128.5,200">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,49"
+              Start="0,0"
+              End="0,41.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="1128.5,291">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-15.5,32"
+              Start="0,0"
+              End="-15.5,24.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12"
+                    Point2="0,16"
+                    Point3="-4,16" />
+                  <mssgle:LineSegment
+                    End="-11.5,16" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-11.5,16"
+                    Point2="-15.5,16"
+                    Point3="-15.5,20" />
+                  <mssgle:LineSegment
+                    End="-15.5,24.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="170,41.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="38,0"
+              Start="0,0"
+              End="30.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="30.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="367,39.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="23,0"
+              Start="0,0"
+              End="15.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="15.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 8]"
+          TopLeft="1113,365">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-33.5,33"
+              Start="0,0"
+              End="-33.5,25.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.5"
+                    Point2="0,16.5"
+                    Point3="-4,16.5" />
+                  <mssgle:LineSegment
+                    End="-29.5,16.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-29.5,16.5"
+                    Point2="-33.5,16.5"
+                    Point3="-33.5,20.5" />
+                  <mssgle:LineSegment
+                    End="-33.5,25.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Fail on duplicate primary key]"
+          TopLeft="1035.33333333333,89">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-292.833333333333,176"
+              Start="0,0"
+              End="-292.833333333333,168.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,67.1873252562907" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,67.1873252562907"
+                    Point2="0,71.1873252562907"
+                    Point3="-4,71.1873252562907" />
+                  <mssgle:LineSegment
+                    End="-288.833333333333,71.1873252562907" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-288.833333333333,71.1873252562907"
+                    Point2="-292.833333333333,71.1873252562907"
+                    Point3="-292.833333333333,75.1873252562907" />
+                  <mssgle:LineSegment
+                    End="-292.833333333333,168.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-219.462252604167,76.1873252562907,146.091171875,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package.EventHandlers[OnError]\Error Log"
+          TopLeft="246,158" />
+        <NodeLayout
+          Size="169,42"
+          Id="Package.EventHandlers[OnError]\ETL Job Status Log"
+          TopLeft="60,60" />
+        <EdgeLayout
+          Id="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          TopLeft="144.5,102">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="163,56"
+              Start="0,0"
+              End="163,48.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24"
+                    Point2="0,28"
+                    Point3="4,28" />
+                  <mssgle:LineSegment
+                    End="159,28" />
+                  <mssgle:CubicBezierSegment
+                    Point1="159,28"
+                    Point2="163,28"
+                    Point3="163,32" />
+                  <mssgle:LineSegment
+                    End="163,48.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\Load in temp table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Load in temp table\OLE DB Source"
+          TopLeft="79,17" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\Load in temp table\Derived Column"
+          TopLeft="362,41" />
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Load in temp table\Derived Column 1"
+          TopLeft="603,100" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Load in temp table\OLE DB Destination"
+          TopLeft="213,256" />
+        <EdgeLayout
+          Id="Package\Load in temp table.Paths[Derived Column Output1]"
+          TopLeft="684.5,142">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-386,114"
+              Start="0,0"
+              End="-386,106.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,53" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,53"
+                    Point2="0,57"
+                    Point3="-4,57" />
+                  <mssgle:LineSegment
+                    End="-382,57" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-382,57"
+                    Point2="-386,57"
+                    Point3="-386,61" />
+                  <mssgle:LineSegment
+                    End="-386,106.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load in temp table.Paths[Derived Column Output]"
+          TopLeft="516,62">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="87,59"
+              Start="0,0"
+              End="79.5,59">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="39.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="39.5,0"
+                    Point2="43.5,0"
+                    Point3="43.5,4" />
+                  <mssgle:LineSegment
+                    End="43.5,55" />
+                  <mssgle:CubicBezierSegment
+                    Point1="43.5,55"
+                    Point2="43.5,59"
+                    Point3="47.5,59" />
+                  <mssgle:LineSegment
+                    End="79.5,59" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load in temp table.Paths[OLE DB Source Output]"
+          TopLeft="229,38">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="133,24"
+              Start="0,0"
+              End="125.5,24">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="62.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="62.5,0"
+                    Point2="66.5,0"
+                    Point3="66.5,4" />
+                  <mssgle:LineSegment
+                    End="66.5,20" />
+                  <mssgle:CubicBezierSegment
+                    Point1="66.5,20"
+                    Point2="66.5,24"
+                    Point3="70.5,24" />
+                  <mssgle:LineSegment
+                    End="125.5,24" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load in temp table\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load in temp table\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PrecedenceConstraint
+    design-time-name="Package.PrecedenceConstraints[Fail on duplicate primary key]">
+    <ShowAnnotation>ConstraintName</ShowAnnotation>
+  </PrecedenceConstraint>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,69 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="3/26/2020 6:56:07 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="RP-ETL-DW-UAT"
+  DTS:CreatorName="RP\svc-dw-uat-etl"
+  DTS:DTSID="{D6526881-FD3F-4B34-97E2-AC92C5A6458C}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Update_Warning_For_Freq_1_Job"
+  DTS:PackageType="5"
+  DTS:VersionBuild="10"
+  DTS:VersionGUID="{13E8F68E-84CE-4AA4-8AAA-CFE05ED181BB}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{664247D2-B482-4D86-9AAA-839ED72902BD}"
+      DTS:ObjectName="RPDW">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=RP-DW-PROD;Initial Catalog=RPDW_PRD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Update Warning in ETL Job Status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{ED6CB9F1-484F-4B19-8907-81C0DD350F7F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Warning in ETL Job Status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{664247D2-B482-4D86-9AAA-839ED72902BD}"
+          SQLTask:SqlStatementSource="WAITFOR DELAY '00:01:10'&#xA;&#xA;update ETL_JOB_STATUS&#xA;set JOB_STATUS='Warning'&#xA;where JOB_STATUS='Fail' &#xA;and (ERROR_MSG like'%Input file missing%' or ERROR_MSG like '%PSTG table is not%' &#xA;or ERROR_MSG like '%STG table is not%' or ERROR_MSG like'%Previous%' or ERROR_MSG like'%Last Job not completed sucessfully%'&#xA;or ERROR_MSG like'%DW table is not completed%')&#xA;and TARGET_TABLENAME in ('DW_STUDENT_ASSESSMENT_RESULTS',&#xA;'DW_STUDENT_ASSESSMT_RESLT_TRANS',&#xA;'PSTG_OASIS_GRADES','STG_OASIS_GRADES','PSTG_OASIS_STUDENT_FROZEN_ENROLMT','STG_OASIS_STUDENT_FROZEN_ENROLMT'&#xA;,'DW_STUDENT_FROZEN_ENROLMENT','PSTG_OASIS_CEREMONY_REGISTRTN_SETUP','PSTG_OASIS_CEREMONY_REGISTRTN'&#xA;,'PSTG_OASIS_DIPLOMA_COLLECTION','STG_OASIS_CEREMONY_REGISTRTN','STG_OASIS_CEREMONY_REGISTRTN_SETUP'&#xA;,'STG_OASIS_DIPLOMA_COLLECTION','DW_CEREMONY_REGISTRATN_SETUP','DW_GRADUATION'&#xA;)&#xA;and convert(varchar(8),CREATED_ON,112)=CONVERT(varchar(8),getdate(),112)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="240,42"
+          Id="Package\Update Warning in ETL Job Status"
+          TopLeft="312,85" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

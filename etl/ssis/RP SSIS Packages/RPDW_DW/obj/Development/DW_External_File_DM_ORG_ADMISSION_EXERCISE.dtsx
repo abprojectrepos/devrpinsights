@@ -1,0 +1,1106 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/31/2019 4:40:18 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-140119GM07"
+  DTS:CreatorName="NCS\P0500450"
+  DTS:DTSID="{EA335C9C-10C4-419D-A5B3-E22E85FEC510}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="DW_External_File_DM_ORG_ADMISSION_EXERCISE"
+  DTS:PackageType="5"
+  DTS:VersionBuild="161"
+  DTS:VersionGUID="{99C004EB-4240-44F3-8074-F913BF4B2078}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{4C4E75BC-DB11-4A9B-9928-A16CB873B86A}"
+      DTS:ObjectName="RPDW_DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT;Provider=SQLNCLI11.1;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAjmfcLoftrkO4CNyVi2x+sAAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABO5BA1+JGv7Q16+3tMuKMtAAAAAASAAACgAAAAEAAAAIjONcQV+5qaKGMfej/uKEMYAAAACg/sK0NG9sKg/+FHduD78hEFmAy3pcc6FAAAABn3wGEIJO3K4X1qaVFTf3LnNN2/</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_STG]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{E86C3E98-087A-4F65-A860-F716E873EDD9}"
+      DTS:ObjectName="RPDW_STG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::Staging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT_STG;Provider=SQLNCLI11.1;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAjmfcLoftrkO4CNyVi2x+sAAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABhLcV4pIYLEy2PFqm4lljrAAAAAASAAACgAAAAEAAAAEbI2+/k5djWsIUvKp5FSvkYAAAAnZKZTP6JMeSi+zbNklJNfWpVi0Z69fG8FAAAAPcQiEsWgyOfD0K1KFqpsvzp4GXH</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{12B2ECF2-F785-45A4-819B-8F322CBF923A}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;------------&#xA;DECLARE @LastDWProcessdate datetime&#xA;,@processeddatetime datetime&#xA;,@jobstatusid varchar(5)&#xA;select @jobstatusid=&quot;+ (DT_STR, 5,1252) @[User::JobStatusId] +&quot;&#xA;select @LastDWProcessdate=isnull(max(Modified_on),'1900-01-01 00:00:00.000') from [dbo].[DW_EXT_DPAEAE_JAE]&#xA;select  @processeddatetime= getdate()&#xA;&#xA;;WITH TMP_EXT_DPAEAE_JAE2&#xA;AS&#xA;(&#xA;SELECT [UIN]&#xA;      ,[STATUTORY_NM]&#xA;      ,[POSTED_COURSE_CD]&#xA;      ,[JAE_SUBJECT_CD_1]&#xA;      ,[JAE_GRADE_1]&#xA;      ,[BETTER_GRADE _1]&#xA;      ,[JAE_SUBJECT_CD_2]&#xA;      ,[JAE_GRADE_2]&#xA;      ,[BETTER_GRADE_2]&#xA;      ,[JAE_SUBJECT_CD_3]&#xA;      ,[JAE_GRADE_3]&#xA;      ,[BETTER_GRADE _3]&#xA;      ,[JAE_SUBJECT_CD_4]&#xA;      ,[JAE_GRADE_4]&#xA;      ,[BETTER_GRADE _4]&#xA;      ,[JAE_SUBJECT_CD_5]&#xA;      ,[JAE_GRADE_5]&#xA;      ,[BETTER_GRADE _5]&#xA;      ,[JAE_SUBJECT_CD_6]&#xA;      ,[JAE_GRADE_6]&#xA;      ,[BETTER_GRADE_6]&#xA;      ,[JAE_SUBJECT_CD_7]&#xA;      ,[JAE_GRADE_7]&#xA;      ,[BETTER_GRADE_7]&#xA;      ,[JAE_SUBJECT_CD_8]&#xA;      ,[JAE_GRADE_8]&#xA;      ,[BETTER_GRADE_8]&#xA;      ,[JAE_SUBJECT_CD_9]&#xA;      ,[JAE_GRADE_9]&#xA;      ,[BETTER_GRADE_9]&#xA;      ,[JAE_SUBJECT_CD_10]&#xA;      ,[JAE_GRADE_10]&#xA;      ,[BETTER_GRADE_10]&#xA;      ,[JAE_SUBJECT_CD_11]&#xA;      ,[JAE_GRADE_11]&#xA;      ,[BETTER_GRADE_11]&#xA;      ,[JAE_SUBJECT_CD_12]&#xA;      ,[JAE_GRADE_12]&#xA;      ,[BETTER_GRADE_12]&#xA;      ,[ECA_GRADE]&#xA;      ,[YR_FIRST_SITTING]&#xA;      ,[YR_SECOND_SITTING]&#xA;      ,[RAW_AGGREGATE]&#xA;      ,[NET_AGGREGATE]&#xA;      ,[DPA_IND]&#xA;      ,[COMBINED_SITTING]&#xA;      ,[CREATED_ON]&#xA;      ,[MODIFIED_ON]&#xA;      ,[AY_YEAR]&#xA;      ,[AY_SEM]&#xA;   FROM &quot;+@[$Project::Staging_Initial_Catalog]+&quot;.[dbo].[STG_EXT_DPAEAE_JAE2]&#xA;   where [Latest_Ind] ='Y' &#xA;AND [MODIFIED_ON]&gt;@LastDWProcessdate&#xA;)&#xA;&#xA;&#xA;MERGE INTO [DW_EXT_DPAEAE_JAE] AS dst&#xA;   USING TMP_EXT_DPAEAE_JAE2 AS src&#xA;  ON (&#xA;  SRC. [AY_SEM] = DST.[AY_SEM] AND   &#xA;  SRC. [AY_YEAR] = DST.[AY_YEAR] AND   &#xA;  SRC. [UIN] = DST.[UIN]&#xA;     )&#xA;&#xA;   WHEN NOT MATCHED THEN&#xA;   INSERT&#xA;&#x9;(&#xA;&#x9;   [UIN]&#xA;      ,[STATUTORY_NM]&#xA;      ,[POSTED_COURSE_CD]&#xA;      ,[JAE_SUBJECT_CD_1]&#xA;      ,[JAE_GRADE_1]&#xA;      ,[BETTER_GRADE _1]&#xA;      ,[JAE_SUBJECT_CD_2]&#xA;      ,[JAE_GRADE_2]&#xA;      ,[BETTER_GRADE_2]&#xA;      ,[JAE_SUBJECT_CD_3]&#xA;      ,[JAE_GRADE_3]&#xA;      ,[BETTER_GRADE _3]&#xA;      ,[JAE_SUBJECT_CD_4]&#xA;      ,[JAE_GRADE_4]&#xA;      ,[BETTER_GRADE _4]&#xA;      ,[JAE_SUBJECT_CD_5]&#xA;      ,[JAE_GRADE_5]&#xA;      ,[BETTER_GRADE _5]&#xA;      ,[JAE_SUBJECT_CD_6]&#xA;      ,[JAE_GRADE_6]&#xA;      ,[BETTER_GRADE_6]&#xA;      ,[JAE_SUBJECT_CD_7]&#xA;      ,[JAE_GRADE_7]&#xA;      ,[BETTER_GRADE_7]&#xA;      ,[JAE_SUBJECT_CD_8]&#xA;      ,[JAE_GRADE_8]&#xA;      ,[BETTER_GRADE_8]&#xA;      ,[JAE_SUBJECT_CD_9]&#xA;      ,[JAE_GRADE_9]&#xA;      ,[BETTER_GRADE_9]&#xA;      ,[JAE_SUBJECT_CD_10]&#xA;      ,[JAE_GRADE_10]&#xA;      ,[BETTER_GRADE_10]&#xA;      ,[JAE_SUBJECT_CD_11]&#xA;      ,[JAE_GRADE_11]&#xA;      ,[BETTER_GRADE_11]&#xA;      ,[JAE_SUBJECT_CD_12]&#xA;      ,[JAE_GRADE_12]&#xA;      ,[BETTER_GRADE_12]&#xA;      ,[ECA_GRADE]&#xA;      ,[YR_FIRST_SITTING]&#xA;      ,[YR_SECOND_SITTING]&#xA;      ,[RAW_AGGREGATE]&#xA;      ,[NET_AGGREGATE]&#xA;      ,[DPA_IND]&#xA;      ,[COMBINED_SITTING]&#xA;      ,[CREATED_ON]&#xA;      ,[MODIFIED_ON]&#xA;      ,[AY_YEAR]&#xA;      ,[AY_SEM]&#xA;&#x9;  )&#xA;VALUES&#xA;&#x9;(  &#xA;       SRC.[UIN]&#xA;      ,SRC.[STATUTORY_NM]&#xA;      ,SRC.[POSTED_COURSE_CD]&#xA;      ,SRC.[JAE_SUBJECT_CD_1]&#xA;      ,SRC.[JAE_GRADE_1]&#xA;      ,SRC.[BETTER_GRADE _1]&#xA;      ,SRC.[JAE_SUBJECT_CD_2]&#xA;      ,SRC.[JAE_GRADE_2]&#xA;      ,SRC.[BETTER_GRADE_2]&#xA;      ,SRC.[JAE_SUBJECT_CD_3]&#xA;      ,SRC.[JAE_GRADE_3]&#xA;      ,SRC.[BETTER_GRADE _3]&#xA;      ,SRC.[JAE_SUBJECT_CD_4]&#xA;      ,SRC.[JAE_GRADE_4]&#xA;      ,SRC.[BETTER_GRADE _4]&#xA;      ,SRC.[JAE_SUBJECT_CD_5]&#xA;      ,SRC.[JAE_GRADE_5]&#xA;      ,SRC.[BETTER_GRADE _5]&#xA;      ,SRC.[JAE_SUBJECT_CD_6]&#xA;      ,SRC.[JAE_GRADE_6]&#xA;      ,SRC.[BETTER_GRADE_6]&#xA;      ,SRC.[JAE_SUBJECT_CD_7]&#xA;      ,SRC.[JAE_GRADE_7]&#xA;      ,SRC.[BETTER_GRADE_7]&#xA;      ,SRC.[JAE_SUBJECT_CD_8]&#xA;      ,SRC.[JAE_GRADE_8]&#xA;      ,SRC.[BETTER_GRADE_8]&#xA;      ,SRC.[JAE_SUBJECT_CD_9]&#xA;      ,SRC.[JAE_GRADE_9]&#xA;      ,SRC.[BETTER_GRADE_9]&#xA;      ,SRC.[JAE_SUBJECT_CD_10]&#xA;      ,SRC.[JAE_GRADE_10]&#xA;      ,SRC.[BETTER_GRADE_10]&#xA;      ,SRC.[JAE_SUBJECT_CD_11]&#xA;      ,SRC.[JAE_GRADE_11]&#xA;      ,SRC.[BETTER_GRADE_11]&#xA;      ,SRC.[JAE_SUBJECT_CD_12]&#xA;      ,SRC.[JAE_GRADE_12]&#xA;      ,SRC.[BETTER_GRADE_12]&#xA;      ,SRC.[ECA_GRADE]&#xA;      ,SRC.[YR_FIRST_SITTING]&#xA;      ,SRC.[YR_SECOND_SITTING]&#xA;      ,SRC.[RAW_AGGREGATE]&#xA;      ,SRC.[NET_AGGREGATE]&#xA;      ,SRC.[DPA_IND]&#xA;      ,SRC.[COMBINED_SITTING]&#xA;      ,SRC.[CREATED_ON]&#xA;      ,SRC.[MODIFIED_ON]&#xA;      ,SRC.[AY_YEAR]&#xA;      ,SRC.[AY_SEM]&#xA;&#x9;)&#xA;   WHEN MATCHED&#xA;   &#xA;   THEN UPDATE&#xA;   SET &#x9; &#xA;   DST.[AY_SEM] =  ISNULL(SRC.[AY_SEM],'')  ,  &#xA;   DST.[AY_YEAR] =  ISNULL(SRC.[AY_YEAR],'')  ,  &#xA;   DST.[BETTER_GRADE _1] =  ISNULL(SRC.[BETTER_GRADE _1],'')  ,  &#xA;   DST.[BETTER_GRADE _3] =  ISNULL(SRC.[BETTER_GRADE _3],'')  ,  &#xA;   DST.[BETTER_GRADE _4] =  ISNULL(SRC.[BETTER_GRADE _4],'')  ,  &#xA;   DST.[BETTER_GRADE _5] =  ISNULL(SRC.[BETTER_GRADE _5],'')  ,  &#xA;   DST.[BETTER_GRADE_10] =  ISNULL(SRC.[BETTER_GRADE_10],'')  ,  &#xA;   DST.[BETTER_GRADE_11] =  ISNULL(SRC.[BETTER_GRADE_11],'')  ,  &#xA;   DST.[BETTER_GRADE_12] =  ISNULL(SRC.[BETTER_GRADE_12],'')  ,  &#xA;   DST.[BETTER_GRADE_2] =  ISNULL(SRC.[BETTER_GRADE_2],'')  ,  &#xA;   DST.[BETTER_GRADE_6] =  ISNULL(SRC.[BETTER_GRADE_6],'')  ,  &#xA;   DST.[BETTER_GRADE_7] =  ISNULL(SRC.[BETTER_GRADE_7],'')  ,  &#xA;   DST.[BETTER_GRADE_8] =  ISNULL(SRC.[BETTER_GRADE_8],'')  ,  &#xA;   DST.[BETTER_GRADE_9] =  ISNULL(SRC.[BETTER_GRADE_9],'')  ,  &#xA;   DST.[COMBINED_SITTING] =  ISNULL(SRC.[COMBINED_SITTING],'')  ,  &#xA;   DST.[CREATED_ON] =  ISNULL(SRC.[CREATED_ON],'')  ,  &#xA;   DST.[DPA_IND] =  ISNULL(SRC.[DPA_IND],'')  ,  &#xA;   DST.[ECA_GRADE] =  ISNULL(SRC.[ECA_GRADE],'')  ,  &#xA;   DST.[JAE_GRADE_1] =  ISNULL(SRC.[JAE_GRADE_1],'')  ,  &#xA;   DST.[JAE_GRADE_10] =  ISNULL(SRC.[JAE_GRADE_10],'')  ,  &#xA;   DST.[JAE_GRADE_11] =  ISNULL(SRC.[JAE_GRADE_11],'')  ,  &#xA;   DST.[JAE_GRADE_12] =  ISNULL(SRC.[JAE_GRADE_12],'')  ,  &#xA;   DST.[JAE_GRADE_2] =  ISNULL(SRC.[JAE_GRADE_2],'')  ,  &#xA;   DST.[JAE_GRADE_3] =  ISNULL(SRC.[JAE_GRADE_3],'')  ,  &#xA;   DST.[JAE_GRADE_4] =  ISNULL(SRC.[JAE_GRADE_4],'')  ,  &#xA;   DST.[JAE_GRADE_5] =  ISNULL(SRC.[JAE_GRADE_5],'')  ,  &#xA;   DST.[JAE_GRADE_6] =  ISNULL(SRC.[JAE_GRADE_6],'')  ,  &#xA;   DST.[JAE_GRADE_7] =  ISNULL(SRC.[JAE_GRADE_7],'')  ,  &#xA;   DST.[JAE_GRADE_8] =  ISNULL(SRC.[JAE_GRADE_8],'')  ,  &#xA;   DST.[JAE_GRADE_9] =  ISNULL(SRC.[JAE_GRADE_9],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_1] =  ISNULL(SRC.[JAE_SUBJECT_CD_1],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_10] =  ISNULL(SRC.[JAE_SUBJECT_CD_10],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_11] =  ISNULL(SRC.[JAE_SUBJECT_CD_11],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_12] =  ISNULL(SRC.[JAE_SUBJECT_CD_12],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_2] =  ISNULL(SRC.[JAE_SUBJECT_CD_2],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_3] =  ISNULL(SRC.[JAE_SUBJECT_CD_3],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_4] =  ISNULL(SRC.[JAE_SUBJECT_CD_4],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_5] =  ISNULL(SRC.[JAE_SUBJECT_CD_5],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_6] =  ISNULL(SRC.[JAE_SUBJECT_CD_6],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_7] =  ISNULL(SRC.[JAE_SUBJECT_CD_7],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_8] =  ISNULL(SRC.[JAE_SUBJECT_CD_8],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_9] =  ISNULL(SRC.[JAE_SUBJECT_CD_9],'')  ,  &#xA;   DST.[MODIFIED_ON] =  ISNULL(SRC.[MODIFIED_ON],'')  ,  &#xA;   DST.[NET_AGGREGATE] =  ISNULL(SRC.[NET_AGGREGATE],'')  ,  &#xA;   DST.[POSTED_COURSE_CD] =  ISNULL(SRC.[POSTED_COURSE_CD],'')  , &#xA;   DST.[RAW_AGGREGATE] =  ISNULL(SRC.[RAW_AGGREGATE],'')  ,  &#xA;   DST.[STATUTORY_NM] =  ISNULL(SRC.[STATUTORY_NM],'')  ,  &#xA;   DST.[UIN] =  ISNULL(SRC.[UIN],'')  , &#xA;   DST.[YR_FIRST_SITTING] =  ISNULL(SRC.[YR_FIRST_SITTING],'')  ,  &#xA;   DST.[YR_SECOND_SITTING] =  ISNULL(SRC.[YR_SECOND_SITTING],'') ; &#xA;&#x9;&#xA;&#xA;--------------------------------------&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,@processeddatetime  as created_on&#xA;  &#xA;  &#xA;END CATCH  &#xA;GO&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="InsertQuery">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+------------
+DECLARE @LastDWProcessdate datetime
+,@processeddatetime datetime
+,@jobstatusid varchar(5)
+select @jobstatusid=0
+select @LastDWProcessdate=isnull(max(Modified_on),'1900-01-01 00:00:00.000') from [dbo].[DW_EXT_DPAEAE_JAE]
+select  @processeddatetime= getdate()
+
+;WITH TMP_EXT_DPAEAE_JAE2
+AS
+(
+SELECT [UIN]
+      ,[STATUTORY_NM]
+      ,[POSTED_COURSE_CD]
+      ,[JAE_SUBJECT_CD_1]
+      ,[JAE_GRADE_1]
+      ,[BETTER_GRADE _1]
+      ,[JAE_SUBJECT_CD_2]
+      ,[JAE_GRADE_2]
+      ,[BETTER_GRADE_2]
+      ,[JAE_SUBJECT_CD_3]
+      ,[JAE_GRADE_3]
+      ,[BETTER_GRADE _3]
+      ,[JAE_SUBJECT_CD_4]
+      ,[JAE_GRADE_4]
+      ,[BETTER_GRADE _4]
+      ,[JAE_SUBJECT_CD_5]
+      ,[JAE_GRADE_5]
+      ,[BETTER_GRADE _5]
+      ,[JAE_SUBJECT_CD_6]
+      ,[JAE_GRADE_6]
+      ,[BETTER_GRADE_6]
+      ,[JAE_SUBJECT_CD_7]
+      ,[JAE_GRADE_7]
+      ,[BETTER_GRADE_7]
+      ,[JAE_SUBJECT_CD_8]
+      ,[JAE_GRADE_8]
+      ,[BETTER_GRADE_8]
+      ,[JAE_SUBJECT_CD_9]
+      ,[JAE_GRADE_9]
+      ,[BETTER_GRADE_9]
+      ,[JAE_SUBJECT_CD_10]
+      ,[JAE_GRADE_10]
+      ,[BETTER_GRADE_10]
+      ,[JAE_SUBJECT_CD_11]
+      ,[JAE_GRADE_11]
+      ,[BETTER_GRADE_11]
+      ,[JAE_SUBJECT_CD_12]
+      ,[JAE_GRADE_12]
+      ,[BETTER_GRADE_12]
+      ,[ECA_GRADE]
+      ,[YR_FIRST_SITTING]
+      ,[YR_SECOND_SITTING]
+      ,[RAW_AGGREGATE]
+      ,[NET_AGGREGATE]
+      ,[DPA_IND]
+      ,[COMBINED_SITTING]
+      ,[CREATED_ON]
+      ,[MODIFIED_ON]
+      ,[AY_YEAR]
+      ,[AY_SEM]
+   FROM RPDW_PRD_STG.[dbo].[STG_EXT_DPAEAE_JAE2]
+   where [Latest_Ind] ='Y' 
+AND [MODIFIED_ON]&gt;@LastDWProcessdate
+)
+
+
+MERGE INTO [DW_EXT_DPAEAE_JAE] AS dst
+   USING TMP_EXT_DPAEAE_JAE2 AS src
+  ON (
+  SRC. [AY_SEM] = DST.[AY_SEM] AND   
+  SRC. [AY_YEAR] = DST.[AY_YEAR] AND   
+  SRC. [UIN] = DST.[UIN]
+     )
+
+   WHEN NOT MATCHED THEN
+   INSERT
+	(
+	   [UIN]
+      ,[STATUTORY_NM]
+      ,[POSTED_COURSE_CD]
+      ,[JAE_SUBJECT_CD_1]
+      ,[JAE_GRADE_1]
+      ,[BETTER_GRADE _1]
+      ,[JAE_SUBJECT_CD_2]
+      ,[JAE_GRADE_2]
+      ,[BETTER_GRADE_2]
+      ,[JAE_SUBJECT_CD_3]
+      ,[JAE_GRADE_3]
+      ,[BETTER_GRADE _3]
+      ,[JAE_SUBJECT_CD_4]
+      ,[JAE_GRADE_4]
+      ,[BETTER_GRADE _4]
+      ,[JAE_SUBJECT_CD_5]
+      ,[JAE_GRADE_5]
+      ,[BETTER_GRADE _5]
+      ,[JAE_SUBJECT_CD_6]
+      ,[JAE_GRADE_6]
+      ,[BETTER_GRADE_6]
+      ,[JAE_SUBJECT_CD_7]
+      ,[JAE_GRADE_7]
+      ,[BETTER_GRADE_7]
+      ,[JAE_SUBJECT_CD_8]
+      ,[JAE_GRADE_8]
+      ,[BETTER_GRADE_8]
+      ,[JAE_SUBJECT_CD_9]
+      ,[JAE_GRADE_9]
+      ,[BETTER_GRADE_9]
+      ,[JAE_SUBJECT_CD_10]
+      ,[JAE_GRADE_10]
+      ,[BETTER_GRADE_10]
+      ,[JAE_SUBJECT_CD_11]
+      ,[JAE_GRADE_11]
+      ,[BETTER_GRADE_11]
+      ,[JAE_SUBJECT_CD_12]
+      ,[JAE_GRADE_12]
+      ,[BETTER_GRADE_12]
+      ,[ECA_GRADE]
+      ,[YR_FIRST_SITTING]
+      ,[YR_SECOND_SITTING]
+      ,[RAW_AGGREGATE]
+      ,[NET_AGGREGATE]
+      ,[DPA_IND]
+      ,[COMBINED_SITTING]
+      ,[CREATED_ON]
+      ,[MODIFIED_ON]
+      ,[AY_YEAR]
+      ,[AY_SEM]
+	  )
+VALUES
+	(  
+       SRC.[UIN]
+      ,SRC.[STATUTORY_NM]
+      ,SRC.[POSTED_COURSE_CD]
+      ,SRC.[JAE_SUBJECT_CD_1]
+      ,SRC.[JAE_GRADE_1]
+      ,SRC.[BETTER_GRADE _1]
+      ,SRC.[JAE_SUBJECT_CD_2]
+      ,SRC.[JAE_GRADE_2]
+      ,SRC.[BETTER_GRADE_2]
+      ,SRC.[JAE_SUBJECT_CD_3]
+      ,SRC.[JAE_GRADE_3]
+      ,SRC.[BETTER_GRADE _3]
+      ,SRC.[JAE_SUBJECT_CD_4]
+      ,SRC.[JAE_GRADE_4]
+      ,SRC.[BETTER_GRADE _4]
+      ,SRC.[JAE_SUBJECT_CD_5]
+      ,SRC.[JAE_GRADE_5]
+      ,SRC.[BETTER_GRADE _5]
+      ,SRC.[JAE_SUBJECT_CD_6]
+      ,SRC.[JAE_GRADE_6]
+      ,SRC.[BETTER_GRADE_6]
+      ,SRC.[JAE_SUBJECT_CD_7]
+      ,SRC.[JAE_GRADE_7]
+      ,SRC.[BETTER_GRADE_7]
+      ,SRC.[JAE_SUBJECT_CD_8]
+      ,SRC.[JAE_GRADE_8]
+      ,SRC.[BETTER_GRADE_8]
+      ,SRC.[JAE_SUBJECT_CD_9]
+      ,SRC.[JAE_GRADE_9]
+      ,SRC.[BETTER_GRADE_9]
+      ,SRC.[JAE_SUBJECT_CD_10]
+      ,SRC.[JAE_GRADE_10]
+      ,SRC.[BETTER_GRADE_10]
+      ,SRC.[JAE_SUBJECT_CD_11]
+      ,SRC.[JAE_GRADE_11]
+      ,SRC.[BETTER_GRADE_11]
+      ,SRC.[JAE_SUBJECT_CD_12]
+      ,SRC.[JAE_GRADE_12]
+      ,SRC.[BETTER_GRADE_12]
+      ,SRC.[ECA_GRADE]
+      ,SRC.[YR_FIRST_SITTING]
+      ,SRC.[YR_SECOND_SITTING]
+      ,SRC.[RAW_AGGREGATE]
+      ,SRC.[NET_AGGREGATE]
+      ,SRC.[DPA_IND]
+      ,SRC.[COMBINED_SITTING]
+      ,SRC.[CREATED_ON]
+      ,SRC.[MODIFIED_ON]
+      ,SRC.[AY_YEAR]
+      ,SRC.[AY_SEM]
+	)
+   WHEN MATCHED
+   
+   THEN UPDATE
+   SET 	 
+   DST.[AY_SEM] =  ISNULL(SRC.[AY_SEM],'')  ,  
+   DST.[AY_YEAR] =  ISNULL(SRC.[AY_YEAR],'')  ,  
+   DST.[BETTER_GRADE _1] =  ISNULL(SRC.[BETTER_GRADE _1],'')  ,  
+   DST.[BETTER_GRADE _3] =  ISNULL(SRC.[BETTER_GRADE _3],'')  ,  
+   DST.[BETTER_GRADE _4] =  ISNULL(SRC.[BETTER_GRADE _4],'')  ,  
+   DST.[BETTER_GRADE _5] =  ISNULL(SRC.[BETTER_GRADE _5],'')  ,  
+   DST.[BETTER_GRADE_10] =  ISNULL(SRC.[BETTER_GRADE_10],'')  ,  
+   DST.[BETTER_GRADE_11] =  ISNULL(SRC.[BETTER_GRADE_11],'')  ,  
+   DST.[BETTER_GRADE_12] =  ISNULL(SRC.[BETTER_GRADE_12],'')  ,  
+   DST.[BETTER_GRADE_2] =  ISNULL(SRC.[BETTER_GRADE_2],'')  ,  
+   DST.[BETTER_GRADE_6] =  ISNULL(SRC.[BETTER_GRADE_6],'')  ,  
+   DST.[BETTER_GRADE_7] =  ISNULL(SRC.[BETTER_GRADE_7],'')  ,  
+   DST.[BETTER_GRADE_8] =  ISNULL(SRC.[BETTER_GRADE_8],'')  ,  
+   DST.[BETTER_GRADE_9] =  ISNULL(SRC.[BETTER_GRADE_9],'')  ,  
+   DST.[COMBINED_SITTING] =  ISNULL(SRC.[COMBINED_SITTING],'')  ,  
+   DST.[CREATED_ON] =  ISNULL(SRC.[CREATED_ON],'')  ,  
+   DST.[DPA_IND] =  ISNULL(SRC.[DPA_IND],'')  ,  
+   DST.[ECA_GRADE] =  ISNULL(SRC.[ECA_GRADE],'')  ,  
+   DST.[JAE_GRADE_1] =  ISNULL(SRC.[JAE_GRADE_1],'')  ,  
+   DST.[JAE_GRADE_10] =  ISNULL(SRC.[JAE_GRADE_10],'')  ,  
+   DST.[JAE_GRADE_11] =  ISNULL(SRC.[JAE_GRADE_11],'')  ,  
+   DST.[JAE_GRADE_12] =  ISNULL(SRC.[JAE_GRADE_12],'')  ,  
+   DST.[JAE_GRADE_2] =  ISNULL(SRC.[JAE_GRADE_2],'')  ,  
+   DST.[JAE_GRADE_3] =  ISNULL(SRC.[JAE_GRADE_3],'')  ,  
+   DST.[JAE_GRADE_4] =  ISNULL(SRC.[JAE_GRADE_4],'')  ,  
+   DST.[JAE_GRADE_5] =  ISNULL(SRC.[JAE_GRADE_5],'')  ,  
+   DST.[JAE_GRADE_6] =  ISNULL(SRC.[JAE_GRADE_6],'')  ,  
+   DST.[JAE_GRADE_7] =  ISNULL(SRC.[JAE_GRADE_7],'')  ,  
+   DST.[JAE_GRADE_8] =  ISNULL(SRC.[JAE_GRADE_8],'')  ,  
+   DST.[JAE_GRADE_9] =  ISNULL(SRC.[JAE_GRADE_9],'')  ,  
+   DST.[JAE_SUBJECT_CD_1] =  ISNULL(SRC.[JAE_SUBJECT_CD_1],'')  ,  
+   DST.[JAE_SUBJECT_CD_10] =  ISNULL(SRC.[JAE_SUBJECT_CD_10],'')  ,  
+   DST.[JAE_SUBJECT_CD_11] =  ISNULL(SRC.[JAE_SUBJECT_CD_11],'')  ,  
+   DST.[JAE_SUBJECT_CD_12] =  ISNULL(SRC.[JAE_SUBJECT_CD_12],'')  ,  
+   DST.[JAE_SUBJECT_CD_2] =  ISNULL(SRC.[JAE_SUBJECT_CD_2],'')  ,  
+   DST.[JAE_SUBJECT_CD_3] =  ISNULL(SRC.[JAE_SUBJECT_CD_3],'')  ,  
+   DST.[JAE_SUBJECT_CD_4] =  ISNULL(SRC.[JAE_SUBJECT_CD_4],'')  ,  
+   DST.[JAE_SUBJECT_CD_5] =  ISNULL(SRC.[JAE_SUBJECT_CD_5],'')  ,  
+   DST.[JAE_SUBJECT_CD_6] =  ISNULL(SRC.[JAE_SUBJECT_CD_6],'')  ,  
+   DST.[JAE_SUBJECT_CD_7] =  ISNULL(SRC.[JAE_SUBJECT_CD_7],'')  ,  
+   DST.[JAE_SUBJECT_CD_8] =  ISNULL(SRC.[JAE_SUBJECT_CD_8],'')  ,  
+   DST.[JAE_SUBJECT_CD_9] =  ISNULL(SRC.[JAE_SUBJECT_CD_9],'')  ,  
+   DST.[MODIFIED_ON] =  ISNULL(SRC.[MODIFIED_ON],'')  ,  
+   DST.[NET_AGGREGATE] =  ISNULL(SRC.[NET_AGGREGATE],'')  ,  
+   DST.[POSTED_COURSE_CD] =  ISNULL(SRC.[POSTED_COURSE_CD],'')  , 
+   DST.[RAW_AGGREGATE] =  ISNULL(SRC.[RAW_AGGREGATE],'')  ,  
+   DST.[STATUTORY_NM] =  ISNULL(SRC.[STATUTORY_NM],'')  ,  
+   DST.[UIN] =  ISNULL(SRC.[UIN],'')  , 
+   DST.[YR_FIRST_SITTING] =  ISNULL(SRC.[YR_FIRST_SITTING],'')  ,  
+   DST.[YR_SECOND_SITTING] =  ISNULL(SRC.[YR_SECOND_SITTING],'') ; 
+	
+
+--------------------------------------
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+  ROLLBACK TRANSACTION
+INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,@processeddatetime  as created_on
+  
+  
+END CATCH  
+GO</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{EA691853-50AA-42AD-A6B7-1A47D7402047}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JobStatusId">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E46ADDF6-7BA4-4AC8-BF8A-02659B8597FA}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_Name">
+      <DTS:VariableValue
+        DTS:DataType="8">DM_ORG_ADMISSION_EXERCISE</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{90733F7F-6BDF-4E01-9A3C-7A8B84937C1D}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JOB_STATUS">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{19F84D7C-AD49-46E3-9025-AC7334D1A828}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="MndColumncheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E798DB3B-6F05-4E36-9B07-2B5726D96109}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="PrevJobStatus">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B570559D-1F55-4455-97AA-B6B698F4E5F6}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprimarykeycheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1E39C297-4C2E-4773-9F60-988B5F42DEFC}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprocesseddate">
+      <DTS:VariableValue
+        DTS:DataType="7">2/27/2019 11:28:00 AM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1CE5D82F-CD0F-4441-9610-1760B34141BF}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SrcTable">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_EXT_ADMISSION_EXE</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C63EF7CF-9ACB-42B5-BC64-AD806677F21F}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Stage">
+      <DTS:VariableValue
+        DTS:DataType="8">DW</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4EB665C0-8209-47C7-BB1B-D129B193CA07}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTable">
+      <DTS:VariableValue
+        DTS:DataType="8">DM_ORG_ADMISSION_EXERCISE</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\check previous job status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{9431C3D4-7C3D-41F4-BEA1-F4E64BEA1639}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="check previous job status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4C4E75BC-DB11-4A9B-9928-A16CB873B86A}"
+          SQLTask:SqlStatementSource="select top 1 col1 from (&#xA;select top 1 1 as col1 from DM_ORG_ADMISSION_EXERCISE &#xA;where created_on &lt; =(select max(created_on) &#xA;from DW_EXT_ADMISSION_EXE)&#xA;union &#xA;select 0 as col1) T ORDER BY COL1 DESC"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create ETL Job Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{922BA131-F695-4628-BFFC-176BE5D8C87E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create ETL Job Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4C4E75BC-DB11-4A9B-9928-A16CB873B86A}"
+          SQLTask:SqlStatementSource="&#xA;EXEC dbo.[usp_InsertETLJobLog]  ?,?,?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Job_Name"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::Stage"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\get Job Status Id"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3A67D319-3A6B-4B5B-B65B-EA2B969BAE3D}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="get Job Status Id"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4C4E75BC-DB11-4A9B-9928-A16CB873B86A}"
+          SQLTask:SqlStatementSource="declare  @JobstatusID int&#xA;&#xA;select @JobstatusID=max(job_status_id) from [ETL_JOB_STATUS]&#xA;where [TARGET_TABLENAME]=?&#xA;&#xA;&#xA;Select @JobstatusID "
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JobStatusId" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\getprocesseddate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{13C4B1AD-13EA-44AB-A94E-3649A0776B42}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="getprocesseddate"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4C4E75BC-DB11-4A9B-9928-A16CB873B86A}"
+          SQLTask:SqlStatementSource="SELECT GETDATE()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::sqlprocesseddate" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Part 1"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{879FB164-DF65-4865-BE78-CDFB226B0BF5}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Part 1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4C4E75BC-DB11-4A9B-9928-A16CB873B86A}"
+          SQLTask:SqlStatementSource="&#xA;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;--------------------------------------&#xA;DECLARE @jobstatusid varchar(5)&#xA;select @jobstatusid=?&#xA;&#xA;&#xA;&#xA;DROP TABLE All_Admission_Exe_Applicants&#xA;&#xA;SELECT   * INTO All_Admission_Exe_Applicants FROM &#xA;(&#xA;SELECT distinct CONVERT(VARCHAR(6), TRIM(Academic_Year)) AS Academic_Year&#xA;,CONVERT(VARCHAR(2), TRIM(Semester)) AS Semester &#xA;,CONVERT(VARCHAR(4), TRIM(Admit_Term)) AS Admit_Term&#xA;,CONVERT(VARCHAR(100), TRIM(Admission_Exercise)) AS Admission_Exercise&#xA;,CONVERT(VARCHAR(50), TRIM(Applicant_Primary_National_ID_Masked)) AS Applicant_Primary_National_ID_Masked&#xA;,CONVERT(VARCHAR(400), TRIM(Applicant_Primary_National_ID_Type_Descr)) AS Applicant_Primary_National_ID_Type&#xA;,CONVERT(VARCHAR(100), TRIM(Applicant_ID)) AS Applicant_ID&#xA;,CONVERT(VARCHAR(8), TRIM(Application_Number)) AS Application_Number&#xA;,CONVERT(VARCHAR(100), TRIM(Entry_Qualification)) AS Entry_Qualification&#xA;,CONVERT(VARCHAR(50), TRIM(Agg_Score_or_GPA_Range)) AS Agg_Score_or_GPA_Range&#xA;,CONVERT(VARCHAR(50), TRIM(Choice_Number)) AS Choice_Number&#xA;,CONVERT(VARCHAR(50), TRIM(Applied_JAE_Course_Code)) AS Applied_JAE_Course_Code&#xA;,CONVERT(VARCHAR(250), TRIM(Applied_JAE_Course_Title)) AS Applied_JAE_Course_Title&#xA;,CONVERT(VARCHAR(260), TRIM(Applied_JAE_Course)) AS Applied_JAE_Course&#xA;,CONVERT(VARCHAR(50), TRIM(Applied_Institution)) AS Applied_Institution&#xA;,CONVERT(VARCHAR(250), TRIM(NMC)) AS NMC&#xA;,CONVERT(VARCHAR(50), TRIM(RP_Course_Code)) AS RP_Course_Code&#xA;,CONVERT(VARCHAR(50), TRIM(Posted_Choice_Number)) AS Posted_Choice_Number&#xA;,CONVERT(VARCHAR(50), TRIM(Posted_JAE_Course_Code)) AS Posted_JAE_Course_Code&#xA;,CONVERT(VARCHAR(50), TRIM(Posted_Institution)) AS Posted_Institution&#xA;,CONVERT(VARCHAR(50), TRIM(Admitted_Institution)) AS Admitted_Institution&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_1)) AS Subject_1&#xA;,CONVERT(VARCHAR(5), TRIM(Subject_Grade_1)) AS Subject_Grade_1&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_2)) AS Subject_2&#xA;,CONVERT(VARCHAR(5), TRIM(Subject_Grade_2)) AS Subject_Grade_2&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_3)) AS Subject_3&#xA;,CONVERT(VARCHAR(5), TRIM(Subject_Grade_3)) AS Subject_Grade_3&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_4)) AS Subject_4&#xA;,CONVERT(VARCHAR(5), TRIM(Subject_Grade_4)) AS Subject_Grade_4&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_5)) AS Subject_5&#xA;,CONVERT(VARCHAR(5), TRIM(Subject_Grade_5)) AS Subject_Grade_5&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_6)) AS Subject_6&#xA;,CONVERT(VARCHAR(5), TRIM(Subject_Grade_6)) AS Subject_Grade_6&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_7)) AS Subject_7&#xA;,CONVERT(VARCHAR(5), TRIM(Subject_Grade_7)) AS Subject_Grade_7&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_8)) AS Subject_8&#xA;,CONVERT(VARCHAR(5), TRIM(Subject_Grade_8)) AS Subject_Grade_8&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_9)) AS Subject_9&#xA;,CONVERT(VARCHAR(5), TRIM(Subject_Grade_9)) AS Subject_Grade_9&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_10)) AS Subject_10&#xA;,CONVERT(VARCHAR(5), TRIM(Subject_Grade_10)) AS Subject_Grade_10&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_11)) AS Subject_11&#xA;,CONVERT(VARCHAR(5), TRIM(Subject_Grade_11)) AS Subject_Grade_11&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_12)) AS Subject_12&#xA;,CONVERT(VARCHAR(5), TRIM(Subject_Grade_12)) AS Subject_Grade_12&#xA;,CONVERT(VARCHAR(11), TRIM(RP_Student_ID)) AS RP_Student_ID&#xA;,CREATED_ON AS CREATED_ON&#xA;,MODIFIED_ON AS MODIFIED_ON&#xA; FROM&#xA;( SELECT CASE WHEN LEN (AE.Acad_Year)&gt;0 THEN CONCAT('AY',CONVERT (VARCHAR(50),AE.Acad_Year)) ELSE '' END  AS Academic_Year&#xA;&#x9;&#x9;,AE.SEMESTER AS Semester&#xA;&#x9;&#x9;,AE.DATE_OF_BIRTH &#xA;&#x9;&#x9;,AE.Admission_Exercise AS Admission_Exercise&#xA;&#x9;&#x9;,AE.Masked_National_ID AS Applicant_Primary_National_ID_Masked&#xA;&#x9;&#x9;,SM.Primary_National_ID_Type AS Applicant_Primary_National_ID_Type_Descr&#xA;&#x9;&#x9;  ,CASE &#xA;&#x9;&#x9;&#x9;WHEN CONVERT (numeric(10,4),AE.Net_AGG) &gt;0  AND  CONVERT (numeric(10,4),AE.Net_AGG) &lt;10.0  AND LEFT (AE.ADMISSION_EXERCISE,3) in ('JAE', 'DPA','JSE','PFP') THEN '&lt;10'&#xA;&#x9;&#x9;&#x9;WHEN CONVERT (numeric(10,4),AE.Net_AGG) &gt;=10.0  AND CONVERT (numeric(10,4),AE.Net_AGG) &lt;20.0 AND LEFT (AE.ADMISSION_EXERCISE,3) in ('JAE', 'DPA','JSE','PFP') THEN '10 to &lt;20'&#xA;&#x9;&#x9;&#x9;WHEN CONVERT (numeric(10,4),AE.Net_AGG) &gt;=20.0  AND CONVERT (numeric(10,4),AE.Net_AGG) &lt;26.0 AND LEFT (AE.ADMISSION_EXERCISE,3) in ('JAE', 'DPA','JSE','PFP') THEN '20 to &lt; 26'&#xA;&#x9;&#x9;&#x9;WHEN CONVERT (numeric(10,4),AE.Net_AGG) &gt;=26.0    AND LEFT (AE.ADMISSION_EXERCISE,3) in ('JAE', 'DPA','JSE','PFP') THEN '&gt;26' &#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;WHEN CONVERT (NUMERIC(10,4),AE.Net_AGG) &gt;0    AND CONVERT (NUMERIC(10,4),AE.Net_AGG) &lt;1.5  AND   LEFT (AE.ADMISSION_EXERCISE,3)  in ('JPE')  THEN '&lt;1.5'&#xA;&#x9;&#x9;&#x9;WHEN CONVERT (NUMERIC(10,4),AE.Net_AGG) &gt;=1.5  AND CONVERT (NUMERIC(10,4),AE.Net_AGG) &lt; 2.0 AND   LEFT (AE.ADMISSION_EXERCISE,3)  in ('JPE') AND AE.Net_AGG IS NOT NULL AND LEN(AE.Net_AGG)&gt;0 AND AE.Net_AGG&lt;&gt; '' THEN '1.5 to &lt; 2.0'&#xA;&#x9;&#x9;&#x9;WHEN CONVERT (NUMERIC(10,4),AE.Net_AGG) &gt;=2.0  AND CONVERT (NUMERIC(10,4),AE.Net_AGG) &lt;2.5  AND   LEFT (AE.ADMISSION_EXERCISE,3)  in ('JPE') AND AE.Net_AGG IS NOT NULL AND LEN(AE.Net_AGG)&gt;0 AND AE.Net_AGG&lt;&gt; '' THEN '2.0 to &lt; 2.5'&#xA;&#x9;&#x9;&#x9;WHEN CONVERT (NUMERIC(10,4),AE.Net_AGG) &gt;=2.5  AND CONVERT (NUMERIC(10,4),AE.Net_AGG) &lt;3.0  AND   LEFT (AE.ADMISSION_EXERCISE,3)  in ('JPE') AND AE.Net_AGG IS NOT NULL AND LEN(AE.Net_AGG)&gt;0 AND AE.Net_AGG&lt;&gt; '' THEN '2.5 to &lt; 3.0'&#xA;&#x9;&#x9;&#x9;WHEN CONVERT (NUMERIC(10,4),AE.Net_AGG) &gt;=3.0  AND CONVERT (NUMERIC(10,4),AE.Net_AGG) &lt;3.5  AND   LEFT (AE.ADMISSION_EXERCISE,3)  in ('JPE') AND AE.Net_AGG IS NOT NULL AND LEN(AE.Net_AGG)&gt;0 AND AE.Net_AGG&lt;&gt; '' THEN '3.0 to &lt; 3.5'&#xA;&#x9;&#x9;&#x9;WHEN CONVERT (NUMERIC(10,4),AE.Net_AGG) &gt;=3.5  AND CONVERT (NUMERIC(10,4),AE.Net_AGG) &lt;4.0  AND   LEFT (AE.ADMISSION_EXERCISE,3)  in ('JPE') AND AE.Net_AGG IS NOT NULL AND LEN(AE.Net_AGG)&gt;0 AND AE.Net_AGG&lt;&gt; '' THEN '3.5 to &lt; 4.0'&#xA;&#x9;&#x9;&#x9;WHEN CONVERT (NUMERIC(10,4),AE.Net_AGG) &gt;=4.0  AND LEFT ( LEFT (AE.ADMISSION_EXERCISE,3) ,3) in ('JPE') AND LEN(AE.Net_AGG)&gt;0 AND AE.Net_AGG IS NOT NULL AND AE.Net_AGG&lt;&gt; ''  THEN '4.0'&#xA;&#x9;&#x9;&#x9;--ELSE '0'&#xA;&#x9;&#x9;&#x9;ELSE ''&#xA;&#x9;&#x9;&#x9;END AS 'Agg_Score_or_GPA_Range'&#xA;&#x9;&#x9;&#x9;--,Net_AGG&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#xA;        ,AE.Posted_Choice_Order AS Posted_Choice_Number&#xA;&#x9;&#x9;,LEFT(AE.Posted_Course,3) AS Posted_JAE_Course_Code&#xA;&#x9;&#x9;--,AE.Posted_Centre AS Posted_Institution&#xA;&#x9;&#x9;--,CASE WHEN left (AE.Posted_Course,1)='R' Then 'Republic Poly'&#xA;&#x9;&#x9;--&#x9;WHEN left (AE.Posted_Course,1)='S' Then 'Singapore Poly'&#xA;&#x9;&#x9;--&#x9;WHEN left (AE.Posted_Course,1)='N' Then 'Ngee Ann Poly'&#xA;&#x9;&#x9;--&#x9;WHEN left (AE.Posted_Course,1)='C' Then 'Nanyang Poly'&#xA;&#x9;&#x9;--&#x9;WHEN left (AE.Posted_Course,1)='T' Then 'Temasek Poly'&#xA;&#x9;&#x9;--&#x9;Else 'Others'&#xA;&#x9;&#x9;--&#x9;END Posted_Institution&#xA;&#xA;&#xA;&#x9;&#x9;,CASE WHEN ISNUMERIC(Left(Posted_Course,1))&gt;0 Then 'JC'&#xA;ELSE &#xA;CASE WHEN Left(Posted_Course,1) ='R' Then 'Republic Poly'&#xA;WHEN Left(Posted_Course,1)='S' Then 'Singapore Poly'&#xA;WHEN Left(Posted_Course,1)='N' Then 'Ngee Ann Poly'&#xA;WHEN Left(Posted_Course,1) ='C' Then 'Nanyang Poly'&#xA;WHEN Left(Posted_Course,1)= 'T' Then 'Temasek Poly'&#xA;WHEN Left(Posted_Course,1)='V' Then 'ITE'&#xA;Else 'Others'&#xA;END  &#xA;END Posted_Institution&#xA;&#x9;&#x9;,AE.Subject_Code_1 AS Subject_1&#xA;&#x9;&#x9;,AE.Grade_1 AS Subject_Grade_1&#xA;&#x9;&#x9;,AE.Subject_Code_2 AS Subject_2&#xA;&#x9;&#x9;,AE.Grade_2 AS Subject_Grade_2&#xA;&#x9;&#x9;,AE.Subject_Code_3 AS Subject_3&#xA;&#x9;&#x9;,AE.Grade_3 AS Subject_Grade_3&#xA;&#x9;&#x9;,AE.Subject_Code_4 AS Subject_4&#xA;&#x9;&#x9;,AE.Grade_4 AS Subject_Grade_4&#xA;&#x9;&#x9;,AE.Subject_Code_5 AS Subject_5&#xA;&#x9;&#x9;,AE.Grade_5 AS Subject_Grade_5&#xA;&#x9;&#x9;,AE.Subject_Code_6 AS Subject_6&#xA;&#x9;&#x9;,AE.Grade_6 AS Subject_Grade_6&#xA;&#x9;&#x9;,AE.Subject_Code_7 AS Subject_7&#xA;&#x9;&#x9;,AE.Grade_7 AS Subject_Grade_7&#xA;&#x9;&#x9;,AE.Subject_Code_8 AS Subject_8&#xA;&#x9;&#x9;,AE.Grade_8 AS Subject_Grade_8&#xA;&#x9;&#x9;,AE.Subject_Code_9 AS Subject_9&#xA;&#x9;&#x9;,AE.Grade_9 AS Subject_Grade_9&#xA;&#x9;&#x9;,AE.Subject_Code_10 AS Subject_10&#xA;&#x9;&#x9;,AE.Grade_10 AS Subject_Grade_10&#xA;&#x9;&#x9;,AE.Subject_Code_11 AS Subject_11&#xA;&#x9;&#x9;,AE.Grade_11 AS Subject_Grade_11&#xA;&#x9;&#x9;,AE.Subject_Code_12 AS Subject_12&#xA;&#x9;&#x9;,AE.Grade_12 AS Subject_Grade_12&#xA;&#x9;&#x9;,AE_CHOICE.CHOICE_1 AS Choice_Number&#xA;&#x9;&#x9;,AE_CHOICE.Applied_JAE_Course_Code AS Applied_JAE_Course_Code&#xA;&#x9;&#x9;--&#xA;,app_det.Admit_Term AS Admit_Term&#xA;,app_det.Applicant_ID AS Applicant_ID&#xA;,adm_stud.App_Number AS Application_Number&#xA;--,AD.Entry_Qual Entry_Qualification&#xA;,QT.Entry_Qual_Type AS Entry_Qualification&#xA;--&#xA;,NM.Course_Title AS Applied_JAE_Course_Title&#xA;,CONCAT (trim(AE_CHOICE.Applied_JAE_Course_Code),' - ',trim(NM.Course_Title)) AS Applied_JAE_Course&#xA;&#xA;--,CASE &#xA;--WHEN Poly='RP' Then 'Republic Poly'&#xA;--WHEN Poly='SP' Then 'Singapore Poly'&#xA;--WHEN Poly='NP' Then 'Ngee Ann Poly'&#xA;--WHEN Poly='NYP' Then 'Nanyang Poly'&#xA;--WHEN Poly='TP' Then 'Temasek Poly'&#xA;--Else 'Others' END AS Applied_Institution&#xA;&#xA;,CASE WHEN ISNUMERIC(Left(Applied_JAE_Course_Code,1))&gt;0 Then 'JC'&#xA;Else &#xA;CASE WHEN Left(Applied_JAE_Course_Code,1)='R' Then 'Republic Poly'&#xA;WHEN Left(Applied_JAE_Course_Code,1)='S' Then 'Singapore Poly'&#xA;WHEN Left(Applied_JAE_Course_Code,1)= 'N' Then 'Ngee Ann Poly'&#xA;WHEN Left(Applied_JAE_Course_Code,1)='C' Then 'Nanyang Poly'&#xA;WHEN Left(Applied_JAE_Course_Code,1)='T' Then 'Temasek Poly'&#xA;WHEN Left(Applied_JAE_Course_Code,1)='V' Then 'ITE'&#xA;Else 'Others'&#xA;END&#xA;END AS Applied_Institution&#xA;&#xA;&#xA;,substring(NM.NMC_Cluster,1,250) AS NMC&#xA;,NM.RP_Course_Code AS RP_Course_Code&#xA;,CASE WHEN LEN(SM.Student_ID)&gt;0 THEN 'Republic Poly'ELSE 'Non-RP' END AS Admitted_Institution&#xA;,SM.Student_ID AS RP_Student_ID&#xA;,convert (date,GETDATE()) AS CREATED_ON&#xA;,convert (date,GETDATE()) AS MODIFIED_ON&#xA;&#x9;&#x9; FROM &#xA;&#x9;&#x9;(SELECT  &#xA;&#x9;&#x9;UIN ,&#xA;&#x9;&#x9;Acad_Year&#xA;&#x9;&#x9;,Semester&#xA;&#x9;&#x9;,DATE_OF_BIRTH&#xA;&#x9;&#x9;,CONCAT (trim(Admission_Exercise),' - ', trim(D.Long_Name))  AS Admission_Exercise&#xA;&#x9;&#x9;,Masked_National_ID&#xA;&#x9;&#x9;,CASE WHEN TRIM(Net_AGG) ='' THEN '1000' ELSE convert (varchar(7),TRIM(Net_AGG) )&#xA;&#x9;&#x9;--,CASE WHEN TRIM(Net_AGG) ='' THEN 'Null' ELSE convert (varchar(7),TRIM(Net_AGG) )&#xA;&#x9;&#x9; END AS Net_AGG &#xA;&#x9;&#x9;,Posted_Choice_Order&#xA;&#x9;&#x9;,Posted_Course&#xA;&#x9;&#x9;,CASE WHEN Admission_Exercise='JPE' THEN  LEFT (Posted_Centre,3) ELSE Posted_Centre END AS Posted_Centre&#xA;&#x9;&#x9;--,Posted_Centre&#xA;&#x9;&#x9;,Subject_Code_1&#xA;&#x9;&#x9;,Grade_1&#xA;&#x9;&#x9;,Subject_Code_2&#xA;&#x9;&#x9;,Grade_2&#xA;&#x9;&#x9;,Subject_Code_3&#xA;&#x9;&#x9;,Grade_3&#xA;&#x9;&#x9;,Subject_Code_4&#xA;&#x9;&#x9;,Grade_4&#xA;&#x9;&#x9;,Subject_Code_5&#xA;&#x9;&#x9;,Grade_5&#xA;&#x9;&#x9;,Subject_Code_6&#xA;&#x9;&#x9;,Grade_6&#xA;&#x9;&#x9;,Subject_Code_7&#xA;&#x9;&#x9;,Grade_7&#xA;&#x9;&#x9;,Subject_Code_8&#xA;&#x9;&#x9;,Grade_8&#xA;&#x9;&#x9;,Subject_Code_9&#xA;&#x9;&#x9;,Grade_9&#xA;&#x9;&#x9;,Subject_Code_10&#xA;&#x9;&#x9;,Grade_10&#xA;&#x9;&#x9;,Subject_Code_11&#xA;&#x9;&#x9;,Grade_11&#xA;&#x9;&#x9;,Subject_Code_12&#xA;&#x9;&#x9;,Grade_12&#xA;&#x9;&#x9;FROM DW_EXT_ADMISSION_EXE AE WITH(NOLOCK) JOIN &#xA;&#x9;&#x9;(SELECT  Field_Name,Field_Value,Long_Name FROM  RPDW_PRD_STG.DBO.STG_OASIS_MASTER_CODE WHERE Field_Name='ADMIT_TYPE') D&#xA;&#x9;&#x9;ON AE.ADMISSION_EXERCISE=D.Field_Value&#xA;&#x9;&#x9;) AE&#xA;INNER JOIN  (&#xA;&#xA;&#x9;&#x9;SELECT UIN,MASKED_NATIONAL_ID,ADMISSION_EXERCISE,ACAD_YEAR,SEMESTER,DATE_OF_BIRTH,'Choice 1'  AS CHOICE_1,CASE WHEN Admission_Exercise='JPE' THEN  LEFT (COURSE_CODE_CHOICE_1,3) ELSE COURSE_CODE_CHOICE_1 END AS Applied_JAE_Course_Code&#xA;&#x9;&#x9;FROM DW_EXT_ADMISSION_EXE WITH (NOLOCK)&#xA;&#x9;&#x9;UNION&#xA;&#x9;&#x9;SELECT UIN,MASKED_NATIONAL_ID,ADMISSION_EXERCISE,ACAD_YEAR,SEMESTER,DATE_OF_BIRTH,'Choice 2'  AS CHOICE_2,CASE WHEN Admission_Exercise='JPE' THEN  LEFT (COURSE_CODE_CHOICE_2,3) ELSE COURSE_CODE_CHOICE_2 END AS Applied_JAE_Course_Code &#xA;&#x9;&#x9;FROM DW_EXT_ADMISSION_EXE WITH (NOLOCK)&#xA;&#x9;&#x9;UNION&#xA;&#x9;&#x9;SELECT UIN,MASKED_NATIONAL_ID,ADMISSION_EXERCISE,ACAD_YEAR,SEMESTER,DATE_OF_BIRTH,'Choice 3'  AS CHOICE_3,CASE WHEN Admission_Exercise='JPE' THEN  LEFT (COURSE_CODE_CHOICE_3,3) ELSE COURSE_CODE_CHOICE_3 END AS Applied_JAE_Course_Code&#xA;&#x9;&#x9;&#x9;FROM DW_EXT_ADMISSION_EXE WITH (NOLOCK)&#xA;&#x9;&#x9;UNION&#xA;&#x9;&#x9;SELECT UIN,MASKED_NATIONAL_ID,ADMISSION_EXERCISE,ACAD_YEAR,SEMESTER,DATE_OF_BIRTH,'Choice 4'  AS CHOICE_4,CASE WHEN Admission_Exercise='JPE' THEN  LEFT (COURSE_CODE_CHOICE_4,3) ELSE COURSE_CODE_CHOICE_4 END AS Applied_JAE_Course_Code&#xA;&#x9;&#x9;&#x9;FROM DW_EXT_ADMISSION_EXE WITH (NOLOCK)&#xA;&#x9;&#x9;UNION&#xA;&#x9;&#x9;SELECT UIN,MASKED_NATIONAL_ID,ADMISSION_EXERCISE,ACAD_YEAR,SEMESTER,DATE_OF_BIRTH,'Choice 5'  AS CHOICE_5,CASE WHEN Admission_Exercise='JPE' THEN  LEFT (COURSE_CODE_CHOICE_5,3) ELSE COURSE_CODE_CHOICE_5 END AS Applied_JAE_Course_Code&#xA;&#x9;&#x9;&#x9;FROM DW_EXT_ADMISSION_EXE WITH (NOLOCK)&#xA;&#x9;&#x9;UNION&#xA;&#x9;&#x9;SELECT UIN,MASKED_NATIONAL_ID,ADMISSION_EXERCISE,ACAD_YEAR,SEMESTER,DATE_OF_BIRTH,'Choice 6'  AS CHOICE_6,CASE WHEN Admission_Exercise='JPE' THEN  LEFT (COURSE_CODE_CHOICE_6,3) ELSE COURSE_CODE_CHOICE_6 END AS Applied_JAE_Course_Code&#xA;&#x9;&#x9;&#x9;FROM DW_EXT_ADMISSION_EXE WITH (NOLOCK)&#xA;&#x9;&#x9;UNION&#xA;&#x9;&#x9;SELECT UIN,MASKED_NATIONAL_ID,ADMISSION_EXERCISE,ACAD_YEAR,SEMESTER,DATE_OF_BIRTH,'Choice 7'  AS CHOICE_7,CASE WHEN Admission_Exercise='JPE' THEN  LEFT (COURSE_CODE_CHOICE_7,3) ELSE COURSE_CODE_CHOICE_7 END AS Applied_JAE_Course_Code&#xA;&#x9;&#x9;&#x9;FROM DW_EXT_ADMISSION_EXE WITH (NOLOCK)&#xA;&#x9;&#x9;UNION&#xA;&#x9;&#x9;SELECT UIN,MASKED_NATIONAL_ID,ADMISSION_EXERCISE,ACAD_YEAR,SEMESTER,DATE_OF_BIRTH,'Choice 8'  AS CHOICE_8,CASE WHEN Admission_Exercise='JPE' THEN  LEFT (COURSE_CODE_CHOICE_8,3) ELSE COURSE_CODE_CHOICE_8 END AS Applied_JAE_Course_Code&#xA;&#x9;&#x9;&#x9;FROM DW_EXT_ADMISSION_EXE WITH (NOLOCK)&#xA;&#x9;&#x9;UNION&#xA;&#x9;&#x9;SELECT UIN,MASKED_NATIONAL_ID,ADMISSION_EXERCISE,ACAD_YEAR,SEMESTER,DATE_OF_BIRTH,'Choice 9'  AS CHOICE_9,CASE WHEN Admission_Exercise='JPE' THEN  LEFT (COURSE_CODE_CHOICE_9,3) ELSE COURSE_CODE_CHOICE_9 END AS Applied_JAE_Course_Code&#xA;&#x9;&#x9;&#x9;FROM DW_EXT_ADMISSION_EXE WITH (NOLOCK)&#xA;&#x9;&#x9;UNION&#xA;&#x9;&#x9;SELECT UIN,MASKED_NATIONAL_ID,ADMISSION_EXERCISE,ACAD_YEAR,SEMESTER,DATE_OF_BIRTH,'Choice 10'  AS CHOICE_10,CASE WHEN Admission_Exercise='JPE' THEN  LEFT (COURSE_CODE_CHOICE_10,3) ELSE COURSE_CODE_CHOICE_10 END AS Applied_JAE_Course_Code&#xA;&#x9;&#x9;&#x9;FROM DW_EXT_ADMISSION_EXE WITH (NOLOCK)&#xA;&#x9;&#x9;UNION&#xA;&#x9;&#x9;SELECT UIN,MASKED_NATIONAL_ID,ADMISSION_EXERCISE,ACAD_YEAR,SEMESTER,DATE_OF_BIRTH,'Choice 11'  AS CHOICE_11,CASE WHEN Admission_Exercise='JPE' THEN  LEFT (COURSE_CODE_CHOICE_11,3) ELSE COURSE_CODE_CHOICE_11 END AS Applied_JAE_Course_Code&#xA;&#x9;&#x9;&#x9;FROM DW_EXT_ADMISSION_EXE WITH (NOLOCK)&#xA;&#x9;&#x9;UNION&#xA;&#x9;&#x9;SELECT UIN,MASKED_NATIONAL_ID,ADMISSION_EXERCISE,ACAD_YEAR,SEMESTER,DATE_OF_BIRTH,'Choice 12'  AS CHOICE_12,CASE WHEN Admission_Exercise='JPE' THEN  LEFT (COURSE_CODE_CHOICE_12,3) ELSE COURSE_CODE_CHOICE_12 END AS Applied_JAE_Course_Code&#xA;&#x9;&#x9;&#x9;FROM DW_EXT_ADMISSION_EXE WITH (NOLOCK)&#xA;&#xA;&#x9;&#x9;) AE_CHOICE --1033255 --1034112&#xA;&#x9;&#x9;ON AE.UIN=AE_CHOICE.UIN&#xA;&#x9;&#x9;AND AE.DATE_OF_BIRTH=AE_CHOICE.DATE_OF_BIRTH AND AE.ACAD_YEAR=AE_CHOICE.ACAD_YEAR AND AE.SEMESTER=AE_CHOICE.SEMESTER &#xA;&#x9;&#x9;AND Substring(AE.Admission_Exercise,1,3)=Substring(AE_CHOICE.ADMISSION_EXERCISE,1,3)&#xA;LEFT JOIN --DW_STUDENT_ID &#xA;&#x9;&#x9;(&#xA;&#x9;&#x9;select distinct j.UIN, j.ACAD_YEAR, j.ADMISSION_EXERCISE, j.NET_AGG, d.Student_ID,d.Primary_National_ID_Type&#xA;  from DW_EXT_ADMISSION_EXE j&#xA;  inner join&#xA;  DW_STUDENT_DETAILS d&#xA;  on j.uin=d.Primary_National_ID &#xA;  --and Right(j.ACAD_YEAR,2)=Left(d.Admit_Term,2)&#xA;  UNION&#xA;  select distinct j.UIN, j.ACAD_YEAR, j.ADMISSION_EXERCISE, j.NET_AGG, d.Student_ID,d.Primary_National_ID_Type&#xA;  from DW_EXT_ADMISSION_EXE j&#xA;  inner join&#xA;  DW_STUDENT_DETAILS d&#xA;  on j.uin=d.Non_Primary_National_ID_1 &#xA;  --and Right(j.ACAD_YEAR,2)=Left(d.Admit_Term,2)&#xA;  UNION&#xA;  select distinct j.UIN, j.ACAD_YEAR, j.ADMISSION_EXERCISE, j.NET_AGG, d.Student_ID,d.Primary_National_ID_Type&#xA;  from DW_EXT_ADMISSION_EXE j&#xA;  inner join&#xA;  DW_STUDENT_DETAILS d&#xA;  on j.uin=d.Non_Primary_National_ID_2&#xA;  --and Right(j.ACAD_YEAR,2)=Left(d.Admit_Term,2)&#xA;   UNION&#xA;  select distinct j.UIN, j.ACAD_YEAR, j.ADMISSION_EXERCISE, j.NET_AGG, d.Student_ID,d.Primary_National_ID_Type&#xA;  from DW_EXT_ADMISSION_EXE j&#xA;  inner join&#xA;  DW_STUDENT_DETAILS d&#xA;  on j.uin=d.Non_Primary_National_ID_3 &#xA;  --and Right(j.ACAD_YEAR,2)=Left(d.Admit_Term,2)&#xA;  UNION&#xA;  select distinct j.UIN, j.ACAD_YEAR, j.ADMISSION_EXERCISE, j.NET_AGG, d.Student_ID,d.Primary_National_ID_Type&#xA;  from DW_EXT_ADMISSION_EXE j&#xA;  inner join&#xA;  DW_STUDENT_DETAILS d&#xA;  on j.uin=d.Non_Primary_National_ID_4&#xA;     &#xA;&#x9;&#x9;) SM &#xA;&#x9;&#x9;ON AE.UIN=SM.UIN &#xA;&#x9;&#x9;--and Right(AE.ACAD_YEAR,2)=Left(SM.Admit_Term,2)&#xA;&#xA;&#xA;left join &#xA;(select distinct all_exe.*, admt.App_Number, admt.Action_Year from &#xA;   (select distinct j.UIN, j.ACAD_YEAR, j.ADMISSION_EXERCISE, j.NET_AGG, d.Student_ID&#xA;     from DW_EXT_ADMISSION_EXE j&#xA;     left join&#xA;     DW_STUDENT_DETAILS d&#xA;     on j.uin=d.Primary_National_ID &#xA;     UNION&#xA;     select distinct j.UIN, j.ACAD_YEAR, j.ADMISSION_EXERCISE, j.NET_AGG, d.Student_ID&#xA;     from DW_EXT_ADMISSION_EXE j&#xA;     left join&#xA;     DW_STUDENT_DETAILS d&#xA;     on j.uin=d.Non_Primary_National_ID_1 &#xA;     UNION&#xA;     select distinct j.UIN, j.ACAD_YEAR, j.ADMISSION_EXERCISE, j.NET_AGG, d.Student_ID&#xA;     from DW_EXT_ADMISSION_EXE j&#xA;     left join&#xA;     DW_STUDENT_DETAILS d&#xA;     on j.uin=d.Non_Primary_National_ID_2&#xA;      UNION&#xA;     select distinct j.UIN, j.ACAD_YEAR, j.ADMISSION_EXERCISE, j.NET_AGG, d.Student_ID&#xA;     from DW_EXT_ADMISSION_EXE j&#xA;     left join&#xA;     DW_STUDENT_DETAILS d&#xA;     on j.uin=d.Non_Primary_National_ID_3 &#xA;     UNION&#xA;     select distinct j.UIN, j.ACAD_YEAR, j.ADMISSION_EXERCISE, j.NET_AGG, d.Student_ID&#xA;     from DW_EXT_ADMISSION_EXE j&#xA;     left join&#xA;     DW_STUDENT_DETAILS d&#xA;     on j.uin=d.Non_Primary_National_ID_4) all_exe &#xA;  inner join &#xA;   --(select distinct Student_Id, App_Number, Programme_Code, Programme_Descr, Year(Action_Date) Action_Year &#xA;   -- from DW_APPLICANT_PROGRAM_STATUS where Programme_Action='ADMT') admt&#xA;   (select distinct Student_Id, ad.App_Number, ad.Admit_Term, Programme_Code, Programme_Descr , Year(Action_Date) Action_Year,ad.Entry_Qual,ad.Admit_Type&#xA;   from DW_APPLICANT_PROGRAM_STATUS aps,&#xA;   DW_APPLICANT_DETAILS ad &#xA;      where Programme_Action='ADMT'&#xA;&#x9;  and ad.App_Number=aps.App_Number&#xA;&#x9;  and ad.Admit_Term=aps.Admit_Term) admt&#xA;   on all_exe.Student_ID=admt.Student_Id&#xA;   --and all_exe.Application_Nbr=admt.App_Number&#xA;   --and Right(all_exe.ACAD_YEAR,2)=Left(admt.admit_term,2)&#xA;   and all_exe.ACAD_YEAR=admt.Action_Year &#xA;   and all_exe.ADMISSION_EXERCISE=admt.Admit_Type&#xA;) adm_stud&#xA;on AE.uin=adm_stud.uin&#xA;and AE.ACAD_YEAR=adm_stud.Action_Year&#xA;and substring(AE.ADMISSION_EXERCISE,1,3)=substring(adm_stud.ADMISSION_EXERCISE,1,3)&#xA;&#xA;&#xA;&#x9;&#x9;--AND Right(AE.ACAD_YEAR,2)=left(SM.Admit_Term,2)&#xA;LEFT JOIN --DW_APPLICANT_DETAILS &#xA;&#x9;&#x9;--(SELECT  &#xA;&#x9;&#x9;-- DISTINCT Admit_Term,Applicant_ID,App_Number,AD.Entry_Qual,Student_Career_Number,QT.Entry_Qual_Type&#xA;&#x9;&#x9;--FROM DW_APPLICANT_DETAILS AD WITH (NOLOCK)  JOIN DW_EXT_ENTRY_QUAL_TYPE QT &#xA;  --      ON AD.Entry_Qual=QT.Entry_Qual&#xA;&#x9;&#x9;--)AD  &#xA;&#x9;&#x9;--ON AD.Applicant_ID=SM.Student_ID AND&#xA;&#x9;&#x9;--AD.App_Number=SM.Application_Nbr&#xA;&#xA;&#x9;--&#x9;(select distinct ad.Applicant_Id, ad.Admit_Type, ad.Admit_Term, ps.Programme_Descr, ps.Programme_Code, ad.App_Number, ad.Entry_Qual as Entry_Qual&#xA; --   from DW_APPLICANT_DETAILS ad left join (Select distinct App_Number,Programme_Descr,Programme_Code&#xA; --from  DW_APPLICANT_PROGRAM_STATUS where Programme_Action='MATR') ps &#xA; --on ad.App_Number=ps.App_Number&#xA; &#xA; --) app_det &#xA; /* 19 June 2019 changes */&#xA;&#xA;( select distinct ad.Applicant_Id, ad.Admit_Type, ps.Admit_Term, ps.Programme_Descr, ps.Programme_Code, ad.App_Number, ad.Entry_Qual as Entry_Qual&#xA;    from DW_APPLICANT_DETAILS ad left join (select * from (select Student_ID, Admit_Term, App_Number, Programme_Code, Programme_Descr,&#xA; ROW_NUMBER() OVER(PARTITION BY Student_ID, Admit_Term ORDER BY effective_date desc, EFFECTIVE_SEQ desc )&#xA; ROW_NUM from DW_APPLICANT_PROGRAM_STATUS where Programme_Action='MATR')&#xA; aps where ROW_NUM=1) ps&#xA;on ad.App_Number=ps.App_Number&#xA;and ad.Admit_Term=ps.Admit_Term) app_det &#xA; on SM.student_id=app_det.Applicant_Id&#xA; --and Right(AE.ACAD_YEAR,2)=Left(app_det.admit_term,2)&#xA; and adm_stud.App_Number=app_det.App_Number&#xA; and substring(AE.ADMISSION_EXERCISE,1,3)=app_det.Admit_Type&#xA;  LEFT JOIN DW_EXT_ENTRY_QUAL_TYPE QT&#xA; ON  app_det.Entry_Qual=QT.Entry_Qual&#xA;&#xA;-- LEFT JOIN &#xA;-- (select distinct ad.Applicant_Id, ad.Admit_Type, ps.Admit_Term, ps.Programme_Descr, ps.Programme_Code, ad.App_Number, ad.Entry_Qual as Entry_Qual&#xA;--    from DW_APPLICANT_DETAILS ad  join (select * from (select Student_ID, Admit_Term, App_Number, Programme_Code, Programme_Descr,&#xA;-- ROW_NUMBER() OVER(PARTITION BY Student_ID, Admit_Term ORDER BY effective_date desc, EFFECTIVE_SEQ desc )&#xA;-- ROW_NUM from DW_APPLICANT_PROGRAM_STATUS where Programme_Action='MATR')&#xA;-- aps where ROW_NUM=1) ps&#xA;--on ad.App_Number=ps.App_Number&#xA;--and ad.Admit_Term=ps.Admit_Term&#xA;-- ) app_det1&#xA;-- ON  &#xA;-- --Right(AE.ACAD_YEAR,2)=Left(app_det1.admit_term,2) &#xA;-- SM.Admit_Term=app_det1.Admit_Term&#xA;-- and substring(AE.ADMISSION_EXERCISE,1,3)=app_det1.Admit_Type&#xA;&#xA;&#xA;LEFT JOIN --DW_EXT_NMC &#xA;&#xA;&#x9;&#x9;(SELECT &#xA;&#x9;&#x9;Course_Title&#xA;&#x9;&#x9;,Poly&#xA;&#x9;&#x9;,NMC_Cluster&#xA;&#x9;&#x9;,RP_Course_Code&#xA;&#x9;&#x9;,JAE_Code&#xA;&#x9;&#x9;,[Year]&#xA;&#x9;&#x9;FROM DW_EXT_NMC WITH (NOLOCK) &#xA;&#x9;&#x9;) NM &#xA;&#x9;&#x9;ON AE_CHOICE.Applied_JAE_Course_Code=NM.JAE_Code &#xA;&#x9;&#x9;AND AE.ACAD_YEAR =NM.Year&#xA;) AS T&#xA;) TEMP &#xA;--truncate table DM_ORG_ADMISSION_EXERCISE&#xA;DELETE FROM DM_ORG_ADMISSION_EXERCISE where Admission_Exercise&lt;&gt;'DAE - FT DIRECT ADMISSIONS EXERCISE'&#xA;&#xA;;WITH All_Admission&#xA;AS&#xA;(&#xA;SELECT * ,&#xA;ROW_NUMBER () OVER (PARTITION BY&#xA;Academic_Year&#xA;,Semester&#xA;,Admission_Exercise&#xA;,ISNULL(Applicant_Primary_National_ID_Masked,0)&#xA;,Applicant_ID&#xA;,Choice_Number ORDER BY Applicant_ID) AS ROW_NUM&#xA; FROM All_Admission_Exe_Applicants &#xA;       WHERE LEN (Academic_Year) &gt;0   &#xA; )&#xA;INSERT INTO  DM_ORG_ADMISSION_EXERCISE&#xA;(Academic_Year&#xA;,Semester&#xA;,Admit_Term&#xA;,Admission_Exercise&#xA;,Applicant_Primary_National_ID_Masked&#xA;,Applicant_Primary_National_ID_Type&#xA;,Applicant_ID&#xA;,Application_Number&#xA;,Entry_Qualification&#xA;,Agg_Score_or_GPA_Range&#xA;,Choice_Number&#xA;,Applied_JAE_Course_Code&#xA;,Applied_JAE_Course_Title&#xA;,Applied_JAE_Course&#xA;,Applied_Institution&#xA;,NMC&#xA;,RP_Course_Code&#xA;,Posted_Choice_Number&#xA;,Posted_JAE_Course_Code&#xA;,Posted_Institution&#xA;,Admitted_Institution&#xA;,Subject_1&#xA;,Subject_Grade_1&#xA;,Subject_2&#xA;,Subject_Grade_2&#xA;,Subject_3&#xA;,Subject_Grade_3&#xA;,Subject_4&#xA;,Subject_Grade_4&#xA;,Subject_5&#xA;,Subject_Grade_5&#xA;,Subject_6&#xA;,Subject_Grade_6&#xA;,Subject_7&#xA;,Subject_Grade_7&#xA;,Subject_8&#xA;,Subject_Grade_8&#xA;,Subject_9&#xA;,Subject_Grade_9&#xA;,Subject_10&#xA;,Subject_Grade_10&#xA;,Subject_11&#xA;,Subject_Grade_11&#xA;,Subject_12&#xA;,Subject_Grade_12&#xA;,RP_Student_ID&#xA;,CREATED_ON&#xA;,MODIFIED_ON)&#xA; SELECT &#xA; Academic_Year&#xA;,Semester&#xA;,Admit_Term&#xA;,Admission_Exercise&#xA;,ISNULL(Applicant_Primary_National_ID_Masked,0) AS Applicant_Primary_National_ID_Masked&#xA;--,Applicant_Primary_National_ID_Type&#xA;,b.Short_Name as Applicant_Primary_National_ID_Type&#xA;,Applicant_ID&#xA;,ISNULL(Application_Number,'NA')&#xA;,Entry_Qualification&#xA;,Agg_Score_or_GPA_Range&#xA;,Choice_Number&#xA;,Applied_JAE_Course_Code&#xA;,Applied_JAE_Course_Title&#xA;,Applied_JAE_Course&#xA;,Applied_Institution&#xA;,NMC&#xA;,RP_Course_Code&#xA;,Posted_Choice_Number&#xA;,Posted_JAE_Course_Code&#xA;,Posted_Institution&#xA;,Admitted_Institution&#xA;,Subject_1&#xA;,Subject_Grade_1&#xA;,Subject_2&#xA;,Subject_Grade_2&#xA;,Subject_3&#xA;,Subject_Grade_3&#xA;,Subject_4&#xA;,Subject_Grade_4&#xA;,Subject_5&#xA;,Subject_Grade_5&#xA;,Subject_6&#xA;,Subject_Grade_6&#xA;,Subject_7&#xA;,Subject_Grade_7&#xA;,Subject_8&#xA;,Subject_Grade_8&#xA;,Subject_9&#xA;,Subject_Grade_9&#xA;,Subject_10&#xA;,Subject_Grade_10&#xA;,Subject_11&#xA;,Subject_Grade_11&#xA;,Subject_12&#xA;,Subject_Grade_12&#xA;,RP_Student_ID&#xA;,CREATED_ON&#xA;,MODIFIED_ON&#xA;FROM All_Admission a LEFT JOIN [RPDW_PRD_STG].dbo.STG_OASIS_MASTER_CODE b&#xA;ON b.Field_Name='NATIONAL_ID_TYPE' and b.Field_Value=a.Applicant_Primary_National_ID_Type&#xA;&#xA;WHERE ROW_NUM=1 &#xA;&#xA;&#xA;Delete from DM_ORG_ADMISSION_EXERCISE &#xA;where Applied_JAE_Course_Code='0' or TRIM(Applied_JAE_Course_Code)='' or Applied_JAE_Course_Code=null&#xA;or Applied_JAE_Course_Code is null&#xA;&#xA;&#xA;update [RPDW_PRD].[dbo].DM_ORG_ADMISSION_EXERCISE set  Agg_Score_or_GPA_Range= null where Agg_Score_or_GPA_Range='0'&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;ROLLBACK TRANSACTION&#xA;&#xA;  INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,getdate()  as created_on&#xA;END CATCH  &#xA;GO" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Part 2"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{2D591331-5FC8-4760-95E3-522A381A5AA5}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Part 2"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4C4E75BC-DB11-4A9B-9928-A16CB873B86A}"
+          SQLTask:SqlStatementSource="&#xA;&#xA;&#xA;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;--------------------------------------&#xA;DECLARE @jobstatusid varchar(5)&#xA;select @jobstatusid=?&#xA;&#xA;DELETE FROM DM_ORG_ADMISSION_EXERCISE where Admission_Exercise='DAE - FT DIRECT ADMISSIONS EXERCISE'&#xA;&#xA;drop table DAE_Applicants_with_grades&#xA;&#xA;&#xA;SELECT * INTO DAE_Applicants_with_grades FROM( &#xA;&#xA;SELECT  distinct&#xA;CONVERT(VARCHAR(6), TRIM(Academic_Year)) AS Academic_Year&#xA;,CONVERT(VARCHAR(2), TRIM(Semester)) AS Semester&#xA;,CONVERT(VARCHAR(4), TRIM(sd.Admit_Term)) AS Admit_Term&#xA;,CONVERT(VARCHAR(100), 'DAE - FT DIRECT ADMISSIONS EXERCISE') AS Admission_Exercise&#xA;,CONVERT(VARCHAR(50), TRIM(AD2.Masked_Primary_National_ID)) AS Applicant_Primary_National_ID_Masked&#xA;,CONVERT(VARCHAR(50), TRIM(Applicant_Primary_National_ID_Type_Descr)) AS Applicant_Primary_National_ID_Type_Descr&#xA;,CONVERT(VARCHAR(100), TRIM(AD.Applicant_ID)) AS Applicant_ID&#xA;,CONVERT(VARCHAR(8), TRIM(ad.App_Number)) AS Application_Number&#xA;,CONVERT(VARCHAR(100), TRIM(Entry_Qualification)) AS Entry_Qualification&#xA;,CONVERT(VARCHAR(50), TRIM(Agg_Score_or_GPA_Range)) AS Agg_Score_or_GPA_Range&#xA;,CONVERT(VARCHAR(50), concat('Choice ', convert (varchar(50),(TRIM(APS1.Programme_Number)+1)))) AS Choice_Number&#xA;,CONVERT(VARCHAR(4), TRIM(JAE_Code_1)) AS Applied_JAE_Course_Code&#xA;,CONVERT(VARCHAR(250), TRIM(Course_title)) AS Applied_JAE_Course_Title&#xA;,CONVERT(VARCHAR(260), Concat (TRIM(JAE_Code_1) , ' - ' , TRIM(Course_title))) AS Applied_JAE_Course&#xA;,CONVERT(VARCHAR(50), 'Republic Poly') AS Applied_Institution&#xA;,CONVERT(VARCHAR(250), TRIM(NMC_Cluster)) AS NMC&#xA;,CONVERT(VARCHAR(50), TRIM(RP_Course_Code)) AS RP_Course_Code&#xA;,CONVERT(VARCHAR(50), TRIM(APS2.Programme_Number)+1) AS Posted_Choice_Number&#xA;,CONVERT(VARCHAR(50), TRIM(JAE_Code_2)) AS Posted_JAE_Course_Code&#xA;,CASE WHEN SD.Student_ID IS NOT NULL THEN 'Republic Poly'&#xA;ELSE 'Non-RP' END AS  Posted_Institution&#xA;--,CONVERT(VARCHAR(50), 'Republic Poly') AS Posted_Institution&#xA;,CONVERT(VARCHAR(50), TRIM(Admitted_Institution)) AS Admitted_Institution&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_1)) AS Subject_1&#xA;,CONVERT(VARCHAR(5), TRIM(Grade_1)) AS Subject_Grade_1&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_2)) AS Subject_2&#xA;,CONVERT(VARCHAR(5), TRIM(Grade_2)) AS Subject_Grade_2&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_3)) AS Subject_3&#xA;,CONVERT(VARCHAR(5), TRIM(Grade_3)) AS Subject_Grade_3&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_4)) AS Subject_4&#xA;,CONVERT(VARCHAR(5), TRIM(Grade_4)) AS Subject_Grade_4&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_5)) AS Subject_5&#xA;,CONVERT(VARCHAR(5), TRIM(Grade_5)) AS Subject_Grade_5&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_6)) AS Subject_6&#xA;,CONVERT(VARCHAR(5), TRIM(Grade_6)) AS Subject_Grade_6&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_7)) AS Subject_7&#xA;,CONVERT(VARCHAR(5), TRIM(Grade_7)) AS Subject_Grade_7&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_8)) AS Subject_8&#xA;,CONVERT(VARCHAR(5), TRIM(Grade_8)) AS Subject_Grade_8&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_9)) AS Subject_9&#xA;,CONVERT(VARCHAR(5), TRIM(Grade_9)) AS Subject_Grade_9&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_10)) AS Subject_10&#xA;,CONVERT(VARCHAR(5), TRIM(Grade_10)) AS Subject_Grade_10&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_11)) AS Subject_11&#xA;,CONVERT(VARCHAR(5), TRIM(Grade_11)) AS Subject_Grade_11&#xA;,CONVERT(VARCHAR(100), TRIM(Subject_12)) AS Subject_12&#xA;,CONVERT(VARCHAR(5), TRIM(Grade_12)) AS Subject_Grade_12&#xA;,CONVERT(VARCHAR(11), TRIM(SD.Student_ID)) AS RP_Student_ID&#xA;,GETDATE() AS CREATED_ON&#xA;,GETDATE() AS MODIFIED_ON&#xA;&#xA;&#x9;FROM (&#xA;&#xA;         SELECT  &#xA;&#x9;&#x9; DISTINCT &#xA;&#x9;&#x9;&#x9; 'AY20'+CONVERT (VARCHAR(2),LEFT (Admit_Term,2)) AS Academic_Year&#xA;&#x9;&#x9;&#x9;--,CASE WHEN MONTH (App_Date) &gt;=4 and MONTH (App_Date)&lt;=9 THEN 'S1' ELSE 'S2' END  AS Semester&#xA;&#x9;&#x9;&#x9;,CASE WHEN RIGHT(Admit_Term,2)='10' then 'S1' else 'S2' END  AS Semester&#xA;&#x9;&#x9;&#x9;,Admit_Term &#xA;&#x9;&#x9;&#x9;,Admit_Type AS Admission_Exercise&#xA;&#x9;&#x9;&#x9;,Applicant_ID&#xA;&#x9;&#x9;&#x9;,App_Number&#xA;&#x9;&#x9;&#x9;,D.Entry_Qual&#xA;&#x9;&#x9;&#x9;,D.Qual_Type&#xA;&#x9;&#x9;&#x9;--,JAE_Code&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;,CASE &#xA;&#x9;&#x9;&#x9;--WHEN CONVERT (numeric(10,4),Net_Posted_Agg) &gt;0  AND  CONVERT (numeric(10,4),Net_Posted_Agg) &lt;10.0   THEN '&lt;10'&#xA;&#x9;&#x9;&#x9;--WHEN CONVERT (numeric(10,4),Net_Posted_Agg) &gt;=10.0  AND CONVERT (numeric(10,4),Net_Posted_Agg) &lt;20.0 THEN '10 to &lt;20'&#xA;&#x9;&#x9;&#x9;--WHEN CONVERT (numeric(10,4),Net_Posted_Agg) &gt;=20.0  AND CONVERT (numeric(10,4),Net_Posted_Agg) &lt;26.0  THEN '20 to &lt; 26'&#xA;&#x9;&#x9;&#x9;--WHEN CONVERT (numeric(10,4),Net_Posted_Agg) &gt;=26.0     THEN '&gt;26' &#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;WHEN CONVERT (NUMERIC(10,4),Net_Posted_Agg) &gt;0    AND CONVERT (NUMERIC(10,4),Net_Posted_Agg) &lt;1.5    THEN '&lt;1.5'&#xA;&#x9;&#x9;&#x9;WHEN CONVERT (NUMERIC(10,4),Net_Posted_Agg) &gt;=1.5  AND CONVERT (NUMERIC(10,4),Net_Posted_Agg) &lt; 2.0 AND Net_Posted_Agg IS NOT NULL AND LEN(Net_Posted_Agg)&gt;0 AND cast(Net_Posted_Agg as varchar)&lt;&gt; '' THEN '1.5 to &lt; 2.0'&#xA;&#x9;&#x9;&#x9;WHEN CONVERT (NUMERIC(10,4),Net_Posted_Agg) &gt;=2.0  AND CONVERT (NUMERIC(10,4),Net_Posted_Agg) &lt;2.5   AND Net_Posted_Agg IS NOT NULL AND LEN(Net_Posted_Agg)&gt;0 AND cast(Net_Posted_Agg as varchar)&lt;&gt; '' THEN '2.0 to &lt; 2.5'&#xA;&#x9;&#x9;&#x9;WHEN CONVERT (NUMERIC(10,4),Net_Posted_Agg) &gt;=2.5  AND CONVERT (NUMERIC(10,4),Net_Posted_Agg) &lt;3.0   AND Net_Posted_Agg IS NOT NULL AND LEN(Net_Posted_Agg)&gt;0 AND cast(Net_Posted_Agg as varchar)&lt;&gt; '' THEN '2.5 to &lt; 3.0'&#xA;&#x9;&#x9;&#x9;WHEN CONVERT (NUMERIC(10,4),Net_Posted_Agg) &gt;=3.0  AND CONVERT (NUMERIC(10,4),Net_Posted_Agg) &lt;3.5   AND Net_Posted_Agg IS NOT NULL AND LEN(Net_Posted_Agg)&gt;0 AND cast(Net_Posted_Agg as varchar)&lt;&gt; '' THEN '3.0 to &lt; 3.5'&#xA;&#x9;&#x9;&#x9;WHEN CONVERT (NUMERIC(10,4),Net_Posted_Agg) &gt;=3.5  AND CONVERT (NUMERIC(10,4),Net_Posted_Agg) &lt;4.0   AND Net_Posted_Agg IS NOT NULL AND LEN(Net_Posted_Agg)&gt;0 AND cast(Net_Posted_Agg as varchar)&lt;&gt; '' THEN '3.5 to &lt; 4.0'&#xA;&#x9;&#x9;&#x9;WHEN CONVERT (NUMERIC(10,4),Net_Posted_Agg) &gt;=4.0  AND LEN(Net_Posted_Agg)&gt;0 AND Net_Posted_Agg IS NOT NULL AND cast(Net_Posted_Agg as varchar)&lt;&gt; ''  THEN '4.0'&#xA;&#x9;&#x9;&#x9;--ELSE '0'&#xA;&#x9;&#x9;&#x9;ELSE ''&#xA;&#x9;&#x9;&#x9;END AS 'Agg_Score_or_GPA_Range'&#xA;&#x9;&#x9;&#x9;,App_Date&#xA;&#x9;&#x9;&#x9;,Course_Offered AS Posted_JAE_Course_Code&#xA;&#x9;&#x9;&#x9;,QT.Entry_Qual_Type AS Entry_Qualification&#xA;&#x9;&#x9;&#x9;FROM DW_APPLICANT_DETAILS D WITH (NOLOCK)&#xA;&#x9;&#x9;&#x9;LEFT JOIN DW_EXT_ENTRY_QUAL_TYPE QT WITH (NOLOCK)&#xA;            ON D.Entry_Qual=QT.Entry_Qual Where Admit_Type = 'DAE'&#xA;&#x9;&#x9;&#x9;) AD&#xA;&#xA;&#xA;LEFT JOIN &#xA;&#x9;&#x9;&#x9;/*(select DISTINCT &#xA;&#x9;&#x9;&#x9;a.student_id, &#xA;&#x9;&#x9;&#x9;a.Qual_Type, &#xA;&#x9;&#x9;&#x9;b.App_Number, &#xA;&#x9;&#x9;&#x9;b.Programme_Number, &#xA;&#x9;&#x9;&#x9;b.Programme_Code  &#xA;&#x9;&#x9;&#x9;from &#xA;&#x9;&#x9;&#x9;(Select distinct student_id, Qual_Type, max(evaluation_date) eva_date&#xA;&#x9;&#x9;&#x9;from DW_APPLICANT_PROGRAM_STATUS&#xA;&#x9;&#x9;&#x9;group by student_id, Qual_Type&#xA;&#x9;&#x9;&#x9;) a, DW_APPLICANT_PROGRAM_STATUS b&#xA;&#x9;&#x9;&#x9;where a.Student_Id=b.Student_Id and a.Qual_Type=b.Qual_Type and a.eva_date=b.Evaluation_Date&#xA;&#x9;&#x9;&#x9;*/&#xA;&#xA;&#x9;&#x9;(select DISTINCT &#xA;&#x9;&#x9;b.student_id, &#xA;&#x9;&#x9;b.Qual_Type, &#xA;&#x9;&#x9;b.App_Number, &#xA;&#x9;&#x9;b.Programme_Number, &#xA;&#x9;&#x9;b.Programme_Code ,&#xA;&#x9;&#x9;NMC.JAE_Code as JAE_Code_1  &#xA;&#x9;&#x9;from &#xA;&#x9;&#x9;&#x9;  ( select * from (&#xA; SELECT Student_ID,Qual_Type,Admit_Term,App_Number,Programme_Number,Programme_Code,&#xA; ROW_NUMBER() OVER(PARTITION BY Student_ID, App_Number, Programme_Number, Admit_Term ORDER BY effective_date desc, EFFECTIVE_SEQ desc )&#xA; ROW_NUM &#xA; FROM  DW_APPLICANT_PROGRAM_STATUS&#xA; ) a where ROW_NUM = 1)b&#xA;&#x9;&#x9;&#x9;&#x9;LEFT JOIN  (SELECT * FROM DW_EXT_NMC  WHERE POLY='RP') NMC &#xA;&#x9;&#x9;&#x9;    ON  b.Programme_Code=NMC.RP_Course_Code  &#xA;) APS1&#xA;ON AD.Applicant_ID=APS1.Student_ID and AD.Qual_Type=APS1.Qual_Type and AD.App_Number=APS1.App_Number&#xA;&#xA;LEFT JOIN&#xA;(&#xA;&#x9;&#x9;/*select a.student_id, a.Qual_Type, App_Number, Programme_Number, Programme_Code from&#xA;&#x9;&#x9;(Select distinct student_id, Qual_Type, max(evaluation_date) eva_date&#xA;&#x9;&#x9;from DW_APPLICANT_PROGRAM_STATUS where  Programme_Action='ADMT'&#xA;&#x9;&#x9;group by student_id, Qual_Type&#xA;&#x9;&#x9;) a, DW_APPLICANT_PROGRAM_STATUS b&#xA;&#x9;&#x9;where a.Student_Id=b.Student_Id and a.Qual_Type=b.Qual_Type and a.eva_date=b.Evaluation_Date&#xA;&#x9;&#x9;*/&#xA;&#x9;&#x9;&#x9;select a.student_id, &#xA;&#x9;&#x9;&#x9;a.Qual_Type, &#xA;&#x9;&#x9;&#x9;App_Number, &#xA;&#x9;&#x9;&#x9;Programme_Number, &#xA;&#x9;&#x9;&#x9;Programme_Code,&#xA;&#x9;&#x9;&#x9;NMC.JAE_Code as JAE_Code_2  &#xA;&#x9;&#x9;&#x9;from&#xA;&#x9;&#x9;&#x9;(select * from (&#xA; SELECT Student_ID,Qual_Type,Admit_Term,App_Number,Programme_Number,Programme_Code,&#xA; ROW_NUMBER() OVER(PARTITION BY Student_ID, App_Number, Programme_Number, Admit_Term ORDER BY effective_date desc, EFFECTIVE_SEQ desc )&#xA; ROW_NUM &#xA; FROM  DW_APPLICANT_PROGRAM_STATUS where  Programme_Action='ADMT'&#xA; ) a where ROW_NUM = 1)a&#xA;&#x9;&#x9;&#x9;LEFT JOIN  (SELECT * FROM DW_EXT_NMC  WHERE POLY='RP') NMC &#xA;&#x9;&#x9;&#x9;    ON  a.Programme_Code=NMC.RP_Course_Code  &#xA;&#xA;) APS2&#xA;ON AD.Applicant_ID=APS2.Student_ID and AD.Qual_Type=APS2.Qual_Type and &#xA;AD.App_Number=APS2.App_Number&#x9;&#xA;&#xA;LEFT JOIN  &#xA;(SELECT * FROM DW_EXT_NMC  WHERE POLY='RP') NMC &#xA;ON  APS1.Programme_Code=NMC.RP_Course_Code And &#xA;--Year(AD.App_Date)=NMC.[Year]&#xA;Left(AD.admit_term,2)=right(NMC.[Year],2)&#xA;&#xA;LEFT JOIN  --DW_APPLICANT_TEST_RESULTS &#xA;&#x9;&#x9;&#x9;(SELECT&#xA;&#x9;&#x9;&#x9; Subject_1&#xA;&#x9;&#x9;&#x9;,Grade_1&#xA;&#x9;&#x9;&#x9;,Subject_2&#xA;&#x9;&#x9;&#x9;,Grade_2&#xA;&#x9;&#x9;&#x9;,Subject_3&#xA;&#x9;&#x9;&#x9;,Grade_3&#xA;&#x9;&#x9;&#x9;,Subject_4&#xA;&#x9;&#x9;&#x9;,Grade_4&#xA;&#x9;&#x9;&#x9;,Subject_5&#xA;&#x9;&#x9;&#x9;,Grade_5&#xA;&#x9;&#x9;&#x9;,Subject_6&#xA;&#x9;&#x9;&#x9;,Grade_6&#xA;&#x9;&#x9;&#x9;,Subject_7&#xA;&#x9;&#x9;&#x9;,Grade_7&#xA;&#x9;&#x9;&#x9;,Subject_8&#xA;&#x9;&#x9;&#x9;,Grade_8&#xA;&#x9;&#x9;&#x9;,Subject_9&#xA;&#x9;&#x9;&#x9;,Grade_9&#xA;&#x9;&#x9;&#x9;,Subject_10&#xA;&#x9;&#x9;&#x9;,Grade_10&#xA;&#x9;&#x9;&#x9;,'' AS Subject_11&#xA;&#x9;&#x9;&#x9;,'' AS Grade_11&#xA;&#x9;&#x9;&#x9;,'' AS Subject_12&#xA;&#x9;&#x9;&#x9;,'' AS Grade_12&#xA;&#x9;&#x9;&#x9;,Applicant_ID --AS ApplicantID&#xA;&#x9;&#x9;&#x9;,App_Number --AS AppNumber&#xA;&#x9;&#x9;&#x9;,Test_ID&#xA;&#x9;&#x9;&#x9;FROM DW_APPLICANT_TEST_RESULTS WITH (NOLOCK) ) RES &#xA;&#x9;&#x9;&#x9;ON AD.Applicant_Id=RES.Applicant_ID&#xA;&#x9;&#x9;&#x9; AND  &#xA;&#x9;&#x9;&#x9; AD.App_Number=RES.App_Number&#xA;&#x9;&#x9;&#x9; AND AD.Entry_Qual=RES.Test_ID&#xA;LEFT JOIN --DW_STUDENT_DETAILS&#xA;&#x9;&#x9;&#x9;(SELECT distinct CASE WHEN LEN(Student_ID) &gt;0 THEN 'Republic Poly' ELSE '' END AS Admitted_Institution,&#xA;&#x9;&#x9;&#x9;Student_ID,&#xA;&#x9;&#x9;&#x9;Applicatn_Number,&#xA;&#x9;&#x9;&#x9;Admit_term,&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;Primary_National_ID_Type AS Applicant_Primary_National_ID_Type_Descr,&#xA;&#x9;&#x9;&#x9;Primary_National_ID  AS Applicant_Primary_National_ID_Masked &#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;FROM DW_STUDENT_DETAILS WITH (NOLOCK)) SD&#xA;&#x9;&#xA;&#x9;&#xA;&#x9;&#x9;&#x9;ON &#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;AD.Applicant_ID=SD.Student_ID&#xA;&#x9;&#x9;&#x9;AND&#xA;&#x9;&#x9;&#x9;AD.App_Number=SD.Applicatn_Number&#xA;&#xA;&#xA;&#x9;/* Get National_ID from   DW_APPLICANT_DETAILS */&#xA;&#xA;LEFT JOIN (select * from &#xA;(select  distinct a.Masked_Primary_National_ID as Masked_Primary_National_ID ,a.Applicant_Id,a.App_Number  &#xA;from DW_APPLICANT_DETAILS a&#xA;inner join DW_APPLICANT_DETAILS b on a.Masked_Primary_National_ID=b.Masked_Primary_National_ID&#xA;&#xA;union &#xA;select distinct a.Masked_Primary_National_ID as Masked_Primary_National_ID ,a.Applicant_Id,a.App_Number&#xA; from DW_APPLICANT_DETAILS a &#xA; inner join DW_APPLICANT_DETAILS b on a.Masked_Primary_National_ID=b.Masked_Non_Primary_National_ID_1&#xA;union &#xA;select  distinct a.Masked_Primary_National_ID as Masked_Primary_National_ID ,a.Applicant_Id,a.App_Number&#xA; from DW_APPLICANT_DETAILS a &#xA; inner join DW_APPLICANT_DETAILS b on a.Masked_Primary_National_ID=b.Masked_Non_Primary_National_ID_2 &#xA;union &#xA;select  distinct a.Masked_Primary_National_ID as Masked_Primary_National_ID ,a.Applicant_Id,a.App_Number&#xA; from DW_APPLICANT_DETAILS a &#xA; inner join DW_APPLICANT_DETAILS b on a.Masked_Primary_National_ID=b.Masked_Non_Primary_National_ID_3 &#xA;union &#xA;select  distinct a.Masked_Primary_National_ID as Masked_Primary_National_ID ,a.Applicant_Id,a.App_Number&#xA; from DW_APPLICANT_DETAILS a &#xA; inner join DW_APPLICANT_DETAILS b on a.Masked_Primary_National_ID=b.Masked_Non_Primary_National_ID_4&#xA;&#xA; )&#xA;AD1)AD2 on AD.Applicant_Id=AD2.Applicant_Id and AD.App_Number=AD2.App_Number&#xA;&#xA;) AS T&#xA;&#xA;&#xA;;WITH DAE_Applicants&#xA;AS&#xA;(&#xA;SELECT * ,&#xA;ROW_NUMBER () OVER (PARTITION BY&#xA;Academic_Year&#xA;,Semester&#xA;,Admission_Exercise&#xA;,Applicant_Primary_National_ID_Masked&#xA;--,Applicant_ID&#xA;,Choice_Number &#xA;,Application_Number ORDER BY Applicant_ID) AS ROW_NUM&#xA; FROM DAE_Applicants_with_grades&#xA; WHERE LEN (Academic_Year) &gt;0  and Applicant_Primary_National_ID_Masked&#xA;is not NULL   &#xA; )&#xA; &#xA; &#xA;INSERT INTO  DM_ORG_ADMISSION_EXERCISE&#xA;(Academic_Year&#xA;,Semester&#xA;,Admit_Term&#xA;,Admission_Exercise&#xA;,Applicant_Primary_National_ID_Masked&#xA;,Applicant_Primary_National_ID_Type&#xA;,Applicant_ID&#xA;,Application_Number&#xA;,Entry_Qualification&#xA;,Agg_Score_or_GPA_Range&#xA;,Choice_Number&#xA;,Applied_JAE_Course_Code&#xA;,Applied_JAE_Course_Title&#xA;,Applied_JAE_Course&#xA;,Applied_Institution&#xA;,NMC&#xA;,RP_Course_Code&#xA;,Posted_Choice_Number&#xA;,Posted_JAE_Course_Code&#xA;,Posted_Institution&#xA;,Admitted_Institution&#xA;,Subject_1&#xA;,Subject_Grade_1&#xA;,Subject_2&#xA;,Subject_Grade_2&#xA;,Subject_3&#xA;,Subject_Grade_3&#xA;,Subject_4&#xA;,Subject_Grade_4&#xA;,Subject_5&#xA;,Subject_Grade_5&#xA;,Subject_6&#xA;,Subject_Grade_6&#xA;,Subject_7&#xA;,Subject_Grade_7&#xA;,Subject_8&#xA;,Subject_Grade_8&#xA;,Subject_9&#xA;,Subject_Grade_9&#xA;,Subject_10&#xA;,Subject_Grade_10&#xA;,Subject_11&#xA;,Subject_Grade_11&#xA;,Subject_12&#xA;,Subject_Grade_12&#xA;,RP_Student_ID&#xA;,CREATED_ON&#xA;,MODIFIED_ON)&#xA;&#xA; SELECT &#xA; Academic_Year&#xA;,Semester&#xA;,Admit_Term&#xA;,Admission_Exercise&#xA;,Applicant_Primary_National_ID_Masked&#xA;--,Applicant_Primary_National_ID_Type_Descr&#xA;,b.Short_Name as Applicant_Primary_National_ID_Type_Descr&#xA;,Applicant_ID&#xA;,Application_Number&#xA;,Entry_Qualification&#xA;,Agg_Score_or_GPA_Range&#xA;,Choice_Number&#xA;,Applied_JAE_Course_Code&#xA;,Applied_JAE_Course_Title&#xA;,Applied_JAE_Course&#xA;,Applied_Institution&#xA;,NMC&#xA;,RP_Course_Code&#xA;,Posted_Choice_Number&#xA;,Posted_JAE_Course_Code&#xA;,Posted_Institution&#xA;,Admitted_Institution&#xA;,Subject_1&#xA;,Subject_Grade_1&#xA;,Subject_2&#xA;,Subject_Grade_2&#xA;,Subject_3&#xA;,Subject_Grade_3&#xA;,Subject_4&#xA;,Subject_Grade_4&#xA;,Subject_5&#xA;,Subject_Grade_5&#xA;,Subject_6&#xA;,Subject_Grade_6&#xA;,Subject_7&#xA;,Subject_Grade_7&#xA;,Subject_8&#xA;,Subject_Grade_8&#xA;,Subject_9&#xA;,Subject_Grade_9&#xA;,Subject_10&#xA;,Subject_Grade_10&#xA;,Subject_11&#xA;,Subject_Grade_11&#xA;,Subject_12&#xA;,Subject_Grade_12&#xA;,RP_Student_ID&#xA;,CREATED_ON&#xA;,MODIFIED_ON&#xA;FROM DAE_Applicants a LEFT JOIN [RPDW_PRD_STG].dbo.STG_OASIS_MASTER_CODE b&#xA;ON b.Field_Name='NATIONAL_ID_TYPE' and b.Field_Value=a.Applicant_Primary_National_ID_Type_Descr&#xA;&#xA;&#xA;WHERE ROW_NUM=1&#xA;&#xA;&#xA;&#xA;Delete from DM_ORG_ADMISSION_EXERCISE &#xA;where Applied_JAE_Course_Code='0' or TRIM(Applied_JAE_Course_Code)='' or Applied_JAE_Course_Code=null&#xA;or Applied_JAE_Course_Code is null&#xA;&#xA;update [RPDW_PRD].[dbo].DM_ORG_ADMISSION_EXERCISE set  Agg_Score_or_GPA_Range= null where Agg_Score_or_GPA_Range='0'&#xA;&#xA;&#xA;&#xA;&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;ROLLBACK TRANSACTION&#xA;&#xA;  INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,getdate()  as created_on&#xA;END CATCH  &#xA;GO&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{41C6780F-8B02-4CBF-954B-6F2A08D46EC9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4C4E75BC-DB11-4A9B-9928-A16CB873B86A}"
+          SQLTask:SqlStatementSource="truncate table DM_ORG_ADMISSION_EXERCISE" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\update on failure"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{F51722CB-6BA1-4312-827A-A644F168A516}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="update on failure"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4C4E75BC-DB11-4A9B-9928-A16CB873B86A}"
+          SQLTask:SqlStatementSource="   UPDATE [DBO].[ETL_JOB_STATUS]&#xA;  SET [JOB_STATUS]='Fail',&#xA;[ERROR_MSG]='Last Job not completed sucessfully'&#xA;  where [JOB_STATUS_ID]=?&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\UpdateJobStatus"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{8B93DE50-5D1F-4F48-85BE-46ABF8D45EAD}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="UpdateJobStatus"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4C4E75BC-DB11-4A9B-9928-A16CB873B86A}"
+          SQLTask:SqlStatementSource="&#xA; &#xA;&#xA;DECLARE &#xA;@jobstatusid INT&#xA;select @jobstatusid=?&#xA;IF EXISTS(SELECT * FROM dbo.ETL_ERROR_LOG WHERE [JOB_STATUS_ID]=@jobstatusid)&#xA;&#xA; BEGIN&#xA;&#xA;&#xA;&#xA; UPDATE [dbo].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='FAIL'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;  END&#xA;&#xA;ELSE&#xA;&#xA;BEGIN&#xA;&#xA;UPDATE [DBO].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='Success'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;END&#xA;&#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{AB76C524-AD21-4A3E-B0F2-F3872E764224}"
+      DTS:Expression="@[User::JOB_STATUS]==0"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\update on failure" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{C3DA76F6-69BD-458A-A5A7-72405F19BACF}"
+      DTS:From="Package\Create ETL Job Log"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\get Job Status Id" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{45C66645-E7E5-4075-835E-1269126EDDE5}"
+      DTS:From="Package\getprocesseddate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Truncate table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{46118E5D-90BE-4C05-A7EA-DDF7D6D7D91A}"
+      DTS:Expression="@[User::JOB_STATUS]==1"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\getprocesseddate" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{F6687990-2DC3-4145-A7EE-80ECADF43BDC}"
+      DTS:From="Package\get Job Status Id"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\check previous job status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{547CBB73-C1FF-4581-BF8C-86BB363F10D2}"
+      DTS:From="Package\Part 1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Part 2" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{9295BB71-7F0C-4901-8125-3CDA3B4E0B59}"
+      DTS:From="Package\Part 2"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\UpdateJobStatus" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{AAA5D069-AD43-4E8D-9206-DAAE88D140F9}"
+      DTS:From="Package\Truncate table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\Part 1" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{CB166A69-7899-4737-862B-E2653C3730D2}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{18352847-EBFA-48FD-B0B3-079AA604806A}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\Error Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{EA5762DC-0EFA-4F22-A275-942B31397073}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Error Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{4C4E75BC-DB11-4A9B-9928-A16CB873B86A}"
+              SQLTask:SqlStatementSource="  insert into [dbo].[ETL_ERROR_LOG]([JOB_STATUS_ID],[ERROR_RECORD])&#xA;  select ?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL Job Status Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{C836F9F8-0EAE-46B4-9C6E-82C87658D518}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL Job Status Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{4C4E75BC-DB11-4A9B-9928-A16CB873B86A}"
+              SQLTask:SqlStatementSource="update [ETL_JOB_STATUS]&#xA;set Job_Status='Fail'&#xA;,Error_Msg=?&#xA;where job_status_id=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{29140321-77BF-45C9-AA36-ABCDE929CB4E}"
+          DTS:From="Package.EventHandlers[OnError]\Error Log"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package.EventHandlers[OnError]\ETL Job Status Log" />
+      </DTS:PrecedenceConstraints>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="198,42"
+          Id="Package\check previous job status"
+          TopLeft="415,32" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Create ETL Job Log"
+          TopLeft="9,30" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\get Job Status Id"
+          TopLeft="225,31" />
+        <NodeLayout
+          Size="162,42"
+          Id="Package\getprocesseddate"
+          TopLeft="660,29" />
+        <NodeLayout
+          Size="108,42"
+          Id="Package\Part 1"
+          TopLeft="699,203" />
+        <NodeLayout
+          Size="107,42"
+          Id="Package\Part 2"
+          TopLeft="705,277" />
+        <NodeLayout
+          Size="147,42"
+          Id="Package\Truncate table"
+          TopLeft="693,110" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\update on failure"
+          TopLeft="437,161" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\UpdateJobStatus"
+          TopLeft="685,364" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="515.25,74">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,87"
+              Start="0,0"
+              End="0,79.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,79.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="179,51.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="46,0"
+              Start="0,0"
+              End="38.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="38.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="741,71">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="25.5,39"
+              Start="0,0"
+              End="25.5,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.5"
+                    Point2="0,19.5"
+                    Point3="4,19.5" />
+                  <mssgle:LineSegment
+                    End="21.5,19.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="21.5,19.5"
+                    Point2="25.5,19.5"
+                    Point3="25.5,23.5" />
+                  <mssgle:LineSegment
+                    End="25.5,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="613,51.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="47,0"
+              Start="0,0"
+              End="39.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="39.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="384,52.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="31,0"
+              Start="0,0"
+              End="23.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="23.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="755.75,245">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32"
+              Start="0,0"
+              End="0,24.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="761.25,319">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,45"
+              Start="0,0"
+              End="0,37.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="766.5,152">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-13.5,51"
+              Start="0,0"
+              End="-13.5,43.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.5"
+                    Point2="0,25.5"
+                    Point3="-4,25.5" />
+                  <mssgle:LineSegment
+                    End="-9.5,25.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-9.5,25.5"
+                    Point2="-13.5,25.5"
+                    Point3="-13.5,29.5" />
+                  <mssgle:LineSegment
+                    End="-13.5,43.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package.EventHandlers[OnError]\Error Log"
+          TopLeft="60,60" />
+        <NodeLayout
+          Size="169,42"
+          Id="Package.EventHandlers[OnError]\ETL Job Status Log"
+          TopLeft="60,162" />
+        <EdgeLayout
+          Id="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          TopLeft="121.5,102">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="23,60"
+              Start="0,0"
+              End="23,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26"
+                    Point2="0,30"
+                    Point3="4,30" />
+                  <mssgle:LineSegment
+                    End="19,30" />
+                  <mssgle:CubicBezierSegment
+                    Point1="19,30"
+                    Point2="23,30"
+                    Point3="23,34" />
+                  <mssgle:LineSegment
+                    End="23,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,385 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/10/2019 10:10:41 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-110119GM22"
+  DTS:CreatorName="NCS\P0500388"
+  DTS:DTSID="{08198F92-6AED-4E9E-97BC-442CB5680B5F}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="GPGEncryption_LEO"
+  DTS:PackageType="5"
+  DTS:VersionBuild="88"
+  DTS:VersionGUID="{1C561A6E-E626-4C0E-B37C-B64A6019E1CB}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6E2C4D0B-8E21-40D7-ABD2-25E68CEADBDB}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Count">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{EF04104E-BC89-466A-A415-EA7831807580}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileName">
+      <DTS:VariableValue
+        DTS:DataType="8">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A6BC0D4A-F164-4EA7-AF0A-C9AA4DCB435D}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileSpec">
+      <DTS:VariableValue
+        DTS:DataType="8">*.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E5BC7837-BE57-49A7-9C67-57B12DDB1D30}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileSpec2">
+      <DTS:VariableValue
+        DTS:DataType="8">*.csv</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D58BE744-6B09-420D-AEE1-D9B13702E35C}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Source_Path">
+      <DTS:VariableValue
+        DTS:DataType="8">\\\\Dev-rpsvr01\\rpdw\\Archive\\LEO\\</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\csv encryption"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{E57B99D1-02D3-421C-9F2E-7507C7CAFBE7}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="csv encryption">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachFileEnumerator"
+        DTS:DTSID="{62D010A8-96CF-457C-B385-C48EBA15681F}"
+        DTS:ObjectName="{62D010A8-96CF-457C-B385-C48EBA15681F}">
+        <DTS:PropertyExpression
+          DTS:Name="Directory">@[User::Source_Path]</DTS:PropertyExpression>
+        <DTS:PropertyExpression
+          DTS:Name="FileSpec">@[User::FileSpec]</DTS:PropertyExpression>
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="\\\\Dev-rpsvr01\\rpdw\\Archive\\LEO\\" />
+            <FEFEProperty
+              FileSpec="*.xlsx" />
+            <FEFEProperty
+              FileNameRetrievalType="0" />
+            <FEFEProperty
+              Recurse="-1" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\csv encryption\Encrypt File"
+          DTS:CreationName="Microsoft.ExecuteProcess"
+          DTS:Description="Execute Process Task"
+          DTS:DTSID="{635EE51A-6AAA-4CD4-990A-191C16A3FADB}"
+          DTS:ExecutableType="Microsoft.ExecuteProcess"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Encrypt File"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:PropertyExpression
+            DTS:Name="Arguments">"--recipient \"Insights\" --output "+ "\""+ @[User::FileName] +".gpg" + "\"" + " --encrypt " + "\""+ @[User::FileName] + "\""</DTS:PropertyExpression>
+          <DTS:ObjectData>
+            <ExecuteProcessData
+              Executable="C:\Program Files (x86)\GnuPG\bin\gpg.exe"
+              Arguments="--recipient &quot;Insights&quot; --output &quot;0.gpg&quot; --encrypt &quot;0&quot;" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\csv encryption\File System Task"
+          DTS:CreationName="Microsoft.FileSystemTask"
+          DTS:Description="File System Task"
+          DTS:DTSID="{2E7C6055-15CB-455A-AFE9-63EE9B6AA108}"
+          DTS:ExecutableType="Microsoft.FileSystemTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="File System Task"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <FileSystemData
+              TaskOperationType="DeleteFile"
+              TaskSourcePath="User::FileName"
+              TaskIsSourceVariable="True" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\csv encryption.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{F43F939B-09B6-4E30-B4CE-579DD94701BE}"
+          DTS:From="Package\csv encryption\Encrypt File"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\csv encryption\File System Task" />
+      </DTS:PrecedenceConstraints>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{A53F7E69-4C3E-4FDE-B0D3-19BE4B170612}"
+          DTS:ObjectName="{A53F7E69-4C3E-4FDE-B0D3-19BE4B170612}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::FileName" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\xlsx encryption"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{1e32fa2f-cf42-4d20-a487-93bf44304963}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="xlsx encryption">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachFileEnumerator"
+        DTS:DTSID="{c4063607-f049-41e7-98ce-cccb361cb4bd}"
+        DTS:ObjectName="{62D010A8-96CF-457C-B385-C48EBA15681F}">
+        <DTS:PropertyExpression
+          DTS:Name="Directory">@[User::Source_Path]</DTS:PropertyExpression>
+        <DTS:PropertyExpression
+          DTS:Name="FileSpec">@[User::FileSpec2]</DTS:PropertyExpression>
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="\\\\Dev-rpsvr01\\rpdw\\Archive\\LEO\\" />
+            <FEFEProperty
+              FileSpec="*.csv" />
+            <FEFEProperty
+              FileNameRetrievalType="0" />
+            <FEFEProperty
+              Recurse="-1" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\xlsx encryption\Encrypt File"
+          DTS:CreationName="Microsoft.ExecuteProcess"
+          DTS:Description="Execute Process Task"
+          DTS:DTSID="{1d93c6f0-0480-4cc1-930d-e5d5c69ed1b6}"
+          DTS:ExecutableType="Microsoft.ExecuteProcess"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Encrypt File"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:PropertyExpression
+            DTS:Name="Arguments">"--recipient \"Insights\" --output "+ "\""+ @[User::FileName] +".gpg" + "\"" + " --encrypt " + "\""+ @[User::FileName] + "\""</DTS:PropertyExpression>
+          <DTS:ObjectData>
+            <ExecuteProcessData
+              Executable="C:\Program Files (x86)\GnuPG\bin\gpg.exe"
+              Arguments="--recipient &quot;Insights&quot; --output &quot;0.gpg&quot; --encrypt &quot;0&quot;" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\xlsx encryption\File System Task"
+          DTS:CreationName="Microsoft.FileSystemTask"
+          DTS:Description="File System Task"
+          DTS:DTSID="{9a22d3c4-75fa-46b3-8b92-0a3421084b13}"
+          DTS:ExecutableType="Microsoft.FileSystemTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="File System Task"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <FileSystemData
+              TaskOperationType="DeleteFile"
+              TaskSourcePath="User::FileName"
+              TaskIsSourceVariable="True" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\xlsx encryption.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{ac70a60a-7bce-4618-a623-7ac8bf44aa96}"
+          DTS:From="Package\xlsx encryption\Encrypt File"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\xlsx encryption\File System Task" />
+      </DTS:PrecedenceConstraints>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{8E709163-4CBE-4A3F-B762-CE58D9DF0424}"
+          DTS:ObjectName="{8E709163-4CBE-4A3F-B762-CE58D9DF0424}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::FileName" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{DF9DAB2C-BE5A-4510-BCE0-AC94D411CEDA}"
+      DTS:From="Package\csv encryption"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\xlsx encryption" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="119,43"
+          Id="Package\csv encryption\Encrypt File"
+          TopLeft="73.9999999999999,26.666666666667" />
+        <NodeLayout
+          Size="136,43"
+          Id="Package\csv encryption\File System Task"
+          TopLeft="76,108" />
+        <EdgeLayout
+          Id="Package\csv encryption.PrecedenceConstraints[Constraint]"
+          TopLeft="133.333333333333,69.3333333333337">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="10.6666666666668,38.666666666666"
+              Start="0,0"
+              End="10.6666666666668,31.166666666666">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.333333333333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.333333333333"
+                    Point2="0,19.333333333333"
+                    Point3="4,19.333333333333" />
+                  <mssgle:LineSegment
+                    End="6.66666666666677,19.333333333333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="6.66666666666677,19.333333333333"
+                    Point2="10.6666666666668,19.333333333333"
+                    Point3="10.6666666666668,23.333333333333" />
+                  <mssgle:LineSegment
+                    End="10.6666666666668,31.166666666666" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="271,211"
+          Size="271,254"
+          Id="Package\csv encryption"
+          TopLeft="177.333333333333,70.666666666667" />
+        <NodeLayout
+          Size="119,43"
+          Id="Package\xlsx encryption\Encrypt File"
+          TopLeft="73.9999999999999,26.666666666667" />
+        <NodeLayout
+          Size="136,43"
+          Id="Package\xlsx encryption\File System Task"
+          TopLeft="76,108" />
+        <EdgeLayout
+          Id="Package\xlsx encryption.PrecedenceConstraints[Constraint]"
+          TopLeft="133.333333333333,69.3333333333337">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="10.6666666666668,38.666666666666"
+              Start="0,0"
+              End="10.6666666666668,31.166666666666">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.333333333333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.333333333333"
+                    Point2="0,19.333333333333"
+                    Point3="4,19.333333333333" />
+                  <mssgle:LineSegment
+                    End="6.66666666666677,19.333333333333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="6.66666666666677,19.333333333333"
+                    Point2="10.6666666666668,19.333333333333"
+                    Point3="10.6666666666668,23.333333333333" />
+                  <mssgle:LineSegment
+                    End="10.6666666666668,31.166666666666" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="271,211"
+          Size="271,254"
+          Id="Package\xlsx encryption"
+          TopLeft="530.888888888889,77.5555555555558" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="448,201.111111111111">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="82.888888888889,0"
+              Start="0,0"
+              End="75.388888888889,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="75.388888888889,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

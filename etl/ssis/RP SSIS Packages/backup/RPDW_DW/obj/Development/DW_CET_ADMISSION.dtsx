@@ -1,0 +1,1543 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/30/2019 1:46:31 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-110119GM22"
+  DTS:CreatorName="NCS\P0500388"
+  DTS:DelayValidation="True"
+  DTS:DTSID="{74E5DAC7-C4C7-4BC2-B794-3DF539EF05DB}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="DW_CET_ADMISSION"
+  DTS:PackageType="5"
+  DTS:VersionBuild="130"
+  DTS:VersionGUID="{D0300BB2-F808-467D-8AEB-0EBA20D1B6BD}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{5A2903BA-90C0-4CEF-A8D5-FE377F4146D6}"
+      DTS:ObjectName="DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.22.2.38;User ID=svc-dw-prod-etl;Initial Catalog=RPDW_PRD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAjmfcLoftrkO4CNyVi2x+sAAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACX3TvtQc+d6KoafnV6M5EGAAAAAASAAACgAAAAEAAAAOtZVV4rhg5ta/561zIiFh0YAAAAORK1UzcPW/USxZ8vNLBoa3CSnDv5MLdXFAAAACxvfIHe3+yyBXZHaDH0U48juG/A</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ErrorLog]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{6BDB618C-7C1A-4EF5-A95F-506FC0F9D145}"
+      DTS:ObjectName="ErrorLog">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.22.2.38;User ID=svc-dw-prod-etl;Initial Catalog=RPDW_PRD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAjmfcLoftrkO4CNyVi2x+sAAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADbDNqH3j1JMNJXG9Lj0zk3AAAAAASAAACgAAAAEAAAAIZgQUEV3Fgrnb9HPe/dQYYYAAAAnQj6JnCfuT9i2DSxfO6XYT3+NixcoMI+FAAAAJBL5hcsd/9Qcorja2jGj/zEPqC2</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B6481BB4-828F-4E86-A2A0-84687BD51636}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Duplicate_Check">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5D0280DF-30ED-497D-BB37-F842667FA2FF}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_name">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_CET_ADMISSION</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{98A25EE1-344F-41D7-AFD6-C09A0C4B4DE8}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_Status">
+      <DTS:VariableValue
+        DTS:DataType="3">1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{37EDDAA5-4C34-4BCF-A032-DA0A8389C15F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JOB_STATUS_ID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C79A8117-CAF2-41C8-ADD0-3B4288295CBF}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Mandatory_constraint_Check">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{10729B43-3B04-4544-9BE1-1387A5664385}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Process_date">
+      <DTS:VariableValue
+        DTS:DataType="7">2/1/2019 2:58:00 PM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E16B41DD-8E66-4C58-80C4-1D26605DDA19}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SourceTable">
+      <DTS:VariableValue
+        DTS:DataType="8">STG_OASIS_ADMISSIONS_SUMMARY_COURSE</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E1DB365C-83B5-48BB-87B2-97BCFE6CBABB}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;&#xA;BEGIN TRY&#xA;&#xA;------------&#xA;&#xA;DECLARE @LastDWProcessdate datetime&#xA;&#xA;,@processeddatetime datetime&#xA;,@jobstatusid varchar(5)&#xA;select @jobstatusid=&quot;+ (DT_STR, 5,1252) @[User::JOB_STATUS_ID] +&quot;&#xA;select @LastDWProcessdate= Isnull(max(Modified_on),'1990-01-01 00:00:00.000') from [dbo].[DW_CET_ADMISSION]--dw table&#xA;--select  @processeddatetime=?&#xA;&#xA;--select @LastDWProcessdate&#xA;&#xA;;with TMP_DW_CET_ADMISSION ([Institution]&#xA;      ,[Qual_Type]&#xA;      ,[Qual_Type_Descr]&#xA;      ,[Admit_Term]&#xA;      ,[Programme]&#xA;      ,[Programme_Descr]&#xA;      ,[Specialisatn]&#xA;      ,[Student_Attr]&#xA;      ,[Run_Number]&#xA;      ,[Run_Title]&#xA;      ,[Prog_Action]&#xA;      ,[Prog_Action_Descr]&#xA;      ,[Applicant_ID]&#xA;      ,[Applicant_Number]&#xA;      ,[Student_Career_Number]&#xA;      ,[App_Prog_Number]&#xA;      ,[Effective_Date]&#xA;      ,[Effective_Sequence]&#xA;      ,[Salutation]&#xA;      ,[Applicant_Name]&#xA;      ,[Id_Type]&#xA;      ,[Id_Number]&#xA;      ,[Residency_Type]&#xA;      ,[Citizenship]&#xA;      ,[Gender]&#xA;      ,[Race]&#xA;      ,[DOB]&#xA;      ,[Age]&#xA;      ,[Country_of_Birth]&#xA;      ,[Highest_Acad_Qual]&#xA;      ,[Last_Inst_Attended]&#xA;      ,[Inst_Name]&#xA;      ,[Country]&#xA;      ,[Block_House_Name]&#xA;      ,[Street_Name]&#xA;      ,[Storey_Unit_Number]&#xA;      ,[Building_Name]&#xA;      ,[Postal_Code]&#xA;      ,[Comp_Name_Office]&#xA;      ,[Comp_Name_Oth]&#xA;      ,[Is_SME_Comp]&#xA;      ,[Country_Office]&#xA;      ,[Blk_House_Number_Office]&#xA;      ,[Street_Name_Office]&#xA;      ,[Storey_Unit_Number_Office]&#xA;      ,[Building_Name_Office]&#xA;      ,[Postal_Code_Office]&#xA;      ,[Telephone_Office]&#xA;      ,[Ext_Office]&#xA;      ,[Fax_Office]&#xA;      ,[Job_Designation]&#xA;      ,[Current_Job_Function]&#xA;      ,[Current_Employmt_Sector]&#xA;      ,[Working_Exp_Yrs]&#xA;      ,[Working_Exp_Mth]&#xA;      ,[Relevant_Working_Exp_Yrs]&#xA;      ,[Relevant_Working_Exp_Mth]&#xA;      ,[Reason_for_taking_course]&#xA;      ,[Oth_reason_pls_specify]&#xA;      ,[Exam_Name1_Tertiary_ITE]&#xA;      ,[Course_Name1_Tertiary_ITE]&#xA;      ,[Inst1_Tertiary_ITE]&#xA;      ,[GPA1_Tertiary_ITE]&#xA;      ,[Exam_Name2_Tertiary_ITE]&#xA;      ,[Course_Name2_Tertiary_ITE]&#xA;      ,[Inst2_Tertiary_ITE]&#xA;      ,[GPA2_Tertiary_ITE]&#xA;      ,[Exam_Name3_Tertiary_ITE]&#xA;      ,[Course_Name3_Tertiary_ITE]&#xA;      ,[Inst3_Tertiary_ITE]&#xA;      ,[GPA3_Tertiary_ITE]&#xA;      ,[Exam_Name1_Tertiary_Non_ITE]&#xA;      ,[Exam_Name2_Tertiary_Non_ITE]&#xA;      ,[Exam_Name3_Tertiary_Non_ITE]&#xA;      ,[SP_Diploma_Holder]&#xA;      ,[NP_Diploma_Holder]&#xA;      ,[NYP_Diploma_Holder]&#xA;      ,[TP_Diploma_Holder]&#xA;      ,[RP_Staff]&#xA;      ,[RP_Student]&#xA;      ,[RP_Alumni]&#xA;      ,[NA]&#xA;      ,[Club_Replc_RP_Staff_RP_Student]&#xA;      ,[Received_WTS_letter_before]&#xA;      ,[Received_MOE_Subsidy_before]&#xA;      ,[AD_SD_DCON_PTD_NA_1]&#xA;      ,[Name_of_course_1]&#xA;      ,[Awarding_Poly_1]&#xA;      ,[Completed_Diploma_1]&#xA;      ,[Year_of_Graduation_1]&#xA;      ,[No_of_Certs_Completed_1]&#xA;      ,[AD_SD_DCON_PTD_NA_2]&#xA;      ,[Name_of_course_2]&#xA;      ,[Awarding_Poly_2]&#xA;      ,[Completed_Diploma_2]&#xA;      ,[Year_of_Graduation_2]&#xA;      ,[No_of_Certs_Completed_2]&#xA;      ,[AD_SD_DCON_PTD_NA_3]&#xA;      ,[Name_of_course_3]&#xA;      ,[Awarding_Polytechnics_3]&#xA;      ,[Completed_Diploma_3]&#xA;      ,[Year_of_Graduation_3]&#xA;      ,[No_of_Certs_Completed_3]&#xA;      ,[Claim_ID]&#xA;      ,[Claim_Amount]&#xA;      ,[Colour_Appreciation_Deficiency]&#xA;      ,[Blindness_Low_Vision]&#xA;      ,[Deafness]&#xA;      ,[Epilepsy]&#xA;      ,[HIV_positive_AIDS]&#xA;      ,[Phychiatric_Probs]&#xA;      ,[Oth_prob_pls_specify]&#xA;      ,[Provide_details_if_any]&#xA;      ,[Advt_in_Straits_Times]&#xA;      ,[Mailer_from_RP]&#xA;      ,[Friends]&#xA;      ,[Internet]&#xA;      ,[General_Enquiry_at_RP]&#xA;      ,[Lecturers]&#xA;      ,[Oth_pls_specify]&#xA;      ,[Submitted_Comments]&#xA;      ,[Submitted_Photo]&#xA;      ,[Submitted_Id_Doc]&#xA;      ,[Submitted_Certificate]&#xA;      ,[Submitted_Date_of_Web_App]&#xA;      ,[Invoice_Status]&#xA;      ,[Payment_Status]&#xA;      ,[Net_Payable]&#xA;      ,[Payment_Amount]&#xA;      ,[Form_of_Payment_Received]&#xA;      ,[Payment_Date_Time]&#xA;      ,[Remarks]&#xA;      ,[Qual_Type_Highest]&#xA;      ,[Title_of_Qual]&#xA;      ,[Awarding_Inst]&#xA;      ,[GPA]&#xA;      ,[Qual_Type_Other_1]&#xA;      ,[Title_of_Qual_1]&#xA;      ,[Awarding_Inst_1]&#xA;      ,[GPA_1]&#xA;      ,[Qual_Type_Other_2]&#xA;      ,[Title_of_Qual_2]&#xA;      ,[Awarding_Inst_2]&#xA;      ,[GPA_2]&#xA;      ,[Employmt_Status]&#xA;      ,[Blacklisted]&#xA;&#xA;      )&#xA;&#xA;         as&#xA;&#xA;  (&#xA;&#xA;SELECT &#xA;a.Inst&#xA;,a.Qual_Type&#xA;,b.Long_Name&#xA;,a.Admit_Term&#xA;,a.Prog&#xA;,c.Prog_Formal_Descr&#xA;,a.Specialisatn&#xA;,a.Student_Attr&#xA;,a.Run_Number&#xA;,a.Run_Title&#xA;,a.Prog_Action&#xA;,d.Long_Name&#xA;,a.Applicant_ID&#xA;,a.Applicant_Number&#xA;,a.Student_Career_Number&#xA;,a.App_Prog_Number&#xA;,a.Effective_Date&#xA;,a.Effective_Sequence&#xA;,a.Salutation&#xA;,a.Name&#xA;,a.Id_Type&#xA;,a.Id_Number&#xA;,a.Residency_Type&#xA;,a.Citizenship&#xA;,a.Gender&#xA;,a.Race&#xA;,a.DOB&#xA;,a.Age&#xA;,a.Country_of_Birth&#xA;,a.Highest_Acad_Qual&#xA;,a.Last_Inst_Attended&#xA;,a.Inst_Name&#xA;,a.Country&#xA;,a.Block_House_Name&#xA;,a.Street_Name&#xA;,a.Storey_Unit_Number&#xA;,a.Building_Name&#xA;,a.Postal_Code&#xA;,a.Comp_Name_Office&#xA;,a.Comp_Name_Oth&#xA;,a.Is_SME_Comp&#xA;,a.Country_Office&#xA;,a.Blk_House_Number_Office&#xA;,a.Street_Name_Office&#xA;,a.Storey_Unit_Number_Office&#xA;,a.Building_Name_Office&#xA;,a.Postal_Code_Office&#xA;,a.Telephone_Office&#xA;,a.Ext_Office&#xA;,a.Fax_Office&#xA;,a.Job_Designation&#xA;,a.Current_Job_Function&#xA;,a.Current_Employmt_Sector&#xA;,a.Working_Exp_Yrs&#xA;,a.Working_Exp_Mth&#xA;,a.Relevant_Working_Exp_Yrs&#xA;,a.Relevant_Working_Exp_Mth&#xA;,a.Reason_for_taking_course&#xA;,a.Oth_reason_pls_specify&#xA;,a.Exam_Name1_Tertiary_ITE&#xA;,a.Course_Name1_Tertiary_ITE&#xA;,a.Inst1_Tertiary_ITE&#xA;,a.GPA1_Tertiary_ITE&#xA;,a.Exam_Name2_Tertiary_ITE&#xA;,a.Course_Name2_Tertiary_ITE&#xA;,a.Inst2_Tertiary_ITE&#xA;,a.GPA2_Tertiary_ITE&#xA;,a.Exam_Name3_Tertiary_ITE&#xA;,a.Course_Name3_Tertiary_ITE&#xA;,a.Inst3_Tertiary_ITE&#xA;,a.GPA3_Tertiary_ITE&#xA;,a.Exam_Name1_Tertiary_Non_ITE&#xA;,a.Exam_Name2_Tertiary_Non_ITE&#xA;,a.Exam_Name3_Tertiary_Non_ITE&#xA;,a.SP_Diploma_Holder&#xA;,a.NP_Diploma_Holder&#xA;,a.NYP_Diploma_Holder&#xA;,a.TP_Diploma_Holder&#xA;,a.RP_Staff&#xA;,a.RP_Student&#xA;,a.RP_Alumni&#xA;,a.NA&#xA;,a.Club_Replc_RP_Staff_RP_Student&#xA;,a.Received_WTS_letter_before&#xA;,a.Received_MOE_Subsidy_before&#xA;,a.AD_SD_DCON_PTD_NA_1&#xA;,a.Name_of_course_1&#xA;,a.Awarding_Poly_1&#xA;,a.Completed_Diploma_1&#xA;,a.Year_of_Graduation_1&#xA;,a.No_of_Certs_Completed_1&#xA;,a.AD_SD_DCON_PTD_NA_2&#xA;,a.Name_of_course_2&#xA;,a.Awarding_Poly_2&#xA;,a.Completed_Diploma_2&#xA;,a.Year_of_Graduation_2&#xA;,a.No_of_Certs_Completed_2&#xA;,a.AD_SD_DCON_PTD_NA_3&#xA;,a.Name_of_course_3&#xA;,a.Awarding_Polytechnics_3&#xA;,a.Completed_Diploma_3&#xA;,a.Year_of_Graduation_3&#xA;,a.No_of_Certs_Completed_3&#xA;,a.Claim_ID&#xA;,a.Claim_Amount&#xA;,a.Colour_Appreciation_Deficiency&#xA;,a.Blindness_Low_Vision&#xA;,a.Deafness&#xA;,a.Epilepsy&#xA;,a.HIV_positive_AIDS&#xA;,a.Phychiatric_Probs&#xA;,a.Oth_prob_pls_specify&#xA;,a.Provide_details_if_any&#xA;,a.Advt_in_Straits_Times&#xA;,a.Mailer_from_RP&#xA;,a.Friends&#xA;,a.Internet&#xA;,a.General_Enquiry_at_RP&#xA;,a.Lecturers&#xA;,a.Oth_pls_specify&#xA;,a.Submitted_Comments&#xA;,a.Submitted_Photo&#xA;,a.Submitted_Id_Doc&#xA;,a.Submitted_Certificate&#xA;,a.Submitted_Date_of_Web_App&#xA;,a.Invoice_Status&#xA;,a.Payment_Status&#xA;,a.Net_Payable&#xA;,a.Payment_Amount&#xA;,a.Form_of_Payment_Received&#xA;,a.Payment_Date_Time&#xA;,a.Remarks&#xA;,a.Qual_Type_Highest&#xA;,a.Title_of_Qual&#xA;,a.Awarding_Inst&#xA;,a.GPA&#xA;,a.Qual_Type_Other_1&#xA;,a.Title_of_Qual_1&#xA;,a.Awarding_Inst_1&#xA;,a.GPA_1&#xA;,a.Qual_Type_Other_2&#xA;,a.Title_of_Qual_2&#xA;,a.Awarding_Inst_2&#xA;,a.GPA_2&#xA;,a.Employmt_Status&#xA;,a.Blacklisted&#xA;  FROM &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_ADMISSIONS_SUMMARY_COURSE] a &#xA;&#xA;  inner join (select * from (&#xA; SELECT Applicant_ID, Qual_Type,Admit_Term, Prog, Run_Number, Prog_Action, Applicant_Number, &#xA; ROW_NUMBER() OVER (&#xA;  PARTITION BY Applicant_ID, Qual_Type,Admit_Term, Prog, Run_Number, Prog_Action, Applicant_Number&#xA;  ORDER BY Effective_Date DESC, Effective_Sequence DESC) rownum, Effective_Date, Effective_Sequence&#xA;FROM &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].STG_OASIS_ADMISSIONS_SUMMARY_COURSE&#xA;) a where rownum=1)ac ON&#xA;&#xA;a.Applicant_ID=ac.Applicant_ID and &#xA;a.Qual_Type=ac.Qual_Type and&#xA;a.Admit_Term=ac.Admit_Term and&#xA;a.Prog=ac.Prog and &#xA;a.Prog_Action=ac.Prog_Action and&#xA;a.Run_Number=ac.Run_Number and&#xA;a.Applicant_Number=ac.Applicant_Number and&#xA;a.Effective_Date=ac.Effective_Date and&#xA;a.Effective_Sequence=ac.Effective_Sequence&#xA;&#xA;&#xA;&#xA;  Left JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_MASTER_CODE] b&#xA;  on a.QUAL_TYPE=b.FIELD_VALUE and b.FIELD_NAME='ACAD_CAREER' and b.EFFECTIVE_STATUS = 'A' &#xA;&#xA;left join &#xA;  ( select  PROG_CODE,Prog_Formal_Descr from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_PROG_TABLE] a1&#xA;&#x9;&#x9; where a1.LATEST_IND='Y'  and a1.EFFECTIVE_DATE in (select max(b1.EFFECTIVE_DATE) from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_PROG_TABLE] b1&#xA;&#x9;&#x9; where b1.Prog_Code=a1.PROG_CODE)) c on a.Prog=c.Prog_Code&#x9;&#xA;&#x9;&#x9; &#xA;Left JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_MASTER_CODE] d&#xA;  on a.Prog_Action=d.FIELD_VALUE and d.FIELD_NAME='PROG_ACTION' and d.EFFECTIVE_STATUS = 'A'  &#xA;&#xA;  where a.[Latest_Ind]='Y'  and a.[Modified_On]&gt;@LastDWProcessdate)&#xA;&#xA;  MERGE INTO dbo.DW_CET_ADMISSION AS dst&#xA;&#xA;   USING TMP_DW_CET_ADMISSION AS src&#xA;&#xA;   ON( dst.Qual_Type=src.Qual_Type and dst.Specialisatn=src.Specialisatn and dst.Applicant_ID=Src.Applicant_ID and dst.Applicant_Number=src.Applicant_Number&#xA;     and  dst.Student_Career_Number=src.Student_Career_Number and dst.App_Prog_Number=src.App_Prog_Number and dst.Effective_Date=src.Effective_Date&#xA;  and dst.Effective_Sequence=src.Effective_Sequence and src.Residency_Type=dst.Residency_Type)&#xA;&#xA;&#xA;&#xA;   WHEN NOT MATCHED THEN&#xA;&#xA;   INSERT&#xA;&#xA;         ( [Institution]&#xA;      ,[Qual_Type]&#xA;      ,[Qual_Type_Descr]&#xA;      ,[Admit_Term]&#xA;      ,[Programme]&#xA;      ,[Programme_Descr]&#xA;      ,[Specialisatn]&#xA;      ,[Student_Attr]&#xA;      ,[Run_Number]&#xA;      ,[Run_Title]&#xA;      ,[Prog_Action]&#xA;      ,[Prog_Action_Descr]&#xA;      ,[Applicant_ID]&#xA;      ,[Applicant_Number]&#xA;      ,[Student_Career_Number]&#xA;      ,[App_Prog_Number]&#xA;      ,[Effective_Date]&#xA;      ,[Effective_Sequence]&#xA;      ,[Salutation]&#xA;      ,[Applicant_Name]&#xA;      ,[Id_Type]&#xA;      ,[Id_Number]&#xA;      ,[Residency_Type]&#xA;      ,[Citizenship]&#xA;      ,[Gender]&#xA;      ,[Race]&#xA;      ,[DOB]&#xA;      ,[Age]&#xA;      ,[Country_of_Birth]&#xA;      ,[Highest_Acad_Qual]&#xA;      ,[Last_Inst_Attended]&#xA;      ,[Inst_Name]&#xA;      ,[Country]&#xA;      ,[Block_House_Name]&#xA;      ,[Street_Name]&#xA;      ,[Storey_Unit_Number]&#xA;      ,[Building_Name]&#xA;      ,[Postal_Code]&#xA;      ,[Comp_Name_Office]&#xA;      ,[Comp_Name_Oth]&#xA;      ,[Is_SME_Comp]&#xA;      ,[Country_Office]&#xA;      ,[Blk_House_Number_Office]&#xA;      ,[Street_Name_Office]&#xA;      ,[Storey_Unit_Number_Office]&#xA;      ,[Building_Name_Office]&#xA;      ,[Postal_Code_Office]&#xA;      ,[Telephone_Office]&#xA;      ,[Ext_Office]&#xA;      ,[Fax_Office]&#xA;      ,[Job_Designation]&#xA;      ,[Current_Job_Function]&#xA;      ,[Current_Employmt_Sector]&#xA;      ,[Working_Exp_Yrs]&#xA;      ,[Working_Exp_Mth]&#xA;      ,[Relevant_Working_Exp_Yrs]&#xA;      ,[Relevant_Working_Exp_Mth]&#xA;      ,[Reason_for_taking_course]&#xA;      ,[Oth_reason_pls_specify]&#xA;      ,[Exam_Name1_Tertiary_ITE]&#xA;      ,[Course_Name1_Tertiary_ITE]&#xA;      ,[Inst1_Tertiary_ITE]&#xA;      ,[GPA1_Tertiary_ITE]&#xA;      ,[Exam_Name2_Tertiary_ITE]&#xA;      ,[Course_Name2_Tertiary_ITE]&#xA;      ,[Inst2_Tertiary_ITE]&#xA;      ,[GPA2_Tertiary_ITE]&#xA;      ,[Exam_Name3_Tertiary_ITE]&#xA;      ,[Course_Name3_Tertiary_ITE]&#xA;      ,[Inst3_Tertiary_ITE]&#xA;      ,[GPA3_Tertiary_ITE]&#xA;      ,[Exam_Name1_Tertiary_Non_ITE]&#xA;      ,[Exam_Name2_Tertiary_Non_ITE]&#xA;      ,[Exam_Name3_Tertiary_Non_ITE]&#xA;      ,[SP_Diploma_Holder]&#xA;      ,[NP_Diploma_Holder]&#xA;      ,[NYP_Diploma_Holder]&#xA;      ,[TP_Diploma_Holder]&#xA;      ,[RP_Staff]&#xA;      ,[RP_Student]&#xA;      ,[RP_Alumni]&#xA;      ,[NA]&#xA;      ,[Club_Replc_RP_Staff_RP_Student]&#xA;      ,[Received_WTS_letter_before]&#xA;      ,[Received_MOE_Subsidy_before]&#xA;      ,[AD_SD_DCON_PTD_NA_1]&#xA;      ,[Name_of_course_1]&#xA;      ,[Awarding_Poly_1]&#xA;      ,[Completed_Diploma_1]&#xA;      ,[Year_of_Graduation_1]&#xA;      ,[No_of_Certs_Completed_1]&#xA;      ,[AD_SD_DCON_PTD_NA_2]&#xA;      ,[Name_of_course_2]&#xA;      ,[Awarding_Poly_2]&#xA;      ,[Completed_Diploma_2]&#xA;      ,[Year_of_Graduation_2]&#xA;      ,[No_of_Certs_Completed_2]&#xA;      ,[AD_SD_DCON_PTD_NA_3]&#xA;      ,[Name_of_course_3]&#xA;      ,[Awarding_Polytechnics_3]&#xA;      ,[Completed_Diploma_3]&#xA;      ,[Year_of_Graduation_3]&#xA;      ,[No_of_Certs_Completed_3]&#xA;      ,[Claim_ID]&#xA;      ,[Claim_Amount]&#xA;      ,[Colour_Appreciation_Deficiency]&#xA;      ,[Blindness_Low_Vision]&#xA;      ,[Deafness]&#xA;      ,[Epilepsy]&#xA;      ,[HIV_positive_AIDS]&#xA;      ,[Phychiatric_Probs]&#xA;      ,[Oth_prob_pls_specify]&#xA;      ,[Provide_details_if_any]&#xA;      ,[Advt_in_Straits_Times]&#xA;      ,[Mailer_from_RP]&#xA;      ,[Friends]&#xA;      ,[Internet]&#xA;      ,[General_Enquiry_at_RP]&#xA;      ,[Lecturers]&#xA;      ,[Oth_pls_specify]&#xA;      ,[Submitted_Comments]&#xA;      ,[Submitted_Photo]&#xA;      ,[Submitted_Id_Doc]&#xA;      ,[Submitted_Certificate]&#xA;      ,[Submitted_Date_of_Web_App]&#xA;      ,[Invoice_Status]&#xA;      ,[Payment_Status]&#xA;      ,[Net_Payable]&#xA;      ,[Payment_Amount]&#xA;      ,[Form_of_Payment_Received]&#xA;      ,[Payment_Date_Time]&#xA;      ,[Remarks]&#xA;      ,[Qual_Type_Highest]&#xA;      ,[Title_of_Qual]&#xA;      ,[Awarding_Inst]&#xA;      ,[GPA]&#xA;      ,[Qual_Type_Other_1]&#xA;      ,[Title_of_Qual_1]&#xA;      ,[Awarding_Inst_1]&#xA;      ,[GPA_1]&#xA;      ,[Qual_Type_Other_2]&#xA;      ,[Title_of_Qual_2]&#xA;      ,[Awarding_Inst_2]&#xA;      ,[GPA_2]&#xA;      ,[Employmt_Status]&#xA;      ,[Blacklisted]&#xA;&#x9;  ,[Created_On]&#xA;     ,[Modified_On])&#xA;&#xA;   VALUES(  &#xA;&#xA;           SRC.[Institution]&#xA;      ,SRC.[Qual_Type]&#xA;      ,SRC.[Qual_Type_Descr]&#xA;      ,SRC.[Admit_Term]&#xA;      ,SRC.[Programme]&#xA;      ,SRC.[Programme_Descr]&#xA;      ,SRC.[Specialisatn]&#xA;      ,SRC.[Student_Attr]&#xA;      ,SRC.[Run_Number]&#xA;      ,SRC.[Run_Title]&#xA;      ,SRC.[Prog_Action]&#xA;      ,SRC.[Prog_Action_Descr]&#xA;      ,SRC.[Applicant_ID]&#xA;      ,SRC.[Applicant_Number]&#xA;      ,SRC.[Student_Career_Number]&#xA;      ,SRC.[App_Prog_Number]&#xA;      ,SRC.[Effective_Date]&#xA;      ,SRC.[Effective_Sequence]&#xA;      ,SRC.[Salutation]&#xA;      ,SRC.[Applicant_Name]&#xA;      ,SRC.[Id_Type]&#xA;      ,SRC.[Id_Number]&#xA;      ,SRC.[Residency_Type]&#xA;      ,SRC.[Citizenship]&#xA;      ,SRC.[Gender]&#xA;      ,SRC.[Race]&#xA;      ,SRC.[DOB]&#xA;      ,SRC.[Age]&#xA;      ,SRC.[Country_of_Birth]&#xA;      ,SRC.[Highest_Acad_Qual]&#xA;      ,SRC.[Last_Inst_Attended]&#xA;      ,SRC.[Inst_Name]&#xA;      ,SRC.[Country]&#xA;      ,SRC.[Block_House_Name]&#xA;      ,SRC.[Street_Name]&#xA;      ,SRC.[Storey_Unit_Number]&#xA;      ,SRC.[Building_Name]&#xA;      ,SRC.[Postal_Code]&#xA;      ,SRC.[Comp_Name_Office]&#xA;      ,SRC.[Comp_Name_Oth]&#xA;      ,SRC.[Is_SME_Comp]&#xA;      ,SRC.[Country_Office]&#xA;      ,SRC.[Blk_House_Number_Office]&#xA;      ,SRC.[Street_Name_Office]&#xA;      ,SRC.[Storey_Unit_Number_Office]&#xA;      ,SRC.[Building_Name_Office]&#xA;      ,SRC.[Postal_Code_Office]&#xA;      ,SRC.[Telephone_Office]&#xA;      ,SRC.[Ext_Office]&#xA;      ,SRC.[Fax_Office]&#xA;      ,SRC.[Job_Designation]&#xA;      ,SRC.[Current_Job_Function]&#xA;      ,SRC.[Current_Employmt_Sector]&#xA;      ,SRC.[Working_Exp_Yrs]&#xA;      ,SRC.[Working_Exp_Mth]&#xA;      ,SRC.[Relevant_Working_Exp_Yrs]&#xA;      ,SRC.[Relevant_Working_Exp_Mth]&#xA;      ,SRC.[Reason_for_taking_course]&#xA;      ,SRC.[Oth_reason_pls_specify]&#xA;      ,SRC.[Exam_Name1_Tertiary_ITE]&#xA;      ,SRC.[Course_Name1_Tertiary_ITE]&#xA;      ,SRC.[Inst1_Tertiary_ITE]&#xA;      ,SRC.[GPA1_Tertiary_ITE]&#xA;      ,SRC.[Exam_Name2_Tertiary_ITE]&#xA;      ,SRC.[Course_Name2_Tertiary_ITE]&#xA;      ,SRC.[Inst2_Tertiary_ITE]&#xA;      ,SRC.[GPA2_Tertiary_ITE]&#xA;      ,SRC.[Exam_Name3_Tertiary_ITE]&#xA;      ,SRC.[Course_Name3_Tertiary_ITE]&#xA;      ,SRC.[Inst3_Tertiary_ITE]&#xA;      ,SRC.[GPA3_Tertiary_ITE]&#xA;      ,SRC.[Exam_Name1_Tertiary_Non_ITE]&#xA;      ,SRC.[Exam_Name2_Tertiary_Non_ITE]&#xA;      ,SRC.[Exam_Name3_Tertiary_Non_ITE]&#xA;      ,SRC.[SP_Diploma_Holder]&#xA;      ,SRC.[NP_Diploma_Holder]&#xA;      ,SRC.[NYP_Diploma_Holder]&#xA;      ,SRC.[TP_Diploma_Holder]&#xA;      ,SRC.[RP_Staff]&#xA;      ,SRC.[RP_Student]&#xA;      ,SRC.[RP_Alumni]&#xA;      ,SRC.[NA]&#xA;      ,SRC.[Club_Replc_RP_Staff_RP_Student]&#xA;      ,SRC.[Received_WTS_letter_before]&#xA;      ,SRC.[Received_MOE_Subsidy_before]&#xA;      ,SRC.[AD_SD_DCON_PTD_NA_1]&#xA;      ,SRC.[Name_of_course_1]&#xA;      ,SRC.[Awarding_Poly_1]&#xA;      ,SRC.[Completed_Diploma_1]&#xA;      ,SRC.[Year_of_Graduation_1]&#xA;      ,SRC.[No_of_Certs_Completed_1]&#xA;      ,SRC.[AD_SD_DCON_PTD_NA_2]&#xA;      ,SRC.[Name_of_course_2]&#xA;      ,SRC.[Awarding_Poly_2]&#xA;      ,SRC.[Completed_Diploma_2]&#xA;      ,SRC.[Year_of_Graduation_2]&#xA;      ,SRC.[No_of_Certs_Completed_2]&#xA;      ,SRC.[AD_SD_DCON_PTD_NA_3]&#xA;      ,SRC.[Name_of_course_3]&#xA;      ,SRC.[Awarding_Polytechnics_3]&#xA;      ,SRC.[Completed_Diploma_3]&#xA;      ,SRC.[Year_of_Graduation_3]&#xA;      ,SRC.[No_of_Certs_Completed_3]&#xA;      ,SRC.[Claim_ID]&#xA;      ,SRC.[Claim_Amount]&#xA;      ,SRC.[Colour_Appreciation_Deficiency]&#xA;      ,SRC.[Blindness_Low_Vision]&#xA;      ,SRC.[Deafness]&#xA;      ,SRC.[Epilepsy]&#xA;      ,SRC.[HIV_positive_AIDS]&#xA;      ,SRC.[Phychiatric_Probs]&#xA;      ,SRC.[Oth_prob_pls_specify]&#xA;      ,SRC.[Provide_details_if_any]&#xA;      ,SRC.[Advt_in_Straits_Times]&#xA;      ,SRC.[Mailer_from_RP]&#xA;      ,SRC.[Friends]&#xA;      ,SRC.[Internet]&#xA;      ,SRC.[General_Enquiry_at_RP]&#xA;      ,SRC.[Lecturers]&#xA;      ,SRC.[Oth_pls_specify]&#xA;      ,SRC.[Submitted_Comments]&#xA;      ,SRC.[Submitted_Photo]&#xA;      ,SRC.[Submitted_Id_Doc]&#xA;      ,SRC.[Submitted_Certificate]&#xA;      ,SRC.[Submitted_Date_of_Web_App]&#xA;      ,SRC.[Invoice_Status]&#xA;      ,SRC.[Payment_Status]&#xA;      ,SRC.[Net_Payable]&#xA;      ,SRC.[Payment_Amount]&#xA;      ,SRC.[Form_of_Payment_Received]&#xA;      ,SRC.[Payment_Date_Time]&#xA;      ,SRC.[Remarks]&#xA;      ,SRC.[Qual_Type_Highest]&#xA;      ,SRC.[Title_of_Qual]&#xA;      ,SRC.[Awarding_Inst]&#xA;      ,SRC.[GPA]&#xA;      ,SRC.[Qual_Type_Other_1]&#xA;      ,SRC.[Title_of_Qual_1]&#xA;      ,SRC.[Awarding_Inst_1]&#xA;      ,SRC.[GPA_1]&#xA;      ,SRC.[Qual_Type_Other_2]&#xA;      ,SRC.[Title_of_Qual_2]&#xA;      ,SRC.[Awarding_Inst_2]&#xA;      ,SRC.[GPA_2]&#xA;      ,SRC.[Employmt_Status]&#xA;      ,SRC.[Blacklisted]&#xA;&#xA;       ,  getdate(),getdate())&#xA;&#xA;   WHEN MATCHED&#xA;&#xA;   &#xA;&#xA;   THEN UPDATE&#xA;&#xA;   SET        dst.Institution=src.Institution&#xA;&#xA;              ,dst.Qual_Type_Descr=src.Qual_Type_Descr&#xA;&#xA;             ,dst.Admit_Term=src.Admit_Term&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Programme=src.Programme&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Programme_Descr=src.Programme_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Student_Attr=src.Student_Attr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Run_Number=src.Run_Number&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Run_Title=src.Run_Title&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Prog_Action=src.Prog_Action&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Prog_Action_Descr=src.Prog_Action_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Salutation=src.Salutation&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Applicant_Name=src.Applicant_Name&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Id_Type=src.Id_Type&#xA;&#xA;&#x9;&#x9;&#x9; ,dst.Id_Number=src.Id_Number&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Citizenship=src.Citizenship&#xA;&#xA;&#x9;&#x9;&#x9;   ,dst.Gender=src.Gender&#xA;&#xA;&#x9;&#x9;&#x9;    ,dst.Race=src.Race&#xA;&#xA;&#x9;&#x9;&#x9;&#x9; ,dst.DOB=src.DOB&#xA;&#xA;&#x9;&#x9;&#x9;&#x9;  ,dst.Age=src.Age&#xA;&#xA;,dst.Country_of_Birth=src.Country_of_Birth&#xA;,dst.Highest_Acad_Qual=src.Highest_Acad_Qual&#xA;,dst.Last_Inst_Attended=src.Last_Inst_Attended&#xA;,dst.Inst_Name=src.Inst_Name&#xA;,dst.Country=src.Country&#xA;,dst.Street_Name=src.Street_Name&#xA;,dst.Storey_Unit_Number=src.Storey_Unit_Number&#xA;,dst.Building_Name=src.Building_Name&#xA;,dst.Postal_Code=src.Postal_Code&#xA;,dst.Comp_Name_Office=src.Comp_Name_Office&#xA;,dst.Comp_Name_Oth=src.Comp_Name_Oth&#xA;,dst.Country_Office=src.Country_Office&#xA;,dst.Blk_House_Number_Office=src.Blk_House_Number_Office&#xA;,dst.Street_Name_Office=src.Street_Name_Office&#xA;&#xA;,dst.Storey_Unit_Number_Office=src.Storey_Unit_Number_Office&#xA;,dst.Building_Name_Office=src.Building_Name_Office&#xA;,dst.Postal_Code_Office=src.Postal_Code_Office&#xA;,dst.Telephone_Office=src.Telephone_Office&#xA;,dst.Ext_Office=src.Ext_Office&#xA;,dst.Fax_Office=src.Fax_Office&#xA;,dst.Job_Designation=src.Job_Designation&#xA;,dst.Current_Job_Function=src.Current_Job_Function&#xA;,dst.Current_Employmt_Sector=src.Current_Employmt_Sector&#xA;,dst.Working_Exp_Yrs=src.Working_Exp_Yrs&#xA;,dst.Working_Exp_Mth=src.Working_Exp_Mth&#xA;,dst.Relevant_Working_Exp_Yrs=src.Relevant_Working_Exp_Yrs&#xA;,dst.Relevant_Working_Exp_Mth=src.Relevant_Working_Exp_Mth&#xA;,dst.Reason_for_taking_course=src.Reason_for_taking_course&#xA;&#xA;&#xA;,dst.Oth_reason_pls_specify=src.Oth_reason_pls_specify&#xA;,dst.Exam_Name1_Tertiary_ITE=src.Exam_Name1_Tertiary_ITE&#xA;,dst.Course_Name1_Tertiary_ITE=src.Course_Name1_Tertiary_ITE&#xA;,dst.Inst1_Tertiary_ITE=src.Inst1_Tertiary_ITE&#xA;,dst.GPA1_Tertiary_ITE=src.GPA1_Tertiary_ITE&#xA;,dst.Exam_Name2_Tertiary_ITE=src.Exam_Name2_Tertiary_ITE&#xA;,dst.Course_Name2_Tertiary_ITE=src.Course_Name2_Tertiary_ITE&#xA;,dst.Inst2_Tertiary_ITE=src.Inst2_Tertiary_ITE&#xA;,dst.GPA2_Tertiary_ITE=src.GPA2_Tertiary_ITE&#xA;,dst.Exam_Name3_Tertiary_ITE=src.Exam_Name3_Tertiary_ITE&#xA;,dst.Course_Name3_Tertiary_ITE=src.Course_Name3_Tertiary_ITE&#xA;,dst.Inst3_Tertiary_ITE=src.Inst3_Tertiary_ITE&#xA;,dst.GPA3_Tertiary_ITE=src.GPA3_Tertiary_ITE&#xA;,dst.Exam_Name1_Tertiary_Non_ITE=src.Exam_Name1_Tertiary_Non_ITE&#xA;,dst.Exam_Name2_Tertiary_Non_ITE=src.Exam_Name2_Tertiary_Non_ITE&#xA;,dst.Exam_Name3_Tertiary_Non_ITE=src.Exam_Name3_Tertiary_Non_ITE&#xA;,dst.SP_Diploma_Holder=src.SP_Diploma_Holder&#xA;,dst.NP_Diploma_Holder=src.NP_Diploma_Holder&#xA;,dst.NYP_Diploma_Holder=src.NYP_Diploma_Holder&#xA;,dst.TP_Diploma_Holder=src.TP_Diploma_Holder&#xA;,dst.RP_Staff=src.RP_Staff&#xA;,dst.RP_Student=src.RP_Student&#xA;,dst.RP_Alumni=src.RP_Alumni&#xA;,dst.NA=src.NA&#xA;,dst.Club_Replc_RP_Staff_RP_Student=src.Club_Replc_RP_Staff_RP_Student&#xA;&#xA;&#xA;,dst.Received_WTS_letter_before=src.Received_WTS_letter_before&#xA;,dst.Received_MOE_Subsidy_before=src.Received_MOE_Subsidy_before&#xA;,dst.AD_SD_DCON_PTD_NA_1=src.AD_SD_DCON_PTD_NA_1&#xA;,dst.Name_of_course_1=src.Name_of_course_1&#xA;,dst.Awarding_Poly_1=src.Awarding_Poly_1&#xA;,dst.Completed_Diploma_1=src.Completed_Diploma_1&#xA;,dst.Year_of_Graduation_1=src.Year_of_Graduation_1&#xA;,dst.No_of_Certs_Completed_1=src.No_of_Certs_Completed_1&#xA;,dst.AD_SD_DCON_PTD_NA_2=src.AD_SD_DCON_PTD_NA_2&#xA;,dst.Name_of_course_2=src.Name_of_course_2&#xA;,dst.Awarding_Poly_2=src.Awarding_Poly_2&#xA;,dst.Completed_Diploma_2=src.Completed_Diploma_2&#xA;,dst.Year_of_Graduation_2=src.Year_of_Graduation_2&#xA;,dst.No_of_Certs_Completed_2=src.No_of_Certs_Completed_2&#xA;,dst.AD_SD_DCON_PTD_NA_3=src.AD_SD_DCON_PTD_NA_3&#xA;,dst.Name_of_course_3=src.Name_of_course_3&#xA;,dst.Awarding_Polytechnics_3=src.Awarding_Polytechnics_3&#xA;,dst.Completed_Diploma_3=src.Completed_Diploma_3&#xA;,dst.Year_of_Graduation_3=src.Year_of_Graduation_3&#xA;,dst.No_of_Certs_Completed_3=src.No_of_Certs_Completed_3&#xA;,dst.Claim_ID=src.Claim_ID&#xA;,dst.Claim_Amount=src.Claim_Amount&#xA;,dst.Colour_Appreciation_Deficiency=src.Colour_Appreciation_Deficiency&#xA;,dst.Blindness_Low_Vision=src.Blindness_Low_Vision&#xA;,dst.Deafness=src.Deafness&#xA;&#xA;&#xA;&#xA;,dst.Epilepsy=src.Epilepsy&#xA;,dst.HIV_positive_AIDS=src.HIV_positive_AIDS&#xA;,dst.Phychiatric_Probs=src.Phychiatric_Probs&#xA;,dst.Oth_prob_pls_specify=src.Oth_prob_pls_specify&#xA;,dst.Provide_details_if_any=src.Provide_details_if_any&#xA;,dst.Advt_in_Straits_Times=src.Advt_in_Straits_Times&#xA;,dst.Mailer_from_RP=src.Mailer_from_RP&#xA;,dst.Friends=src.Friends&#xA;,dst.Internet=src.Internet&#xA;,dst.General_Enquiry_at_RP=src.General_Enquiry_at_RP&#xA;,dst.Lecturers=src.Lecturers&#xA;,dst.Oth_pls_specify=src.Oth_pls_specify&#xA;,dst.Submitted_Comments=src.Submitted_Comments&#xA;,dst.Submitted_Photo=src.Submitted_Photo&#xA;,dst.Submitted_Id_Doc=src.Submitted_Id_Doc&#xA;,dst.Submitted_Certificate=src.Submitted_Certificate&#xA;,dst.Submitted_Date_of_Web_App=src.Submitted_Date_of_Web_App&#xA;,dst.Invoice_Status=src.Invoice_Status&#xA;,dst.Payment_Status=src.Payment_Status&#xA;,dst.Net_Payable=src.Net_Payable&#xA;,dst.Payment_Amount=src.Payment_Amount&#xA;,dst.Form_of_Payment_Received=src.Form_of_Payment_Received&#xA;,dst.Payment_Date_Time=src.Payment_Date_Time&#xA;,dst.Remarks=src.Remarks&#xA;,dst.Qual_Type_Highest=src.Qual_Type_Highest&#xA;&#xA;&#xA;&#xA;,dst.Title_of_Qual=src.Title_of_Qual&#xA;,dst.Awarding_Inst=src.Awarding_Inst&#xA;,dst.GPA=src.GPA&#xA;,dst.Qual_Type_Other_1=src.Qual_Type_Other_1&#xA;,dst.Title_of_Qual_1=src.Title_of_Qual_1&#xA;,dst.Awarding_Inst_1=src.Awarding_Inst_1&#xA;,dst.GPA_1=src.GPA_1&#xA;,dst.Qual_Type_Other_2=src.Qual_Type_Other_2&#xA;,dst.Title_of_Qual_2=src.Title_of_Qual_2&#xA;,dst.Awarding_Inst_2=src.Awarding_Inst_2&#xA;,dst.GPA_2=src.GPA_2&#xA;,dst.Employmt_Status=src.Employmt_Status&#xA;,dst.Blacklisted=src.Blacklisted&#xA;,dst.Modified_On=getdate();&#xA;&#xA;              &#xA;&#xA;&#xA;&#xA;--------------------------------------&#xA;&#xA;COMMIT TRANSACTION&#xA;&#xA;END TRY&#xA;&#xA;&#xA;&#xA;BEGIN CATCH&#xA;&#xA;   ROLLBACK TRANSACTION&#xA;&#xA;  INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,getdate()  as created_on&#xA;&#xA;  &#xA;&#xA;END CATCH  &#xA;&#xA;GO&#xA;&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_DW_Load">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+
+BEGIN TRY
+
+------------
+
+DECLARE @LastDWProcessdate datetime
+
+,@processeddatetime datetime
+,@jobstatusid varchar(5)
+select @jobstatusid=0
+select @LastDWProcessdate= Isnull(max(Modified_on),'1990-01-01 00:00:00.000') from [dbo].[DW_CET_ADMISSION]--dw table
+--select  @processeddatetime=?
+
+--select @LastDWProcessdate
+
+;with TMP_DW_CET_ADMISSION ([Institution]
+      ,[Qual_Type]
+      ,[Qual_Type_Descr]
+      ,[Admit_Term]
+      ,[Programme]
+      ,[Programme_Descr]
+      ,[Specialisatn]
+      ,[Student_Attr]
+      ,[Run_Number]
+      ,[Run_Title]
+      ,[Prog_Action]
+      ,[Prog_Action_Descr]
+      ,[Applicant_ID]
+      ,[Applicant_Number]
+      ,[Student_Career_Number]
+      ,[App_Prog_Number]
+      ,[Effective_Date]
+      ,[Effective_Sequence]
+      ,[Salutation]
+      ,[Applicant_Name]
+      ,[Id_Type]
+      ,[Id_Number]
+      ,[Residency_Type]
+      ,[Citizenship]
+      ,[Gender]
+      ,[Race]
+      ,[DOB]
+      ,[Age]
+      ,[Country_of_Birth]
+      ,[Highest_Acad_Qual]
+      ,[Last_Inst_Attended]
+      ,[Inst_Name]
+      ,[Country]
+      ,[Block_House_Name]
+      ,[Street_Name]
+      ,[Storey_Unit_Number]
+      ,[Building_Name]
+      ,[Postal_Code]
+      ,[Comp_Name_Office]
+      ,[Comp_Name_Oth]
+      ,[Is_SME_Comp]
+      ,[Country_Office]
+      ,[Blk_House_Number_Office]
+      ,[Street_Name_Office]
+      ,[Storey_Unit_Number_Office]
+      ,[Building_Name_Office]
+      ,[Postal_Code_Office]
+      ,[Telephone_Office]
+      ,[Ext_Office]
+      ,[Fax_Office]
+      ,[Job_Designation]
+      ,[Current_Job_Function]
+      ,[Current_Employmt_Sector]
+      ,[Working_Exp_Yrs]
+      ,[Working_Exp_Mth]
+      ,[Relevant_Working_Exp_Yrs]
+      ,[Relevant_Working_Exp_Mth]
+      ,[Reason_for_taking_course]
+      ,[Oth_reason_pls_specify]
+      ,[Exam_Name1_Tertiary_ITE]
+      ,[Course_Name1_Tertiary_ITE]
+      ,[Inst1_Tertiary_ITE]
+      ,[GPA1_Tertiary_ITE]
+      ,[Exam_Name2_Tertiary_ITE]
+      ,[Course_Name2_Tertiary_ITE]
+      ,[Inst2_Tertiary_ITE]
+      ,[GPA2_Tertiary_ITE]
+      ,[Exam_Name3_Tertiary_ITE]
+      ,[Course_Name3_Tertiary_ITE]
+      ,[Inst3_Tertiary_ITE]
+      ,[GPA3_Tertiary_ITE]
+      ,[Exam_Name1_Tertiary_Non_ITE]
+      ,[Exam_Name2_Tertiary_Non_ITE]
+      ,[Exam_Name3_Tertiary_Non_ITE]
+      ,[SP_Diploma_Holder]
+      ,[NP_Diploma_Holder]
+      ,[NYP_Diploma_Holder]
+      ,[TP_Diploma_Holder]
+      ,[RP_Staff]
+      ,[RP_Student]
+      ,[RP_Alumni]
+      ,[NA]
+      ,[Club_Replc_RP_Staff_RP_Student]
+      ,[Received_WTS_letter_before]
+      ,[Received_MOE_Subsidy_before]
+      ,[AD_SD_DCON_PTD_NA_1]
+      ,[Name_of_course_1]
+      ,[Awarding_Poly_1]
+      ,[Completed_Diploma_1]
+      ,[Year_of_Graduation_1]
+      ,[No_of_Certs_Completed_1]
+      ,[AD_SD_DCON_PTD_NA_2]
+      ,[Name_of_course_2]
+      ,[Awarding_Poly_2]
+      ,[Completed_Diploma_2]
+      ,[Year_of_Graduation_2]
+      ,[No_of_Certs_Completed_2]
+      ,[AD_SD_DCON_PTD_NA_3]
+      ,[Name_of_course_3]
+      ,[Awarding_Polytechnics_3]
+      ,[Completed_Diploma_3]
+      ,[Year_of_Graduation_3]
+      ,[No_of_Certs_Completed_3]
+      ,[Claim_ID]
+      ,[Claim_Amount]
+      ,[Colour_Appreciation_Deficiency]
+      ,[Blindness_Low_Vision]
+      ,[Deafness]
+      ,[Epilepsy]
+      ,[HIV_positive_AIDS]
+      ,[Phychiatric_Probs]
+      ,[Oth_prob_pls_specify]
+      ,[Provide_details_if_any]
+      ,[Advt_in_Straits_Times]
+      ,[Mailer_from_RP]
+      ,[Friends]
+      ,[Internet]
+      ,[General_Enquiry_at_RP]
+      ,[Lecturers]
+      ,[Oth_pls_specify]
+      ,[Submitted_Comments]
+      ,[Submitted_Photo]
+      ,[Submitted_Id_Doc]
+      ,[Submitted_Certificate]
+      ,[Submitted_Date_of_Web_App]
+      ,[Invoice_Status]
+      ,[Payment_Status]
+      ,[Net_Payable]
+      ,[Payment_Amount]
+      ,[Form_of_Payment_Received]
+      ,[Payment_Date_Time]
+      ,[Remarks]
+      ,[Qual_Type_Highest]
+      ,[Title_of_Qual]
+      ,[Awarding_Inst]
+      ,[GPA]
+      ,[Qual_Type_Other_1]
+      ,[Title_of_Qual_1]
+      ,[Awarding_Inst_1]
+      ,[GPA_1]
+      ,[Qual_Type_Other_2]
+      ,[Title_of_Qual_2]
+      ,[Awarding_Inst_2]
+      ,[GPA_2]
+      ,[Employmt_Status]
+      ,[Blacklisted]
+
+      )
+
+         as
+
+  (
+
+SELECT 
+a.Inst
+,a.Qual_Type
+,b.Long_Name
+,a.Admit_Term
+,a.Prog
+,c.Prog_Formal_Descr
+,a.Specialisatn
+,a.Student_Attr
+,a.Run_Number
+,a.Run_Title
+,a.Prog_Action
+,d.Long_Name
+,a.Applicant_ID
+,a.Applicant_Number
+,a.Student_Career_Number
+,a.App_Prog_Number
+,a.Effective_Date
+,a.Effective_Sequence
+,a.Salutation
+,a.Name
+,a.Id_Type
+,a.Id_Number
+,a.Residency_Type
+,a.Citizenship
+,a.Gender
+,a.Race
+,a.DOB
+,a.Age
+,a.Country_of_Birth
+,a.Highest_Acad_Qual
+,a.Last_Inst_Attended
+,a.Inst_Name
+,a.Country
+,a.Block_House_Name
+,a.Street_Name
+,a.Storey_Unit_Number
+,a.Building_Name
+,a.Postal_Code
+,a.Comp_Name_Office
+,a.Comp_Name_Oth
+,a.Is_SME_Comp
+,a.Country_Office
+,a.Blk_House_Number_Office
+,a.Street_Name_Office
+,a.Storey_Unit_Number_Office
+,a.Building_Name_Office
+,a.Postal_Code_Office
+,a.Telephone_Office
+,a.Ext_Office
+,a.Fax_Office
+,a.Job_Designation
+,a.Current_Job_Function
+,a.Current_Employmt_Sector
+,a.Working_Exp_Yrs
+,a.Working_Exp_Mth
+,a.Relevant_Working_Exp_Yrs
+,a.Relevant_Working_Exp_Mth
+,a.Reason_for_taking_course
+,a.Oth_reason_pls_specify
+,a.Exam_Name1_Tertiary_ITE
+,a.Course_Name1_Tertiary_ITE
+,a.Inst1_Tertiary_ITE
+,a.GPA1_Tertiary_ITE
+,a.Exam_Name2_Tertiary_ITE
+,a.Course_Name2_Tertiary_ITE
+,a.Inst2_Tertiary_ITE
+,a.GPA2_Tertiary_ITE
+,a.Exam_Name3_Tertiary_ITE
+,a.Course_Name3_Tertiary_ITE
+,a.Inst3_Tertiary_ITE
+,a.GPA3_Tertiary_ITE
+,a.Exam_Name1_Tertiary_Non_ITE
+,a.Exam_Name2_Tertiary_Non_ITE
+,a.Exam_Name3_Tertiary_Non_ITE
+,a.SP_Diploma_Holder
+,a.NP_Diploma_Holder
+,a.NYP_Diploma_Holder
+,a.TP_Diploma_Holder
+,a.RP_Staff
+,a.RP_Student
+,a.RP_Alumni
+,a.NA
+,a.Club_Replc_RP_Staff_RP_Student
+,a.Received_WTS_letter_before
+,a.Received_MOE_Subsidy_before
+,a.AD_SD_DCON_PTD_NA_1
+,a.Name_of_course_1
+,a.Awarding_Poly_1
+,a.Completed_Diploma_1
+,a.Year_of_Graduation_1
+,a.No_of_Certs_Completed_1
+,a.AD_SD_DCON_PTD_NA_2
+,a.Name_of_course_2
+,a.Awarding_Poly_2
+,a.Completed_Diploma_2
+,a.Year_of_Graduation_2
+,a.No_of_Certs_Completed_2
+,a.AD_SD_DCON_PTD_NA_3
+,a.Name_of_course_3
+,a.Awarding_Polytechnics_3
+,a.Completed_Diploma_3
+,a.Year_of_Graduation_3
+,a.No_of_Certs_Completed_3
+,a.Claim_ID
+,a.Claim_Amount
+,a.Colour_Appreciation_Deficiency
+,a.Blindness_Low_Vision
+,a.Deafness
+,a.Epilepsy
+,a.HIV_positive_AIDS
+,a.Phychiatric_Probs
+,a.Oth_prob_pls_specify
+,a.Provide_details_if_any
+,a.Advt_in_Straits_Times
+,a.Mailer_from_RP
+,a.Friends
+,a.Internet
+,a.General_Enquiry_at_RP
+,a.Lecturers
+,a.Oth_pls_specify
+,a.Submitted_Comments
+,a.Submitted_Photo
+,a.Submitted_Id_Doc
+,a.Submitted_Certificate
+,a.Submitted_Date_of_Web_App
+,a.Invoice_Status
+,a.Payment_Status
+,a.Net_Payable
+,a.Payment_Amount
+,a.Form_of_Payment_Received
+,a.Payment_Date_Time
+,a.Remarks
+,a.Qual_Type_Highest
+,a.Title_of_Qual
+,a.Awarding_Inst
+,a.GPA
+,a.Qual_Type_Other_1
+,a.Title_of_Qual_1
+,a.Awarding_Inst_1
+,a.GPA_1
+,a.Qual_Type_Other_2
+,a.Title_of_Qual_2
+,a.Awarding_Inst_2
+,a.GPA_2
+,a.Employmt_Status
+,a.Blacklisted
+  FROM RPDW_PRD_STG.[dbo].[STG_OASIS_ADMISSIONS_SUMMARY_COURSE] a 
+
+  inner join (select * from (
+ SELECT Applicant_ID, Qual_Type,Admit_Term, Prog, Run_Number, Prog_Action, Applicant_Number, 
+ ROW_NUMBER() OVER (
+  PARTITION BY Applicant_ID, Qual_Type,Admit_Term, Prog, Run_Number, Prog_Action, Applicant_Number
+  ORDER BY Effective_Date DESC, Effective_Sequence DESC) rownum, Effective_Date, Effective_Sequence
+FROM RPDW_PRD_STG.[dbo].STG_OASIS_ADMISSIONS_SUMMARY_COURSE
+) a where rownum=1)ac ON
+
+a.Applicant_ID=ac.Applicant_ID and 
+a.Qual_Type=ac.Qual_Type and
+a.Admit_Term=ac.Admit_Term and
+a.Prog=ac.Prog and 
+a.Prog_Action=ac.Prog_Action and
+a.Run_Number=ac.Run_Number and
+a.Applicant_Number=ac.Applicant_Number and
+a.Effective_Date=ac.Effective_Date and
+a.Effective_Sequence=ac.Effective_Sequence
+
+
+
+  Left JOIN RPDW_PRD_STG.[dbo].[STG_OASIS_MASTER_CODE] b
+  on a.QUAL_TYPE=b.FIELD_VALUE and b.FIELD_NAME='ACAD_CAREER' and b.EFFECTIVE_STATUS = 'A' 
+
+left join 
+  ( select  PROG_CODE,Prog_Formal_Descr from RPDW_PRD_STG.[dbo].[STG_OASIS_PROG_TABLE] a1
+		 where a1.LATEST_IND='Y'  and a1.EFFECTIVE_DATE in (select max(b1.EFFECTIVE_DATE) from RPDW_PRD_STG.[dbo].[STG_OASIS_PROG_TABLE] b1
+		 where b1.Prog_Code=a1.PROG_CODE)) c on a.Prog=c.Prog_Code	
+		 
+Left JOIN RPDW_PRD_STG.[dbo].[STG_OASIS_MASTER_CODE] d
+  on a.Prog_Action=d.FIELD_VALUE and d.FIELD_NAME='PROG_ACTION' and d.EFFECTIVE_STATUS = 'A'  
+
+  where a.[Latest_Ind]='Y'  and a.[Modified_On]&gt;@LastDWProcessdate)
+
+  MERGE INTO dbo.DW_CET_ADMISSION AS dst
+
+   USING TMP_DW_CET_ADMISSION AS src
+
+   ON( dst.Qual_Type=src.Qual_Type and dst.Specialisatn=src.Specialisatn and dst.Applicant_ID=Src.Applicant_ID and dst.Applicant_Number=src.Applicant_Number
+     and  dst.Student_Career_Number=src.Student_Career_Number and dst.App_Prog_Number=src.App_Prog_Number and dst.Effective_Date=src.Effective_Date
+  and dst.Effective_Sequence=src.Effective_Sequence and src.Residency_Type=dst.Residency_Type)
+
+
+
+   WHEN NOT MATCHED THEN
+
+   INSERT
+
+         ( [Institution]
+      ,[Qual_Type]
+      ,[Qual_Type_Descr]
+      ,[Admit_Term]
+      ,[Programme]
+      ,[Programme_Descr]
+      ,[Specialisatn]
+      ,[Student_Attr]
+      ,[Run_Number]
+      ,[Run_Title]
+      ,[Prog_Action]
+      ,[Prog_Action_Descr]
+      ,[Applicant_ID]
+      ,[Applicant_Number]
+      ,[Student_Career_Number]
+      ,[App_Prog_Number]
+      ,[Effective_Date]
+      ,[Effective_Sequence]
+      ,[Salutation]
+      ,[Applicant_Name]
+      ,[Id_Type]
+      ,[Id_Number]
+      ,[Residency_Type]
+      ,[Citizenship]
+      ,[Gender]
+      ,[Race]
+      ,[DOB]
+      ,[Age]
+      ,[Country_of_Birth]
+      ,[Highest_Acad_Qual]
+      ,[Last_Inst_Attended]
+      ,[Inst_Name]
+      ,[Country]
+      ,[Block_House_Name]
+      ,[Street_Name]
+      ,[Storey_Unit_Number]
+      ,[Building_Name]
+      ,[Postal_Code]
+      ,[Comp_Name_Office]
+      ,[Comp_Name_Oth]
+      ,[Is_SME_Comp]
+      ,[Country_Office]
+      ,[Blk_House_Number_Office]
+      ,[Street_Name_Office]
+      ,[Storey_Unit_Number_Office]
+      ,[Building_Name_Office]
+      ,[Postal_Code_Office]
+      ,[Telephone_Office]
+      ,[Ext_Office]
+      ,[Fax_Office]
+      ,[Job_Designation]
+      ,[Current_Job_Function]
+      ,[Current_Employmt_Sector]
+      ,[Working_Exp_Yrs]
+      ,[Working_Exp_Mth]
+      ,[Relevant_Working_Exp_Yrs]
+      ,[Relevant_Working_Exp_Mth]
+      ,[Reason_for_taking_course]
+      ,[Oth_reason_pls_specify]
+      ,[Exam_Name1_Tertiary_ITE]
+      ,[Course_Name1_Tertiary_ITE]
+      ,[Inst1_Tertiary_ITE]
+      ,[GPA1_Tertiary_ITE]
+      ,[Exam_Name2_Tertiary_ITE]
+      ,[Course_Name2_Tertiary_ITE]
+      ,[Inst2_Tertiary_ITE]
+      ,[GPA2_Tertiary_ITE]
+      ,[Exam_Name3_Tertiary_ITE]
+      ,[Course_Name3_Tertiary_ITE]
+      ,[Inst3_Tertiary_ITE]
+      ,[GPA3_Tertiary_ITE]
+      ,[Exam_Name1_Tertiary_Non_ITE]
+      ,[Exam_Name2_Tertiary_Non_ITE]
+      ,[Exam_Name3_Tertiary_Non_ITE]
+      ,[SP_Diploma_Holder]
+      ,[NP_Diploma_Holder]
+      ,[NYP_Diploma_Holder]
+      ,[TP_Diploma_Holder]
+      ,[RP_Staff]
+      ,[RP_Student]
+      ,[RP_Alumni]
+      ,[NA]
+      ,[Club_Replc_RP_Staff_RP_Student]
+      ,[Received_WTS_letter_before]
+      ,[Received_MOE_Subsidy_before]
+      ,[AD_SD_DCON_PTD_NA_1]
+      ,[Name_of_course_1]
+      ,[Awarding_Poly_1]
+      ,[Completed_Diploma_1]
+      ,[Year_of_Graduation_1]
+      ,[No_of_Certs_Completed_1]
+      ,[AD_SD_DCON_PTD_NA_2]
+      ,[Name_of_course_2]
+      ,[Awarding_Poly_2]
+      ,[Completed_Diploma_2]
+      ,[Year_of_Graduation_2]
+      ,[No_of_Certs_Completed_2]
+      ,[AD_SD_DCON_PTD_NA_3]
+      ,[Name_of_course_3]
+      ,[Awarding_Polytechnics_3]
+      ,[Completed_Diploma_3]
+      ,[Year_of_Graduation_3]
+      ,[No_of_Certs_Completed_3]
+      ,[Claim_ID]
+      ,[Claim_Amount]
+      ,[Colour_Appreciation_Deficiency]
+      ,[Blindness_Low_Vision]
+      ,[Deafness]
+      ,[Epilepsy]
+      ,[HIV_positive_AIDS]
+      ,[Phychiatric_Probs]
+      ,[Oth_prob_pls_specify]
+      ,[Provide_details_if_any]
+      ,[Advt_in_Straits_Times]
+      ,[Mailer_from_RP]
+      ,[Friends]
+      ,[Internet]
+      ,[General_Enquiry_at_RP]
+      ,[Lecturers]
+      ,[Oth_pls_specify]
+      ,[Submitted_Comments]
+      ,[Submitted_Photo]
+      ,[Submitted_Id_Doc]
+      ,[Submitted_Certificate]
+      ,[Submitted_Date_of_Web_App]
+      ,[Invoice_Status]
+      ,[Payment_Status]
+      ,[Net_Payable]
+      ,[Payment_Amount]
+      ,[Form_of_Payment_Received]
+      ,[Payment_Date_Time]
+      ,[Remarks]
+      ,[Qual_Type_Highest]
+      ,[Title_of_Qual]
+      ,[Awarding_Inst]
+      ,[GPA]
+      ,[Qual_Type_Other_1]
+      ,[Title_of_Qual_1]
+      ,[Awarding_Inst_1]
+      ,[GPA_1]
+      ,[Qual_Type_Other_2]
+      ,[Title_of_Qual_2]
+      ,[Awarding_Inst_2]
+      ,[GPA_2]
+      ,[Employmt_Status]
+      ,[Blacklisted]
+	  ,[Created_On]
+     ,[Modified_On])
+
+   VALUES(  
+
+           SRC.[Institution]
+      ,SRC.[Qual_Type]
+      ,SRC.[Qual_Type_Descr]
+      ,SRC.[Admit_Term]
+      ,SRC.[Programme]
+      ,SRC.[Programme_Descr]
+      ,SRC.[Specialisatn]
+      ,SRC.[Student_Attr]
+      ,SRC.[Run_Number]
+      ,SRC.[Run_Title]
+      ,SRC.[Prog_Action]
+      ,SRC.[Prog_Action_Descr]
+      ,SRC.[Applicant_ID]
+      ,SRC.[Applicant_Number]
+      ,SRC.[Student_Career_Number]
+      ,SRC.[App_Prog_Number]
+      ,SRC.[Effective_Date]
+      ,SRC.[Effective_Sequence]
+      ,SRC.[Salutation]
+      ,SRC.[Applicant_Name]
+      ,SRC.[Id_Type]
+      ,SRC.[Id_Number]
+      ,SRC.[Residency_Type]
+      ,SRC.[Citizenship]
+      ,SRC.[Gender]
+      ,SRC.[Race]
+      ,SRC.[DOB]
+      ,SRC.[Age]
+      ,SRC.[Country_of_Birth]
+      ,SRC.[Highest_Acad_Qual]
+      ,SRC.[Last_Inst_Attended]
+      ,SRC.[Inst_Name]
+      ,SRC.[Country]
+      ,SRC.[Block_House_Name]
+      ,SRC.[Street_Name]
+      ,SRC.[Storey_Unit_Number]
+      ,SRC.[Building_Name]
+      ,SRC.[Postal_Code]
+      ,SRC.[Comp_Name_Office]
+      ,SRC.[Comp_Name_Oth]
+      ,SRC.[Is_SME_Comp]
+      ,SRC.[Country_Office]
+      ,SRC.[Blk_House_Number_Office]
+      ,SRC.[Street_Name_Office]
+      ,SRC.[Storey_Unit_Number_Office]
+      ,SRC.[Building_Name_Office]
+      ,SRC.[Postal_Code_Office]
+      ,SRC.[Telephone_Office]
+      ,SRC.[Ext_Office]
+      ,SRC.[Fax_Office]
+      ,SRC.[Job_Designation]
+      ,SRC.[Current_Job_Function]
+      ,SRC.[Current_Employmt_Sector]
+      ,SRC.[Working_Exp_Yrs]
+      ,SRC.[Working_Exp_Mth]
+      ,SRC.[Relevant_Working_Exp_Yrs]
+      ,SRC.[Relevant_Working_Exp_Mth]
+      ,SRC.[Reason_for_taking_course]
+      ,SRC.[Oth_reason_pls_specify]
+      ,SRC.[Exam_Name1_Tertiary_ITE]
+      ,SRC.[Course_Name1_Tertiary_ITE]
+      ,SRC.[Inst1_Tertiary_ITE]
+      ,SRC.[GPA1_Tertiary_ITE]
+      ,SRC.[Exam_Name2_Tertiary_ITE]
+      ,SRC.[Course_Name2_Tertiary_ITE]
+      ,SRC.[Inst2_Tertiary_ITE]
+      ,SRC.[GPA2_Tertiary_ITE]
+      ,SRC.[Exam_Name3_Tertiary_ITE]
+      ,SRC.[Course_Name3_Tertiary_ITE]
+      ,SRC.[Inst3_Tertiary_ITE]
+      ,SRC.[GPA3_Tertiary_ITE]
+      ,SRC.[Exam_Name1_Tertiary_Non_ITE]
+      ,SRC.[Exam_Name2_Tertiary_Non_ITE]
+      ,SRC.[Exam_Name3_Tertiary_Non_ITE]
+      ,SRC.[SP_Diploma_Holder]
+      ,SRC.[NP_Diploma_Holder]
+      ,SRC.[NYP_Diploma_Holder]
+      ,SRC.[TP_Diploma_Holder]
+      ,SRC.[RP_Staff]
+      ,SRC.[RP_Student]
+      ,SRC.[RP_Alumni]
+      ,SRC.[NA]
+      ,SRC.[Club_Replc_RP_Staff_RP_Student]
+      ,SRC.[Received_WTS_letter_before]
+      ,SRC.[Received_MOE_Subsidy_before]
+      ,SRC.[AD_SD_DCON_PTD_NA_1]
+      ,SRC.[Name_of_course_1]
+      ,SRC.[Awarding_Poly_1]
+      ,SRC.[Completed_Diploma_1]
+      ,SRC.[Year_of_Graduation_1]
+      ,SRC.[No_of_Certs_Completed_1]
+      ,SRC.[AD_SD_DCON_PTD_NA_2]
+      ,SRC.[Name_of_course_2]
+      ,SRC.[Awarding_Poly_2]
+      ,SRC.[Completed_Diploma_2]
+      ,SRC.[Year_of_Graduation_2]
+      ,SRC.[No_of_Certs_Completed_2]
+      ,SRC.[AD_SD_DCON_PTD_NA_3]
+      ,SRC.[Name_of_course_3]
+      ,SRC.[Awarding_Polytechnics_3]
+      ,SRC.[Completed_Diploma_3]
+      ,SRC.[Year_of_Graduation_3]
+      ,SRC.[No_of_Certs_Completed_3]
+      ,SRC.[Claim_ID]
+      ,SRC.[Claim_Amount]
+      ,SRC.[Colour_Appreciation_Deficiency]
+      ,SRC.[Blindness_Low_Vision]
+      ,SRC.[Deafness]
+      ,SRC.[Epilepsy]
+      ,SRC.[HIV_positive_AIDS]
+      ,SRC.[Phychiatric_Probs]
+      ,SRC.[Oth_prob_pls_specify]
+      ,SRC.[Provide_details_if_any]
+      ,SRC.[Advt_in_Straits_Times]
+      ,SRC.[Mailer_from_RP]
+      ,SRC.[Friends]
+      ,SRC.[Internet]
+      ,SRC.[General_Enquiry_at_RP]
+      ,SRC.[Lecturers]
+      ,SRC.[Oth_pls_specify]
+      ,SRC.[Submitted_Comments]
+      ,SRC.[Submitted_Photo]
+      ,SRC.[Submitted_Id_Doc]
+      ,SRC.[Submitted_Certificate]
+      ,SRC.[Submitted_Date_of_Web_App]
+      ,SRC.[Invoice_Status]
+      ,SRC.[Payment_Status]
+      ,SRC.[Net_Payable]
+      ,SRC.[Payment_Amount]
+      ,SRC.[Form_of_Payment_Received]
+      ,SRC.[Payment_Date_Time]
+      ,SRC.[Remarks]
+      ,SRC.[Qual_Type_Highest]
+      ,SRC.[Title_of_Qual]
+      ,SRC.[Awarding_Inst]
+      ,SRC.[GPA]
+      ,SRC.[Qual_Type_Other_1]
+      ,SRC.[Title_of_Qual_1]
+      ,SRC.[Awarding_Inst_1]
+      ,SRC.[GPA_1]
+      ,SRC.[Qual_Type_Other_2]
+      ,SRC.[Title_of_Qual_2]
+      ,SRC.[Awarding_Inst_2]
+      ,SRC.[GPA_2]
+      ,SRC.[Employmt_Status]
+      ,SRC.[Blacklisted]
+
+       ,  getdate(),getdate())
+
+   WHEN MATCHED
+
+   
+
+   THEN UPDATE
+
+   SET        dst.Institution=src.Institution
+
+              ,dst.Qual_Type_Descr=src.Qual_Type_Descr
+
+             ,dst.Admit_Term=src.Admit_Term
+
+			  ,dst.Programme=src.Programme
+
+			  ,dst.Programme_Descr=src.Programme_Descr
+
+			  ,dst.Student_Attr=src.Student_Attr
+
+			  ,dst.Run_Number=src.Run_Number
+
+			  ,dst.Run_Title=src.Run_Title
+
+			  ,dst.Prog_Action=src.Prog_Action
+
+			  ,dst.Prog_Action_Descr=src.Prog_Action_Descr
+
+			  ,dst.Salutation=src.Salutation
+
+			  ,dst.Applicant_Name=src.Applicant_Name
+
+			  ,dst.Id_Type=src.Id_Type
+
+			 ,dst.Id_Number=src.Id_Number
+
+			  ,dst.Citizenship=src.Citizenship
+
+			   ,dst.Gender=src.Gender
+
+			    ,dst.Race=src.Race
+
+				 ,dst.DOB=src.DOB
+
+				  ,dst.Age=src.Age
+
+,dst.Country_of_Birth=src.Country_of_Birth
+,dst.Highest_Acad_Qual=src.Highest_Acad_Qual
+,dst.Last_Inst_Attended=src.Last_Inst_Attended
+,dst.Inst_Name=src.Inst_Name
+,dst.Country=src.Country
+,dst.Street_Name=src.Street_Name
+,dst.Storey_Unit_Number=src.Storey_Unit_Number
+,dst.Building_Name=src.Building_Name
+,dst.Postal_Code=src.Postal_Code
+,dst.Comp_Name_Office=src.Comp_Name_Office
+,dst.Comp_Name_Oth=src.Comp_Name_Oth
+,dst.Country_Office=src.Country_Office
+,dst.Blk_House_Number_Office=src.Blk_House_Number_Office
+,dst.Street_Name_Office=src.Street_Name_Office
+
+,dst.Storey_Unit_Number_Office=src.Storey_Unit_Number_Office
+,dst.Building_Name_Office=src.Building_Name_Office
+,dst.Postal_Code_Office=src.Postal_Code_Office
+,dst.Telephone_Office=src.Telephone_Office
+,dst.Ext_Office=src.Ext_Office
+,dst.Fax_Office=src.Fax_Office
+,dst.Job_Designation=src.Job_Designation
+,dst.Current_Job_Function=src.Current_Job_Function
+,dst.Current_Employmt_Sector=src.Current_Employmt_Sector
+,dst.Working_Exp_Yrs=src.Working_Exp_Yrs
+,dst.Working_Exp_Mth=src.Working_Exp_Mth
+,dst.Relevant_Working_Exp_Yrs=src.Relevant_Working_Exp_Yrs
+,dst.Relevant_Working_Exp_Mth=src.Relevant_Working_Exp_Mth
+,dst.Reason_for_taking_course=src.Reason_for_taking_course
+
+
+,dst.Oth_reason_pls_specify=src.Oth_reason_pls_specify
+,dst.Exam_Name1_Tertiary_ITE=src.Exam_Name1_Tertiary_ITE
+,dst.Course_Name1_Tertiary_ITE=src.Course_Name1_Tertiary_ITE
+,dst.Inst1_Tertiary_ITE=src.Inst1_Tertiary_ITE
+,dst.GPA1_Tertiary_ITE=src.GPA1_Tertiary_ITE
+,dst.Exam_Name2_Tertiary_ITE=src.Exam_Name2_Tertiary_ITE
+,dst.Course_Name2_Tertiary_ITE=src.Course_Name2_Tertiary_ITE
+,dst.Inst2_Tertiary_ITE=src.Inst2_Tertiary_ITE
+,dst.GPA2_Tertiary_ITE=src.GPA2_Tertiary_ITE
+,dst.Exam_Name3_Tertiary_ITE=src.Exam_Name3_Tertiary_ITE
+,dst.Course_Name3_Tertiary_ITE=src.Course_Name3_Tertiary_ITE
+,dst.Inst3_Tertiary_ITE=src.Inst3_Tertiary_ITE
+,dst.GPA3_Tertiary_ITE=src.GPA3_Tertiary_ITE
+,dst.Exam_Name1_Tertiary_Non_ITE=src.Exam_Name1_Tertiary_Non_ITE
+,dst.Exam_Name2_Tertiary_Non_ITE=src.Exam_Name2_Tertiary_Non_ITE
+,dst.Exam_Name3_Tertiary_Non_ITE=src.Exam_Name3_Tertiary_Non_ITE
+,dst.SP_Diploma_Holder=src.SP_Diploma_Holder
+,dst.NP_Diploma_Holder=src.NP_Diploma_Holder
+,dst.NYP_Diploma_Holder=src.NYP_Diploma_Holder
+,dst.TP_Diploma_Holder=src.TP_Diploma_Holder
+,dst.RP_Staff=src.RP_Staff
+,dst.RP_Student=src.RP_Student
+,dst.RP_Alumni=src.RP_Alumni
+,dst.NA=src.NA
+,dst.Club_Replc_RP_Staff_RP_Student=src.Club_Replc_RP_Staff_RP_Student
+
+
+,dst.Received_WTS_letter_before=src.Received_WTS_letter_before
+,dst.Received_MOE_Subsidy_before=src.Received_MOE_Subsidy_before
+,dst.AD_SD_DCON_PTD_NA_1=src.AD_SD_DCON_PTD_NA_1
+,dst.Name_of_course_1=src.Name_of_course_1
+,dst.Awarding_Poly_1=src.Awarding_Poly_1
+,dst.Completed_Diploma_1=src.Completed_Diploma_1
+,dst.Year_of_Graduation_1=src.Year_of_Graduation_1
+,dst.No_of_Certs_Completed_1=src.No_of_Certs_Completed_1
+,dst.AD_SD_DCON_PTD_NA_2=src.AD_SD_DCON_PTD_NA_2
+,dst.Name_of_course_2=src.Name_of_course_2
+,dst.Awarding_Poly_2=src.Awarding_Poly_2
+,dst.Completed_Diploma_2=src.Completed_Diploma_2
+,dst.Year_of_Graduation_2=src.Year_of_Graduation_2
+,dst.No_of_Certs_Completed_2=src.No_of_Certs_Completed_2
+,dst.AD_SD_DCON_PTD_NA_3=src.AD_SD_DCON_PTD_NA_3
+,dst.Name_of_course_3=src.Name_of_course_3
+,dst.Awarding_Polytechnics_3=src.Awarding_Polytechnics_3
+,dst.Completed_Diploma_3=src.Completed_Diploma_3
+,dst.Year_of_Graduation_3=src.Year_of_Graduation_3
+,dst.No_of_Certs_Completed_3=src.No_of_Certs_Completed_3
+,dst.Claim_ID=src.Claim_ID
+,dst.Claim_Amount=src.Claim_Amount
+,dst.Colour_Appreciation_Deficiency=src.Colour_Appreciation_Deficiency
+,dst.Blindness_Low_Vision=src.Blindness_Low_Vision
+,dst.Deafness=src.Deafness
+
+
+
+,dst.Epilepsy=src.Epilepsy
+,dst.HIV_positive_AIDS=src.HIV_positive_AIDS
+,dst.Phychiatric_Probs=src.Phychiatric_Probs
+,dst.Oth_prob_pls_specify=src.Oth_prob_pls_specify
+,dst.Provide_details_if_any=src.Provide_details_if_any
+,dst.Advt_in_Straits_Times=src.Advt_in_Straits_Times
+,dst.Mailer_from_RP=src.Mailer_from_RP
+,dst.Friends=src.Friends
+,dst.Internet=src.Internet
+,dst.General_Enquiry_at_RP=src.General_Enquiry_at_RP
+,dst.Lecturers=src.Lecturers
+,dst.Oth_pls_specify=src.Oth_pls_specify
+,dst.Submitted_Comments=src.Submitted_Comments
+,dst.Submitted_Photo=src.Submitted_Photo
+,dst.Submitted_Id_Doc=src.Submitted_Id_Doc
+,dst.Submitted_Certificate=src.Submitted_Certificate
+,dst.Submitted_Date_of_Web_App=src.Submitted_Date_of_Web_App
+,dst.Invoice_Status=src.Invoice_Status
+,dst.Payment_Status=src.Payment_Status
+,dst.Net_Payable=src.Net_Payable
+,dst.Payment_Amount=src.Payment_Amount
+,dst.Form_of_Payment_Received=src.Form_of_Payment_Received
+,dst.Payment_Date_Time=src.Payment_Date_Time
+,dst.Remarks=src.Remarks
+,dst.Qual_Type_Highest=src.Qual_Type_Highest
+
+
+
+,dst.Title_of_Qual=src.Title_of_Qual
+,dst.Awarding_Inst=src.Awarding_Inst
+,dst.GPA=src.GPA
+,dst.Qual_Type_Other_1=src.Qual_Type_Other_1
+,dst.Title_of_Qual_1=src.Title_of_Qual_1
+,dst.Awarding_Inst_1=src.Awarding_Inst_1
+,dst.GPA_1=src.GPA_1
+,dst.Qual_Type_Other_2=src.Qual_Type_Other_2
+,dst.Title_of_Qual_2=src.Title_of_Qual_2
+,dst.Awarding_Inst_2=src.Awarding_Inst_2
+,dst.GPA_2=src.GPA_2
+,dst.Employmt_Status=src.Employmt_Status
+,dst.Blacklisted=src.Blacklisted
+,dst.Modified_On=getdate();
+
+              
+
+
+
+--------------------------------------
+
+COMMIT TRANSACTION
+
+END TRY
+
+
+
+BEGIN CATCH
+
+   ROLLBACK TRANSACTION
+
+  INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,getdate()  as created_on
+
+  
+
+END CATCH  
+
+GO
+</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{55C676E8-1584-4277-A93D-B200CC3903E8}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="STAGE">
+      <DTS:VariableValue
+        DTS:DataType="8">DW</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{875EC408-6B79-48E4-90FD-B82589E86BE8}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTableName">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_CET_ADMISSION</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create ETL Job Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{AF19A00A-9D13-4929-B5C4-D0CBCED37040}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create ETL Job Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6BDB618C-7C1A-4EF5-A95F-506FC0F9D145}"
+          SQLTask:SqlStatementSource="Exec [dbo].[usp_InsertETLJobLog] ?, ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Job_name"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::STAGE"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::SourceTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::TgtTableName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Error Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{8EA19968-ABBA-47F5-BBD8-B94DA9A926F9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Error Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6BDB618C-7C1A-4EF5-A95F-506FC0F9D145}"
+          SQLTask:SqlStatementSource="UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET&#xA;ERROR_MSG = 'STG table is not completed',&#xA;JOB_STATUS ='Fail'&#xA;--PROCESSED_ON =getdate()&#xA;WHERE JOB_STATUS_ID=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\JOB_STATUS_ID"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0D172439-FEA2-4D2F-A50D-0563EC684C7B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="JOB_STATUS_ID"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6BDB618C-7C1A-4EF5-A95F-506FC0F9D145}"
+          SQLTask:SqlStatementSource="SELECT max([JOB_STATUS_ID])&#xA;      &#xA;  FROM [dbo].[ETL_JOB_STATUS] where [SOURCE_FILENAME]=? &#xA;---and convert(varchar(8),CREATED_ON,112)=convert--(varchar(8) ,getdate(),112)"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::SourceTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Into DW"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5D43DBF7-EA81-4ADC-992A-5F63F30F6F78}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Into DW"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{5A2903BA-90C0-4CEF-A8D5-FE377F4146D6}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::SQL_DW_Load" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Process_Date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{77D2BD2E-820C-4D0A-A411-179E0E244004}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Process_Date"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{5A2903BA-90C0-4CEF-A8D5-FE377F4146D6}"
+          SQLTask:SqlStatementSource="Select getdate()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::Process_date" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Process_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="135"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update Job Status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{60BEBC56-A656-4C36-93FB-D17CE29EFDE2}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Job Status"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6BDB618C-7C1A-4EF5-A95F-506FC0F9D145}"
+          SQLTask:SqlStatementSource="DECLARE &#xA;@jobstatusid INT &#xA;select @jobstatusid=?&#xA;IF exists(select * from dbo.ETL_ERROR_LOG where [JOB_STATUS_ID]=@jobstatusid)&#xA; BEGIN&#xA; Update [dbo].[ETL_JOB_STATUS]&#xA;SET [PROCESSED_ON] =getdate(),&#xA;[JOB_STATUS]='Fail'&#xA;where [JOB_STATUS_ID]=@jobstatusid&#xA;  END&#xA;ELSE&#xA;BEGIN&#xA;Update [dbo].[ETL_JOB_STATUS]&#xA;SET [PROCESSED_ON] =getdate(),&#xA;[JOB_STATUS]='Success'&#xA;where [JOB_STATUS_ID]=@jobstatusid&#xA;END" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Validate job status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{2B58239D-9364-4D9C-A984-DB8BBB62F763}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Validate job status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6BDB618C-7C1A-4EF5-A95F-506FC0F9D145}"
+          SQLTask:SqlStatementSource="select CASE WHEN JOB_STATUS='Success' then 0 ELSE 1 END AS  JOB_STATUS&#xA;&#xA;from [dbo].[ETL_JOB_STATUS]&#xA;  where STAGE='STG' and TARGET_TABLENAME='STG_OASIS_STUDENT_DEBARMT' and &#xA;  JOB_STATUS_ID in (Select max(JOB_STATUS_ID) from [dbo].[ETL_JOB_STATUS]&#xA;  where STAGE='STG' and TARGET_TABLENAME='STG_OASIS_STUDENT_DEBARMT')"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::Job_Status" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::STAGE"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{CA0CDE4C-D9D5-4526-8D3E-9555F40A91D2}"
+      DTS:From="Package\Process_Date"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Load Into DW" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{ADA7C81D-EA48-480C-8EC7-0B62B7AB527B}"
+      DTS:From="Package\Create ETL Job Log"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\JOB_STATUS_ID" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{AD2211F2-50A6-4576-90E4-5A2B3FCA870F}"
+      DTS:From="Package\JOB_STATUS_ID"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Validate job status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{7EBC8F81-4C9F-4D31-AE02-2E4F525BB3A5}"
+      DTS:From="Package\Load Into DW"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Update Job Status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[False]"
+      DTS:CreationName=""
+      DTS:DTSID="{67DEA28A-5ACE-4E87-8233-08431140D1E7}"
+      DTS:Expression="@[User::Job_Status]==1"
+      DTS:From="Package\Validate job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="False"
+      DTS:To="Package\Error Log" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[True]"
+      DTS:CreationName=""
+      DTS:DTSID="{58FA268B-BCEE-420A-8931-B44115189F8D}"
+      DTS:Expression="@[User::Job_Status]==0"
+      DTS:From="Package\Validate job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="True"
+      DTS:To="Package\Process_Date" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{3DB97D33-4EA8-432A-9E6E-E862DA376EF7}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{A354D72E-4782-404D-B3C0-48E0026888E5}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL_ERROR_LOG"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{6D9B25FC-B6B7-4E26-B72C-27F3850E3FA6}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL_ERROR_LOG">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{6BDB618C-7C1A-4EF5-A95F-506FC0F9D145}"
+              SQLTask:SqlStatementSource="[dbo].[usp_InsertETLErrorLog] ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="131"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Create ETL Job Log"
+          TopLeft="17,13" />
+        <NodeLayout
+          Size="123,42"
+          Id="Package\Error Log"
+          TopLeft="699,21" />
+        <NodeLayout
+          Size="142,42"
+          Id="Package\JOB_STATUS_ID"
+          TopLeft="231,18" />
+        <NodeLayout
+          Size="144,42"
+          Id="Package\Load Into DW"
+          TopLeft="484,217" />
+        <NodeLayout
+          Size="142,42"
+          Id="Package\Process_Date"
+          TopLeft="487,131" />
+        <NodeLayout
+          Size="165,42"
+          Id="Package\Update Job Status"
+          TopLeft="526,322" />
+        <NodeLayout
+          Size="166,42"
+          Id="Package\Validate job status"
+          TopLeft="446,22" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="557,173">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44"
+              Start="0,0"
+              End="0,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="187,36.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="44,0"
+              Start="0,0"
+              End="36.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="36.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="373,41">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="73,0"
+              Start="0,0"
+              End="65.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="65.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="556,259">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="52.5,63"
+              Start="0,0"
+              End="52.5,55.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,27.5"
+                    Point2="0,31.5"
+                    Point3="4,31.5" />
+                  <mssgle:LineSegment
+                    End="48.5,31.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="48.5,31.5"
+                    Point2="52.5,31.5"
+                    Point3="52.5,35.5" />
+                  <mssgle:LineSegment
+                    End="52.5,55.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[False]"
+          TopLeft="612,42.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="87,0"
+              Start="0,0"
+              End="79.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="79.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="28.01365234375,5,23.4726953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[True]"
+          TopLeft="529,64">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="29,67"
+              Start="0,0"
+              End="29,59.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.5"
+                    Point2="0,33.5"
+                    Point3="4,33.5" />
+                  <mssgle:LineSegment
+                    End="25,33.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="25,33.5"
+                    Point2="29,33.5"
+                    Point3="29,37.5" />
+                  <mssgle:LineSegment
+                    End="29,59.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="3.48755859375,38.5,22.0248828125,9.421875"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="162,42"
+          Id="Package.EventHandlers[OnError]\ETL_ERROR_LOG"
+          TopLeft="370,98" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PrecedenceConstraint
+    design-time-name="Package.PrecedenceConstraints[False]">
+    <ShowAnnotation>ConstraintName</ShowAnnotation>
+  </PrecedenceConstraint>
+  <PrecedenceConstraint
+    design-time-name="Package.PrecedenceConstraints[True]">
+    <ShowAnnotation>ConstraintName</ShowAnnotation>
+  </PrecedenceConstraint>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

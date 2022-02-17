@@ -1,0 +1,826 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/31/2019 1:09:40 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="RP-ETL-PROD"
+  DTS:CreatorName="RP\admin.azim"
+  DTS:DTSID="{15F89410-9A84-4CAE-A119-BC2F1F382C77}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Copy_filesFromSharedNetwork_EXT"
+  DTS:PackageType="5"
+  DTS:VersionBuild="102"
+  DTS:VersionGUID="{05FEF5EC-8F15-4DA5-A9C6-20B901E054B7}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{218B8F01-318B-479B-AC43-D6046806BA6B}"
+      DTS:ObjectName="RPDW">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT;Provider=SQLNCLI11.1;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiAXqJL5xwkap+hp6D6sPxwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAD/WMIYSZJy3Yz4rzJAHK5ZkJg6bhrgmQo5+Wi8TDFZzwAAAAAOgAAAAAIAACAAAAB6KFaLP5tPMb+HqiLU9SMC0KuuKOwA4tQpZ3kuuOvLCjAAAAD6+oZBiwifwHXHJi3+NfFPWGTkVM3iYgcTV8Ak8Va/6vgLWKVS2avqWNtuFD5RfKFAAAAAK3KHYyM6wUB+ldiSHGHZVK7OibNpKtnGWg2UwDSl9KWP81mTHsqN/0EZ59urYsub0JBl0X1KForHwdtFPXWBrQ</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5E62B4E6-2E33-4B39-8B93-C29A59DC0C6E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Dest">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9E51EDBE-0A33-43BB-9166-579D7AE67B3D}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;\\\\Dev-rpsvr01\\rpdw\\Source_Files\\&quot;+  @[User::source]+&quot;\\&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Dest_File_Path">
+      <DTS:VariableValue
+        DTS:DataType="8">\\Dev-rpsvr01\rpdw\Source_Files\EXTERNAL\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{FCB44BFD-F41E-4322-8C64-61144177B8CF}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Frequecy_id">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{766B1F11-46D1-49EC-B3C8-36EABED4677E}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::Source_Path]+ @[User::MyFileValue]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Full_Source_File_Path">
+      <DTS:VariableValue
+        DTS:DataType="8">\\Dev-rpsvr01\DW_EXTERNAL_PROD\OAS\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{70BF47FD-F781-491C-8857-87B531E5BA8E}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::Source_Path_ACE]+ @[User::MyFileValue]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Full_Source_File_Path_ACE">
+      <DTS:VariableValue
+        DTS:DataType="8">\\Dev-rpsvr01\DW_EXTERNAL_PROD\ACE\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{01A479A8-83F5-4060-9F9B-00EFB8ABBE73}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::Source_Path_OAS]+ @[User::MyFileValue]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Full_Source_File_Path_OAS">
+      <DTS:VariableValue
+        DTS:DataType="8">\\Dev-rpsvr01\DW_EXTERNAL_PROD\OAS\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BC92ED44-F33C-4074-9C1A-F90E8DEC8145}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::Source_Path_ORG]+ @[User::MyFileValue]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Full_Source_File_Path_ORG">
+      <DTS:VariableValue
+        DTS:DataType="8">\\Dev-rpsvr01\DW_EXTERNAL_PROD\ORG\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0BB96747-9254-4A58-A0EA-45D62A242E8C}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::Source_Path_SFO]+ @[User::MyFileValue]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Full_Source_File_Path_SFO">
+      <DTS:VariableValue
+        DTS:DataType="8">\\Dev-rpsvr01\DW_EXTERNAL_PROD\SFO\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6FB68694-0E97-42DC-AF26-313528223224}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::Source_Path]+ @[User::MyFileValue_1]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Full_Source_File_Path_text">
+      <DTS:VariableValue
+        DTS:DataType="8">\\Dev-rpsvr01\DW_EXTERNAL_PROD\OAS\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E9CF5947-27DC-4284-A645-A06CABD1A3F5}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_name">
+      <DTS:VariableValue
+        DTS:DataType="8">LD_PSTG_STG</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{109F7F91-7EB3-4CC4-BC96-0C3ECE46D531}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="MyFileValue">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7654DC8D-FA78-4F60-82EA-AE25B65425F0}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="MyFileValue_1">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6BD4BC88-2679-4EF1-A0F2-C5018DBC771A}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="source">
+      <DTS:VariableValue
+        DTS:DataType="8">EXTERNAL</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1D151BD4-9425-4BE5-8984-07DEBA0E784B}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;\\\\Dev-rpsvr01\\DW_&quot;+ @[User::source]+&quot;_PROD\\&quot;+&quot;OAS\\&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Source_Path">
+      <DTS:VariableValue
+        DTS:DataType="8">\\Dev-rpsvr01\DW_EXTERNAL_PROD\OAS\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{365EF598-ED89-4B25-8E95-9F171970483F}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Source_Path_ACE">
+      <DTS:VariableValue
+        DTS:DataType="8">\\Dev-rpsvr01\DW_EXTERNAL_PROD\ACE\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CD08D53A-08F4-4BD4-8FE2-55AB7FB350D2}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Source_Path_OAS">
+      <DTS:VariableValue
+        DTS:DataType="8">\\Dev-rpsvr01\DW_EXTERNAL_PROD\OAS\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0385DB39-4423-4926-80D6-F2434E9DB1EF}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Source_Path_ORG">
+      <DTS:VariableValue
+        DTS:DataType="8">\\Dev-rpsvr01\DW_EXTERNAL_PROD\ORG\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AA427A26-7F75-48AF-9170-69F2B1518980}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Source_Path_SFO">
+      <DTS:VariableValue
+        DTS:DataType="8">\\Dev-rpsvr01\DW_EXTERNAL_PROD\SFO\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CD771017-142F-4A49-8931-9919BAD5EDF8}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="stage">
+      <DTS:VariableValue
+        DTS:DataType="8">PSTG</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Foreach Loop Container"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{436C9BB2-06BD-448E-8E20-ACD5BBFF5D4A}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Foreach Loop Container">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachFileEnumerator"
+        DTS:Description="\\\\Dev-rpsvr01\\DW_OASIS_PRD\\OASIS-SR-5360\\"
+        DTS:DTSID="{94F78DA7-37F8-4830-8AF3-55E8594D388B}"
+        DTS:ObjectName="{94F78DA7-37F8-4830-8AF3-55E8594D388B}">
+        <DTS:PropertyExpression
+          DTS:Name="Directory">@[User::Full_Source_File_Path_OAS]</DTS:PropertyExpression>
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="\\Dev-rpsvr01\DW_EXTERNAL_PROD\OAS\" />
+            <FEFEProperty
+              FileSpec="*.*" />
+            <FEFEProperty
+              FileNameRetrievalType="1" />
+            <FEFEProperty
+              Recurse="0" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Loop Container\OAS"
+          DTS:CreationName="Microsoft.FileSystemTask"
+          DTS:Description="File System Task"
+          DTS:DTSID="{19DDDAA4-2B97-4BE1-8AFC-16CCCFEB832F}"
+          DTS:ExecutableType="Microsoft.FileSystemTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="OAS"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <FileSystemData
+              TaskOperationType="MoveFile"
+              TaskOverwriteDestFile="True"
+              TaskSourcePath="User::Full_Source_File_Path_OAS"
+              TaskIsSourceVariable="True"
+              TaskDestinationPath="User::Dest_File_Path"
+              TaskIsDestinationVariable="True" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{5B1E8420-6F43-474D-93BC-1ABF1ED507E5}"
+          DTS:ObjectName="{5B1E8420-6F43-474D-93BC-1ABF1ED507E5}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::MyFileValue" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Foreach Loop Container 1"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{EE1A8234-5CDE-402D-A741-1A05C4FBE2AC}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Foreach Loop Container 1">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachFileEnumerator"
+        DTS:DTSID="{E1C371B8-0196-484D-88BB-791A4B137310}"
+        DTS:ObjectName="{E1C371B8-0196-484D-88BB-791A4B137310}">
+        <DTS:PropertyExpression
+          DTS:Name="Directory">@[User::Source_Path_ACE]</DTS:PropertyExpression>
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="\\Dev-rpsvr01\DW_EXTERNAL_PROD\ACE\" />
+            <FEFEProperty
+              FileSpec="*.*" />
+            <FEFEProperty
+              FileNameRetrievalType="1" />
+            <FEFEProperty
+              Recurse="0" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Loop Container 1\ACE"
+          DTS:CreationName="Microsoft.FileSystemTask"
+          DTS:Description="File System Task"
+          DTS:DTSID="{4c6aebda-9bda-4583-993c-94d458defda6}"
+          DTS:ExecutableType="Microsoft.FileSystemTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ACE"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <FileSystemData
+              TaskOperationType="MoveFile"
+              TaskOverwriteDestFile="True"
+              TaskSourcePath="User::Full_Source_File_Path_ACE"
+              TaskIsSourceVariable="True"
+              TaskDestinationPath="User::Dest_File_Path"
+              TaskIsDestinationVariable="True" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{0C992B05-4D0F-4AC1-9358-875F5D0979F5}"
+          DTS:ObjectName="{0C992B05-4D0F-4AC1-9358-875F5D0979F5}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::MyFileValue" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Foreach Loop Container 2"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{B97F5D69-743F-4F14-8F65-88ABADB0A041}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Foreach Loop Container 2">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachFileEnumerator"
+        DTS:DTSID="{44CA0785-F253-4D44-AECE-986BC3D4758E}"
+        DTS:ObjectName="{44CA0785-F253-4D44-AECE-986BC3D4758E}">
+        <DTS:PropertyExpression
+          DTS:Name="Directory">@[User::Source_Path_ORG]</DTS:PropertyExpression>
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="\\Dev-rpsvr01\DW_EXTERNAL_PROD\ORG\" />
+            <FEFEProperty
+              FileSpec="*.*" />
+            <FEFEProperty
+              FileNameRetrievalType="1" />
+            <FEFEProperty
+              Recurse="0" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Loop Container 2\ORG"
+          DTS:CreationName="Microsoft.FileSystemTask"
+          DTS:Description="File System Task"
+          DTS:DTSID="{229aa57f-f303-4950-8668-b1c4bc091eb0}"
+          DTS:ExecutableType="Microsoft.FileSystemTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ORG"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <FileSystemData
+              TaskOperationType="MoveFile"
+              TaskOverwriteDestFile="True"
+              TaskSourcePath="User::Full_Source_File_Path_ORG"
+              TaskIsSourceVariable="True"
+              TaskDestinationPath="User::Dest_File_Path"
+              TaskIsDestinationVariable="True" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{D1A62F6B-5E83-4AC6-8468-24341714AC40}"
+          DTS:ObjectName="{D1A62F6B-5E83-4AC6-8468-24341714AC40}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::MyFileValue" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Foreach Loop Container 3"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{19FDBDBE-6EC5-4081-9CD8-E3DB2D2C4297}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Foreach Loop Container 3">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachFileEnumerator"
+        DTS:DTSID="{F8541120-186E-439A-9DA3-DF7BB31EDBCC}"
+        DTS:ObjectName="{F8541120-186E-439A-9DA3-DF7BB31EDBCC}">
+        <DTS:PropertyExpression
+          DTS:Name="Directory">@[User::Source_Path_SFO]</DTS:PropertyExpression>
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="\\Dev-rpsvr01\DW_EXTERNAL_PROD\SFO\" />
+            <FEFEProperty
+              FileSpec="*.*" />
+            <FEFEProperty
+              FileNameRetrievalType="1" />
+            <FEFEProperty
+              Recurse="0" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Loop Container 3\SFO"
+          DTS:CreationName="Microsoft.FileSystemTask"
+          DTS:Description="File System Task"
+          DTS:DTSID="{9d97e3f6-75b8-4be1-a731-b840c8b1a902}"
+          DTS:ExecutableType="Microsoft.FileSystemTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SFO"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <FileSystemData
+              TaskOverwriteDestFile="True"
+              TaskSourcePath="User::Full_Source_File_Path_SFO"
+              TaskIsSourceVariable="True"
+              TaskDestinationPath="User::Dest_File_Path"
+              TaskIsDestinationVariable="True" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{1AD7FD20-68F2-4957-B6CA-B889126FA44C}"
+          DTS:ObjectName="{1AD7FD20-68F2-4957-B6CA-B889126FA44C}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::MyFileValue" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update batch run date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{2E316FB5-F306-43A8-8DF7-B93A2DFEA828}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update batch run date"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{218B8F01-318B-479B-AC43-D6046806BA6B}"
+          SQLTask:SqlStatementSource="DECLARE &#xA;@FREQUENCY_ID INT ,&#xA; @stage varchar(20),&#xA; @job_name varchar(20),&#xA; @source varchar(20)&#xA;select @FREQUENCY_ID=?&#xA;select @stage=?&#xA;select @job_name=?&#xA;select @source=?&#xA;&#xA;&#xA; Update [dbo].[ETL_BATCH_RUN_JOB]&#xA;SET BATCH_RUN_DATE =getdate()&#xA;where FREQUENCY_ID=@FREQUENCY_ID&#xA;&#xA;and STAGE=@stage&#xA;and JOB_NAME=@job_name&#xA;and [SOURCE]=@source" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Frequecy_id"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::stage"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::Job_name"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::source"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{B47D2CAC-7720-4088-BB16-7AD6CF7057EF}"
+      DTS:From="Package\Update batch run date"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Foreach Loop Container" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{AADCB6F6-A02D-489C-90BB-15309140F82E}"
+      DTS:From="Package\Foreach Loop Container"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Foreach Loop Container 2" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{BED047B0-D668-4319-B791-48384BBC45F8}"
+      DTS:From="Package\Foreach Loop Container 2"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Foreach Loop Container 1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{37123B5E-FBC8-4891-A356-810DBCDFB69D}"
+      DTS:From="Package\Foreach Loop Container 1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Foreach Loop Container 3" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{35A38FED-C545-4A78-AB8F-09779B4D0D0A}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{A8BAAE88-7512-4D08-A937-4D4A2909867F}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\Execute SQL Task"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:Disabled="True"
+          DTS:DTSID="{9B758BE5-C3C8-491D-9431-16B4ED83EA0B}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{218B8F01-318B-479B-AC43-D6046806BA6B}"
+              SQLTask:SqlStatementSource="&#xA;DECLARE &#xA;@FREQUENCY_ID INT ,&#xA; @stage varchar(20),&#xA; @job_name varchar(20),&#xA; @source varchar(20),&#xA; @count int,&#xA;@errorMsg nvarchar(3000)&#xA;select @FREQUENCY_ID=?&#xA;select @stage=?&#xA;select @job_name=?&#xA;select @source=?&#xA;select @errorMsg=?&#xA;&#xA;&#xA;Update [dbo].[ETL_BATCH_RUN_JOB]&#xA;SET SUCCESS ='N',&#xA;ERROR_MSG=@errorMsg&#xA;where FREQUENCY_ID=@FREQUENCY_ID&#xA;and convert(varchar(8),[BATCH_RUN_DATE],112)=CONVERT(varchar(8),getdate(),112)&#xA;and STAGE=@stage&#xA;and JOB_NAME=@job_name&#xA;and [SOURCE]=@source" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::Frequecy_id"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="131"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::stage"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="2"
+                SQLTask:DtsVariableName="User::Job_name"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="3"
+                SQLTask:DtsVariableName="User::source"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="4"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="102,42"
+          Id="Package\Foreach Loop Container\OAS"
+          TopLeft="26,24" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="220,121"
+          Size="220,164"
+          Id="Package\Foreach Loop Container"
+          TopLeft="213,42" />
+        <NodeLayout
+          Size="102,42"
+          Id="Package\Foreach Loop Container 1\ACE"
+          TopLeft="60,60" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="205,157"
+          Size="205,200"
+          Id="Package\Foreach Loop Container 1"
+          TopLeft="727,34" />
+        <NodeLayout
+          Size="104,42"
+          Id="Package\Foreach Loop Container 2\ORG"
+          TopLeft="60,60" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="205,157"
+          Size="205,200"
+          Id="Package\Foreach Loop Container 2"
+          TopLeft="493,44" />
+        <NodeLayout
+          Size="102,42"
+          Id="Package\Foreach Loop Container 3\SFO"
+          TopLeft="60,60" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="205,157"
+          Size="205,200"
+          Id="Package\Foreach Loop Container 3"
+          TopLeft="247,334" />
+        <NodeLayout
+          Size="187,42"
+          Id="Package\Update batch run date"
+          TopLeft="0,29" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="187,50">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="26,74"
+              Start="0,0"
+              End="18.5,74">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="9,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="9,0"
+                    Point2="13,0"
+                    Point3="13,4" />
+                  <mssgle:LineSegment
+                    End="13,70" />
+                  <mssgle:CubicBezierSegment
+                    Point1="13,70"
+                    Point2="13,74"
+                    Point3="17,74" />
+                  <mssgle:LineSegment
+                    End="18.5,74" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="433,124">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="60,20"
+              Start="0,0"
+              End="52.5,20">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="26,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="26,0"
+                    Point2="30,0"
+                    Point3="30,4" />
+                  <mssgle:LineSegment
+                    End="30,16" />
+                  <mssgle:CubicBezierSegment
+                    Point1="30,16"
+                    Point2="30,20"
+                    Point3="34,20" />
+                  <mssgle:LineSegment
+                    End="52.5,20" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="698,144">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="29,-10"
+              Start="0,0"
+              End="21.5,-10">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="10.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="10.5,0"
+                    Point2="14.5,0"
+                    Point3="14.5,-4" />
+                  <mssgle:LineSegment
+                    End="14.5,-6" />
+                  <mssgle:CubicBezierSegment
+                    Point1="14.5,-6"
+                    Point2="14.5,-10"
+                    Point3="18.5,-10" />
+                  <mssgle:LineSegment
+                    End="21.5,-10" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="829.5,234">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-480,100"
+              Start="0,0"
+              End="-480,92.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,46"
+                    Point2="0,50"
+                    Point3="-4,50" />
+                  <mssgle:LineSegment
+                    End="-476,50" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-476,50"
+                    Point2="-480,50"
+                    Point3="-480,54" />
+                  <mssgle:LineSegment
+                    End="-480,92.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="170,42"
+          Id="Package.EventHandlers[OnError]\Execute SQL Task"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,778 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/31/2019 4:40:18 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-140119GM07"
+  DTS:CreatorName="NCS\P0500450"
+  DTS:DTSID="{2B17F048-B618-48A1-97A0-668B8FF8BEFF}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="DM_OAS_IIP_OVERALL_PERFORMANCE"
+  DTS:PackageType="5"
+  DTS:VersionBuild="148"
+  DTS:VersionGUID="{AEE6969C-4524-47F2-AF8F-0F9D205C2DAF}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{63C798A3-F97E-40DF-A4F3-E2F23D2D27A4}"
+      DTS:ObjectName="RPDW_DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT;Provider=SQLNCLI11.1;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiAXqJL5xwkap+hp6D6sPxwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABvQ0rYZBo2InLx5qvSnzHWMaTZibJ7aZSPPbb+rxK5SAAAAAAOgAAAAAIAACAAAAD9JgaGqWUfe5aV//v9QUiCHBjvIr5B6+pk+SRB4dCerTAAAABWDcDSTOb+MQXbu9NSonamwXLk0JYtMlr7EG2o8podyU91SmeMy/XZf0+gLBwaNilAAAAAnMhj3Kwp7XH+jOseLfTxBZ5U0YW1WSsCbQTjtHEMgaN1bhEtfaGb6tpyEiexX3ZEUoY+7yP+/Ta26i7BMe4DgQ</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_STG]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{346CC473-6ED8-4F02-A422-D9D65A8D78BD}"
+      DTS:ObjectName="RPDW_STG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::Staging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT_STG;Provider=SQLNCLI11.1;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiAXqJL5xwkap+hp6D6sPxwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAADYEOzk3SDSn7Ke43u92HlSs9jpwrxiJf3sH0M7YPKYAAAAAAOgAAAAAIAACAAAAB/wBl3KeFGg5ABbA4F/Ak2Q4K658BYAsk+i5eHp79q+TAAAAABTg4uch4m5kvH9ulQJ71CPYvK8VPbrhqYm5ntr3HgFZOq1B89ive2azT8K7lRsWJAAAAAlzZYYYM5D/ty+hcA6a1X8z+PAmd14piF475bYHhiBDv4TFEiFWIMYWDqSRxESzMvMzDGH6Aslsl5d/Fxo8VxaQ</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{351DD07A-6692-4FC9-9346-BEF6BC4899F7}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;-------------------- DELETE DATA FROM DM_OAS_IIP_OVERALL_PERFORMANCE----------------------------&#xA;&#xA;DELETE FROM DM_OAS_IIP_OVERALL_PERFORMANCE&#xA;&#xA;----------------------------GET JOB ID--------------------------------&#xA;DECLARE @LastDWProcessdate datetime&#xA;,@processeddatetime datetime&#xA;,@jobstatusid varchar(5)&#xA;select @jobstatusid=&quot;+ (DT_STR, 5,1252) @[User::JobStatusId] +&quot;&#xA;&#xA; --------------------------------INSERT INTO DM_OAS_IIP_OVERALL_PERFORMANCE---------------------&#xA;  INSERT INTO DM_OAS_IIP_OVERALL_PERFORMANCE&#xA;  &#xA;  select ('AY' + CAST(Academic_Year AS CHAR(4))) AS Academic_Year&#xA;,('S'+CAST(Semester AS CHAR(1)))AS Semester&#xA;,('AY' + RIGHT( CAST(Academic_Year AS CHAR(4)),2) + ('S'+CAST(Semester AS CHAR(1)))) Academic_Term&#xA;,School_Centre AS Department&#xA;,Descr AS Department_Descr&#xA;,(Prog+' - '+ Prog_Descr) AS Programme&#xA;, Student_ID &#xA;,Score AS Overall_Performance&#xA;,( case when  Score in ('Excellent','Good','Very Good') THEN 'Y'&#xA;WHEN   Score in ('Not Satisfactory','Average' ) THEN 'N'&#xA;ELSE '' END) AS Good_Perf_Ind&#xA;,NULL AS Programme_IIP_Strength_in_Sem&#xA;,NULL AS Programme_IIP_Good_Count_in_Sem&#xA;,NULL AS Programme_IIP_Good_Percent_in_Sem&#xA;,NULL AS Programme_IIP_Strength_in_AY&#xA;,NULL AS Programme_IIP_Good_Count_in_AY&#xA;,NULL AS Programme_IIP_Good_Percent_in_AY&#xA;,NULL AS Department_IIP_Strength_in_Sem&#xA;,NULL AS Department_IIP_Good_Count_in_Sem&#xA;,NULL AS Department_IIP_Good_Percent_in_Sem&#xA;,NULL AS Department_IIP_Strength_in_AY&#xA;,NULL AS Department_IIP_Good_Count_in_AY&#xA;,NULL AS Department_IIP_Good_Percent_in_AY&#xA;,NULL AS RP_IIP_Strength_in_Sem&#xA;,NULL AS RP_IIP_Good_Count_in_Sem&#xA;,NULL AS RP_IIP_Good_Percent_in_Sem&#xA;,NULL AS RP_IIP_Strength_in_AY&#xA;,NULL AS RP_IIP_Good_Count_in_AY&#xA;,NULL AS RP_IIP_Good_Percent_in_AY&#xA;,GETDATE() AS CREATED_ON&#xA;,GETDATE() AS MODIFIED_ON&#xA;&#xA; from &#xA; &#xA; (&#xA; (SELECT IIP_Students.* FROM (select eval.Student_ID, eval.Academic_Year, eval.Semester, eval.Score, fe.Prog, fe.School_Centre,Prog_Descr,Semester_Code&#xA;  from DW_IIP_COMP_EVAL_QUESTION eval left join &#xA;  (&#xA;       select *&#xA;       from &#xA;       (      &#xA;              select Student_Id, Prog, ROW_NUMBER() over (partition by Student_Id order by Effective_Date desc, Effective_Seq desc) as rn&#xA;              from DW_STUDENT_MOVEMENT&#xA;              where Student_Status='AC'&#xA;              and Qual_Type='DPFT'&#xA;             &#xA;       ) a join&#xA;       (      &#xA;              select School_Centre, Prog_Code, Prog_Descr, ROW_NUMBER() over (partition by prog_code order by Effective_Date desc) as prn&#xA;              from DW_PET_PROGRAMME prog&#xA;              where Qual_Type='DPFT'&#xA;       ) b&#xA;       on a.Prog=b.Prog_Code&#xA;       where a.rn=1&#xA;       and b.prn=1&#xA;  ) fe&#xA;  on eval.Student_ID=fe.Student_Id&#xA;  where eval.name like '%overall internship performance%')IIP_Students&#xA;     INNER JOIN &#xA;&#x9;    ( select distinct Student_ID,Acad_Term from DW_MODULE a,&#xA;DW_STUDENT_MODULE_GRADES b&#xA;where a.Module_Code=b.Module_Code&#xA;and a.Module_Code like '%931'&#xA;and b.Final_Grade in ('P','PC'))IIP_Strength&#xA;ON IIP_Students.Student_ID=IIP_Strength.Student_Id&#xA;and IIP_Students.Semester_Code=IIP_Strength.acad_term&#xA;)&#xA;UNION&#xA;&#xA;( SELECT Student_ID,Acad_Year,RIGHT(Acad_Sem,1)Semester,Q7 AS Score,Diploma,School,Prog_Descr ,(Right(Acad_Year,2)+Right(Acad_Sem,1)+'0')&#xA;as Semester_Code&#xA;FROM DW_IIP_EVALUATION A&#xA;   JOIN&#xA;       (      &#xA;              SELECT School_Centre, Prog_Code, Prog_Descr, ROW_NUMBER() over (partition by prog_code order by Effective_Date desc) as prn&#xA;             FROM DW_PET_PROGRAMME prog&#xA;              WHERE Qual_Type='DPFT'&#xA;       ) b&#xA;       on a.Diploma=b.Prog_Code&#xA;       WHERE b.prn=1&#xA;&#x9;   ))A&#xA;&#x9;    LEFT JOIN  DW_EXT_DEPARTMENT D ON A.School_Centre=D.Department&#xA;  --------------update-------------------------&#xA;  UPDATE i&#xA;SET i.Programme_IIP_Strength_in_Sem = iagg.Programme_IIP_Strength_in_Sem,&#xA;       i.Programme_IIP_Good_Count_in_Sem = iagg.Programme_IIP_Good_Count_in_Sem,&#xA;       i.Programme_IIP_Good_Percent_in_Sem = iagg.Programme_IIP_Good_Percent_in_Sem,&#xA;       i.Programme_IIP_Strength_in_AY = iagg.Programme_IIP_Strength_in_AY,&#xA;       i.Programme_IIP_Good_Count_in_AY = iagg.Programme_IIP_Good_Count_in_AY,&#xA;       i.Programme_IIP_Good_Percent_in_AY = iagg.Programme_IIP_Good_Percent_in_AY,&#xA;       i.Department_IIP_Strength_in_Sem = iagg.Department_IIP_Strength_in_Sem,&#xA;       i.Department_IIP_Good_Count_in_Sem = iagg.Department_IIP_Good_Count_in_Sem,&#xA;       i.Department_IIP_Good_Percent_in_Sem = iagg.Department_IIP_Good_Percent_in_Sem,&#xA;       i.Department_IIP_Strength_in_AY = iagg.Department_IIP_Strength_in_AY,&#xA;       i.Department_IIP_Good_Count_in_AY = iagg.Department_IIP_Good_Count_in_AY,&#xA;       i.Department_IIP_Good_Percent_in_AY = iagg.Department_IIP_Good_Percent_in_AY,&#xA;       i.RP_IIP_Strength_in_Sem = iagg.RP_IIP_Strength_in_Sem,&#xA;       i.RP_IIP_Good_Count_in_Sem = iagg.RP_IIP_Good_Count_in_Sem,&#xA;       i.RP_IIP_Good_Percent_in_Sem = iagg.RP_IIP_Good_Percent_in_Sem,&#xA;       i.RP_IIP_Strength_in_AY = iagg.RP_IIP_Strength_in_AY,&#xA;       i.RP_IIP_Good_Count_in_AY = iagg.RP_IIP_Good_Count_in_AY,&#xA;       i.RP_IIP_Good_Percent_in_AY = iagg.RP_IIP_Good_Percent_in_AY&#xA; FROM DM_OAS_IIP_OVERALL_PERFORMANCE i&#xA;INNER JOIN (&#xA;       SELECT &#xA;              Academic_Year&#xA;              ,Semester&#xA;              ,Department         &#xA;              ,Programme&#xA;              ,Student_ID&#xA;              ,Programme_IIP_Strength_in_Sem&#xA;              ,Programme_IIP_Good_Count_in_Sem&#xA;              ,CAST(Programme_IIP_Good_Count_in_Sem as decimal)/Programme_IIP_Strength_in_Sem * 100.0 AS Programme_IIP_Good_Percent_in_Sem&#xA;              ,Programme_IIP_Strength_in_AY&#xA;              ,Programme_IIP_Good_Count_in_AY&#xA;              ,CAST(Programme_IIP_Good_Count_in_AY As decimal)/Programme_IIP_Strength_in_AY * 100.0 AS Programme_IIP_Good_Percent_in_AY&#xA;              ,Department_IIP_Strength_in_Sem&#xA;              ,Department_IIP_Good_Count_in_Sem&#xA;              ,cast(Department_IIP_Good_Count_in_Sem as decimal)/Department_IIP_Strength_in_Sem * 100.0 AS Department_IIP_Good_Percent_in_Sem&#xA;              ,Department_IIP_Strength_in_AY&#xA;              ,Department_IIP_Good_Count_in_AY&#xA;              ,cast(Department_IIP_Good_Count_in_AY as decimal)/Department_IIP_Strength_in_AY * 100.0 AS Department_IIP_Good_Percent_in_AY&#xA;              ,RP_IIP_Strength_in_Sem&#xA;              ,RP_IIP_Good_Count_in_Sem&#xA;              ,cast(RP_IIP_Good_Count_in_Sem as decimal)/RP_IIP_Strength_in_Sem * 100.0 AS RP_IIP_Good_Percent_in_Sem&#xA;              ,RP_IIP_Strength_in_AY&#xA;              ,RP_IIP_Good_Count_in_AY&#xA;              ,cast(RP_IIP_Good_Count_in_AY as decimal)/RP_IIP_Strength_in_AY * 100.0 AS RP_IIP_Good_Percent_in_AY&#xA;       FROM (&#xA;       SELECT &#xA;              Academic_Year&#xA;              ,Semester&#xA;              ,Department&#xA;              ,Programme&#xA;              ,Student_ID,&#xA;              COUNT(1) OVER (PARTITION BY i.Academic_Term, i.Department, i.Programme) AS Programme_IIP_Strength_in_Sem,&#xA;              Sum(Good_Perf_Count) OVER (PARTITION BY i.Academic_Term, i.Department, i.Programme) AS Programme_IIP_Good_Count_in_Sem,&#xA;              COUNT(1) OVER (PARTITION BY i.Academic_Year, i.Department, i.Programme) AS Programme_IIP_Strength_in_AY,&#xA;              Sum(Good_Perf_Count) OVER (PARTITION BY i.Academic_Year, i.Department, i.Programme) AS Programme_IIP_Good_Count_in_AY,&#xA;              COUNT(1) OVER (PARTITION BY i.Academic_Term, i.Department) AS Department_IIP_Strength_in_Sem,&#xA;              Sum(Good_Perf_Count) OVER (PARTITION BY i.Academic_Term, i.Department) AS Department_IIP_Good_Count_in_Sem,&#xA;              COUNT(1) OVER (PARTITION BY i.Academic_Year, i.Department) AS Department_IIP_Strength_in_AY,&#xA;              Sum(Good_Perf_Count) OVER (PARTITION BY i.Academic_Year, i.Department) AS Department_IIP_Good_Count_in_AY,&#xA;              COUNT(1) OVER (PARTITION BY i.Academic_Term) AS RP_IIP_Strength_in_Sem,&#xA;              Sum(Good_Perf_Count) OVER (PARTITION BY i.Academic_Term) AS RP_IIP_Good_Count_in_Sem,&#xA;              COUNT(1) OVER (PARTITION BY i.Academic_Year) AS RP_IIP_Strength_in_AY,&#xA;              Sum(Good_Perf_Count) OVER (PARTITION BY i.Academic_Year) AS RP_IIP_Good_Count_in_AY&#xA;       FROM (&#xA;       SELECT Academic_Year&#xA;                ,Semester&#xA;                ,Academic_Term&#xA;                ,Department&#xA;                ,Programme&#xA;                ,Student_ID,&#xA;       CASE Good_Perf_Ind &#xA;              WHEN 'Y' THEN 1&#xA;              ELSE 0&#xA;       END AS Good_Perf_Count&#xA;       FROM DM_OAS_IIP_OVERALL_PERFORMANCE i) i) i) iagg&#xA;ON i.Academic_Year = iagg.Academic_Year&#xA;AND i.Semester = iagg.Semester&#xA;AND i.Department = iagg.Department&#xA;AND i.Programme = iagg.Programme&#xA;AND i.Student_ID = iagg.Student_ID;&#xA;&#xA;--------------------------------------&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;INSERT INTO  ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,@processeddatetime  as created_on&#xA;  &#xA;  &#xA;END CATCH  &#xA;GO&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="InsertQuery">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+-------------------- DELETE DATA FROM DM_OAS_IIP_OVERALL_PERFORMANCE----------------------------
+
+DELETE FROM DM_OAS_IIP_OVERALL_PERFORMANCE
+
+----------------------------GET JOB ID--------------------------------
+DECLARE @LastDWProcessdate datetime
+,@processeddatetime datetime
+,@jobstatusid varchar(5)
+select @jobstatusid=0
+
+ --------------------------------INSERT INTO DM_OAS_IIP_OVERALL_PERFORMANCE---------------------
+  INSERT INTO DM_OAS_IIP_OVERALL_PERFORMANCE
+  
+  select ('AY' + CAST(Academic_Year AS CHAR(4))) AS Academic_Year
+,('S'+CAST(Semester AS CHAR(1)))AS Semester
+,('AY' + RIGHT( CAST(Academic_Year AS CHAR(4)),2) + ('S'+CAST(Semester AS CHAR(1)))) Academic_Term
+,School_Centre AS Department
+,Descr AS Department_Descr
+,(Prog+' - '+ Prog_Descr) AS Programme
+, Student_ID 
+,Score AS Overall_Performance
+,( case when  Score in ('Excellent','Good','Very Good') THEN 'Y'
+WHEN   Score in ('Not Satisfactory','Average' ) THEN 'N'
+ELSE '' END) AS Good_Perf_Ind
+,NULL AS Programme_IIP_Strength_in_Sem
+,NULL AS Programme_IIP_Good_Count_in_Sem
+,NULL AS Programme_IIP_Good_Percent_in_Sem
+,NULL AS Programme_IIP_Strength_in_AY
+,NULL AS Programme_IIP_Good_Count_in_AY
+,NULL AS Programme_IIP_Good_Percent_in_AY
+,NULL AS Department_IIP_Strength_in_Sem
+,NULL AS Department_IIP_Good_Count_in_Sem
+,NULL AS Department_IIP_Good_Percent_in_Sem
+,NULL AS Department_IIP_Strength_in_AY
+,NULL AS Department_IIP_Good_Count_in_AY
+,NULL AS Department_IIP_Good_Percent_in_AY
+,NULL AS RP_IIP_Strength_in_Sem
+,NULL AS RP_IIP_Good_Count_in_Sem
+,NULL AS RP_IIP_Good_Percent_in_Sem
+,NULL AS RP_IIP_Strength_in_AY
+,NULL AS RP_IIP_Good_Count_in_AY
+,NULL AS RP_IIP_Good_Percent_in_AY
+,GETDATE() AS CREATED_ON
+,GETDATE() AS MODIFIED_ON
+
+ from 
+ 
+ (
+ (SELECT IIP_Students.* FROM (select eval.Student_ID, eval.Academic_Year, eval.Semester, eval.Score, fe.Prog, fe.School_Centre,Prog_Descr,Semester_Code
+  from DW_IIP_COMP_EVAL_QUESTION eval left join 
+  (
+       select *
+       from 
+       (      
+              select Student_Id, Prog, ROW_NUMBER() over (partition by Student_Id order by Effective_Date desc, Effective_Seq desc) as rn
+              from DW_STUDENT_MOVEMENT
+              where Student_Status='AC'
+              and Qual_Type='DPFT'
+             
+       ) a join
+       (      
+              select School_Centre, Prog_Code, Prog_Descr, ROW_NUMBER() over (partition by prog_code order by Effective_Date desc) as prn
+              from DW_PET_PROGRAMME prog
+              where Qual_Type='DPFT'
+       ) b
+       on a.Prog=b.Prog_Code
+       where a.rn=1
+       and b.prn=1
+  ) fe
+  on eval.Student_ID=fe.Student_Id
+  where eval.name like '%overall internship performance%')IIP_Students
+     INNER JOIN 
+	    ( select distinct Student_ID,Acad_Term from DW_MODULE a,
+DW_STUDENT_MODULE_GRADES b
+where a.Module_Code=b.Module_Code
+and a.Module_Code like '%931'
+and b.Final_Grade in ('P','PC'))IIP_Strength
+ON IIP_Students.Student_ID=IIP_Strength.Student_Id
+and IIP_Students.Semester_Code=IIP_Strength.acad_term
+)
+UNION
+
+( SELECT Student_ID,Acad_Year,RIGHT(Acad_Sem,1)Semester,Q7 AS Score,Diploma,School,Prog_Descr ,(Right(Acad_Year,2)+Right(Acad_Sem,1)+'0')
+as Semester_Code
+FROM DW_IIP_EVALUATION A
+   JOIN
+       (      
+              SELECT School_Centre, Prog_Code, Prog_Descr, ROW_NUMBER() over (partition by prog_code order by Effective_Date desc) as prn
+             FROM DW_PET_PROGRAMME prog
+              WHERE Qual_Type='DPFT'
+       ) b
+       on a.Diploma=b.Prog_Code
+       WHERE b.prn=1
+	   ))A
+	    LEFT JOIN  DW_EXT_DEPARTMENT D ON A.School_Centre=D.Department
+  --------------update-------------------------
+  UPDATE i
+SET i.Programme_IIP_Strength_in_Sem = iagg.Programme_IIP_Strength_in_Sem,
+       i.Programme_IIP_Good_Count_in_Sem = iagg.Programme_IIP_Good_Count_in_Sem,
+       i.Programme_IIP_Good_Percent_in_Sem = iagg.Programme_IIP_Good_Percent_in_Sem,
+       i.Programme_IIP_Strength_in_AY = iagg.Programme_IIP_Strength_in_AY,
+       i.Programme_IIP_Good_Count_in_AY = iagg.Programme_IIP_Good_Count_in_AY,
+       i.Programme_IIP_Good_Percent_in_AY = iagg.Programme_IIP_Good_Percent_in_AY,
+       i.Department_IIP_Strength_in_Sem = iagg.Department_IIP_Strength_in_Sem,
+       i.Department_IIP_Good_Count_in_Sem = iagg.Department_IIP_Good_Count_in_Sem,
+       i.Department_IIP_Good_Percent_in_Sem = iagg.Department_IIP_Good_Percent_in_Sem,
+       i.Department_IIP_Strength_in_AY = iagg.Department_IIP_Strength_in_AY,
+       i.Department_IIP_Good_Count_in_AY = iagg.Department_IIP_Good_Count_in_AY,
+       i.Department_IIP_Good_Percent_in_AY = iagg.Department_IIP_Good_Percent_in_AY,
+       i.RP_IIP_Strength_in_Sem = iagg.RP_IIP_Strength_in_Sem,
+       i.RP_IIP_Good_Count_in_Sem = iagg.RP_IIP_Good_Count_in_Sem,
+       i.RP_IIP_Good_Percent_in_Sem = iagg.RP_IIP_Good_Percent_in_Sem,
+       i.RP_IIP_Strength_in_AY = iagg.RP_IIP_Strength_in_AY,
+       i.RP_IIP_Good_Count_in_AY = iagg.RP_IIP_Good_Count_in_AY,
+       i.RP_IIP_Good_Percent_in_AY = iagg.RP_IIP_Good_Percent_in_AY
+ FROM DM_OAS_IIP_OVERALL_PERFORMANCE i
+INNER JOIN (
+       SELECT 
+              Academic_Year
+              ,Semester
+              ,Department         
+              ,Programme
+              ,Student_ID
+              ,Programme_IIP_Strength_in_Sem
+              ,Programme_IIP_Good_Count_in_Sem
+              ,CAST(Programme_IIP_Good_Count_in_Sem as decimal)/Programme_IIP_Strength_in_Sem * 100.0 AS Programme_IIP_Good_Percent_in_Sem
+              ,Programme_IIP_Strength_in_AY
+              ,Programme_IIP_Good_Count_in_AY
+              ,CAST(Programme_IIP_Good_Count_in_AY As decimal)/Programme_IIP_Strength_in_AY * 100.0 AS Programme_IIP_Good_Percent_in_AY
+              ,Department_IIP_Strength_in_Sem
+              ,Department_IIP_Good_Count_in_Sem
+              ,cast(Department_IIP_Good_Count_in_Sem as decimal)/Department_IIP_Strength_in_Sem * 100.0 AS Department_IIP_Good_Percent_in_Sem
+              ,Department_IIP_Strength_in_AY
+              ,Department_IIP_Good_Count_in_AY
+              ,cast(Department_IIP_Good_Count_in_AY as decimal)/Department_IIP_Strength_in_AY * 100.0 AS Department_IIP_Good_Percent_in_AY
+              ,RP_IIP_Strength_in_Sem
+              ,RP_IIP_Good_Count_in_Sem
+              ,cast(RP_IIP_Good_Count_in_Sem as decimal)/RP_IIP_Strength_in_Sem * 100.0 AS RP_IIP_Good_Percent_in_Sem
+              ,RP_IIP_Strength_in_AY
+              ,RP_IIP_Good_Count_in_AY
+              ,cast(RP_IIP_Good_Count_in_AY as decimal)/RP_IIP_Strength_in_AY * 100.0 AS RP_IIP_Good_Percent_in_AY
+       FROM (
+       SELECT 
+              Academic_Year
+              ,Semester
+              ,Department
+              ,Programme
+              ,Student_ID,
+              COUNT(1) OVER (PARTITION BY i.Academic_Term, i.Department, i.Programme) AS Programme_IIP_Strength_in_Sem,
+              Sum(Good_Perf_Count) OVER (PARTITION BY i.Academic_Term, i.Department, i.Programme) AS Programme_IIP_Good_Count_in_Sem,
+              COUNT(1) OVER (PARTITION BY i.Academic_Year, i.Department, i.Programme) AS Programme_IIP_Strength_in_AY,
+              Sum(Good_Perf_Count) OVER (PARTITION BY i.Academic_Year, i.Department, i.Programme) AS Programme_IIP_Good_Count_in_AY,
+              COUNT(1) OVER (PARTITION BY i.Academic_Term, i.Department) AS Department_IIP_Strength_in_Sem,
+              Sum(Good_Perf_Count) OVER (PARTITION BY i.Academic_Term, i.Department) AS Department_IIP_Good_Count_in_Sem,
+              COUNT(1) OVER (PARTITION BY i.Academic_Year, i.Department) AS Department_IIP_Strength_in_AY,
+              Sum(Good_Perf_Count) OVER (PARTITION BY i.Academic_Year, i.Department) AS Department_IIP_Good_Count_in_AY,
+              COUNT(1) OVER (PARTITION BY i.Academic_Term) AS RP_IIP_Strength_in_Sem,
+              Sum(Good_Perf_Count) OVER (PARTITION BY i.Academic_Term) AS RP_IIP_Good_Count_in_Sem,
+              COUNT(1) OVER (PARTITION BY i.Academic_Year) AS RP_IIP_Strength_in_AY,
+              Sum(Good_Perf_Count) OVER (PARTITION BY i.Academic_Year) AS RP_IIP_Good_Count_in_AY
+       FROM (
+       SELECT Academic_Year
+                ,Semester
+                ,Academic_Term
+                ,Department
+                ,Programme
+                ,Student_ID,
+       CASE Good_Perf_Ind 
+              WHEN 'Y' THEN 1
+              ELSE 0
+       END AS Good_Perf_Count
+       FROM DM_OAS_IIP_OVERALL_PERFORMANCE i) i) i) iagg
+ON i.Academic_Year = iagg.Academic_Year
+AND i.Semester = iagg.Semester
+AND i.Department = iagg.Department
+AND i.Programme = iagg.Programme
+AND i.Student_ID = iagg.Student_ID;
+
+--------------------------------------
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+  ROLLBACK TRANSACTION
+INSERT INTO  ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,@processeddatetime  as created_on
+  
+  
+END CATCH  
+GO</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{EAF8AF7F-0411-45A5-9781-5B4B8F1C1972}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JobStatusId">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{40C0463C-54C8-480E-BC96-D327D15270BF}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="MndColumncheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{88611B02-22BC-48ED-9468-993E35763966}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="PrevJobStatus">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6213B841-3B4B-4DBD-A15C-DB36A28BE30D}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprimarykeycheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7044E869-DCE5-4010-99CE-41941C399AF1}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprocesseddate">
+      <DTS:VariableValue
+        DTS:DataType="7">2/27/2019 11:28:20 AM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{165A86B3-EBB3-43C3-A54A-A41427EF5604}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SrcTable">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_IIP_COMP_EVAL_QUESTION</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B8262A3E-3D99-4A45-9DD2-F5623F1B308A}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Stage">
+      <DTS:VariableValue
+        DTS:DataType="8">DW</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{19C65575-28E9-4EB4-948D-1207581AEEC4}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTable">
+      <DTS:VariableValue
+        DTS:DataType="8">DM_OAS_IIP_OVERALL_PERFORMANCE</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create ETL Job Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3C4C6377-DFF5-4E16-B3A0-547D6670B5A0}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create ETL Job Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{63C798A3-F97E-40DF-A4F3-E2F23D2D27A4}"
+          SQLTask:SqlStatementSource="&#xA;EXEC dbo.[usp_InsertETLJobLog]  ?,?,?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::Stage"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\get Job Status Id"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E9BB5B09-DA77-4FDE-BE4B-438920FEC304}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="get Job Status Id"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{63C798A3-F97E-40DF-A4F3-E2F23D2D27A4}"
+          SQLTask:SqlStatementSource="declare  @JobstatusID int&#xA;&#xA;select @JobstatusID=max(job_status_id) from [ETL_JOB_STATUS]&#xA;where [TARGET_TABLENAME]=?&#xA;&#xA;&#xA;Select @JobstatusID "
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JobStatusId" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\getprocesseddate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{66034B52-1E6A-45AF-9004-1DD0F767ACF7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="getprocesseddate"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{63C798A3-F97E-40DF-A4F3-E2F23D2D27A4}"
+          SQLTask:SqlStatementSource="SELECT GETDATE()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::sqlprocesseddate" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\insert into main table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{96C5F472-2E8D-4432-9868-A4879284AF44}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="insert into main table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{63C798A3-F97E-40DF-A4F3-E2F23D2D27A4}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::InsertQuery" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\UpdateJobStatus"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{7862C127-B8DC-4B39-ADDD-8D9E464FF01C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="UpdateJobStatus"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{63C798A3-F97E-40DF-A4F3-E2F23D2D27A4}"
+          SQLTask:SqlStatementSource="&#xA; &#xA;&#xA;DECLARE &#xA;@jobstatusid INT&#xA;select @jobstatusid=?&#xA;IF EXISTS(SELECT * FROM dbo.ETL_ERROR_LOG WHERE [JOB_STATUS_ID]=@jobstatusid)&#xA;&#xA; BEGIN&#xA;&#xA;&#xA;&#xA; UPDATE [dbo].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='FAIL'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;  END&#xA;&#xA;ELSE&#xA;&#xA;BEGIN&#xA;&#xA;UPDATE [DBO].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='Success'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;END&#xA;&#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{D2D9D7E8-7BF6-4D2F-8ED6-11FBAB275850}"
+      DTS:From="Package\get Job Status Id"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\getprocesseddate" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{0D5ADBC4-9C75-49DC-B727-E54261D17545}"
+      DTS:From="Package\Create ETL Job Log"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\get Job Status Id" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{3B05B1C4-B16E-4BE3-8194-91BEFDF10961}"
+      DTS:From="Package\getprocesseddate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\insert into main table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{42499478-C452-49CB-AFBD-15BDC759AD12}"
+      DTS:From="Package\insert into main table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\UpdateJobStatus" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{246D1ACB-4705-4966-B5BA-7B95E1A971D2}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{DC56841E-7E4A-4D11-A0DA-9FCBD1C741A3}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\Error Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{7A56F0A8-364B-45D6-BAA7-02CA1D93AD7F}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Error Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{63C798A3-F97E-40DF-A4F3-E2F23D2D27A4}"
+              SQLTask:SqlStatementSource="  insert into [dbo].[ETL_ERROR_LOG]([JOB_STATUS_ID],[ERROR_RECORD])&#xA;  select ?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL Job Status Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{4399CD52-90F1-4CC3-9E43-0915B7E8B409}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL Job Status Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{63C798A3-F97E-40DF-A4F3-E2F23D2D27A4}"
+              SQLTask:SqlStatementSource="update [ETL_JOB_STATUS]&#xA;set Job_Status='Fail'&#xA;,Error_Msg=?&#xA;where job_status_id=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{EE4AC0C6-A757-43F4-9157-21B0466DA92F}"
+          DTS:From="Package.EventHandlers[OnError]\Error Log"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package.EventHandlers[OnError]\ETL Job Status Log" />
+      </DTS:PrecedenceConstraints>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Create ETL Job Log"
+          TopLeft="9,30" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\get Job Status Id"
+          TopLeft="225,31" />
+        <NodeLayout
+          Size="162,42"
+          Id="Package\getprocesseddate"
+          TopLeft="421,36" />
+        <NodeLayout
+          Size="179,42"
+          Id="Package\insert into main table"
+          TopLeft="409,135" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\UpdateJobStatus"
+          TopLeft="422,221" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="384,54.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="37,0"
+              Start="0,0"
+              End="29.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="29.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="179,51.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="46,0"
+              Start="0,0"
+              End="38.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="38.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="500.25,78">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,57"
+              Start="0,0"
+              End="0,49.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="499.75,177">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44"
+              Start="0,0"
+              End="0,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package.EventHandlers[OnError]\Error Log"
+          TopLeft="60,60" />
+        <NodeLayout
+          Size="169,42"
+          Id="Package.EventHandlers[OnError]\ETL Job Status Log"
+          TopLeft="60,162" />
+        <EdgeLayout
+          Id="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          TopLeft="121.5,102">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="23,60"
+              Start="0,0"
+              End="23,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26"
+                    Point2="0,30"
+                    Point3="4,30" />
+                  <mssgle:LineSegment
+                    End="19,30" />
+                  <mssgle:CubicBezierSegment
+                    Point1="19,30"
+                    Point2="23,30"
+                    Point3="23,34" />
+                  <mssgle:LineSegment
+                    End="23,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

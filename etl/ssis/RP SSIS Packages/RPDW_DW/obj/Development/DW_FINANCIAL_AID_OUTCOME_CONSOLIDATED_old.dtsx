@@ -1,0 +1,1361 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/30/2019 1:46:31 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-110119GM22"
+  DTS:CreatorName="NCS\P0500388"
+  DTS:DelayValidation="True"
+  DTS:DTSID="{9C5B701E-F87D-45A8-95FF-6A981DBA8308}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="DW_FINANCIAL_AID_OUTCOME_CONSOLIDATED_old"
+  DTS:PackageType="5"
+  DTS:VersionBuild="141"
+  DTS:VersionGUID="{09145769-16DB-40E7-A573-D7306F46C4E6}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{840AC9BA-025A-431F-9BE2-F2A7879C4D69}"
+      DTS:ObjectName="DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT;Provider=SQLNCLI11.1;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiTCZiygZU0CFUIPafxRImQAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADJZSCaXiEUZ420aNb50GgyAAAAAASAAACgAAAAEAAAAGaXpqu3z1DBOZjSlWu0GIUYAAAAq9dzLNgegibLtjIHFizgqXTGwoRySTeGFAAAAFUYssX/oD1UnlqIfSRtqm5g0dzG</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ErrorLog]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{BD480636-76FA-4E51-B625-8C4E9248ABA1}"
+      DTS:ObjectName="ErrorLog">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT;Provider=SQLNCLI11.1;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiTCZiygZU0CFUIPafxRImQAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABcHj7So4qwR9KrWZd3Pec5AAAAAASAAACgAAAAEAAAAGNh5oR53BFXJ8krxaaPEHIYAAAAdoz544Oq35GTxehvNTklZwnyENJRVLjtFAAAAEqu/nxAa8yBI1EPM37ufZSK8JpG</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{FF75EDD2-59A0-49F8-A001-DF4819241822}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Duplicate_Check">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AE1C0914-368A-4FFF-AB71-1BEF9845BA7E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_name">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_FINANCIAL_AID_OUTCOME_CONSOLIDATED</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{21509569-4CD9-4938-ACF6-FF563874514D}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_Status">
+      <DTS:VariableValue
+        DTS:DataType="3">1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B4A1F61F-683B-4FA4-A73A-9AEEE9C5D2AC}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JOB_STATUS_ID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{56A16126-98CB-47DC-9744-4889913A258C}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Mandatory_constraint_Check">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E6A82254-3BD0-4C2C-AFD6-1B0D2660840C}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PreStage">
+      <DTS:VariableValue
+        DTS:DataType="8">STG</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B6770DA6-E2F7-4CEF-8826-E201D8577428}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Process_date">
+      <DTS:VariableValue
+        DTS:DataType="7">2/1/2019 2:58:00 PM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D4E12A21-6ABB-4700-A3F6-2F7CC96A0684}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SourceTable">
+      <DTS:VariableValue
+        DTS:DataType="8">STG_EXT_FIN_AID_OUTCOME_STATUS</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3A24E96F-F5EF-460E-9C5F-F8E9CFCD4F2F}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;------------&#xA;DECLARE @LastDWProcessdate datetime&#xA;,@processeddatetime datetime&#xA;,@jobstatusid varchar(10)&#xA;select @jobstatusid=0&#xA;select @LastDWProcessdate= Isnull(max(Modified_on),'1990-01-01 00:00:00.000') from  [dbo].[DW_FINANCIAL_AID_OUTCOME_CONSOLIDATED]--dw table&#xA;--select  @processeddatetime=?&#xA;--select @LastDWProcessdate&#xA;-----------Scholarship&amp;Bursary-----------------&#xA;select 'Scholarship&amp;Bursary' as Source_data &#xA;,a.Acad_Yr Acad_Yr&#xA;,'AY'+RIGHT(a.Acad_Yr,2) +a.SEM as Acad_Term&#xA;,a.Student_ID Student_ID&#xA;,a.App_ID&#xA;,a.App_Type&#xA;,a.App_Status App_Status&#xA;,a.App_Status_Desc App_Status_Desc&#xA;,a.Schship_Bur_ID &#xA;,a.Schship_Bur_Name Award_Description&#xA;,a.Amt Award_Amt&#xA;,a.Date_Updated&#xA;,NULL as Award_Remarks&#xA;,a.Gross_Monthly_Household_Income Verified_GHI_Award&#xA;,a.Per_Capita_Income Verified_PCI_Award&#xA;,a.Num_Household_Members Num_Household_Members&#xA;,a.Property_Housing_Type Property_Type&#xA;,a.Tenancy_Type Tenancy_Type&#xA;,a.Special_Circumstances&#xA;,a.Comments Remarks_Staff_Verifier&#xA;,a.App_Type_Decr&#xA;,a.SEM&#xA;,a.Disbursed_Date as Disbursement_Date&#xA;&#xA;&#xA;into  #OASIS_Fin_Aid_Details_step1 from(&#xA;&#xA;SELECT a.Student_ID, a.Acad_Yr, a.App_Date, a.Awarded_Date, a.Disbursed_Date,&#xA;--CASE WHEN a.App_Date&gt;=ISNULL(a.Awarded_Date,'1990-01-01')&#xA;--&#x9;&#x9;THEN CASE WHEN  a.App_Date&gt;=ISNULL(a.Disbursed_Date ,'1990-01-01')THEN a.App_Date  ELSE a.Disbursed_Date END&#xA;--WHEN ISNULL(a.Awarded_Date,'1990-01-01')&gt;=ISNULL(a.Disbursed_Date,'1990-01-01') THEN a.Awarded_Date ELSE a.Disbursed_Date &#xA;--END&#xA;a.App_Date As Date_Updated&#xA;,CASE WHEN MONTH(a.App_Date) IN (3,4,5,6,7,8) THEN 'S1'&#xA; WHEN MONTH(a.App_Date) IN (9,10,11,12,1,2) THEN 'S2'&#xA; ELSE 'S1' END AS SEM&#xA;&#xA; ,a.App_Type, a.App_Type_Decr, &#xA;a.App_Status, b.App_Status as App_Status_Code, a.App_ID, a.Schship_Bur_ID, a.Schship_Bur_Name, a.Amt, a.Comments, &#xA;b.Gross_Monthly_Household_Income, b.Per_Capita_Income, b.Num_Household_Members, b.Property_Housing_Type,&#xA;b.Tenancy_Type &#xA;--b.Father_Deceased, b.Mother_Deceased, b.Parents_Divorced, b.Med_Cond_Family_Member,b.Med_Cond_Self, b.Specify_Med_Cond &#xA;&#xA; ,CASE WHEN b.Father_Deceased='Y' THEN 'Father_Deceased' ELSE '' END &#xA; +'| ' + CASE WHEN b.Mother_Deceased='Y' THEN 'Mother_Deceased' ELSE '' END &#xA; +'| ' + CASE WHEN b.Parents_Divorced='Y' THEN 'Parents_Divorced' ELSE '' END&#xA; +'| ' + CASE WHEN b.Med_Cond_Family_Member='Y' THEN 'Med_Cond_Family_Member' ELSE '' END&#xA; +'| ' + CASE WHEN b.Med_Cond_Self='Y' THEN 'Med_Cond_Self' ELSE '' END&#xA; +'| ' + CASE WHEN b.Specify_Med_Cond='Y' THEN 'Specify_Med_Cond' ELSE '' END&#xA; as Special_Circumstances,c.Long_Name as App_Status_Desc&#xA;FROM&#xA;(SELECT * FROM &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_BUR_SCHOLAR_STATUS WHERE Latest_Ind='Y') a &#xA;LEFT JOIN (SELECT * FROM &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_STUDENT_APP WHERE Latest_Ind='Y') b&#xA;ON&#xA;a.Student_ID=b.Student_ID&#xA;and a.Acad_Yr=b.Acad_Yr&#xA;and a.App_ID=b.App_ID&#xA;and a.App_Type=b.App_Type&#xA;&#xA;LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_MASTER_CODE c ON a.App_Status=c.Field_Value and c.Field_Name='A_SF_APPL_STA'&#xA;&#xA;)a&#xA;&#xA;&#xA;select *into #OASIS_Fin_Aid_Details from(&#xA;&#xA;select a.*,ISNULL(b.Fin_Aid_Category,'Others')  as Fin_Aid_Category&#xA;&#xA;,CASE WHEN b.Fin_Aid_Type IS NULL THEN a.App_Type ELSE b.Fin_Aid_Type END AS Fin_Aid_Type&#xA;,CASE WHEN b.Fin_Aid_Desc IS NULL THEN a.App_Type_Decr ELSE b.Fin_Aid_Desc end as Fin_Aid_Desc&#xA;, CASE WHEN  b.Fin_Aid_Status_Desc IS NULL THEN a.App_Status_Desc ELSE b.Fin_Aid_Status_Desc end AS Fin_Aid_Status_Desc&#xA;,ROW_NUMBER() over (partition by a.Acad_Term,a.Student_ID,a.App_ID,a.App_Type,a.App_Status order by CAST(b.[Priority] AS INT))ROw_NUM&#xA;,CASE    WHEN SD.Residency_Type='SGP' THEN 'Y' ELSE 'N' END AS Eligibility_Govt_Bursary&#xA;from #OASIS_Fin_Aid_Details_step1 a&#xA;LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_EXT_FIN_SCHEME_ID b&#xA;on (a.App_Type=b.App_Type OR b.App_Type='*') and (a.App_Status=b.App_Status OR b.App_Status='*')&#xA;and (a.Schship_Bur_ID=b.Award_Item_ID_Grant_Code OR b.Award_Item_ID_Grant_Code='*') and b.Latest_Ind='Y'&#xA;&#xA;LEFT JOIN (Select Student_ID, Acad_Yr from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_BUR_SCHOLAR_STATUS WHERE Latest_Ind='Y' &#xA;and (App_Status='DIS' or App_Status= 'AWD' or App_Status='APR') and App_Type='SCH') BSS on BSS.Student_ID=a.Student_ID&#xA;and BSS.Acad_Yr=a.Acad_Yr&#xA;&#xA;LEFT JOIN (SELECT DISTINCT  STUDENT_ID,Residency_Type,&#xA;ROW_NUMBER() over (partition by STUDENT_ID order by Effective_Date DESC  ) ROW_NO&#xA;FROM DW_STUDENT_DETAILS  where Applicatn_Number is not null)SD ON SD.Student_ID=a.Student_ID and SD.ROW_NO=1&#xA; )a&#xA; where a.ROw_NUM=1 &#xA;&#xA;-- select *into #OASIS_Fin_Aid_Details from(&#xA;&#xA;-- select *, ROW_NUMBER() OVER (Partition by Student_ID,Acad_Term,Fin_Aid_Category,&#xA;--Fin_Aid_Type,Fin_Aid_Desc,Fin_Aid_Status_Desc,Date_Updated order by App_ID DESC)ROW_NUM_App &#xA;--from  #OASIS_Fin_Aid_Details_step2 &#xA;&#xA;-- )Final where Final.ROW_NUM_App=1&#xA;&#xA; /*-------------------------- end of Scholarship&amp;Bursary-------------------------------------------- */&#xA; /*-------------------------RP_Grant_Claim----------------------------------------*/&#xA; SELECT * INTO #RP_Grant_Claim from (&#xA;&#xA;Select &#xA;'RP Grant Claim' as Data_Sources &#xA;,CAST(a.Acad_Year as varchar(10)) Acad_Year&#xA;,'AY'+RIGHT(a.Acad_Year,2)+a.SEM as Acad_Term&#xA;,a.Student_ID&#xA;,CAST('' as varchar(50)) as Fin_Aid_Category&#xA;,CAST('' as varchar(100)) as Fin_Aid_Type&#xA;,CAST('' as varchar(200)) as Fin_Aid_Desc&#xA;,CAST('' as varchar(50)) as Fin_Aid_Status_Desc&#xA;,a.Event_ID as App_ID&#xA;,a.Grant_Code as App_type&#xA;,'AWD' as App_Status&#xA;,'Awarded' as App_Status_Desc&#xA;,'OFSOT' as Award_ID&#xA;,a.[Desc] as Award_Description&#xA;,a.Amt as Award_Amt&#xA;,a.Actual_Event_Start_Date as Date_updated&#xA;,a.Activity_Title as Award_Remarks&#xA;,CASE WHEN SD.Residency_Type='SGP' THEN 'Y' ELSE 'N' END AS Eligibility_Govt_Bursary &#xA;,NULL as Verified_GHI_Award&#xA;,NULL as Verified_PCI_Award&#xA;,NULL as Num_Household_Members&#xA;,NULL as Property_Type&#xA;,NULL as Tenancy_Type&#xA;,NULL as Special_Circumstances&#xA;,a.Activity_Outline as Remarks_Staff_Verifier&#xA;&#xA;&#xA;from (&#xA;select  &#xA;YEAR(b.Actual_Event_Start_Date) as Acad_Year&#xA;,CASE WHEN MONTH(b.Actual_Event_Start_Date) IN (3,4,5,6,7,8) THEN 'S1'&#xA; WHEN MONTH(b.Actual_Event_Start_Date) IN (9,10,11,12,1,2) THEN 'S2'&#xA; ELSE 'S1' END AS SEM&#xA; ,a.Student_ID&#xA; ,a.Event_ID&#xA; ,a.Grant_Code&#xA; ,a.[Desc]&#xA; ,a.Amt&#xA; ,b.Actual_Event_Start_Date&#xA; ,b.Activity_Title&#xA; ,b.Activity_Outline&#xA;&#xA; from (select * from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_RP_GRANT_CLAIM where Latest_Ind='Y') a&#xA; LEFT JOIN (select * from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_EVENT_SETUP where Latest_Ind='Y') b on a.Event_ID=b.Event_ID &#xA; &#xA; )a&#xA;&#xA; LEFT JOIN (SELECT DISTINCT  STUDENT_ID,Residency_Type,&#xA;ROW_NUMBER() over (partition by STUDENT_ID order by Effective_Date DESC  ) ROW_NO&#xA;FROM DW_STUDENT_DETAILS  where Applicatn_Number is not null)SD ON SD.Student_ID=a.Student_ID and SD.ROW_NO=1&#xA;&#xA;)T&#xA;&#xA;&#xA;&#xA;&#xA;UPDATE a&#xA;SET a.Fin_Aid_Category= b.Fin_Aid_Category&#xA;,a.Fin_Aid_Desc=b.Fin_Aid_Desc&#xA;,a.Fin_Aid_Type=b.Fin_Aid_Type&#xA;,a.Fin_Aid_Status_Desc=b.Fin_Aid_Status_Desc &#xA;from  #RP_Grant_Claim a&#xA;INNER JOIN &#xA;(select Student_ID,Acad_Year,Acad_Term,Fin_Aid_Category,Fin_Aid_Type,Fin_Aid_Desc,Fin_Aid_Status_Desc,App_ID,App_Status,App_type from(&#xA;select a.Student_ID,a.Acad_Term,a.Date_updated,ISNULL(b.Fin_Aid_Category,'Others') as Fin_Aid_Category&#xA;,CASE WHEN b.Fin_Aid_Type IS NULL THEN a.App_Type ELSE b.Fin_Aid_Type END AS Fin_Aid_Type&#xA;,CASE WHEN b.Fin_Aid_Desc IS NULL THEN a.Award_Description ELSE b.Fin_Aid_Desc end as Fin_Aid_Desc&#xA;, CASE WHEN  b.Fin_Aid_Status_Desc IS NULL THEN 'Awarded' ELSE b.Fin_Aid_Status_Desc end AS Fin_Aid_Status_Desc&#xA;,b.[Priority],ROW_NUMBER() OVER (Partition BY a.Student_ID,a.Acad_Term,a.App_ID ORDER BY CAST(b.[Priority] AS INT))ROW_NUM&#xA;,App_ID,Acad_Year,a.App_Status,a.App_type&#xA; from #RP_Grant_Claim a&#xA; LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_EXT_FIN_SCHEME_ID b&#xA;on (a.App_type=b.App_Type OR b.App_Type='*') and (a.App_Status=b.App_Status OR b.App_Status='*')&#xA;and (a.Award_ID=b.Award_Item_ID_Grant_Code OR b.Award_Item_ID_Grant_Code='*') and b.Latest_Ind='Y'&#xA;)a where a.ROW_NUM=1)b on a.Student_ID=b.Student_ID and a.Acad_Year=b.Acad_Year and a.App_ID=b.App_ID&#xA;and a.App_Status=b.App_Status and a.App_type=b.App_type&#xA;&#xA;/*-----------------end RP_Grant_Claim---------------------*/&#xA;&#xA;/*--------------------Award-----------------------------*/&#xA;&#xA;&#xA;Select * into #Awards_base from&#xA;(&#xA;Select &#xA;'Edusave Awards' as Source_data&#xA;,'AY20'+left(Term,2) as Acad_year&#xA;,'AY'+left(Term,2)+'S'+substring(Term,3,1) as Acad_Term&#xA;,Student_ID&#xA;,CAST('' as varchar(50)) as Fin_Aid_Category&#xA;,CAST('' as varchar(100)) as Fin_Aid_Type&#xA;,CAST('' as varchar(200)) as Fin_Aid_Desc&#xA;,CAST('' as varchar(50)) as Fin_Aid_Status_Desc&#xA;,Award_Type+Award_ID+Term as App_ID&#xA;, Award_Type as App_type&#xA;,'AWD' as App_Status&#xA;,'Awarded' as App_Status_Desc&#xA;,Award_ID&#xA;,Descr as Award_Description&#xA;,Award_Amount as Award_Amt&#xA;,CAST(NULL as date)as Date_Updated&#xA;,CAST(NULL as varchar) as Award_Remarks&#xA;,CAST(NULL as varchar) as  Eligibility_Govt_Bursary&#xA;,CAST(NULL as decimal) as  Verified_GHI_Award&#xA;,CAST(NULL as decimal) as  Verified_PCI_Award&#xA;,CAST(NULL as tinyint)as  Num_Household_Members&#xA;,CAST(NULL as varchar) as  Property_Type&#xA;,CAST(NULL as varchar) as  Tenancy_Type&#xA;,CAST(NULL as varchar) as  Special_Circumstances&#xA;,Comment as Remarks_Staff_Verifier&#xA;,Disbursement_Date as Disbursement_Date&#xA; &#xA;from  &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_PRIZE_AND_AWARD where Award_Type in ('EG','EM','ES') &#xA;and Student_Award_Status='A' and  Latest_Ind='Y'&#xA;&#xA;)T&#xA;&#xA;UPDATE a&#xA;SET a.Fin_Aid_Category= b.Fin_Aid_Category&#xA;,a.Fin_Aid_Desc=b.Fin_Aid_Desc&#xA;,a.Fin_Aid_Type=b.Fin_Aid_Type&#xA;,a.Fin_Aid_Status_Desc=b.Fin_Aid_Status_Desc &#xA;from  #Awards_base a&#xA;INNER JOIN &#xA;(select Student_ID,Acad_year,Acad_Term,Fin_Aid_Category,Fin_Aid_Type,Fin_Aid_Desc,Fin_Aid_Status_Desc,App_ID,App_Status,App_type from(&#xA;select a.Student_ID,a.Acad_Term,a.Date_updated,ISNULL(b.Fin_Aid_Category,'Others') as Fin_Aid_Category&#xA;,CASE WHEN b.Fin_Aid_Type IS NULL THEN a.App_Type ELSE b.Fin_Aid_Type END AS Fin_Aid_Type&#xA;,CASE WHEN b.Fin_Aid_Desc IS NULL THEN a.Award_Description ELSE b.Fin_Aid_Desc end as Fin_Aid_Desc&#xA;, CASE WHEN  b.Fin_Aid_Status_Desc IS NULL THEN 'Awarded' ELSE b.Fin_Aid_Status_Desc end AS Fin_Aid_Status_Desc&#xA;,b.[Priority],ROW_NUMBER() OVER (Partition BY a.Student_ID,a.Acad_Term,a.App_ID ORDER BY CAST(b.[Priority] AS INT))ROW_NUM&#xA;,App_ID,Acad_year,a.App_Status,a.App_type&#xA; from #Awards_base a&#xA; LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_EXT_FIN_SCHEME_ID b&#xA;on (a.App_type=b.App_Type OR b.App_Type='*') and (a.App_Status=b.App_Status OR b.App_Status='*')&#xA;and (a.Award_ID=b.Award_Item_ID_Grant_Code OR b.Award_Item_ID_Grant_Code='*') and b.Latest_Ind='Y'&#xA;)a where a.ROW_NUM=1)b on a.Student_ID=b.Student_ID and a.Acad_year=b.Acad_year and a.App_ID=b.App_ID&#xA;and a.App_type=b.App_type and a.App_Status=b.App_Status&#xA;&#xA;/*-------------------------End------------------------*/&#xA;/*------------------Financial_Scheme_Application-----------*/&#xA;&#xA;select * into #Financial_Scheme_Application from(&#xA;select  DISTINCT &#xA;'OFN Financial Scheme Application' Source_data&#xA;,'AY'+Acad_Year as Acad_year&#xA;,CAST(NULL as varchar) Acad_term&#xA; ,fsa.Student_ID&#xA; ,CAST('' as varchar(50)) as Fin_Aid_Category&#xA;,CAST('' as varchar(100)) as Fin_Aid_Type&#xA;,CAST('' as varchar(200)) as Fin_Aid_Desc&#xA;,CAST('' as varchar(50)) as Fin_Aid_Status_Desc&#xA; ,App_ID&#xA; ,fsa.Fin_Scheme_Applied as App_type&#xA; ,fsa.App_Status&#xA; ,'Active' as App_Status_desc&#xA; ,CAST(NULL as varchar) as Award_ID&#xA; ,mc.Long_Name as Award_Description&#xA;,fsa.Subsidy_Percentage as Award_Amt&#xA;,CAST(fsa.Last_Updated_Date as date) as Date_Updated&#xA;,CAST(NULL as varchar) as Award_Remarks&#xA;,CAST(NULL as varchar) as  Eligibility_Govt_Bursary&#xA;,CAST(NULL as decimal) as  Verified_GHI_Award&#xA;,CAST(NULL as decimal) as  Verified_PCI_Award&#xA;,CAST(NULL as tinyint)as  Num_Household_Members&#xA;,CAST(NULL as varchar) as  Property_Type&#xA;,CAST(NULL as varchar) as  Tenancy_Type&#xA;,CAST(NULL as varchar) as  Special_Circumstances&#xA;,fsa.Comment as Remarks_Staff_Verifier&#xA;,CAST(NULL as date) as Disbursement_Date&#xA;&#xA; from DW_STUDENT_DETAILS_BY_ACAD_TERM sdat &#xA;inner JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_FIN_SCHEMES_APP fsa on sdat.Student_ID=fsa.Student_ID&#xA;LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_MASTER_CODE mc on fsa.Fin_Scheme_Applied=mc.Field_Value and mc.Field_Name='A_FAS_SCHM_APPL'&#xA;and mc.Effective_Status='A'&#xA;&#xA;where fsa.Fin_Scheme_Applied in('MDK','TFL') and fsa.App_Status='ACTV' and fsa.Latest_Ind='Y'&#xA;&#xA;)T&#xA;&#xA;UPDATE a&#xA;SET a.Fin_Aid_Category= b.Fin_Aid_Category&#xA;,a.Fin_Aid_Desc=b.Fin_Aid_Desc&#xA;,a.Fin_Aid_Type=b.Fin_Aid_Type&#xA;,a.Fin_Aid_Status_Desc=b.Fin_Aid_Status_Desc &#xA;from  #Financial_Scheme_Application a&#xA;INNER JOIN &#xA;(select Student_ID,Acad_Year,Acad_Term,Fin_Aid_Category,Fin_Aid_Type,Fin_Aid_Desc,Fin_Aid_Status_Desc,App_ID,App_Status,App_type from(&#xA;select a.Student_ID,a.Acad_Term,a.Date_updated,ISNULL(b.Fin_Aid_Category,'Others') as Fin_Aid_Category&#xA;,CASE WHEN b.Fin_Aid_Type IS NULL THEN a.App_Type ELSE b.Fin_Aid_Type END AS Fin_Aid_Type&#xA;,CASE WHEN b.Fin_Aid_Desc IS NULL THEN a.Award_Description ELSE b.Fin_Aid_Desc end as Fin_Aid_Desc&#xA;, CASE WHEN  b.Fin_Aid_Status_Desc IS NULL THEN a.App_Status_desc ELSE b.Fin_Aid_Status_Desc end AS Fin_Aid_Status_Desc&#xA;,b.[Priority],ROW_NUMBER() OVER (Partition BY a.Student_ID,a.Acad_Year,a.App_ID ORDER BY CAST(b.[Priority] AS INT))ROW_NUM&#xA;,App_ID,Acad_Year,a.App_Status,a.App_type&#xA; from #Financial_Scheme_Application a&#xA; LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_EXT_FIN_SCHEME_ID b&#xA;on (ISNULL(a.App_type,'*')=b.App_Type OR b.App_Type='*') and (ISNULL(a.App_Status,'*')=b.App_Status OR b.App_Status='*')&#xA;and (ISNULL(a.Award_ID,'*')=b.Award_Item_ID_Grant_Code OR b.Award_Item_ID_Grant_Code='*') and b.Latest_Ind='Y'&#xA;)a where a.ROW_NUM=1)b on a.Student_ID=b.Student_ID and a.Acad_Year=b.Acad_Year and a.App_ID=b.App_ID&#xA;and a.App_Status=b.App_Status and a.App_type=b.App_type&#xA;&#xA;/*--------------END ----------------------*/&#xA;&#xA;/*---------------------Financial_Scheme_Payment------------*/&#xA;&#xA;select * into #Financial_Scheme_Payment from (&#xA;&#xA;Select a.*,b.Amt as Award_Amt from (select distinct &#xA;'OFN Financial Scheme Payment' as source_data&#xA;,Student_ID&#xA;,CAST('' as varchar(50)) as Fin_Aid_Category&#xA;,CAST('' as varchar(100)) as Fin_Aid_Type&#xA;,CAST('' as varchar(200)) as Fin_Aid_Desc&#xA;,CAST('' as varchar(50)) as Fin_Aid_Status_Desc&#xA;,Item_Type+'_'+Acct_Term as App_ID&#xA;,'AY'+Acad_Year as Acad_Year&#xA;,'AY'+Right(Acad_Year,2)+'S'+Semester as Acad_Term&#xA;,CASE WHEN Item='Payment by PSEA SO' THEN 'PSSO'&#xA;&#x9;  WHEN Item='Payment by CPF'THEN  'CPF'&#xA;&#x9;  WHEN Item='Payment by Mendaki'THEN 'MDK'&#xA;&#x9;  WHEN Item='Payment by TFL'THEN 'TFL' END AS App_Type&#xA;,'PAYM' as App_Status&#xA;,'Payment' as App_Status_Desc&#xA;,Item_Type as Award_ID&#xA;,Item as Award_Description&#xA;,Acct_Term&#xA;,Effective as Date_Updated&#xA;,item as Award_Remarks&#xA;,Billed as Disbursement_Date&#xA;,CAST(NULL as varchar) as  Eligibility_Govt_Bursary&#xA;,CAST(NULL as decimal) as  Verified_GHI_Award&#xA;,CAST(NULL as decimal) as  Verified_PCI_Award&#xA;,CAST(NULL as tinyint)as  Num_Household_Members&#xA;,CAST(NULL as varchar) as  Property_Type&#xA;,CAST(NULL as varchar) as  Tenancy_Type&#xA;,CAST(NULL as varchar) as  Special_Circumstances&#xA;,CAST(NULL as varchar) as  Remarks_Staff_Verifier&#xA;,ROW_NUMBER() over (partition by Student_ID,Item,Acct_Term order by Effective desc  ) ROW_NUM&#xA;from DW_CUSTOMER_ACCT_BALANCE_DETAIL BD&#xA;LEFT JOIN DW_TERM_SETUP t on t.Term=BD.Acct_Term&#xA;where Item in ('Payment by PSEA SO', 'Payment by CPF', 'Payment by Mendaki',&#xA;'Payment by TFL') and Business_Unit='RPPET')a&#xA;INNER JOIN (&#xA;&#xA;select Student_ID,Item,Acct_Term,Sum(ABS(Amt)) As Amt&#xA;from DW_CUSTOMER_ACCT_BALANCE_DETAIL&#xA;group by Student_ID,Item,Acct_Term&#xA;&#xA;)b on a.Student_ID=b.Student_ID and a.Acct_Term=b.Acct_Term and a.Award_Description=b.Item and a.ROW_NUM=1&#xA;)T&#xA;&#xA;&#xA;UPDATE a&#xA;SET a.Fin_Aid_Category= b.Fin_Aid_Category&#xA;,a.Fin_Aid_Desc=b.Fin_Aid_Desc&#xA;,a.Fin_Aid_Type=b.Fin_Aid_Type&#xA;,a.Fin_Aid_Status_Desc=b.Fin_Aid_Status_Desc &#xA;from  #Financial_Scheme_Payment a&#xA;INNER JOIN &#xA;(select Student_ID,Acad_Year,Acad_Term,Fin_Aid_Category,Fin_Aid_Type,Fin_Aid_Desc,Fin_Aid_Status_Desc,App_ID,App_Status,App_type from(&#xA;select a.Student_ID,a.Acad_Term,a.Date_updated,ISNULL(b.Fin_Aid_Category,'Others') as Fin_Aid_Category&#xA;,CASE WHEN b.Fin_Aid_Type IS NULL THEN a.App_Type ELSE b.Fin_Aid_Type END AS Fin_Aid_Type&#xA;,CASE WHEN b.Fin_Aid_Desc IS NULL THEN a.Award_Description ELSE b.Fin_Aid_Desc end as Fin_Aid_Desc&#xA;, CASE WHEN  b.Fin_Aid_Status_Desc IS NULL THEN a.App_Status_desc ELSE b.Fin_Aid_Status_Desc end AS Fin_Aid_Status_Desc&#xA;,b.[Priority],ROW_NUMBER() OVER (Partition BY a.Student_ID,a.Acad_Year,a.App_ID ORDER BY CAST(b.[Priority] AS INT))ROW_NUM&#xA;,App_ID,Acad_Year,a.App_Status,a.App_type&#xA; from #Financial_Scheme_Payment a&#xA; LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_EXT_FIN_SCHEME_ID b&#xA;on (ISNULL(a.App_type,'*')=b.App_Type OR b.App_Type='*') and (ISNULL(a.App_Status,'*')=b.App_Status OR b.App_Status='*')&#xA;and (ISNULL(a.Award_ID,'*')=b.Award_Item_ID_Grant_Code OR b.Award_Item_ID_Grant_Code='*') and b.Latest_Ind='Y'&#xA;)a where a.ROW_NUM=1)b on a.Student_ID=b.Student_ID and a.Acad_Year=b.Acad_Year and a.App_ID=b.App_ID&#xA;and a.App_Status=b.App_Status and a.App_type=b.App_type&#xA;&#xA;/*----------------END -----------------------*/&#xA;&#xA; -----------------------Final _Selection---------------&#xA; DELETE FROM DW_FINANCIAL_AID_OUTCOME_CONSOLIDATED&#xA; INSERT INTO DW_FINANCIAL_AID_OUTCOME_CONSOLIDATED&#xA;&#xA; SELECT  &#xA;'OSS External' as [Data_Source]&#xA;,[Acad_Yr]&#xA;      ,[Acad_Term]&#xA;      ,[Student_ID]&#xA;      ,[Fin_Aid_Category]&#xA;      ,[Fin_Aid_Type]&#xA;      ,[Fin_Aid_Desc]&#xA;      ,[Fin_Aid_Status_Desc]&#xA;      ,[App_ID]&#xA;      ,[App_Type]&#xA;      ,[App_Status]&#xA;&#x9;  ,b.Long_Name as App_Status_Desc&#xA;      ,a.[Award_ID]&#xA;&#x9;  ,c.[Desc] as Award_Description&#xA;      ,[Award_Amt]&#xA;      ,[Date_Updated]&#xA;      ,[Award_Remarks]&#xA;      ,[Eligibility_Govt_Bursary]&#xA;      ,[Verified_GHI_Award]&#xA;      ,[Verified_PCI_Award]&#xA;      ,[Num_Household_Members]&#xA;      ,[Property_Type]&#xA;      ,[Tenancy_Type]&#xA;      ,[Special_Circumstances]&#xA;      ,[Remarks_Staff_Verifier]&#xA;&#x9;  ,NULL as Disbursement_Date&#xA;       ,getdate()&#xA; ,getdate()&#xA;   FROM &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..[STG_EXT_FIN_AID_OUTCOME_STATUS] a&#xA;   LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_MASTER_CODE b ON a.App_Status=b.Field_Value and b.Field_Name='A_SF_APPL_STA'&#xA;   LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_AWARD_INFO c on a.Award_ID=c.Award_ID&#xA;   where a.Latest_Ind='Y'&#xA;&#xA;   UNION&#xA;&#xA;   &#xA; Select a.Source_data&#xA; ,'AY'+CAST(a.Acad_Yr as varchar(6))&#xA; ,a.Acad_Term&#xA; ,CAST(a.Student_ID as varchar(11))&#xA; ,a.Fin_Aid_Category&#xA; ,a.Fin_Aid_Type&#xA; ,a.Fin_Aid_Desc&#xA; ,a.Fin_Aid_Status_Desc&#xA; ,CAST(a.App_ID as varchar(50))&#xA; ,a.App_Type&#xA; ,a.App_Status&#xA; ,a.App_Status_Desc&#xA; ,CAST(a.Schship_Bur_ID as varchar(50))&#xA; ,a.Award_Description&#xA; ,a.Award_Amt&#xA; ,a.Date_Updated&#xA; ,CAST(a.Award_Remarks as varchar(100))&#xA; ,a.Eligibility_Govt_Bursary&#xA; ,a.Verified_GHI_Award&#xA; ,a.Verified_PCI_Award&#xA; ,CAST(a.Num_Household_Members as tinyint)&#xA; ,CAST(a.Property_Type as varchar(50))&#xA; ,a.Tenancy_Type&#xA; ,a.Special_Circumstances&#xA; ,a.Remarks_Staff_Verifier&#xA; ,a.Disbursement_Date as Disbursement_Date&#xA; ,getdate()&#xA; ,getdate()&#xA;  from #OASIS_Fin_Aid_Details a&#xA; &#xA; Where NOT EXISTS&#xA; (Select * from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_EXT_FIN_AID_OUTCOME_STATUS  b&#xA; where a.Acad_Yr=Right(b.Acad_Yr,4) and a.Student_ID=b.Student_ID and a.App_ID=b.App_ID&#xA; and a.App_Type=b.App_Type and a.App_Status=b.App_Status and b.Latest_Ind='Y'&#xA; )&#xA;&#xA;&#xA; UNION&#xA;&#xA; Select a.Data_Sources&#xA; ,'AY'+CAST(a.Acad_Year as varchar(6))&#xA; ,a.Acad_Term&#xA; ,CAST(a.Student_ID as varchar(11))&#xA; ,a.Fin_Aid_Category&#xA; ,a.Fin_Aid_Type&#xA; ,a.Fin_Aid_Desc&#xA; ,a.Fin_Aid_Status_Desc&#xA; ,CAST(a.App_ID as varchar(50))&#xA; ,a.App_Type&#xA; ,a.App_Status&#xA; ,a.App_Status_Desc&#xA; ,CAST(a.Award_ID as varchar(50))&#xA; ,a.Award_Description&#xA; ,a.Award_Amt&#xA; ,a.Date_Updated&#xA; ,CAST(a.Award_Remarks as varchar(100))&#xA; ,a.Eligibility_Govt_Bursary&#xA; ,CAST(a.Verified_GHI_Award as decimal)&#xA; ,CAST(a.Verified_PCI_Award as decimal)&#xA; ,CAST(a.Num_Household_Members as tinyint)&#xA; ,CAST(a.Property_Type as varchar(50))&#xA; ,CAST(a.Tenancy_Type as varchar)&#xA; ,CAST(a.Special_Circumstances as varchar)&#xA; ,a.Remarks_Staff_Verifier&#xA; ,NULL as Disbursement_Date&#xA; ,getdate()&#xA; ,getdate()&#xA;  from #RP_Grant_Claim a&#xA; Where NOT EXISTS&#xA; (Select * from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_EXT_FIN_AID_OUTCOME_STATUS b&#xA; where CAST(a.Acad_Year as varchar(6))=RIGHT(b.Acad_Yr,4) and a.Student_ID=b.Student_ID and a.App_ID=b.App_ID&#xA; and a.App_Type=b.App_Type and a.App_Status=b.App_Status and b.Latest_Ind='Y'&#xA; )&#xA;&#xA;&#xA;&#xA; UNION&#xA;&#xA; Select a.Source_data&#xA; ,a.Acad_year&#xA; ,a.Acad_Term&#xA; ,CAST(a.Student_ID as varchar(11))&#xA; ,a.Fin_Aid_Category&#xA; ,a.Fin_Aid_Type&#xA; ,a.Fin_Aid_Desc&#xA; ,a.Fin_Aid_Status_Desc&#xA; ,CAST(a.App_ID as varchar(50))&#xA; ,a.App_Type&#xA; ,a.App_Status&#xA; ,a.App_Status_Desc&#xA; ,CAST(a.Award_ID as varchar(50))&#xA; ,a.Award_Description&#xA; ,a.Award_Amt&#xA; ,a.Date_Updated&#xA; ,CAST(a.Award_Remarks as varchar(100))&#xA; ,a.Eligibility_Govt_Bursary&#xA; ,CAST(a.Verified_GHI_Award as decimal)&#xA; ,CAST(a.Verified_PCI_Award as decimal)&#xA; ,CAST(a.Num_Household_Members as tinyint)&#xA; ,CAST(a.Property_Type as varchar(50))&#xA; ,CAST(a.Tenancy_Type as varchar)&#xA; ,CAST(a.Special_Circumstances as varchar)&#xA; ,a.Remarks_Staff_Verifier&#xA; ,a.Disbursement_Date&#xA; ,getdate()&#xA; ,getdate()&#xA;  from #Awards_base a&#xA; Where NOT EXISTS&#xA; (Select * from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_EXT_FIN_AID_OUTCOME_STATUS b&#xA; where a.Acad_year=b.Acad_Yr and a.Student_ID=b.Student_ID and a.App_ID=b.App_ID&#xA; and a.App_Type=b.App_Type and a.App_Status=b.App_Status and b.Latest_Ind='Y'&#xA; )&#xA;&#xA;&#xA; UNION&#xA;&#xA; Select a.Source_data&#xA; ,a.Acad_year&#xA; ,a.Acad_Term&#xA; ,CAST(a.Student_ID as varchar(11))&#xA; ,a.Fin_Aid_Category&#xA; ,a.Fin_Aid_Type&#xA; ,a.Fin_Aid_Desc&#xA; ,a.Fin_Aid_Status_Desc&#xA; ,CAST(a.App_ID as varchar(50))&#xA; ,a.App_Type&#xA; ,a.App_Status&#xA; ,a.App_Status_Desc&#xA; ,CAST(a.Award_ID as varchar(50))&#xA; ,a.Award_Description&#xA; ,a.Award_Amt&#xA; ,a.Date_Updated&#xA; ,CAST(a.Award_Remarks as varchar(100))&#xA; ,a.Eligibility_Govt_Bursary&#xA; ,CAST(a.Verified_GHI_Award as decimal)&#xA; ,CAST(a.Verified_PCI_Award as decimal)&#xA; ,CAST(a.Num_Household_Members as tinyint)&#xA; ,CAST(a.Property_Type as varchar(50))&#xA; ,CAST(a.Tenancy_Type as varchar)&#xA; ,CAST(a.Special_Circumstances as varchar)&#xA; ,a.Remarks_Staff_Verifier&#xA; ,a.Disbursement_Date&#xA; ,getdate()&#xA; ,getdate()&#xA;  from #Financial_Scheme_Application a&#xA; Where NOT EXISTS&#xA; (Select * from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_EXT_FIN_AID_OUTCOME_STATUS b&#xA; where a.Acad_year=b.Acad_Yr and a.Student_ID=b.Student_ID and a.App_ID=b.App_ID&#xA; and a.App_Type=b.App_Type and a.App_Status=b.App_Status and b.Latest_Ind='Y'&#xA; )&#xA;&#xA; UNION&#xA;&#xA; Select a.Source_data&#xA; ,a.Acad_year&#xA; ,a.Acad_Term&#xA; ,CAST(a.Student_ID as varchar(11))&#xA; ,a.Fin_Aid_Category&#xA; ,a.Fin_Aid_Type&#xA; ,a.Fin_Aid_Desc&#xA; ,a.Fin_Aid_Status_Desc&#xA; ,CAST(a.App_ID as varchar(50))&#xA; ,a.App_Type&#xA; ,a.App_Status&#xA; ,a.App_Status_Desc&#xA; ,CAST(a.Award_ID as varchar(50))&#xA; ,a.Award_Description&#xA; ,a.Award_Amt&#xA; ,a.Date_Updated&#xA; ,CAST(a.Award_Remarks as varchar(100))&#xA; ,a.Eligibility_Govt_Bursary&#xA; ,CAST(a.Verified_GHI_Award as decimal)&#xA; ,CAST(a.Verified_PCI_Award as decimal)&#xA; ,CAST(a.Num_Household_Members as tinyint)&#xA; ,CAST(a.Property_Type as varchar(50))&#xA; ,CAST(a.Tenancy_Type as varchar)&#xA; ,CAST(a.Special_Circumstances as varchar)&#xA; ,a.Remarks_Staff_Verifier&#xA; ,a.Disbursement_Date&#xA; ,getdate()&#xA; ,getdate()&#xA;  from #Financial_Scheme_Payment a&#xA; Where NOT EXISTS&#xA; (Select * from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_EXT_FIN_AID_OUTCOME_STATUS b&#xA; where a.Acad_year=b.Acad_Yr and a.Student_ID=b.Student_ID and a.App_ID=b.App_ID&#xA; and a.App_Type=b.App_Type and a.App_Status=b.App_Status and b.Latest_Ind='Y'&#xA; )&#xA;&#xA;&#xA;&#xA;&#xA; drop table #OASIS_Fin_Aid_Details_step1&#xA; drop table #Awards_base&#xA;drop table #OASIS_Fin_Aid_Details&#xA;DROP table #RP_Grant_Claim&#xA;drop table #Financial_Scheme_Payment&#xA;drop table #Financial_Scheme_Application&#xA;&#xA;&#xA;&#xA;-----------------Upadte------------&#xA;&#xA;&#xA;UPDATE a&#xA;SET a.Fin_Aid_Category= b.Fin_Aid_Category&#xA;,a.Fin_Aid_Desc=b.Fin_Aid_Desc&#xA;,a.Fin_Aid_Type=b.Fin_Aid_Type&#xA;,a.Fin_Aid_Status_Desc=b.Fin_Aid_Status_Desc &#xA;from  DW_FINANCIAL_AID_OUTCOME_CONSOLIDATED a&#xA;INNER JOIN &#xA;(select Student_ID,Acad_Yr,Acad_Term,Fin_Aid_Category,Fin_Aid_Type,Fin_Aid_Desc,Fin_Aid_Status_Desc,App_ID,App_Status,App_Type from(&#xA;select a.Student_ID,a.Acad_Term,a.Date_updated,ISNULL(b.Fin_Aid_Category,'Others') as Fin_Aid_Category&#xA;,CASE WHEN b.Fin_Aid_Type IS NULL THEN a.App_Type ELSE b.Fin_Aid_Type END AS Fin_Aid_Type&#xA;,CASE WHEN b.Fin_Aid_Desc IS NULL THEN a.App_Type ELSE b.Fin_Aid_Desc end as Fin_Aid_Desc&#xA;, CASE WHEN  b.Fin_Aid_Status_Desc IS NULL THEN a.App_Status ELSE b.Fin_Aid_Status_Desc end AS Fin_Aid_Status_Desc&#xA;,b.[Priority],ROW_NUMBER() OVER (Partition BY a.Student_ID,a.Acad_Yr,a.App_ID ORDER BY CAST(b.[Priority] AS INT))ROW_NUM&#xA;,App_ID,a.App_Status,a.Acad_Yr,a.App_Type&#xA; from DW_FINANCIAL_AID_OUTCOME_CONSOLIDATED a&#xA; LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_EXT_FIN_SCHEME_ID b&#xA;on (a.App_type=b.App_Type OR b.App_Type='*') and (a.App_Status=b.App_Status OR b.App_Status='*')&#xA;and (a.Award_ID=b.Award_Item_ID_Grant_Code OR b.Award_Item_ID_Grant_Code='*') and b.Latest_Ind='Y'&#xA;where a.[Source]='OSS External'&#xA;)a where a.ROW_NUM=1)b on a.Student_ID=b.Student_ID and a.Acad_Yr=b.Acad_Yr and a.App_ID=b.App_ID&#xA;and a.App_Status=b.App_Status and a.App_Type=b.App_Type&#xA;&#xA;where a.[Source]='OSS External'&#xA;&#xA;---------------------------------&#xA; &#xA;&#xA; &#xA;--------------------------------------&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;&#xA;  INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,getdate()  as created_on&#xA;  &#xA;END CATCH  &#xA;GO&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_DW_Load">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+------------
+DECLARE @LastDWProcessdate datetime
+,@processeddatetime datetime
+,@jobstatusid varchar(10)
+select @jobstatusid=0
+select @LastDWProcessdate= Isnull(max(Modified_on),'1990-01-01 00:00:00.000') from  [dbo].[DW_FINANCIAL_AID_OUTCOME_CONSOLIDATED]--dw table
+--select  @processeddatetime=?
+--select @LastDWProcessdate
+-----------Scholarship&amp;Bursary-----------------
+select 'Scholarship&amp;Bursary' as Source_data 
+,a.Acad_Yr Acad_Yr
+,'AY'+RIGHT(a.Acad_Yr,2) +a.SEM as Acad_Term
+,a.Student_ID Student_ID
+,a.App_ID
+,a.App_Type
+,a.App_Status App_Status
+,a.App_Status_Desc App_Status_Desc
+,a.Schship_Bur_ID 
+,a.Schship_Bur_Name Award_Description
+,a.Amt Award_Amt
+,a.Date_Updated
+,NULL as Award_Remarks
+,a.Gross_Monthly_Household_Income Verified_GHI_Award
+,a.Per_Capita_Income Verified_PCI_Award
+,a.Num_Household_Members Num_Household_Members
+,a.Property_Housing_Type Property_Type
+,a.Tenancy_Type Tenancy_Type
+,a.Special_Circumstances
+,a.Comments Remarks_Staff_Verifier
+,a.App_Type_Decr
+,a.SEM
+,a.Disbursed_Date as Disbursement_Date
+
+
+into  #OASIS_Fin_Aid_Details_step1 from(
+
+SELECT a.Student_ID, a.Acad_Yr, a.App_Date, a.Awarded_Date, a.Disbursed_Date,
+--CASE WHEN a.App_Date&gt;=ISNULL(a.Awarded_Date,'1990-01-01')
+--		THEN CASE WHEN  a.App_Date&gt;=ISNULL(a.Disbursed_Date ,'1990-01-01')THEN a.App_Date  ELSE a.Disbursed_Date END
+--WHEN ISNULL(a.Awarded_Date,'1990-01-01')&gt;=ISNULL(a.Disbursed_Date,'1990-01-01') THEN a.Awarded_Date ELSE a.Disbursed_Date 
+--END
+a.App_Date As Date_Updated
+,CASE WHEN MONTH(a.App_Date) IN (3,4,5,6,7,8) THEN 'S1'
+ WHEN MONTH(a.App_Date) IN (9,10,11,12,1,2) THEN 'S2'
+ ELSE 'S1' END AS SEM
+
+ ,a.App_Type, a.App_Type_Decr, 
+a.App_Status, b.App_Status as App_Status_Code, a.App_ID, a.Schship_Bur_ID, a.Schship_Bur_Name, a.Amt, a.Comments, 
+b.Gross_Monthly_Household_Income, b.Per_Capita_Income, b.Num_Household_Members, b.Property_Housing_Type,
+b.Tenancy_Type 
+--b.Father_Deceased, b.Mother_Deceased, b.Parents_Divorced, b.Med_Cond_Family_Member,b.Med_Cond_Self, b.Specify_Med_Cond 
+
+ ,CASE WHEN b.Father_Deceased='Y' THEN 'Father_Deceased' ELSE '' END 
+ +'| ' + CASE WHEN b.Mother_Deceased='Y' THEN 'Mother_Deceased' ELSE '' END 
+ +'| ' + CASE WHEN b.Parents_Divorced='Y' THEN 'Parents_Divorced' ELSE '' END
+ +'| ' + CASE WHEN b.Med_Cond_Family_Member='Y' THEN 'Med_Cond_Family_Member' ELSE '' END
+ +'| ' + CASE WHEN b.Med_Cond_Self='Y' THEN 'Med_Cond_Self' ELSE '' END
+ +'| ' + CASE WHEN b.Specify_Med_Cond='Y' THEN 'Specify_Med_Cond' ELSE '' END
+ as Special_Circumstances,c.Long_Name as App_Status_Desc
+FROM
+(SELECT * FROM RPDW_PRD_STG..STG_OASIS_BUR_SCHOLAR_STATUS WHERE Latest_Ind='Y') a 
+LEFT JOIN (SELECT * FROM RPDW_PRD_STG..STG_OASIS_STUDENT_APP WHERE Latest_Ind='Y') b
+ON
+a.Student_ID=b.Student_ID
+and a.Acad_Yr=b.Acad_Yr
+and a.App_ID=b.App_ID
+and a.App_Type=b.App_Type
+
+LEFT JOIN RPDW_PRD_STG..STG_OASIS_MASTER_CODE c ON a.App_Status=c.Field_Value and c.Field_Name='A_SF_APPL_STA'
+
+)a
+
+
+select *into #OASIS_Fin_Aid_Details from(
+
+select a.*,ISNULL(b.Fin_Aid_Category,'Others')  as Fin_Aid_Category
+
+,CASE WHEN b.Fin_Aid_Type IS NULL THEN a.App_Type ELSE b.Fin_Aid_Type END AS Fin_Aid_Type
+,CASE WHEN b.Fin_Aid_Desc IS NULL THEN a.App_Type_Decr ELSE b.Fin_Aid_Desc end as Fin_Aid_Desc
+, CASE WHEN  b.Fin_Aid_Status_Desc IS NULL THEN a.App_Status_Desc ELSE b.Fin_Aid_Status_Desc end AS Fin_Aid_Status_Desc
+,ROW_NUMBER() over (partition by a.Acad_Term,a.Student_ID,a.App_ID,a.App_Type,a.App_Status order by CAST(b.[Priority] AS INT))ROw_NUM
+,CASE    WHEN SD.Residency_Type='SGP' THEN 'Y' ELSE 'N' END AS Eligibility_Govt_Bursary
+from #OASIS_Fin_Aid_Details_step1 a
+LEFT JOIN RPDW_PRD_STG..STG_EXT_FIN_SCHEME_ID b
+on (a.App_Type=b.App_Type OR b.App_Type='*') and (a.App_Status=b.App_Status OR b.App_Status='*')
+and (a.Schship_Bur_ID=b.Award_Item_ID_Grant_Code OR b.Award_Item_ID_Grant_Code='*') and b.Latest_Ind='Y'
+
+LEFT JOIN (Select Student_ID, Acad_Yr from RPDW_PRD_STG..STG_OASIS_BUR_SCHOLAR_STATUS WHERE Latest_Ind='Y' 
+and (App_Status='DIS' or App_Status= 'AWD' or App_Status='APR') and App_Type='SCH') BSS on BSS.Student_ID=a.Student_ID
+and BSS.Acad_Yr=a.Acad_Yr
+
+LEFT JOIN (SELECT DISTINCT  STUDENT_ID,Residency_Type,
+ROW_NUMBER() over (partition by STUDENT_ID order by Effective_Date DESC  ) ROW_NO
+FROM DW_STUDENT_DETAILS  where Applicatn_Number is not null)SD ON SD.Student_ID=a.Student_ID and SD.ROW_NO=1
+ )a
+ where a.ROw_NUM=1 
+
+-- select *into #OASIS_Fin_Aid_Details from(
+
+-- select *, ROW_NUMBER() OVER (Partition by Student_ID,Acad_Term,Fin_Aid_Category,
+--Fin_Aid_Type,Fin_Aid_Desc,Fin_Aid_Status_Desc,Date_Updated order by App_ID DESC)ROW_NUM_App 
+--from  #OASIS_Fin_Aid_Details_step2 
+
+-- )Final where Final.ROW_NUM_App=1
+
+ /*-------------------------- end of Scholarship&amp;Bursary-------------------------------------------- */
+ /*-------------------------RP_Grant_Claim----------------------------------------*/
+ SELECT * INTO #RP_Grant_Claim from (
+
+Select 
+'RP Grant Claim' as Data_Sources 
+,CAST(a.Acad_Year as varchar(10)) Acad_Year
+,'AY'+RIGHT(a.Acad_Year,2)+a.SEM as Acad_Term
+,a.Student_ID
+,CAST('' as varchar(50)) as Fin_Aid_Category
+,CAST('' as varchar(100)) as Fin_Aid_Type
+,CAST('' as varchar(200)) as Fin_Aid_Desc
+,CAST('' as varchar(50)) as Fin_Aid_Status_Desc
+,a.Event_ID as App_ID
+,a.Grant_Code as App_type
+,'AWD' as App_Status
+,'Awarded' as App_Status_Desc
+,'OFSOT' as Award_ID
+,a.[Desc] as Award_Description
+,a.Amt as Award_Amt
+,a.Actual_Event_Start_Date as Date_updated
+,a.Activity_Title as Award_Remarks
+,CASE WHEN SD.Residency_Type='SGP' THEN 'Y' ELSE 'N' END AS Eligibility_Govt_Bursary 
+,NULL as Verified_GHI_Award
+,NULL as Verified_PCI_Award
+,NULL as Num_Household_Members
+,NULL as Property_Type
+,NULL as Tenancy_Type
+,NULL as Special_Circumstances
+,a.Activity_Outline as Remarks_Staff_Verifier
+
+
+from (
+select  
+YEAR(b.Actual_Event_Start_Date) as Acad_Year
+,CASE WHEN MONTH(b.Actual_Event_Start_Date) IN (3,4,5,6,7,8) THEN 'S1'
+ WHEN MONTH(b.Actual_Event_Start_Date) IN (9,10,11,12,1,2) THEN 'S2'
+ ELSE 'S1' END AS SEM
+ ,a.Student_ID
+ ,a.Event_ID
+ ,a.Grant_Code
+ ,a.[Desc]
+ ,a.Amt
+ ,b.Actual_Event_Start_Date
+ ,b.Activity_Title
+ ,b.Activity_Outline
+
+ from (select * from RPDW_PRD_STG..STG_OASIS_RP_GRANT_CLAIM where Latest_Ind='Y') a
+ LEFT JOIN (select * from RPDW_PRD_STG..STG_OASIS_EVENT_SETUP where Latest_Ind='Y') b on a.Event_ID=b.Event_ID 
+ 
+ )a
+
+ LEFT JOIN (SELECT DISTINCT  STUDENT_ID,Residency_Type,
+ROW_NUMBER() over (partition by STUDENT_ID order by Effective_Date DESC  ) ROW_NO
+FROM DW_STUDENT_DETAILS  where Applicatn_Number is not null)SD ON SD.Student_ID=a.Student_ID and SD.ROW_NO=1
+
+)T
+
+
+
+
+UPDATE a
+SET a.Fin_Aid_Category= b.Fin_Aid_Category
+,a.Fin_Aid_Desc=b.Fin_Aid_Desc
+,a.Fin_Aid_Type=b.Fin_Aid_Type
+,a.Fin_Aid_Status_Desc=b.Fin_Aid_Status_Desc 
+from  #RP_Grant_Claim a
+INNER JOIN 
+(select Student_ID,Acad_Year,Acad_Term,Fin_Aid_Category,Fin_Aid_Type,Fin_Aid_Desc,Fin_Aid_Status_Desc,App_ID,App_Status,App_type from(
+select a.Student_ID,a.Acad_Term,a.Date_updated,ISNULL(b.Fin_Aid_Category,'Others') as Fin_Aid_Category
+,CASE WHEN b.Fin_Aid_Type IS NULL THEN a.App_Type ELSE b.Fin_Aid_Type END AS Fin_Aid_Type
+,CASE WHEN b.Fin_Aid_Desc IS NULL THEN a.Award_Description ELSE b.Fin_Aid_Desc end as Fin_Aid_Desc
+, CASE WHEN  b.Fin_Aid_Status_Desc IS NULL THEN 'Awarded' ELSE b.Fin_Aid_Status_Desc end AS Fin_Aid_Status_Desc
+,b.[Priority],ROW_NUMBER() OVER (Partition BY a.Student_ID,a.Acad_Term,a.App_ID ORDER BY CAST(b.[Priority] AS INT))ROW_NUM
+,App_ID,Acad_Year,a.App_Status,a.App_type
+ from #RP_Grant_Claim a
+ LEFT JOIN RPDW_PRD_STG..STG_EXT_FIN_SCHEME_ID b
+on (a.App_type=b.App_Type OR b.App_Type='*') and (a.App_Status=b.App_Status OR b.App_Status='*')
+and (a.Award_ID=b.Award_Item_ID_Grant_Code OR b.Award_Item_ID_Grant_Code='*') and b.Latest_Ind='Y'
+)a where a.ROW_NUM=1)b on a.Student_ID=b.Student_ID and a.Acad_Year=b.Acad_Year and a.App_ID=b.App_ID
+and a.App_Status=b.App_Status and a.App_type=b.App_type
+
+/*-----------------end RP_Grant_Claim---------------------*/
+
+/*--------------------Award-----------------------------*/
+
+
+Select * into #Awards_base from
+(
+Select 
+'Edusave Awards' as Source_data
+,'AY20'+left(Term,2) as Acad_year
+,'AY'+left(Term,2)+'S'+substring(Term,3,1) as Acad_Term
+,Student_ID
+,CAST('' as varchar(50)) as Fin_Aid_Category
+,CAST('' as varchar(100)) as Fin_Aid_Type
+,CAST('' as varchar(200)) as Fin_Aid_Desc
+,CAST('' as varchar(50)) as Fin_Aid_Status_Desc
+,Award_Type+Award_ID+Term as App_ID
+, Award_Type as App_type
+,'AWD' as App_Status
+,'Awarded' as App_Status_Desc
+,Award_ID
+,Descr as Award_Description
+,Award_Amount as Award_Amt
+,CAST(NULL as date)as Date_Updated
+,CAST(NULL as varchar) as Award_Remarks
+,CAST(NULL as varchar) as  Eligibility_Govt_Bursary
+,CAST(NULL as decimal) as  Verified_GHI_Award
+,CAST(NULL as decimal) as  Verified_PCI_Award
+,CAST(NULL as tinyint)as  Num_Household_Members
+,CAST(NULL as varchar) as  Property_Type
+,CAST(NULL as varchar) as  Tenancy_Type
+,CAST(NULL as varchar) as  Special_Circumstances
+,Comment as Remarks_Staff_Verifier
+,Disbursement_Date as Disbursement_Date
+ 
+from  RPDW_PRD_STG..STG_OASIS_PRIZE_AND_AWARD where Award_Type in ('EG','EM','ES') 
+and Student_Award_Status='A' and  Latest_Ind='Y'
+
+)T
+
+UPDATE a
+SET a.Fin_Aid_Category= b.Fin_Aid_Category
+,a.Fin_Aid_Desc=b.Fin_Aid_Desc
+,a.Fin_Aid_Type=b.Fin_Aid_Type
+,a.Fin_Aid_Status_Desc=b.Fin_Aid_Status_Desc 
+from  #Awards_base a
+INNER JOIN 
+(select Student_ID,Acad_year,Acad_Term,Fin_Aid_Category,Fin_Aid_Type,Fin_Aid_Desc,Fin_Aid_Status_Desc,App_ID,App_Status,App_type from(
+select a.Student_ID,a.Acad_Term,a.Date_updated,ISNULL(b.Fin_Aid_Category,'Others') as Fin_Aid_Category
+,CASE WHEN b.Fin_Aid_Type IS NULL THEN a.App_Type ELSE b.Fin_Aid_Type END AS Fin_Aid_Type
+,CASE WHEN b.Fin_Aid_Desc IS NULL THEN a.Award_Description ELSE b.Fin_Aid_Desc end as Fin_Aid_Desc
+, CASE WHEN  b.Fin_Aid_Status_Desc IS NULL THEN 'Awarded' ELSE b.Fin_Aid_Status_Desc end AS Fin_Aid_Status_Desc
+,b.[Priority],ROW_NUMBER() OVER (Partition BY a.Student_ID,a.Acad_Term,a.App_ID ORDER BY CAST(b.[Priority] AS INT))ROW_NUM
+,App_ID,Acad_year,a.App_Status,a.App_type
+ from #Awards_base a
+ LEFT JOIN RPDW_PRD_STG..STG_EXT_FIN_SCHEME_ID b
+on (a.App_type=b.App_Type OR b.App_Type='*') and (a.App_Status=b.App_Status OR b.App_Status='*')
+and (a.Award_ID=b.Award_Item_ID_Grant_Code OR b.Award_Item_ID_Grant_Code='*') and b.Latest_Ind='Y'
+)a where a.ROW_NUM=1)b on a.Student_ID=b.Student_ID and a.Acad_year=b.Acad_year and a.App_ID=b.App_ID
+and a.App_type=b.App_type and a.App_Status=b.App_Status
+
+/*-------------------------End------------------------*/
+/*------------------Financial_Scheme_Application-----------*/
+
+select * into #Financial_Scheme_Application from(
+select  DISTINCT 
+'OFN Financial Scheme Application' Source_data
+,'AY'+Acad_Year as Acad_year
+,CAST(NULL as varchar) Acad_term
+ ,fsa.Student_ID
+ ,CAST('' as varchar(50)) as Fin_Aid_Category
+,CAST('' as varchar(100)) as Fin_Aid_Type
+,CAST('' as varchar(200)) as Fin_Aid_Desc
+,CAST('' as varchar(50)) as Fin_Aid_Status_Desc
+ ,App_ID
+ ,fsa.Fin_Scheme_Applied as App_type
+ ,fsa.App_Status
+ ,'Active' as App_Status_desc
+ ,CAST(NULL as varchar) as Award_ID
+ ,mc.Long_Name as Award_Description
+,fsa.Subsidy_Percentage as Award_Amt
+,CAST(fsa.Last_Updated_Date as date) as Date_Updated
+,CAST(NULL as varchar) as Award_Remarks
+,CAST(NULL as varchar) as  Eligibility_Govt_Bursary
+,CAST(NULL as decimal) as  Verified_GHI_Award
+,CAST(NULL as decimal) as  Verified_PCI_Award
+,CAST(NULL as tinyint)as  Num_Household_Members
+,CAST(NULL as varchar) as  Property_Type
+,CAST(NULL as varchar) as  Tenancy_Type
+,CAST(NULL as varchar) as  Special_Circumstances
+,fsa.Comment as Remarks_Staff_Verifier
+,CAST(NULL as date) as Disbursement_Date
+
+ from DW_STUDENT_DETAILS_BY_ACAD_TERM sdat 
+inner JOIN RPDW_PRD_STG..STG_OASIS_FIN_SCHEMES_APP fsa on sdat.Student_ID=fsa.Student_ID
+LEFT JOIN RPDW_PRD_STG..STG_OASIS_MASTER_CODE mc on fsa.Fin_Scheme_Applied=mc.Field_Value and mc.Field_Name='A_FAS_SCHM_APPL'
+and mc.Effective_Status='A'
+
+where fsa.Fin_Scheme_Applied in('MDK','TFL') and fsa.App_Status='ACTV' and fsa.Latest_Ind='Y'
+
+)T
+
+UPDATE a
+SET a.Fin_Aid_Category= b.Fin_Aid_Category
+,a.Fin_Aid_Desc=b.Fin_Aid_Desc
+,a.Fin_Aid_Type=b.Fin_Aid_Type
+,a.Fin_Aid_Status_Desc=b.Fin_Aid_Status_Desc 
+from  #Financial_Scheme_Application a
+INNER JOIN 
+(select Student_ID,Acad_Year,Acad_Term,Fin_Aid_Category,Fin_Aid_Type,Fin_Aid_Desc,Fin_Aid_Status_Desc,App_ID,App_Status,App_type from(
+select a.Student_ID,a.Acad_Term,a.Date_updated,ISNULL(b.Fin_Aid_Category,'Others') as Fin_Aid_Category
+,CASE WHEN b.Fin_Aid_Type IS NULL THEN a.App_Type ELSE b.Fin_Aid_Type END AS Fin_Aid_Type
+,CASE WHEN b.Fin_Aid_Desc IS NULL THEN a.Award_Description ELSE b.Fin_Aid_Desc end as Fin_Aid_Desc
+, CASE WHEN  b.Fin_Aid_Status_Desc IS NULL THEN a.App_Status_desc ELSE b.Fin_Aid_Status_Desc end AS Fin_Aid_Status_Desc
+,b.[Priority],ROW_NUMBER() OVER (Partition BY a.Student_ID,a.Acad_Year,a.App_ID ORDER BY CAST(b.[Priority] AS INT))ROW_NUM
+,App_ID,Acad_Year,a.App_Status,a.App_type
+ from #Financial_Scheme_Application a
+ LEFT JOIN RPDW_PRD_STG..STG_EXT_FIN_SCHEME_ID b
+on (ISNULL(a.App_type,'*')=b.App_Type OR b.App_Type='*') and (ISNULL(a.App_Status,'*')=b.App_Status OR b.App_Status='*')
+and (ISNULL(a.Award_ID,'*')=b.Award_Item_ID_Grant_Code OR b.Award_Item_ID_Grant_Code='*') and b.Latest_Ind='Y'
+)a where a.ROW_NUM=1)b on a.Student_ID=b.Student_ID and a.Acad_Year=b.Acad_Year and a.App_ID=b.App_ID
+and a.App_Status=b.App_Status and a.App_type=b.App_type
+
+/*--------------END ----------------------*/
+
+/*---------------------Financial_Scheme_Payment------------*/
+
+select * into #Financial_Scheme_Payment from (
+
+Select a.*,b.Amt as Award_Amt from (select distinct 
+'OFN Financial Scheme Payment' as source_data
+,Student_ID
+,CAST('' as varchar(50)) as Fin_Aid_Category
+,CAST('' as varchar(100)) as Fin_Aid_Type
+,CAST('' as varchar(200)) as Fin_Aid_Desc
+,CAST('' as varchar(50)) as Fin_Aid_Status_Desc
+,Item_Type+'_'+Acct_Term as App_ID
+,'AY'+Acad_Year as Acad_Year
+,'AY'+Right(Acad_Year,2)+'S'+Semester as Acad_Term
+,CASE WHEN Item='Payment by PSEA SO' THEN 'PSSO'
+	  WHEN Item='Payment by CPF'THEN  'CPF'
+	  WHEN Item='Payment by Mendaki'THEN 'MDK'
+	  WHEN Item='Payment by TFL'THEN 'TFL' END AS App_Type
+,'PAYM' as App_Status
+,'Payment' as App_Status_Desc
+,Item_Type as Award_ID
+,Item as Award_Description
+,Acct_Term
+,Effective as Date_Updated
+,item as Award_Remarks
+,Billed as Disbursement_Date
+,CAST(NULL as varchar) as  Eligibility_Govt_Bursary
+,CAST(NULL as decimal) as  Verified_GHI_Award
+,CAST(NULL as decimal) as  Verified_PCI_Award
+,CAST(NULL as tinyint)as  Num_Household_Members
+,CAST(NULL as varchar) as  Property_Type
+,CAST(NULL as varchar) as  Tenancy_Type
+,CAST(NULL as varchar) as  Special_Circumstances
+,CAST(NULL as varchar) as  Remarks_Staff_Verifier
+,ROW_NUMBER() over (partition by Student_ID,Item,Acct_Term order by Effective desc  ) ROW_NUM
+from DW_CUSTOMER_ACCT_BALANCE_DETAIL BD
+LEFT JOIN DW_TERM_SETUP t on t.Term=BD.Acct_Term
+where Item in ('Payment by PSEA SO', 'Payment by CPF', 'Payment by Mendaki',
+'Payment by TFL') and Business_Unit='RPPET')a
+INNER JOIN (
+
+select Student_ID,Item,Acct_Term,Sum(ABS(Amt)) As Amt
+from DW_CUSTOMER_ACCT_BALANCE_DETAIL
+group by Student_ID,Item,Acct_Term
+
+)b on a.Student_ID=b.Student_ID and a.Acct_Term=b.Acct_Term and a.Award_Description=b.Item and a.ROW_NUM=1
+)T
+
+
+UPDATE a
+SET a.Fin_Aid_Category= b.Fin_Aid_Category
+,a.Fin_Aid_Desc=b.Fin_Aid_Desc
+,a.Fin_Aid_Type=b.Fin_Aid_Type
+,a.Fin_Aid_Status_Desc=b.Fin_Aid_Status_Desc 
+from  #Financial_Scheme_Payment a
+INNER JOIN 
+(select Student_ID,Acad_Year,Acad_Term,Fin_Aid_Category,Fin_Aid_Type,Fin_Aid_Desc,Fin_Aid_Status_Desc,App_ID,App_Status,App_type from(
+select a.Student_ID,a.Acad_Term,a.Date_updated,ISNULL(b.Fin_Aid_Category,'Others') as Fin_Aid_Category
+,CASE WHEN b.Fin_Aid_Type IS NULL THEN a.App_Type ELSE b.Fin_Aid_Type END AS Fin_Aid_Type
+,CASE WHEN b.Fin_Aid_Desc IS NULL THEN a.Award_Description ELSE b.Fin_Aid_Desc end as Fin_Aid_Desc
+, CASE WHEN  b.Fin_Aid_Status_Desc IS NULL THEN a.App_Status_desc ELSE b.Fin_Aid_Status_Desc end AS Fin_Aid_Status_Desc
+,b.[Priority],ROW_NUMBER() OVER (Partition BY a.Student_ID,a.Acad_Year,a.App_ID ORDER BY CAST(b.[Priority] AS INT))ROW_NUM
+,App_ID,Acad_Year,a.App_Status,a.App_type
+ from #Financial_Scheme_Payment a
+ LEFT JOIN RPDW_PRD_STG..STG_EXT_FIN_SCHEME_ID b
+on (ISNULL(a.App_type,'*')=b.App_Type OR b.App_Type='*') and (ISNULL(a.App_Status,'*')=b.App_Status OR b.App_Status='*')
+and (ISNULL(a.Award_ID,'*')=b.Award_Item_ID_Grant_Code OR b.Award_Item_ID_Grant_Code='*') and b.Latest_Ind='Y'
+)a where a.ROW_NUM=1)b on a.Student_ID=b.Student_ID and a.Acad_Year=b.Acad_Year and a.App_ID=b.App_ID
+and a.App_Status=b.App_Status and a.App_type=b.App_type
+
+/*----------------END -----------------------*/
+
+ -----------------------Final _Selection---------------
+ DELETE FROM DW_FINANCIAL_AID_OUTCOME_CONSOLIDATED
+ INSERT INTO DW_FINANCIAL_AID_OUTCOME_CONSOLIDATED
+
+ SELECT  
+'OSS External' as [Data_Source]
+,[Acad_Yr]
+      ,[Acad_Term]
+      ,[Student_ID]
+      ,[Fin_Aid_Category]
+      ,[Fin_Aid_Type]
+      ,[Fin_Aid_Desc]
+      ,[Fin_Aid_Status_Desc]
+      ,[App_ID]
+      ,[App_Type]
+      ,[App_Status]
+	  ,b.Long_Name as App_Status_Desc
+      ,a.[Award_ID]
+	  ,c.[Desc] as Award_Description
+      ,[Award_Amt]
+      ,[Date_Updated]
+      ,[Award_Remarks]
+      ,[Eligibility_Govt_Bursary]
+      ,[Verified_GHI_Award]
+      ,[Verified_PCI_Award]
+      ,[Num_Household_Members]
+      ,[Property_Type]
+      ,[Tenancy_Type]
+      ,[Special_Circumstances]
+      ,[Remarks_Staff_Verifier]
+	  ,NULL as Disbursement_Date
+       ,getdate()
+ ,getdate()
+   FROM RPDW_PRD_STG..[STG_EXT_FIN_AID_OUTCOME_STATUS] a
+   LEFT JOIN RPDW_PRD_STG..STG_OASIS_MASTER_CODE b ON a.App_Status=b.Field_Value and b.Field_Name='A_SF_APPL_STA'
+   LEFT JOIN RPDW_PRD_STG..STG_OASIS_AWARD_INFO c on a.Award_ID=c.Award_ID
+   where a.Latest_Ind='Y'
+
+   UNION
+
+   
+ Select a.Source_data
+ ,'AY'+CAST(a.Acad_Yr as varchar(6))
+ ,a.Acad_Term
+ ,CAST(a.Student_ID as varchar(11))
+ ,a.Fin_Aid_Category
+ ,a.Fin_Aid_Type
+ ,a.Fin_Aid_Desc
+ ,a.Fin_Aid_Status_Desc
+ ,CAST(a.App_ID as varchar(50))
+ ,a.App_Type
+ ,a.App_Status
+ ,a.App_Status_Desc
+ ,CAST(a.Schship_Bur_ID as varchar(50))
+ ,a.Award_Description
+ ,a.Award_Amt
+ ,a.Date_Updated
+ ,CAST(a.Award_Remarks as varchar(100))
+ ,a.Eligibility_Govt_Bursary
+ ,a.Verified_GHI_Award
+ ,a.Verified_PCI_Award
+ ,CAST(a.Num_Household_Members as tinyint)
+ ,CAST(a.Property_Type as varchar(50))
+ ,a.Tenancy_Type
+ ,a.Special_Circumstances
+ ,a.Remarks_Staff_Verifier
+ ,a.Disbursement_Date as Disbursement_Date
+ ,getdate()
+ ,getdate()
+  from #OASIS_Fin_Aid_Details a
+ 
+ Where NOT EXISTS
+ (Select * from RPDW_PRD_STG..STG_EXT_FIN_AID_OUTCOME_STATUS  b
+ where a.Acad_Yr=Right(b.Acad_Yr,4) and a.Student_ID=b.Student_ID and a.App_ID=b.App_ID
+ and a.App_Type=b.App_Type and a.App_Status=b.App_Status and b.Latest_Ind='Y'
+ )
+
+
+ UNION
+
+ Select a.Data_Sources
+ ,'AY'+CAST(a.Acad_Year as varchar(6))
+ ,a.Acad_Term
+ ,CAST(a.Student_ID as varchar(11))
+ ,a.Fin_Aid_Category
+ ,a.Fin_Aid_Type
+ ,a.Fin_Aid_Desc
+ ,a.Fin_Aid_Status_Desc
+ ,CAST(a.App_ID as varchar(50))
+ ,a.App_Type
+ ,a.App_Status
+ ,a.App_Status_Desc
+ ,CAST(a.Award_ID as varchar(50))
+ ,a.Award_Description
+ ,a.Award_Amt
+ ,a.Date_Updated
+ ,CAST(a.Award_Remarks as varchar(100))
+ ,a.Eligibility_Govt_Bursary
+ ,CAST(a.Verified_GHI_Award as decimal)
+ ,CAST(a.Verified_PCI_Award as decimal)
+ ,CAST(a.Num_Household_Members as tinyint)
+ ,CAST(a.Property_Type as varchar(50))
+ ,CAST(a.Tenancy_Type as varchar)
+ ,CAST(a.Special_Circumstances as varchar)
+ ,a.Remarks_Staff_Verifier
+ ,NULL as Disbursement_Date
+ ,getdate()
+ ,getdate()
+  from #RP_Grant_Claim a
+ Where NOT EXISTS
+ (Select * from RPDW_PRD_STG..STG_EXT_FIN_AID_OUTCOME_STATUS b
+ where CAST(a.Acad_Year as varchar(6))=RIGHT(b.Acad_Yr,4) and a.Student_ID=b.Student_ID and a.App_ID=b.App_ID
+ and a.App_Type=b.App_Type and a.App_Status=b.App_Status and b.Latest_Ind='Y'
+ )
+
+
+
+ UNION
+
+ Select a.Source_data
+ ,a.Acad_year
+ ,a.Acad_Term
+ ,CAST(a.Student_ID as varchar(11))
+ ,a.Fin_Aid_Category
+ ,a.Fin_Aid_Type
+ ,a.Fin_Aid_Desc
+ ,a.Fin_Aid_Status_Desc
+ ,CAST(a.App_ID as varchar(50))
+ ,a.App_Type
+ ,a.App_Status
+ ,a.App_Status_Desc
+ ,CAST(a.Award_ID as varchar(50))
+ ,a.Award_Description
+ ,a.Award_Amt
+ ,a.Date_Updated
+ ,CAST(a.Award_Remarks as varchar(100))
+ ,a.Eligibility_Govt_Bursary
+ ,CAST(a.Verified_GHI_Award as decimal)
+ ,CAST(a.Verified_PCI_Award as decimal)
+ ,CAST(a.Num_Household_Members as tinyint)
+ ,CAST(a.Property_Type as varchar(50))
+ ,CAST(a.Tenancy_Type as varchar)
+ ,CAST(a.Special_Circumstances as varchar)
+ ,a.Remarks_Staff_Verifier
+ ,a.Disbursement_Date
+ ,getdate()
+ ,getdate()
+  from #Awards_base a
+ Where NOT EXISTS
+ (Select * from RPDW_PRD_STG..STG_EXT_FIN_AID_OUTCOME_STATUS b
+ where a.Acad_year=b.Acad_Yr and a.Student_ID=b.Student_ID and a.App_ID=b.App_ID
+ and a.App_Type=b.App_Type and a.App_Status=b.App_Status and b.Latest_Ind='Y'
+ )
+
+
+ UNION
+
+ Select a.Source_data
+ ,a.Acad_year
+ ,a.Acad_Term
+ ,CAST(a.Student_ID as varchar(11))
+ ,a.Fin_Aid_Category
+ ,a.Fin_Aid_Type
+ ,a.Fin_Aid_Desc
+ ,a.Fin_Aid_Status_Desc
+ ,CAST(a.App_ID as varchar(50))
+ ,a.App_Type
+ ,a.App_Status
+ ,a.App_Status_Desc
+ ,CAST(a.Award_ID as varchar(50))
+ ,a.Award_Description
+ ,a.Award_Amt
+ ,a.Date_Updated
+ ,CAST(a.Award_Remarks as varchar(100))
+ ,a.Eligibility_Govt_Bursary
+ ,CAST(a.Verified_GHI_Award as decimal)
+ ,CAST(a.Verified_PCI_Award as decimal)
+ ,CAST(a.Num_Household_Members as tinyint)
+ ,CAST(a.Property_Type as varchar(50))
+ ,CAST(a.Tenancy_Type as varchar)
+ ,CAST(a.Special_Circumstances as varchar)
+ ,a.Remarks_Staff_Verifier
+ ,a.Disbursement_Date
+ ,getdate()
+ ,getdate()
+  from #Financial_Scheme_Application a
+ Where NOT EXISTS
+ (Select * from RPDW_PRD_STG..STG_EXT_FIN_AID_OUTCOME_STATUS b
+ where a.Acad_year=b.Acad_Yr and a.Student_ID=b.Student_ID and a.App_ID=b.App_ID
+ and a.App_Type=b.App_Type and a.App_Status=b.App_Status and b.Latest_Ind='Y'
+ )
+
+ UNION
+
+ Select a.Source_data
+ ,a.Acad_year
+ ,a.Acad_Term
+ ,CAST(a.Student_ID as varchar(11))
+ ,a.Fin_Aid_Category
+ ,a.Fin_Aid_Type
+ ,a.Fin_Aid_Desc
+ ,a.Fin_Aid_Status_Desc
+ ,CAST(a.App_ID as varchar(50))
+ ,a.App_Type
+ ,a.App_Status
+ ,a.App_Status_Desc
+ ,CAST(a.Award_ID as varchar(50))
+ ,a.Award_Description
+ ,a.Award_Amt
+ ,a.Date_Updated
+ ,CAST(a.Award_Remarks as varchar(100))
+ ,a.Eligibility_Govt_Bursary
+ ,CAST(a.Verified_GHI_Award as decimal)
+ ,CAST(a.Verified_PCI_Award as decimal)
+ ,CAST(a.Num_Household_Members as tinyint)
+ ,CAST(a.Property_Type as varchar(50))
+ ,CAST(a.Tenancy_Type as varchar)
+ ,CAST(a.Special_Circumstances as varchar)
+ ,a.Remarks_Staff_Verifier
+ ,a.Disbursement_Date
+ ,getdate()
+ ,getdate()
+  from #Financial_Scheme_Payment a
+ Where NOT EXISTS
+ (Select * from RPDW_PRD_STG..STG_EXT_FIN_AID_OUTCOME_STATUS b
+ where a.Acad_year=b.Acad_Yr and a.Student_ID=b.Student_ID and a.App_ID=b.App_ID
+ and a.App_Type=b.App_Type and a.App_Status=b.App_Status and b.Latest_Ind='Y'
+ )
+
+
+
+
+ drop table #OASIS_Fin_Aid_Details_step1
+ drop table #Awards_base
+drop table #OASIS_Fin_Aid_Details
+DROP table #RP_Grant_Claim
+drop table #Financial_Scheme_Payment
+drop table #Financial_Scheme_Application
+
+
+
+-----------------Upadte------------
+
+
+UPDATE a
+SET a.Fin_Aid_Category= b.Fin_Aid_Category
+,a.Fin_Aid_Desc=b.Fin_Aid_Desc
+,a.Fin_Aid_Type=b.Fin_Aid_Type
+,a.Fin_Aid_Status_Desc=b.Fin_Aid_Status_Desc 
+from  DW_FINANCIAL_AID_OUTCOME_CONSOLIDATED a
+INNER JOIN 
+(select Student_ID,Acad_Yr,Acad_Term,Fin_Aid_Category,Fin_Aid_Type,Fin_Aid_Desc,Fin_Aid_Status_Desc,App_ID,App_Status,App_Type from(
+select a.Student_ID,a.Acad_Term,a.Date_updated,ISNULL(b.Fin_Aid_Category,'Others') as Fin_Aid_Category
+,CASE WHEN b.Fin_Aid_Type IS NULL THEN a.App_Type ELSE b.Fin_Aid_Type END AS Fin_Aid_Type
+,CASE WHEN b.Fin_Aid_Desc IS NULL THEN a.App_Type ELSE b.Fin_Aid_Desc end as Fin_Aid_Desc
+, CASE WHEN  b.Fin_Aid_Status_Desc IS NULL THEN a.App_Status ELSE b.Fin_Aid_Status_Desc end AS Fin_Aid_Status_Desc
+,b.[Priority],ROW_NUMBER() OVER (Partition BY a.Student_ID,a.Acad_Yr,a.App_ID ORDER BY CAST(b.[Priority] AS INT))ROW_NUM
+,App_ID,a.App_Status,a.Acad_Yr,a.App_Type
+ from DW_FINANCIAL_AID_OUTCOME_CONSOLIDATED a
+ LEFT JOIN RPDW_PRD_STG..STG_EXT_FIN_SCHEME_ID b
+on (a.App_type=b.App_Type OR b.App_Type='*') and (a.App_Status=b.App_Status OR b.App_Status='*')
+and (a.Award_ID=b.Award_Item_ID_Grant_Code OR b.Award_Item_ID_Grant_Code='*') and b.Latest_Ind='Y'
+where a.[Source]='OSS External'
+)a where a.ROW_NUM=1)b on a.Student_ID=b.Student_ID and a.Acad_Yr=b.Acad_Yr and a.App_ID=b.App_ID
+and a.App_Status=b.App_Status and a.App_Type=b.App_Type
+
+where a.[Source]='OSS External'
+
+---------------------------------
+ 
+
+ 
+--------------------------------------
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+  ROLLBACK TRANSACTION
+
+  INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,getdate()  as created_on
+  
+END CATCH  
+GO</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3CFA4014-9F85-412A-A7EC-F56AFE2733BE}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="STAGE">
+      <DTS:VariableValue
+        DTS:DataType="8">DW</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5755982C-2A26-4B08-91F1-E3B7CBEB5AE7}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTableName">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_FINANCIAL_AID_OUTCOME_CONSOLIDATED</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create ETL Job Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{1315CC0A-E75C-4BFD-8AE8-B0DAB8A6A6DE}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create ETL Job Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{BD480636-76FA-4E51-B625-8C4E9248ABA1}"
+          SQLTask:SqlStatementSource="Exec [dbo].[usp_InsertETLJobLog] ?, ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Job_name"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::STAGE"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::SourceTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::TgtTableName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Error Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{324D4893-054A-46FE-9D76-9037D8A0BC6C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Error Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{BD480636-76FA-4E51-B625-8C4E9248ABA1}"
+          SQLTask:SqlStatementSource="UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET&#xA;ERROR_MSG = 'STG table is not completed',&#xA;JOB_STATUS ='Fail'&#xA;--PROCESSED_ON =getdate()&#xA;WHERE JOB_STATUS_ID=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\JOB_STATUS_ID"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E5B820E9-F345-45E5-BAA8-3B7A4C13AE6A}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="JOB_STATUS_ID"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{BD480636-76FA-4E51-B625-8C4E9248ABA1}"
+          SQLTask:SqlStatementSource="SELECT max([JOB_STATUS_ID])&#xA;      &#xA;  FROM [dbo].[ETL_JOB_STATUS] where [SOURCE_FILENAME]=? &#xA;---and convert(varchar(8),CREATED_ON,112)=convert--(varchar(8) ,getdate(),112)"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::SourceTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Into DW"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{B7A4A072-4EDB-480F-ABE2-759F9FC5A7F7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Into DW"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{840AC9BA-025A-431F-9BE2-F2A7879C4D69}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::SQL_DW_Load" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Process_Date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{BE87F88F-2953-4250-91FB-D9158E311952}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Process_Date"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{840AC9BA-025A-431F-9BE2-F2A7879C4D69}"
+          SQLTask:SqlStatementSource="Select getdate()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::Process_date" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Process_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="135"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update Job Status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{AB58BFAE-9301-4FFE-9097-6E6C153F08AB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Job Status"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{BD480636-76FA-4E51-B625-8C4E9248ABA1}"
+          SQLTask:SqlStatementSource="DECLARE &#xA;@jobstatusid INT &#xA;select @jobstatusid=?&#xA;IF exists(select * from dbo.ETL_ERROR_LOG where [JOB_STATUS_ID]=@jobstatusid)&#xA; BEGIN&#xA; Update [dbo].[ETL_JOB_STATUS]&#xA;SET [PROCESSED_ON] =getdate(),&#xA;[JOB_STATUS]='Fail'&#xA;where [JOB_STATUS_ID]=@jobstatusid&#xA;  END&#xA;ELSE&#xA;BEGIN&#xA;Update [dbo].[ETL_JOB_STATUS]&#xA;SET [PROCESSED_ON] =getdate(),&#xA;[JOB_STATUS]='Success'&#xA;where [JOB_STATUS_ID]=@jobstatusid&#xA;END" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Validate job status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{487B41B0-2F25-4F65-8E62-6899E95F4B7A}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Validate job status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{BD480636-76FA-4E51-B625-8C4E9248ABA1}"
+          SQLTask:SqlStatementSource="declare @STAGE varchar(100),&#xA;@TARGET_TABLENAME varchar(100)&#xA;select   @STAGE=?&#xA;select   @TARGET_TABLENAME=?&#xA;&#xA;select CASE WHEN JOB_STATUS='Success' then 0 ELSE 1 END AS  JOB_STATUS&#xA;&#xA;from [dbo].[ETL_JOB_STATUS]&#xA;  where STAGE=@STAGE and TARGET_TABLENAME=@TARGET_TABLENAME and &#xA;  JOB_STATUS_ID in (Select max(JOB_STATUS_ID) from [dbo].[ETL_JOB_STATUS]&#xA;  where STAGE=@STAGE and TARGET_TABLENAME=@TARGET_TABLENAME)"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::Job_Status" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::PreStage"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::SourceTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{86CBFFD6-7C73-4B31-84F0-54EF594B2944}"
+      DTS:From="Package\Process_Date"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Load Into DW" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{A53856D0-6C19-44D3-9D0F-98AE79E2BDB2}"
+      DTS:From="Package\Create ETL Job Log"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\JOB_STATUS_ID" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{A51B7879-6E08-40D3-A336-13799D5373D8}"
+      DTS:From="Package\JOB_STATUS_ID"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Validate job status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{C401808B-310D-4D70-B580-A5703FC6001E}"
+      DTS:From="Package\Load Into DW"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Update Job Status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[False]"
+      DTS:CreationName=""
+      DTS:DTSID="{A82AF58F-3735-4B0A-AA9E-228558D57833}"
+      DTS:Expression="@[User::Job_Status]==1"
+      DTS:From="Package\Validate job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="False"
+      DTS:To="Package\Error Log" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[True]"
+      DTS:CreationName=""
+      DTS:DTSID="{B0A922CE-028F-47A9-9597-28F4EC1A835B}"
+      DTS:Expression="@[User::Job_Status]==0"
+      DTS:From="Package\Validate job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="True"
+      DTS:To="Package\Process_Date" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{EC333C4C-28E7-4E58-BC82-8F328BEEA764}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{35AB9F86-1B3E-432C-AF1A-6A59E6E32511}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL_ERROR_LOG"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{BC8C4A00-F8A6-48B1-AF73-29C418E4A3C1}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL_ERROR_LOG">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{BD480636-76FA-4E51-B625-8C4E9248ABA1}"
+              SQLTask:SqlStatementSource="[dbo].[usp_InsertETLErrorLog] ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="131"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="157,42"
+          Id="Package\Create ETL Job Log"
+          TopLeft="17,13" />
+        <NodeLayout
+          Size="123,42"
+          Id="Package\Error Log"
+          TopLeft="699,21" />
+        <NodeLayout
+          Size="142,42"
+          Id="Package\JOB_STATUS_ID"
+          TopLeft="230,18" />
+        <NodeLayout
+          Size="144,42"
+          Id="Package\Load Into DW"
+          TopLeft="487,221" />
+        <NodeLayout
+          Size="142,42"
+          Id="Package\Process_Date"
+          TopLeft="487,131" />
+        <NodeLayout
+          Size="165,42"
+          Id="Package\Update Job Status"
+          TopLeft="526,322" />
+        <NodeLayout
+          Size="166,42"
+          Id="Package\Validate job status"
+          TopLeft="446,22" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="558.5,173">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48"
+              Start="0,0"
+              End="0,40.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="174,36.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="56,0"
+              Start="0,0"
+              End="48.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="48.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="372,41">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="74,0"
+              Start="0,0"
+              End="66.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="66.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="559,263">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="49.5,59"
+              Start="0,0"
+              End="49.5,51.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25.5"
+                    Point2="0,29.5"
+                    Point3="4,29.5" />
+                  <mssgle:LineSegment
+                    End="45.5,29.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="45.5,29.5"
+                    Point2="49.5,29.5"
+                    Point3="49.5,33.5" />
+                  <mssgle:LineSegment
+                    End="49.5,51.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[False]"
+          TopLeft="612,42.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="87,0"
+              Start="0,0"
+              End="79.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="79.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="28.01365234375,5,23.4726953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[True]"
+          TopLeft="529,64">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="29,67"
+              Start="0,0"
+              End="29,59.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.5"
+                    Point2="0,33.5"
+                    Point3="4,33.5" />
+                  <mssgle:LineSegment
+                    End="25,33.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="25,33.5"
+                    Point2="29,33.5"
+                    Point3="29,37.5" />
+                  <mssgle:LineSegment
+                    End="29,59.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="3.48755859375,38.5,22.0248828125,9.421875"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="162,42"
+          Id="Package.EventHandlers[OnError]\ETL_ERROR_LOG"
+          TopLeft="370,98" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PrecedenceConstraint
+    design-time-name="Package.PrecedenceConstraints[False]">
+    <ShowAnnotation>ConstraintName</ShowAnnotation>
+  </PrecedenceConstraint>
+  <PrecedenceConstraint
+    design-time-name="Package.PrecedenceConstraints[True]">
+    <ShowAnnotation>ConstraintName</ShowAnnotation>
+  </PrecedenceConstraint>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

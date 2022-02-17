@@ -1,0 +1,1301 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/31/2019 4:40:18 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-140119GM07"
+  DTS:CreatorName="NCS\P0500450"
+  DTS:DTSID="{6AAAAF70-85CE-46CD-A7A1-B65316ACDD7B}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="DW_External_File_DPAEAE_APPLICANTS"
+  DTS:PackageType="5"
+  DTS:VersionBuild="145"
+  DTS:VersionGUID="{51370E28-BB0F-4442-9E34-A586B32A4296}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{39B92F1D-DA94-4505-A925-FFF5DF574BBB}"
+      DTS:ObjectName="RPDW_DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=10.168.212.13;User ID=svc-dw-uat-etl;Initial Catalog=RPDW;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAdGBqS7B1CkWG301g2fxV+wAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAD1H5hAv5Mi6oo1BHV1IugTAAAAAASAAACgAAAAEAAAAOLzzIxQhmwFAV5n/kFm+44YAAAAlw9wdClAxrxT8tIBSYjhLMz6dP/cbmvpFAAAAOUaLwK+E3SoyF1TVVcMeQqGss/g</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_STG]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{8A63655C-2459-425E-BCB8-2A87D9E6A2B6}"
+      DTS:ObjectName="RPDW_STG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::Staging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=10.168.212.13;User ID=svc-dw-uat-etl;Initial Catalog=RPDW_STG;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAdGBqS7B1CkWG301g2fxV+wAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADtQb0SPeRAWWmpFFhChoIEAAAAAASAAACgAAAAEAAAAGyL+E4j4zeVkzCZIfzDVwIYAAAAspfoyZi6nH9Sy45Fwu9Gf3jQ7bgg0IBcFAAAANYR3MVdoCLHxqoRy+SkBdNJH3B2</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D74FFDF2-0A0B-4EC6-BFB5-AB069F0B1036}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;------------&#xA;DECLARE @LastDWProcessdate datetime&#xA;,@processeddatetime datetime&#xA;,@jobstatusid varchar(5)&#xA;select @jobstatusid=&quot;+ (DT_STR, 5,1252) @[User::JobStatusId] +&quot;&#xA;select @LastDWProcessdate=isnull(max(Modified_on),'1900-01-01 00:00:00.000') from [dbo].[DW_EXT_DPAEAE_APPLICANTS]&#xA;select  @processeddatetime= getdate()&#xA;&#xA;;WITH TMP_EXT&#xA;AS&#xA;(&#xA;SELECT  [NRIC_FIN]&#xA;      ,[Name]&#xA;      ,[Date of Birth]&#xA;      ,[Gender]&#xA;      ,[Race]&#xA;      ,[Country of Birth]&#xA;      ,[Citizenship]&#xA;      ,[Citizenship Type]&#xA;      ,[Academic Stream]&#xA;      ,[Secondary Level]&#xA;      ,[School Code]&#xA;      ,[BLK]&#xA;      ,[Unit]&#xA;      ,[Street Name]&#xA;      ,[Street/Building Name]&#xA;      ,[State]&#xA;      ,[Address Country]&#xA;      ,[Postal code]&#xA;      ,[Home Tel (SG)]&#xA;      ,[Mobile number (SG)]&#xA;      ,[Other contact]&#xA;      ,[Email]&#xA;      ,[Choice Poly_1]&#xA;      ,[Choice Course_1]&#xA;      ,[Choice Reason_1]&#xA;      ,[Choice Status_1]&#xA;      ,[Choice Poly_2]&#xA;      ,[Choice Course_2]&#xA;      ,[Choice Reason_2]&#xA;      ,[Choice Status_2]&#xA;      ,[Choice Poly_3]&#xA;      ,[Choice Course_3]&#xA;      ,[Choice Reason_3]&#xA;      ,[Choice Status_3]&#xA;      ,[Posted Course]&#xA;      ,[Posted Choice No]&#xA;      ,[Posted Poly]&#xA;      ,[Posted Agg]&#xA;      ,[Posted Status]&#xA;      ,[FILE_NAME_ACADEMIC_YEAR]&#xA;      ,[FILE_NAME_SEMESTER]&#xA;&#x9;  ,[Choice_1_Eligibility]&#xA;      ,[Choice_1_Aggregate]&#xA;      ,[Choice_2_Eligibility]&#xA;      ,[Choice_2_Aggregate]&#xA;      ,[Choice_3_Eligibility]&#xA;      ,[Choice_3_Aggregate]&#xA;      ,[SUBJ_CODE_1]&#xA;      ,[SUBJ_Level_Code_1]&#xA;      ,[SUBJ_GRADE_1]&#xA;      ,[SUBJ_CODE_2]&#xA;      ,[SUBJ_Level_Code_2]&#xA;      ,[SUBJ_GRADE_2]&#xA;      ,[SUBJ_CODE_3]&#xA;      ,[SUBJ_Level_Code_3]&#xA;      ,[SUBJ_GRADE_3]&#xA;      ,[SUBJ_CODE_4]&#xA;      ,[SUBJ_Level_Code_4]&#xA;      ,[SUBJ_GRADE_4]&#xA;      ,[SUBJ_CODE_5]&#xA;      ,[SUBJ_Level_Code_5]&#xA;      ,[SUBJ_GRADE_5]&#xA;      ,[SUBJ_CODE_6]&#xA;      ,[SUBJ_Level_Code_6]&#xA;      ,[SUBJ_GRADE_6]&#xA;      ,[SUBJ_CODE_7]&#xA;      ,[SUBJ_Level_Code_7]&#xA;      ,[SUBJ_GRADE_7]&#xA;      ,[SUBJ_CODE_8]&#xA;      ,[SUBJ_Level_Code_8]&#xA;      ,[SUBJ_GRADE_8]&#xA;      ,[SUBJ_CODE_9]&#xA;      ,[SUBJ_Level_Code_9]&#xA;      ,[SUBJ_GRADE_9]&#xA;      ,[SUBJ_CODE_10]&#xA;      ,[SUBJ_Level_Code_10]&#xA;      ,[SUBJ_GRADE_10]&#xA;      ,[SUBJ_CODE_11]&#xA;      ,[SUBJ_Level_Code_11]&#xA;      ,[SUBJ_GRADE_11]&#xA;      ,[SUBJ_CODE_12]&#xA;      ,[SUBJ_Level_Code_12]&#xA;      ,[SUBJ_GRADE_12]&#xA;      ,[SUBJ_CODE_13]&#xA;      ,[SUBJ_Level_Code_13]&#xA;      ,[SUBJ_GRADE_13]&#xA;      ,[SUBJ_CODE_14]&#xA;      ,[SUBJ_Level_Code_14]&#xA;      ,[SUBJ_GRADE_14]&#xA;      ,[SUBJ_CODE_15]&#xA;      ,[SUBJ_Level_Code_15]&#xA;      ,[SUBJ_GRADE_15]&#xA;      ,[SUBJ_CODE_16]&#xA;      ,[SUBJ_Level_Code_16]&#xA;      ,[SUBJ_GRADE_16]&#xA;      ,[SUBJ_CODE_17]&#xA;      ,[SUBJ_Level_Code_17]&#xA;      ,[SUBJ_GRADE_17]&#xA;      ,[SUBJ_CODE_18]&#xA;      ,[SUBJ_Level_Code_18]&#xA;      ,[SUBJ_GRADE_18]&#xA;      ,[SUBJ_CODE_19]&#xA;      ,[SUBJ_Level_Code_19]&#xA;      ,[SUBJ_GRADE_19]&#xA;      ,[SUBJ_CODE_20]&#xA;      ,[SUBJ_Level_Code_20]&#xA;      ,[SUBJ_GRADE_20]&#xA;       FROM [RPDW_PRD_STG].[dbo].[STG_EXT_DPAEAE_APPLICANTS]&#xA;   where [Latest_Ind] ='Y' &#xA;AND [MODIFIED_ON]&gt;@LastDWProcessdate&#xA;)&#xA;&#xA;&#xA;MERGE INTO [DW_EXT_DPAEAE_APPLICANTS] AS DST&#xA;   USING TMP_EXT AS SRC&#xA;  ON (&#xA;  SRC. [NRIC_FIN] = DST.[NRIC_FIN] &#xA;  AND   SRC. [FILE_NAME_ACADEMIC_YEAR] = DST.[FILE_NAME_ACADEMIC_YEAR] &#xA;  AND   SRC. [FILE_NAME_SEMESTER] = DST.[FILE_NAME_SEMESTER] &#xA;  AND   SRC. [Postal code] = DST.[Postal code] &#xA;     )&#xA;&#xA;   WHEN NOT MATCHED THEN&#xA;   INSERT&#xA;&#x9;(&#xA;[NRIC_FIN]&#xA;      ,[Name]&#xA;      ,[Date of Birth]&#xA;      ,[Gender]&#xA;      ,[Race]&#xA;      ,[Country of Birth]&#xA;      ,[Citizenship]&#xA;      ,[Citizenship Type]&#xA;      ,[Academic Stream]&#xA;      ,[Secondary Level]&#xA;      ,[School Code]&#xA;      ,[BLK]&#xA;      ,[Unit]&#xA;      ,[Street Name]&#xA;      ,[Street/Building Name]&#xA;      ,[State]&#xA;      ,[Address Country]&#xA;      ,[Postal code]&#xA;      ,[Home Tel (SG)]&#xA;      ,[Mobile number (SG)]&#xA;      ,[Other contact]&#xA;      ,[Email]&#xA;      ,[Choice Poly_1]&#xA;      ,[Choice Course_1]&#xA;      ,[Choice Reason_1]&#xA;      ,[Choice Status_1]&#xA;      ,[Choice Poly_2]&#xA;      ,[Choice Course_2]&#xA;      ,[Choice Reason_2]&#xA;      ,[Choice Status_2]&#xA;      ,[Choice Poly_3]&#xA;      ,[Choice Course_3]&#xA;      ,[Choice Reason_3]&#xA;      ,[Choice Status_3]&#xA;      ,[Posted Course]&#xA;      ,[Posted Choice No]&#xA;      ,[Posted Poly]&#xA;      ,[Posted Agg]&#xA;      ,[Posted Status]&#xA;      ,[FILE_NAME_ACADEMIC_YEAR]&#xA;      ,[FILE_NAME_SEMESTER]&#xA;      ,[CREATED_ON]&#xA;      ,[MODIFIED_ON]&#xA;      --,[MASKED_NATIONAL_ID]&#xA;&#x9;  ,[Choice_1_Eligibility]&#xA;      ,[Choice_1_Aggregate]&#xA;      ,[Choice_2_Eligibility]&#xA;      ,[Choice_2_Aggregate]&#xA;      ,[Choice_3_Eligibility]&#xA;      ,[Choice_3_Aggregate]&#xA;      ,[SUBJ_CODE_1]&#xA;      ,[SUBJ_Level_Code_1]&#xA;      ,[SUBJ_GRADE_1]&#xA;      ,[SUBJ_CODE_2]&#xA;      ,[SUBJ_Level_Code_2]&#xA;      ,[SUBJ_GRADE_2]&#xA;      ,[SUBJ_CODE_3]&#xA;      ,[SUBJ_Level_Code_3]&#xA;      ,[SUBJ_GRADE_3]&#xA;      ,[SUBJ_CODE_4]&#xA;      ,[SUBJ_Level_Code_4]&#xA;      ,[SUBJ_GRADE_4]&#xA;      ,[SUBJ_CODE_5]&#xA;      ,[SUBJ_Level_Code_5]&#xA;      ,[SUBJ_GRADE_5]&#xA;      ,[SUBJ_CODE_6]&#xA;      ,[SUBJ_Level_Code_6]&#xA;      ,[SUBJ_GRADE_6]&#xA;      ,[SUBJ_CODE_7]&#xA;      ,[SUBJ_Level_Code_7]&#xA;      ,[SUBJ_GRADE_7]&#xA;      ,[SUBJ_CODE_8]&#xA;      ,[SUBJ_Level_Code_8]&#xA;      ,[SUBJ_GRADE_8]&#xA;      ,[SUBJ_CODE_9]&#xA;      ,[SUBJ_Level_Code_9]&#xA;      ,[SUBJ_GRADE_9]&#xA;      ,[SUBJ_CODE_10]&#xA;      ,[SUBJ_Level_Code_10]&#xA;      ,[SUBJ_GRADE_10]&#xA;      ,[SUBJ_CODE_11]&#xA;      ,[SUBJ_Level_Code_11]&#xA;      ,[SUBJ_GRADE_11]&#xA;      ,[SUBJ_CODE_12]&#xA;      ,[SUBJ_Level_Code_12]&#xA;      ,[SUBJ_GRADE_12]&#xA;      ,[SUBJ_CODE_13]&#xA;      ,[SUBJ_Level_Code_13]&#xA;      ,[SUBJ_GRADE_13]&#xA;      ,[SUBJ_CODE_14]&#xA;      ,[SUBJ_Level_Code_14]&#xA;      ,[SUBJ_GRADE_14]&#xA;      ,[SUBJ_CODE_15]&#xA;      ,[SUBJ_Level_Code_15]&#xA;      ,[SUBJ_GRADE_15]&#xA;      ,[SUBJ_CODE_16]&#xA;      ,[SUBJ_Level_Code_16]&#xA;      ,[SUBJ_GRADE_16]&#xA;      ,[SUBJ_CODE_17]&#xA;      ,[SUBJ_Level_Code_17]&#xA;      ,[SUBJ_GRADE_17]&#xA;      ,[SUBJ_CODE_18]&#xA;      ,[SUBJ_Level_Code_18]&#xA;      ,[SUBJ_GRADE_18]&#xA;      ,[SUBJ_CODE_19]&#xA;      ,[SUBJ_Level_Code_19]&#xA;      ,[SUBJ_GRADE_19]&#xA;      ,[SUBJ_CODE_20]&#xA;      ,[SUBJ_Level_Code_20]&#xA;      ,[SUBJ_GRADE_20]&#xA;&#x9;  )&#xA;VALUES&#xA;&#x9;(  &#xA;[NRIC_FIN]&#xA;      ,[Name]&#xA;      ,[Date of Birth]&#xA;      ,[Gender]&#xA;      ,[Race]&#xA;      ,[Country of Birth]&#xA;      ,[Citizenship]&#xA;      ,[Citizenship Type]&#xA;      ,[Academic Stream]&#xA;      ,[Secondary Level]&#xA;      ,[School Code]&#xA;      ,[BLK]&#xA;      ,[Unit]&#xA;      ,[Street Name]&#xA;      ,[Street/Building Name]&#xA;      ,[State]&#xA;      ,[Address Country]&#xA;      ,[Postal code]&#xA;      ,[Home Tel (SG)]&#xA;      ,[Mobile number (SG)]&#xA;      ,[Other contact]&#xA;      ,[Email]&#xA;      ,[Choice Poly_1]&#xA;      ,[Choice Course_1]&#xA;      ,[Choice Reason_1]&#xA;      ,[Choice Status_1]&#xA;      ,[Choice Poly_2]&#xA;      ,[Choice Course_2]&#xA;      ,[Choice Reason_2]&#xA;      ,[Choice Status_2]&#xA;      ,[Choice Poly_3]&#xA;      ,[Choice Course_3]&#xA;      ,[Choice Reason_3]&#xA;      ,[Choice Status_3]&#xA;      ,[Posted Course]&#xA;      ,[Posted Choice No]&#xA;      ,[Posted Poly]&#xA;      ,[Posted Agg]&#xA;      ,[Posted Status]&#xA;      ,[FILE_NAME_ACADEMIC_YEAR]&#xA;      ,[FILE_NAME_SEMESTER]&#xA;      ,getdate()&#xA;      ,getdate()&#xA;      --,[MASKED_NATIONAL_ID]&#xA;&#x9;  ,[Choice_1_Eligibility]&#xA;      ,[Choice_1_Aggregate]&#xA;      ,[Choice_2_Eligibility]&#xA;      ,[Choice_2_Aggregate]&#xA;      ,[Choice_3_Eligibility]&#xA;      ,[Choice_3_Aggregate]&#xA;      ,[SUBJ_CODE_1]&#xA;      ,[SUBJ_Level_Code_1]&#xA;      ,[SUBJ_GRADE_1]&#xA;      ,[SUBJ_CODE_2]&#xA;      ,[SUBJ_Level_Code_2]&#xA;      ,[SUBJ_GRADE_2]&#xA;      ,[SUBJ_CODE_3]&#xA;      ,[SUBJ_Level_Code_3]&#xA;      ,[SUBJ_GRADE_3]&#xA;      ,[SUBJ_CODE_4]&#xA;      ,[SUBJ_Level_Code_4]&#xA;      ,[SUBJ_GRADE_4]&#xA;      ,[SUBJ_CODE_5]&#xA;      ,[SUBJ_Level_Code_5]&#xA;      ,[SUBJ_GRADE_5]&#xA;      ,[SUBJ_CODE_6]&#xA;      ,[SUBJ_Level_Code_6]&#xA;      ,[SUBJ_GRADE_6]&#xA;      ,[SUBJ_CODE_7]&#xA;      ,[SUBJ_Level_Code_7]&#xA;      ,[SUBJ_GRADE_7]&#xA;      ,[SUBJ_CODE_8]&#xA;      ,[SUBJ_Level_Code_8]&#xA;      ,[SUBJ_GRADE_8]&#xA;      ,[SUBJ_CODE_9]&#xA;      ,[SUBJ_Level_Code_9]&#xA;      ,[SUBJ_GRADE_9]&#xA;      ,[SUBJ_CODE_10]&#xA;      ,[SUBJ_Level_Code_10]&#xA;      ,[SUBJ_GRADE_10]&#xA;      ,[SUBJ_CODE_11]&#xA;      ,[SUBJ_Level_Code_11]&#xA;      ,[SUBJ_GRADE_11]&#xA;      ,[SUBJ_CODE_12]&#xA;      ,[SUBJ_Level_Code_12]&#xA;      ,[SUBJ_GRADE_12]&#xA;      ,[SUBJ_CODE_13]&#xA;      ,[SUBJ_Level_Code_13]&#xA;      ,[SUBJ_GRADE_13]&#xA;      ,[SUBJ_CODE_14]&#xA;      ,[SUBJ_Level_Code_14]&#xA;      ,[SUBJ_GRADE_14]&#xA;      ,[SUBJ_CODE_15]&#xA;      ,[SUBJ_Level_Code_15]&#xA;      ,[SUBJ_GRADE_15]&#xA;      ,[SUBJ_CODE_16]&#xA;      ,[SUBJ_Level_Code_16]&#xA;      ,[SUBJ_GRADE_16]&#xA;      ,[SUBJ_CODE_17]&#xA;      ,[SUBJ_Level_Code_17]&#xA;      ,[SUBJ_GRADE_17]&#xA;      ,[SUBJ_CODE_18]&#xA;      ,[SUBJ_Level_Code_18]&#xA;      ,[SUBJ_GRADE_18]&#xA;      ,[SUBJ_CODE_19]&#xA;      ,[SUBJ_Level_Code_19]&#xA;      ,[SUBJ_GRADE_19]&#xA;      ,[SUBJ_CODE_20]&#xA;      ,[SUBJ_Level_Code_20]&#xA;      ,[SUBJ_GRADE_20]&#xA;&#x9;)&#xA;   WHEN MATCHED&#xA;   &#xA;   THEN UPDATE&#xA;   SET &#x9; &#xA;dst.[Name] = isnull(src.[Name],' '),&#xA;dst.[Date of Birth] = isnull(src.[Date of Birth],' '),&#xA;dst.[Gender] = isnull(src.[Gender],' '),&#xA;dst.[Race] = isnull(src.[Race],' '),&#xA;dst.[Country of Birth] = isnull(src.[Country of Birth],' '),&#xA;dst.[Citizenship] = isnull(src.[Citizenship],' '),&#xA;dst.[Citizenship Type] = isnull(src.[Citizenship Type],' '),&#xA;dst.[Academic Stream] = isnull(src.[Academic Stream],' '),&#xA;dst.[Secondary Level] = isnull(src.[Secondary Level],' '),&#xA;dst.[School Code] = isnull(src.[School Code],' '),&#xA;dst.[BLK] = isnull(src.[BLK],' '),&#xA;&#xA;dst.[Unit] = isnull(src.[Unit],' '),&#xA;dst.[Street Name] = isnull(src.[Street Name],' '),&#xA;dst.[Street/Building Name] = isnull(src.[Street/Building Name],' '),&#xA;dst.[State] = isnull(src.[State],' '),&#xA;dst.[Address Country] = isnull(src.[Address Country],' '),&#xA;dst.[Home Tel (SG)] = isnull(src.[Home Tel (SG)],' '),&#xA;dst.[Mobile number (SG)] = isnull(src.[Mobile number (SG)],' '),&#xA;dst.[Other contact] = isnull(src.[Other contact],' '),&#xA;dst.[Email] = isnull(src.[Email],' '),&#xA;dst.[Choice Poly_1] = isnull(src.[Choice Poly_1],' '),&#xA;dst.[Choice Course_1] = isnull(src.[Choice Course_1],' '),&#xA;dst.[Choice Reason_1] = isnull(src.[Choice Reason_1],' '),&#xA;dst.[Choice Status_1] = isnull(src.[Choice Status_1],' '),&#xA;dst.[Choice Poly_2] = isnull(src.[Choice Poly_2],' '),&#xA;dst.[Choice Course_2] = isnull(src.[Choice Course_2],' '),&#xA;dst.[Choice Reason_2] = isnull(src.[Choice Reason_2],' '),&#xA;&#xA;&#xA;dst.[Choice Status_2] = isnull(src.[Choice Status_2],' '),&#xA;dst.[Choice Poly_3] = isnull(src.[Choice Poly_3],' '),&#xA;dst.[Choice Course_3] = isnull(src.[Choice Course_3],' '),&#xA;dst.[Choice Reason_3] = isnull(src.[Choice Reason_3],' '),&#xA;dst.[Choice Status_3] = isnull(src.[Choice Status_3],' '),&#xA;dst.[Posted Course] = isnull(src.[Posted Course],' '),&#xA;dst.[Posted Choice No] = isnull(src.[Posted Choice No],' '),&#xA;dst.[Posted Poly] = isnull(src.[Posted Poly],' '),&#xA;dst.[Posted Agg] = isnull(src.[Posted Agg],' '),&#xA;dst.[Posted Status] = isnull(src.[Posted Status],' '),&#xA;&#xA;&#xA;&#xA;dst.Choice_1_Eligibility = isnull(src.Choice_1_Eligibility,' '),&#xA;dst.Choice_1_Aggregate = isnull(src.Choice_1_Aggregate,' '),&#xA;dst.Choice_2_Eligibility = isnull(src.Choice_2_Eligibility,' '),&#xA;dst.Choice_2_Aggregate = isnull(src.Choice_2_Aggregate,' '),&#xA;dst.Choice_3_Eligibility = isnull(src.Choice_3_Eligibility,' '),&#xA;dst.Choice_3_Aggregate = isnull(src.Choice_3_Aggregate,' '),&#xA;dst.SUBJ_CODE_1 = isnull(src.SUBJ_CODE_1,' '),&#xA;dst.SUBJ_Level_Code_1 = isnull(src.SUBJ_Level_Code_1,' '),&#xA;dst.SUBJ_GRADE_1 = isnull(src.SUBJ_GRADE_1,' '),&#xA;dst.SUBJ_CODE_2 = isnull(src.SUBJ_CODE_2,' '),&#xA;dst.SUBJ_Level_Code_2 = isnull(src.SUBJ_Level_Code_2,' '),&#xA;dst.SUBJ_GRADE_2 = isnull(src.SUBJ_GRADE_2,' '),&#xA;dst.SUBJ_CODE_3 = isnull(src.SUBJ_CODE_3,' '),&#xA;dst.SUBJ_Level_Code_3 = isnull(src.SUBJ_Level_Code_3,' '),&#xA;dst.SUBJ_GRADE_3 = isnull(src.SUBJ_GRADE_3,' '),&#xA;dst.SUBJ_CODE_4 = isnull(src.SUBJ_CODE_4,' '),&#xA;dst.SUBJ_Level_Code_4 = isnull(src.SUBJ_Level_Code_4,' '),&#xA;dst.SUBJ_GRADE_4 = isnull(src.SUBJ_GRADE_4,' '),&#xA;dst.SUBJ_CODE_5 = isnull(src.SUBJ_CODE_5,' '),&#xA;dst.SUBJ_Level_Code_5 = isnull(src.SUBJ_Level_Code_5,' '),&#xA;&#xA;&#xA;&#xA;dst.SUBJ_GRADE_5 = isnull(src.SUBJ_GRADE_5,' '),&#xA;dst.SUBJ_CODE_6 = isnull(src.SUBJ_CODE_6,' '),&#xA;dst.SUBJ_Level_Code_6 = isnull(src.SUBJ_Level_Code_6,' '),&#xA;dst.SUBJ_GRADE_6 = isnull(src.SUBJ_GRADE_6,' '),&#xA;dst.SUBJ_CODE_7 = isnull(src.SUBJ_CODE_7,' '),&#xA;dst.SUBJ_Level_Code_7 = isnull(src.SUBJ_Level_Code_7,' '),&#xA;dst.SUBJ_GRADE_7 = isnull(src.SUBJ_GRADE_7,' '),&#xA;dst.SUBJ_CODE_8 = isnull(src.SUBJ_CODE_8,' '),&#xA;dst.SUBJ_Level_Code_8 = isnull(src.SUBJ_Level_Code_8,' '),&#xA;dst.SUBJ_GRADE_8 = isnull(src.SUBJ_GRADE_8,' '),&#xA;dst.SUBJ_CODE_9 = isnull(src.SUBJ_CODE_9,' '),&#xA;dst.SUBJ_Level_Code_9 = isnull(src.SUBJ_Level_Code_9,' '),&#xA;dst.SUBJ_GRADE_9 = isnull(src.SUBJ_GRADE_9,' '),&#xA;dst.SUBJ_CODE_10 = isnull(src.SUBJ_CODE_10,' '),&#xA;dst.SUBJ_Level_Code_10 = isnull(src.SUBJ_Level_Code_10,' '),&#xA;dst.SUBJ_GRADE_10 = isnull(src.SUBJ_GRADE_10,' '),&#xA;dst.SUBJ_CODE_11 = isnull(src.SUBJ_CODE_11,' '),&#xA;dst.SUBJ_Level_Code_11 = isnull(src.SUBJ_Level_Code_11,' '),&#xA;dst.SUBJ_GRADE_11 = isnull(src.SUBJ_GRADE_11,' '),&#xA;dst.SUBJ_CODE_12 = isnull(src.SUBJ_CODE_12,' '),&#xA;&#xA;&#xA;&#xA;dst.SUBJ_Level_Code_12 = isnull(src.SUBJ_Level_Code_12,' '),&#xA;dst.SUBJ_GRADE_12 = isnull(src.SUBJ_GRADE_12,' '),&#xA;dst.SUBJ_CODE_13 = isnull(src.SUBJ_CODE_13,' '),&#xA;dst.SUBJ_Level_Code_13 = isnull(src.SUBJ_Level_Code_13,' '),&#xA;dst.SUBJ_GRADE_13 = isnull(src.SUBJ_GRADE_13,' '),&#xA;dst.SUBJ_CODE_14 = isnull(src.SUBJ_CODE_14,' '),&#xA;dst.SUBJ_Level_Code_14 = isnull(src.SUBJ_Level_Code_14,' '),&#xA;dst.SUBJ_GRADE_14 = isnull(src.SUBJ_GRADE_14,' '),&#xA;dst.SUBJ_CODE_15 = isnull(src.SUBJ_CODE_15,' '),&#xA;dst.SUBJ_Level_Code_15 = isnull(src.SUBJ_Level_Code_15,' '),&#xA;dst.SUBJ_GRADE_15 = isnull(src.SUBJ_GRADE_15,' '),&#xA;dst.SUBJ_CODE_16 = isnull(src.SUBJ_CODE_16,' '),&#xA;dst.SUBJ_Level_Code_16 = isnull(src.SUBJ_Level_Code_16,' '),&#xA;dst.SUBJ_GRADE_16 = isnull(src.SUBJ_GRADE_16,' '),&#xA;dst.SUBJ_CODE_17 = isnull(src.SUBJ_CODE_17,' '),&#xA;dst.SUBJ_Level_Code_17 = isnull(src.SUBJ_Level_Code_17,' '),&#xA;dst.SUBJ_GRADE_17 = isnull(src.SUBJ_GRADE_17,' '),&#xA;dst.SUBJ_CODE_18 = isnull(src.SUBJ_CODE_18,' '),&#xA;dst.SUBJ_Level_Code_18 = isnull(src.SUBJ_Level_Code_18,' '),&#xA;dst.SUBJ_GRADE_18 = isnull(src.SUBJ_GRADE_18,' '),&#xA;&#xA;&#xA;&#xA;dst.SUBJ_CODE_19 = isnull(src.SUBJ_CODE_19,' '),&#xA;dst.SUBJ_Level_Code_19 = isnull(src.SUBJ_Level_Code_19,' '),&#xA;dst.SUBJ_GRADE_19 = isnull(src.SUBJ_GRADE_19,' '),&#xA;dst.SUBJ_CODE_20 = isnull(src.SUBJ_CODE_20,' '),&#xA;dst.SUBJ_Level_Code_20 = isnull(src.SUBJ_Level_Code_20,' '),&#xA;dst.SUBJ_GRADE_20 = isnull(src.SUBJ_GRADE_20,' ')&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;;&#xA;--------------------------------------&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,@processeddatetime  as created_on&#xA;  &#xA;  &#xA;END CATCH  &#xA;GO&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="InsertQuery">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+------------
+DECLARE @LastDWProcessdate datetime
+,@processeddatetime datetime
+,@jobstatusid varchar(5)
+select @jobstatusid=0
+select @LastDWProcessdate=isnull(max(Modified_on),'1900-01-01 00:00:00.000') from [dbo].[DW_EXT_DPAEAE_APPLICANTS]
+select  @processeddatetime= getdate()
+
+;WITH TMP_EXT
+AS
+(
+SELECT  [NRIC_FIN]
+      ,[Name]
+      ,[Date of Birth]
+      ,[Gender]
+      ,[Race]
+      ,[Country of Birth]
+      ,[Citizenship]
+      ,[Citizenship Type]
+      ,[Academic Stream]
+      ,[Secondary Level]
+      ,[School Code]
+      ,[BLK]
+      ,[Unit]
+      ,[Street Name]
+      ,[Street/Building Name]
+      ,[State]
+      ,[Address Country]
+      ,[Postal code]
+      ,[Home Tel (SG)]
+      ,[Mobile number (SG)]
+      ,[Other contact]
+      ,[Email]
+      ,[Choice Poly_1]
+      ,[Choice Course_1]
+      ,[Choice Reason_1]
+      ,[Choice Status_1]
+      ,[Choice Poly_2]
+      ,[Choice Course_2]
+      ,[Choice Reason_2]
+      ,[Choice Status_2]
+      ,[Choice Poly_3]
+      ,[Choice Course_3]
+      ,[Choice Reason_3]
+      ,[Choice Status_3]
+      ,[Posted Course]
+      ,[Posted Choice No]
+      ,[Posted Poly]
+      ,[Posted Agg]
+      ,[Posted Status]
+      ,[FILE_NAME_ACADEMIC_YEAR]
+      ,[FILE_NAME_SEMESTER]
+	  ,[Choice_1_Eligibility]
+      ,[Choice_1_Aggregate]
+      ,[Choice_2_Eligibility]
+      ,[Choice_2_Aggregate]
+      ,[Choice_3_Eligibility]
+      ,[Choice_3_Aggregate]
+      ,[SUBJ_CODE_1]
+      ,[SUBJ_Level_Code_1]
+      ,[SUBJ_GRADE_1]
+      ,[SUBJ_CODE_2]
+      ,[SUBJ_Level_Code_2]
+      ,[SUBJ_GRADE_2]
+      ,[SUBJ_CODE_3]
+      ,[SUBJ_Level_Code_3]
+      ,[SUBJ_GRADE_3]
+      ,[SUBJ_CODE_4]
+      ,[SUBJ_Level_Code_4]
+      ,[SUBJ_GRADE_4]
+      ,[SUBJ_CODE_5]
+      ,[SUBJ_Level_Code_5]
+      ,[SUBJ_GRADE_5]
+      ,[SUBJ_CODE_6]
+      ,[SUBJ_Level_Code_6]
+      ,[SUBJ_GRADE_6]
+      ,[SUBJ_CODE_7]
+      ,[SUBJ_Level_Code_7]
+      ,[SUBJ_GRADE_7]
+      ,[SUBJ_CODE_8]
+      ,[SUBJ_Level_Code_8]
+      ,[SUBJ_GRADE_8]
+      ,[SUBJ_CODE_9]
+      ,[SUBJ_Level_Code_9]
+      ,[SUBJ_GRADE_9]
+      ,[SUBJ_CODE_10]
+      ,[SUBJ_Level_Code_10]
+      ,[SUBJ_GRADE_10]
+      ,[SUBJ_CODE_11]
+      ,[SUBJ_Level_Code_11]
+      ,[SUBJ_GRADE_11]
+      ,[SUBJ_CODE_12]
+      ,[SUBJ_Level_Code_12]
+      ,[SUBJ_GRADE_12]
+      ,[SUBJ_CODE_13]
+      ,[SUBJ_Level_Code_13]
+      ,[SUBJ_GRADE_13]
+      ,[SUBJ_CODE_14]
+      ,[SUBJ_Level_Code_14]
+      ,[SUBJ_GRADE_14]
+      ,[SUBJ_CODE_15]
+      ,[SUBJ_Level_Code_15]
+      ,[SUBJ_GRADE_15]
+      ,[SUBJ_CODE_16]
+      ,[SUBJ_Level_Code_16]
+      ,[SUBJ_GRADE_16]
+      ,[SUBJ_CODE_17]
+      ,[SUBJ_Level_Code_17]
+      ,[SUBJ_GRADE_17]
+      ,[SUBJ_CODE_18]
+      ,[SUBJ_Level_Code_18]
+      ,[SUBJ_GRADE_18]
+      ,[SUBJ_CODE_19]
+      ,[SUBJ_Level_Code_19]
+      ,[SUBJ_GRADE_19]
+      ,[SUBJ_CODE_20]
+      ,[SUBJ_Level_Code_20]
+      ,[SUBJ_GRADE_20]
+       FROM [RPDW_PRD_STG].[dbo].[STG_EXT_DPAEAE_APPLICANTS]
+   where [Latest_Ind] ='Y' 
+AND [MODIFIED_ON]&gt;@LastDWProcessdate
+)
+
+
+MERGE INTO [DW_EXT_DPAEAE_APPLICANTS] AS DST
+   USING TMP_EXT AS SRC
+  ON (
+  SRC. [NRIC_FIN] = DST.[NRIC_FIN] 
+  AND   SRC. [FILE_NAME_ACADEMIC_YEAR] = DST.[FILE_NAME_ACADEMIC_YEAR] 
+  AND   SRC. [FILE_NAME_SEMESTER] = DST.[FILE_NAME_SEMESTER] 
+  AND   SRC. [Postal code] = DST.[Postal code] 
+     )
+
+   WHEN NOT MATCHED THEN
+   INSERT
+	(
+[NRIC_FIN]
+      ,[Name]
+      ,[Date of Birth]
+      ,[Gender]
+      ,[Race]
+      ,[Country of Birth]
+      ,[Citizenship]
+      ,[Citizenship Type]
+      ,[Academic Stream]
+      ,[Secondary Level]
+      ,[School Code]
+      ,[BLK]
+      ,[Unit]
+      ,[Street Name]
+      ,[Street/Building Name]
+      ,[State]
+      ,[Address Country]
+      ,[Postal code]
+      ,[Home Tel (SG)]
+      ,[Mobile number (SG)]
+      ,[Other contact]
+      ,[Email]
+      ,[Choice Poly_1]
+      ,[Choice Course_1]
+      ,[Choice Reason_1]
+      ,[Choice Status_1]
+      ,[Choice Poly_2]
+      ,[Choice Course_2]
+      ,[Choice Reason_2]
+      ,[Choice Status_2]
+      ,[Choice Poly_3]
+      ,[Choice Course_3]
+      ,[Choice Reason_3]
+      ,[Choice Status_3]
+      ,[Posted Course]
+      ,[Posted Choice No]
+      ,[Posted Poly]
+      ,[Posted Agg]
+      ,[Posted Status]
+      ,[FILE_NAME_ACADEMIC_YEAR]
+      ,[FILE_NAME_SEMESTER]
+      ,[CREATED_ON]
+      ,[MODIFIED_ON]
+      --,[MASKED_NATIONAL_ID]
+	  ,[Choice_1_Eligibility]
+      ,[Choice_1_Aggregate]
+      ,[Choice_2_Eligibility]
+      ,[Choice_2_Aggregate]
+      ,[Choice_3_Eligibility]
+      ,[Choice_3_Aggregate]
+      ,[SUBJ_CODE_1]
+      ,[SUBJ_Level_Code_1]
+      ,[SUBJ_GRADE_1]
+      ,[SUBJ_CODE_2]
+      ,[SUBJ_Level_Code_2]
+      ,[SUBJ_GRADE_2]
+      ,[SUBJ_CODE_3]
+      ,[SUBJ_Level_Code_3]
+      ,[SUBJ_GRADE_3]
+      ,[SUBJ_CODE_4]
+      ,[SUBJ_Level_Code_4]
+      ,[SUBJ_GRADE_4]
+      ,[SUBJ_CODE_5]
+      ,[SUBJ_Level_Code_5]
+      ,[SUBJ_GRADE_5]
+      ,[SUBJ_CODE_6]
+      ,[SUBJ_Level_Code_6]
+      ,[SUBJ_GRADE_6]
+      ,[SUBJ_CODE_7]
+      ,[SUBJ_Level_Code_7]
+      ,[SUBJ_GRADE_7]
+      ,[SUBJ_CODE_8]
+      ,[SUBJ_Level_Code_8]
+      ,[SUBJ_GRADE_8]
+      ,[SUBJ_CODE_9]
+      ,[SUBJ_Level_Code_9]
+      ,[SUBJ_GRADE_9]
+      ,[SUBJ_CODE_10]
+      ,[SUBJ_Level_Code_10]
+      ,[SUBJ_GRADE_10]
+      ,[SUBJ_CODE_11]
+      ,[SUBJ_Level_Code_11]
+      ,[SUBJ_GRADE_11]
+      ,[SUBJ_CODE_12]
+      ,[SUBJ_Level_Code_12]
+      ,[SUBJ_GRADE_12]
+      ,[SUBJ_CODE_13]
+      ,[SUBJ_Level_Code_13]
+      ,[SUBJ_GRADE_13]
+      ,[SUBJ_CODE_14]
+      ,[SUBJ_Level_Code_14]
+      ,[SUBJ_GRADE_14]
+      ,[SUBJ_CODE_15]
+      ,[SUBJ_Level_Code_15]
+      ,[SUBJ_GRADE_15]
+      ,[SUBJ_CODE_16]
+      ,[SUBJ_Level_Code_16]
+      ,[SUBJ_GRADE_16]
+      ,[SUBJ_CODE_17]
+      ,[SUBJ_Level_Code_17]
+      ,[SUBJ_GRADE_17]
+      ,[SUBJ_CODE_18]
+      ,[SUBJ_Level_Code_18]
+      ,[SUBJ_GRADE_18]
+      ,[SUBJ_CODE_19]
+      ,[SUBJ_Level_Code_19]
+      ,[SUBJ_GRADE_19]
+      ,[SUBJ_CODE_20]
+      ,[SUBJ_Level_Code_20]
+      ,[SUBJ_GRADE_20]
+	  )
+VALUES
+	(  
+[NRIC_FIN]
+      ,[Name]
+      ,[Date of Birth]
+      ,[Gender]
+      ,[Race]
+      ,[Country of Birth]
+      ,[Citizenship]
+      ,[Citizenship Type]
+      ,[Academic Stream]
+      ,[Secondary Level]
+      ,[School Code]
+      ,[BLK]
+      ,[Unit]
+      ,[Street Name]
+      ,[Street/Building Name]
+      ,[State]
+      ,[Address Country]
+      ,[Postal code]
+      ,[Home Tel (SG)]
+      ,[Mobile number (SG)]
+      ,[Other contact]
+      ,[Email]
+      ,[Choice Poly_1]
+      ,[Choice Course_1]
+      ,[Choice Reason_1]
+      ,[Choice Status_1]
+      ,[Choice Poly_2]
+      ,[Choice Course_2]
+      ,[Choice Reason_2]
+      ,[Choice Status_2]
+      ,[Choice Poly_3]
+      ,[Choice Course_3]
+      ,[Choice Reason_3]
+      ,[Choice Status_3]
+      ,[Posted Course]
+      ,[Posted Choice No]
+      ,[Posted Poly]
+      ,[Posted Agg]
+      ,[Posted Status]
+      ,[FILE_NAME_ACADEMIC_YEAR]
+      ,[FILE_NAME_SEMESTER]
+      ,getdate()
+      ,getdate()
+      --,[MASKED_NATIONAL_ID]
+	  ,[Choice_1_Eligibility]
+      ,[Choice_1_Aggregate]
+      ,[Choice_2_Eligibility]
+      ,[Choice_2_Aggregate]
+      ,[Choice_3_Eligibility]
+      ,[Choice_3_Aggregate]
+      ,[SUBJ_CODE_1]
+      ,[SUBJ_Level_Code_1]
+      ,[SUBJ_GRADE_1]
+      ,[SUBJ_CODE_2]
+      ,[SUBJ_Level_Code_2]
+      ,[SUBJ_GRADE_2]
+      ,[SUBJ_CODE_3]
+      ,[SUBJ_Level_Code_3]
+      ,[SUBJ_GRADE_3]
+      ,[SUBJ_CODE_4]
+      ,[SUBJ_Level_Code_4]
+      ,[SUBJ_GRADE_4]
+      ,[SUBJ_CODE_5]
+      ,[SUBJ_Level_Code_5]
+      ,[SUBJ_GRADE_5]
+      ,[SUBJ_CODE_6]
+      ,[SUBJ_Level_Code_6]
+      ,[SUBJ_GRADE_6]
+      ,[SUBJ_CODE_7]
+      ,[SUBJ_Level_Code_7]
+      ,[SUBJ_GRADE_7]
+      ,[SUBJ_CODE_8]
+      ,[SUBJ_Level_Code_8]
+      ,[SUBJ_GRADE_8]
+      ,[SUBJ_CODE_9]
+      ,[SUBJ_Level_Code_9]
+      ,[SUBJ_GRADE_9]
+      ,[SUBJ_CODE_10]
+      ,[SUBJ_Level_Code_10]
+      ,[SUBJ_GRADE_10]
+      ,[SUBJ_CODE_11]
+      ,[SUBJ_Level_Code_11]
+      ,[SUBJ_GRADE_11]
+      ,[SUBJ_CODE_12]
+      ,[SUBJ_Level_Code_12]
+      ,[SUBJ_GRADE_12]
+      ,[SUBJ_CODE_13]
+      ,[SUBJ_Level_Code_13]
+      ,[SUBJ_GRADE_13]
+      ,[SUBJ_CODE_14]
+      ,[SUBJ_Level_Code_14]
+      ,[SUBJ_GRADE_14]
+      ,[SUBJ_CODE_15]
+      ,[SUBJ_Level_Code_15]
+      ,[SUBJ_GRADE_15]
+      ,[SUBJ_CODE_16]
+      ,[SUBJ_Level_Code_16]
+      ,[SUBJ_GRADE_16]
+      ,[SUBJ_CODE_17]
+      ,[SUBJ_Level_Code_17]
+      ,[SUBJ_GRADE_17]
+      ,[SUBJ_CODE_18]
+      ,[SUBJ_Level_Code_18]
+      ,[SUBJ_GRADE_18]
+      ,[SUBJ_CODE_19]
+      ,[SUBJ_Level_Code_19]
+      ,[SUBJ_GRADE_19]
+      ,[SUBJ_CODE_20]
+      ,[SUBJ_Level_Code_20]
+      ,[SUBJ_GRADE_20]
+	)
+   WHEN MATCHED
+   
+   THEN UPDATE
+   SET 	 
+dst.[Name] = isnull(src.[Name],' '),
+dst.[Date of Birth] = isnull(src.[Date of Birth],' '),
+dst.[Gender] = isnull(src.[Gender],' '),
+dst.[Race] = isnull(src.[Race],' '),
+dst.[Country of Birth] = isnull(src.[Country of Birth],' '),
+dst.[Citizenship] = isnull(src.[Citizenship],' '),
+dst.[Citizenship Type] = isnull(src.[Citizenship Type],' '),
+dst.[Academic Stream] = isnull(src.[Academic Stream],' '),
+dst.[Secondary Level] = isnull(src.[Secondary Level],' '),
+dst.[School Code] = isnull(src.[School Code],' '),
+dst.[BLK] = isnull(src.[BLK],' '),
+
+dst.[Unit] = isnull(src.[Unit],' '),
+dst.[Street Name] = isnull(src.[Street Name],' '),
+dst.[Street/Building Name] = isnull(src.[Street/Building Name],' '),
+dst.[State] = isnull(src.[State],' '),
+dst.[Address Country] = isnull(src.[Address Country],' '),
+dst.[Home Tel (SG)] = isnull(src.[Home Tel (SG)],' '),
+dst.[Mobile number (SG)] = isnull(src.[Mobile number (SG)],' '),
+dst.[Other contact] = isnull(src.[Other contact],' '),
+dst.[Email] = isnull(src.[Email],' '),
+dst.[Choice Poly_1] = isnull(src.[Choice Poly_1],' '),
+dst.[Choice Course_1] = isnull(src.[Choice Course_1],' '),
+dst.[Choice Reason_1] = isnull(src.[Choice Reason_1],' '),
+dst.[Choice Status_1] = isnull(src.[Choice Status_1],' '),
+dst.[Choice Poly_2] = isnull(src.[Choice Poly_2],' '),
+dst.[Choice Course_2] = isnull(src.[Choice Course_2],' '),
+dst.[Choice Reason_2] = isnull(src.[Choice Reason_2],' '),
+
+
+dst.[Choice Status_2] = isnull(src.[Choice Status_2],' '),
+dst.[Choice Poly_3] = isnull(src.[Choice Poly_3],' '),
+dst.[Choice Course_3] = isnull(src.[Choice Course_3],' '),
+dst.[Choice Reason_3] = isnull(src.[Choice Reason_3],' '),
+dst.[Choice Status_3] = isnull(src.[Choice Status_3],' '),
+dst.[Posted Course] = isnull(src.[Posted Course],' '),
+dst.[Posted Choice No] = isnull(src.[Posted Choice No],' '),
+dst.[Posted Poly] = isnull(src.[Posted Poly],' '),
+dst.[Posted Agg] = isnull(src.[Posted Agg],' '),
+dst.[Posted Status] = isnull(src.[Posted Status],' '),
+
+
+
+dst.Choice_1_Eligibility = isnull(src.Choice_1_Eligibility,' '),
+dst.Choice_1_Aggregate = isnull(src.Choice_1_Aggregate,' '),
+dst.Choice_2_Eligibility = isnull(src.Choice_2_Eligibility,' '),
+dst.Choice_2_Aggregate = isnull(src.Choice_2_Aggregate,' '),
+dst.Choice_3_Eligibility = isnull(src.Choice_3_Eligibility,' '),
+dst.Choice_3_Aggregate = isnull(src.Choice_3_Aggregate,' '),
+dst.SUBJ_CODE_1 = isnull(src.SUBJ_CODE_1,' '),
+dst.SUBJ_Level_Code_1 = isnull(src.SUBJ_Level_Code_1,' '),
+dst.SUBJ_GRADE_1 = isnull(src.SUBJ_GRADE_1,' '),
+dst.SUBJ_CODE_2 = isnull(src.SUBJ_CODE_2,' '),
+dst.SUBJ_Level_Code_2 = isnull(src.SUBJ_Level_Code_2,' '),
+dst.SUBJ_GRADE_2 = isnull(src.SUBJ_GRADE_2,' '),
+dst.SUBJ_CODE_3 = isnull(src.SUBJ_CODE_3,' '),
+dst.SUBJ_Level_Code_3 = isnull(src.SUBJ_Level_Code_3,' '),
+dst.SUBJ_GRADE_3 = isnull(src.SUBJ_GRADE_3,' '),
+dst.SUBJ_CODE_4 = isnull(src.SUBJ_CODE_4,' '),
+dst.SUBJ_Level_Code_4 = isnull(src.SUBJ_Level_Code_4,' '),
+dst.SUBJ_GRADE_4 = isnull(src.SUBJ_GRADE_4,' '),
+dst.SUBJ_CODE_5 = isnull(src.SUBJ_CODE_5,' '),
+dst.SUBJ_Level_Code_5 = isnull(src.SUBJ_Level_Code_5,' '),
+
+
+
+dst.SUBJ_GRADE_5 = isnull(src.SUBJ_GRADE_5,' '),
+dst.SUBJ_CODE_6 = isnull(src.SUBJ_CODE_6,' '),
+dst.SUBJ_Level_Code_6 = isnull(src.SUBJ_Level_Code_6,' '),
+dst.SUBJ_GRADE_6 = isnull(src.SUBJ_GRADE_6,' '),
+dst.SUBJ_CODE_7 = isnull(src.SUBJ_CODE_7,' '),
+dst.SUBJ_Level_Code_7 = isnull(src.SUBJ_Level_Code_7,' '),
+dst.SUBJ_GRADE_7 = isnull(src.SUBJ_GRADE_7,' '),
+dst.SUBJ_CODE_8 = isnull(src.SUBJ_CODE_8,' '),
+dst.SUBJ_Level_Code_8 = isnull(src.SUBJ_Level_Code_8,' '),
+dst.SUBJ_GRADE_8 = isnull(src.SUBJ_GRADE_8,' '),
+dst.SUBJ_CODE_9 = isnull(src.SUBJ_CODE_9,' '),
+dst.SUBJ_Level_Code_9 = isnull(src.SUBJ_Level_Code_9,' '),
+dst.SUBJ_GRADE_9 = isnull(src.SUBJ_GRADE_9,' '),
+dst.SUBJ_CODE_10 = isnull(src.SUBJ_CODE_10,' '),
+dst.SUBJ_Level_Code_10 = isnull(src.SUBJ_Level_Code_10,' '),
+dst.SUBJ_GRADE_10 = isnull(src.SUBJ_GRADE_10,' '),
+dst.SUBJ_CODE_11 = isnull(src.SUBJ_CODE_11,' '),
+dst.SUBJ_Level_Code_11 = isnull(src.SUBJ_Level_Code_11,' '),
+dst.SUBJ_GRADE_11 = isnull(src.SUBJ_GRADE_11,' '),
+dst.SUBJ_CODE_12 = isnull(src.SUBJ_CODE_12,' '),
+
+
+
+dst.SUBJ_Level_Code_12 = isnull(src.SUBJ_Level_Code_12,' '),
+dst.SUBJ_GRADE_12 = isnull(src.SUBJ_GRADE_12,' '),
+dst.SUBJ_CODE_13 = isnull(src.SUBJ_CODE_13,' '),
+dst.SUBJ_Level_Code_13 = isnull(src.SUBJ_Level_Code_13,' '),
+dst.SUBJ_GRADE_13 = isnull(src.SUBJ_GRADE_13,' '),
+dst.SUBJ_CODE_14 = isnull(src.SUBJ_CODE_14,' '),
+dst.SUBJ_Level_Code_14 = isnull(src.SUBJ_Level_Code_14,' '),
+dst.SUBJ_GRADE_14 = isnull(src.SUBJ_GRADE_14,' '),
+dst.SUBJ_CODE_15 = isnull(src.SUBJ_CODE_15,' '),
+dst.SUBJ_Level_Code_15 = isnull(src.SUBJ_Level_Code_15,' '),
+dst.SUBJ_GRADE_15 = isnull(src.SUBJ_GRADE_15,' '),
+dst.SUBJ_CODE_16 = isnull(src.SUBJ_CODE_16,' '),
+dst.SUBJ_Level_Code_16 = isnull(src.SUBJ_Level_Code_16,' '),
+dst.SUBJ_GRADE_16 = isnull(src.SUBJ_GRADE_16,' '),
+dst.SUBJ_CODE_17 = isnull(src.SUBJ_CODE_17,' '),
+dst.SUBJ_Level_Code_17 = isnull(src.SUBJ_Level_Code_17,' '),
+dst.SUBJ_GRADE_17 = isnull(src.SUBJ_GRADE_17,' '),
+dst.SUBJ_CODE_18 = isnull(src.SUBJ_CODE_18,' '),
+dst.SUBJ_Level_Code_18 = isnull(src.SUBJ_Level_Code_18,' '),
+dst.SUBJ_GRADE_18 = isnull(src.SUBJ_GRADE_18,' '),
+
+
+
+dst.SUBJ_CODE_19 = isnull(src.SUBJ_CODE_19,' '),
+dst.SUBJ_Level_Code_19 = isnull(src.SUBJ_Level_Code_19,' '),
+dst.SUBJ_GRADE_19 = isnull(src.SUBJ_GRADE_19,' '),
+dst.SUBJ_CODE_20 = isnull(src.SUBJ_CODE_20,' '),
+dst.SUBJ_Level_Code_20 = isnull(src.SUBJ_Level_Code_20,' '),
+dst.SUBJ_GRADE_20 = isnull(src.SUBJ_GRADE_20,' ')
+
+
+
+
+
+
+;
+--------------------------------------
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+  ROLLBACK TRANSACTION
+INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,@processeddatetime  as created_on
+  
+  
+END CATCH  
+GO</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4EA84640-C80A-4FDA-A510-D0DB368D1CFE}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JobStatusId">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A2F9E49C-FBB6-49E1-99C9-85C9B19FB6DC}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="MndColumncheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{90544E99-6B7B-46A1-A0DD-70A688CD5B6A}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="PrevJobStatus">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F2B03591-B30A-436D-9803-BDCAD62063A4}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprimarykeycheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{62ACF734-FBE5-453B-91FB-C559FC4CE7B2}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprocesseddate">
+      <DTS:VariableValue
+        DTS:DataType="7">2/27/2019 11:28:00 AM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5A3A075F-DD1C-4C66-8AFB-1389C1F11D24}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SrcTable">
+      <DTS:VariableValue
+        DTS:DataType="8">STG_EXT_DPAEAE_APPLICANTS</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D915BD39-FF5B-4D21-B377-2A14A263637A}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Stage">
+      <DTS:VariableValue
+        DTS:DataType="8">DW</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{02CFA612-9CB6-48FF-988E-D2E3FC570A1D}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTable">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_EXT_DPAEAE_APPLICANTS</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\check previous job status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{03E109AF-D976-400F-B3F9-A8A6E03F09CE}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="check previous job status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{39B92F1D-DA94-4505-A925-FFF5DF574BBB}"
+          SQLTask:SqlStatementSource="&#xA;SELECT CASE WHEN [JOB_STATUS] ='SUCCESS' THEN 1 ELSE 0 END AS PrevJobStatus&#xA;FROM [DBO].[ETL_JOB_STATUS] WHERE [JOB_STATUS_ID]=&#xA;(SELECT MAX([JOB_STATUS_ID]) FROM [DBO].[ETL_JOB_STATUS]&#xA;WHERE [TARGET_TABLENAME]=?&#xA;AND [STAGE]='STG')&#xA;&#xA;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="PrevJobStatus"
+            SQLTask:DtsVariableName="User::PrevJobStatus" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create ETL Job Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3FBDC988-1138-4B3E-9CB2-48A0DB955901}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create ETL Job Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{39B92F1D-DA94-4505-A925-FFF5DF574BBB}"
+          SQLTask:SqlStatementSource="&#xA;EXEC dbo.[usp_InsertETLJobLog]  ?,?,?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::Stage"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\get Job Status Id"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0E265BFB-9B33-4B26-BC14-6640BF8AEAFA}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="get Job Status Id"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{39B92F1D-DA94-4505-A925-FFF5DF574BBB}"
+          SQLTask:SqlStatementSource="declare  @JobstatusID int&#xA;&#xA;select @JobstatusID=max(job_status_id) from [ETL_JOB_STATUS]&#xA;where [TARGET_TABLENAME]=?&#xA;&#xA;&#xA;Select @JobstatusID "
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JobStatusId" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\getprocesseddate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{7351CF7F-B68D-48FE-9F57-DD2F19BF4CE8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="getprocesseddate"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{39B92F1D-DA94-4505-A925-FFF5DF574BBB}"
+          SQLTask:SqlStatementSource="SELECT GETDATE()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::sqlprocesseddate" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\insert into main table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{08F3A866-8A5E-400F-8EC8-78F6B86B7D67}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="insert into main table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{39B92F1D-DA94-4505-A925-FFF5DF574BBB}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::InsertQuery" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Masking"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E8B1EA9A-5F27-4DDA-97F6-2A28E2AD7CD2}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Masking"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{39B92F1D-DA94-4505-A925-FFF5DF574BBB}"
+          SQLTask:SqlStatementSource="UPDATE A SET  A.MASKED_NATIONAL_ID=U.MASKED_NATIONAL_ID &#xA;&#xA;FROM DW_NATIONAL_ID_MASKING U JOIN   DW_EXT_DPAEAE_APPLICANTS A&#x9;&#xA; ON A.[NRIC_FIN]=U.NATIONAL_ID" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\update on failure"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0C9F5ED0-A25C-4A8D-BD71-DE6A7EFA34F0}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="update on failure"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{39B92F1D-DA94-4505-A925-FFF5DF574BBB}"
+          SQLTask:SqlStatementSource="   UPDATE [DBO].[ETL_JOB_STATUS]&#xA;  SET [JOB_STATUS]='Fail',&#xA;[ERROR_MSG]='Last Job not completed sucessfully'&#xA;  where [JOB_STATUS_ID]=?&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\UpdateJobStatus"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{B6E6272A-91E1-44E8-BA34-474EB6600BD2}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="UpdateJobStatus"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{39B92F1D-DA94-4505-A925-FFF5DF574BBB}"
+          SQLTask:SqlStatementSource="&#xA; &#xA;&#xA;DECLARE &#xA;@jobstatusid INT&#xA;select @jobstatusid=?&#xA;IF EXISTS(SELECT * FROM dbo.ETL_ERROR_LOG WHERE [JOB_STATUS_ID]=@jobstatusid)&#xA;&#xA; BEGIN&#xA;&#xA;&#xA;&#xA; UPDATE [dbo].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='FAIL'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;  END&#xA;&#xA;ELSE&#xA;&#xA;BEGIN&#xA;&#xA;UPDATE [DBO].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='Success'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;END&#xA;&#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{E3BCD137-CD81-4116-B64D-7F2B523C6421}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::PrevJobStatus]==0"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\update on failure" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{85F30AB0-A52C-4E2E-B651-7DD1CC7FC706}"
+      DTS:From="Package\Create ETL Job Log"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\get Job Status Id" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{A3DB160E-9565-40B4-95F2-3A7706DF0946}"
+      DTS:From="Package\getprocesseddate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\insert into main table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{505E09E8-8B31-4D96-86D6-0E52ABCC273D}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::PrevJobStatus]==1"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\getprocesseddate" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{4CF4C1B4-A322-4927-BC16-0CE5347D84F3}"
+      DTS:From="Package\get Job Status Id"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\check previous job status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{46EE1840-8D4F-40E6-9912-AD472C41CF61}"
+      DTS:From="Package\insert into main table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Masking" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{405F00D7-5365-4908-92D7-764428207206}"
+      DTS:From="Package\Masking"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\UpdateJobStatus" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{CEE48EF7-CF79-4494-9909-0B9BC187692E}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{4E44C535-F821-4E9F-8279-19C42C739D6F}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\Error Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{6FADA63F-B031-4A9F-BB9D-BBC5FA09A5F7}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Error Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{39B92F1D-DA94-4505-A925-FFF5DF574BBB}"
+              SQLTask:SqlStatementSource="  insert into [dbo].[ETL_ERROR_LOG]([JOB_STATUS_ID],[ERROR_RECORD])&#xA;  select ?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL Job Status Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{1702EBB7-A225-4C94-9B47-FAF124A86FE8}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL Job Status Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{39B92F1D-DA94-4505-A925-FFF5DF574BBB}"
+              SQLTask:SqlStatementSource="update [ETL_JOB_STATUS]&#xA;set Job_Status='Fail'&#xA;,Error_Msg=?&#xA;where job_status_id=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{AE104118-CFA9-42C9-A712-5491FC863E46}"
+          DTS:From="Package.EventHandlers[OnError]\Error Log"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package.EventHandlers[OnError]\ETL Job Status Log" />
+      </DTS:PrecedenceConstraints>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="198,42"
+          Id="Package\check previous job status"
+          TopLeft="415,32" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Create ETL Job Log"
+          TopLeft="9,30" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\get Job Status Id"
+          TopLeft="225,31" />
+        <NodeLayout
+          Size="162,42"
+          Id="Package\getprocesseddate"
+          TopLeft="660,29" />
+        <NodeLayout
+          Size="179,42"
+          Id="Package\insert into main table"
+          TopLeft="648,128" />
+        <NodeLayout
+          Size="117,42"
+          Id="Package\Masking"
+          TopLeft="900,175" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\update on failure"
+          TopLeft="418,164" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\UpdateJobStatus"
+          TopLeft="661,214" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="514,74">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-16.5,90"
+              Start="0,0"
+              End="-16.5,82.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,41"
+                    Point2="0,45"
+                    Point3="-4,45" />
+                  <mssgle:LineSegment
+                    End="-12.5,45" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-12.5,45"
+                    Point2="-16.5,45"
+                    Point3="-16.5,49" />
+                  <mssgle:LineSegment
+                    End="-16.5,82.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-16.25,50,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="179,51.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="46,0"
+              Start="0,0"
+              End="38.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="38.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="739.25,71">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,57"
+              Start="0,0"
+              End="0,49.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="613,51.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="47,0"
+              Start="0,0"
+              End="39.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="39.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="11.75,5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="384,52.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="31,0"
+              Start="0,0"
+              End="23.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="23.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="827,149">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="73,47"
+              Start="0,0"
+              End="65.5,47">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="32.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="32.5,0"
+                    Point2="36.5,0"
+                    Point3="36.5,4" />
+                  <mssgle:LineSegment
+                    End="36.5,43" />
+                  <mssgle:CubicBezierSegment
+                    Point1="36.5,43"
+                    Point2="36.5,47"
+                    Point3="40.5,47" />
+                  <mssgle:LineSegment
+                    End="65.5,47" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="900,201.666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-81,33.3333333333333"
+              Start="0,0"
+              End="-73.5,33.3333333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-30.1834862385321,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-30.1834862385321,0"
+                    Point2="-34.1834862385321,0"
+                    Point3="-34.1834862385321,4" />
+                  <mssgle:LineSegment
+                    End="-34.1834862385321,29.3333333333333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-34.1834862385321,29.3333333333333"
+                    Point2="-34.1834862385321,33.3333333333333"
+                    Point3="-38.1834862385321,33.3333333333333" />
+                  <mssgle:LineSegment
+                    End="-73.5,33.3333333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package.EventHandlers[OnError]\Error Log"
+          TopLeft="60,60" />
+        <NodeLayout
+          Size="169,42"
+          Id="Package.EventHandlers[OnError]\ETL Job Status Log"
+          TopLeft="60,162" />
+        <EdgeLayout
+          Id="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          TopLeft="121.5,102">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="23,60"
+              Start="0,0"
+              End="23,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26"
+                    Point2="0,30"
+                    Point3="4,30" />
+                  <mssgle:LineSegment
+                    End="19,30" />
+                  <mssgle:CubicBezierSegment
+                    Point1="19,30"
+                    Point2="23,30"
+                    Point3="23,34" />
+                  <mssgle:LineSegment
+                    End="23,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

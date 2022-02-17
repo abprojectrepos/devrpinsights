@@ -1,0 +1,1558 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/23/2019 5:34:13 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-140119GM07"
+  DTS:CreatorName="NCS\P0500450"
+  DTS:DTSID="{44B9AE08-EAAA-423D-B51D-8FE71579976B}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="STG_EXT_IIP_EVALUATION"
+  DTS:PackageType="5"
+  DTS:VersionBuild="257"
+  DTS:VersionGUID="{E13A0EF2-5D44-420A-9276-C6330311901C}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ErrorLog]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{906C376B-41C7-47FF-A458-E3B87C60FD5B}"
+      DTS:ObjectName="ErrorLog">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_PRD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiAXqJL5xwkap+hp6D6sPxwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAB05Cmc5UsFiNO2qRktSwfxhrUY5ix+LzsC9rSTIKBqTQAAAAAOgAAAAAIAACAAAAB6lE4F/Yf4W1ZgVq2D4+BO012lFP721s+VL9fj01RQNhAAAAB2D8zR4Dwf5yM6bKQjto6DQAAAALAmwK0CuxkAiqAIqoiz6ppMN6Tyyh79ALfhFJ5jvSHSFl5Zr6wYG8fYTECRi6KVyFchW3hPMXrhCgX0EBlfFzA</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{9079138E-A56C-4A4B-A97C-3B92A13D036D}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="0"
+          DTS:ConnectRetryInterval="0"
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=E:\RPDW\Source_Files\External\IIP Evaluation_2016.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PSTG]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{0FF9F12F-0114-44F0-A545-05FB42522048}"
+      DTS:ObjectName="PSTG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::PreStaging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT_PSTG;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiAXqJL5xwkap+hp6D6sPxwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAAllV/HGphtEsjg2gp2bl9+YJ81Hol2p9vgygDWDtm9mgAAAAAOgAAAAAIAACAAAAACpnfzi6ag+GFgzbPUzd1apmNQTaW9JZK0Z2xdaCNKShAAAAAD5mQUWXB3IUbmdo1Ep+BEQAAAAH4m46wU+KvU5MsXSSgy+kPGbuW9/0lrUdHmdCSie9yBIDxQgdR3ztKmuVbroKEXPQsXj4e3V9UYt8WClxpiem8</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[STG]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{67F7D21E-9F85-459D-860A-5586F6E5B7FF}"
+      DTS:ObjectName="STG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::Staging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT_STG;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiAXqJL5xwkap+hp6D6sPxwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAAo0l5tFl0Bg2hyxa/3KCtJn49ZnpnGH69Uoq7qtYfDyQAAAAAOgAAAAAIAACAAAAADZc6hgPHc1EGv4He3DFnnHUjvq1ZcMgAIMpHIzFfZORAAAADwArG1TYaTpSuO58u1Ju73QAAAAOFUW4QlqqgLuHAwP8TE2I5EDIX0v4lea+R6s3eczGc6l+ej/hzCh/FDi7HTqw08xnjHHK+IykVN4ThxeR5f0KI</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0A1C99DE-C724-4FCE-8F76-4D2BD45244A8}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="(DT_WSTR, 4) YEAR( GETDATE()  )+Right(&quot;0&quot;+(DT_WSTR, 4) day( GETDATE()  ),2)+Right(&quot;0&quot;+(DT_WSTR, 4) MONTH( GETDATE()  ),2)"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DATE">
+      <DTS:VariableValue
+        DTS:DataType="8">20221002</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8B946FAA-A3A7-4BFE-BB8A-D72200C1592D}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ErrorCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9179B36E-2DFC-4D39-ADF3-CE79249A6A2A}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;delete from  [dbo].[STG_EXT_DEPARTMENT]&#xA;&#xA;insert into [dbo].[STG_EXT_DEPARTMENT]&#xA;&#xA;SELECT  [Department]&#xA;      ,[Descr]&#xA;,getdate()&#xA;,getdate()&#xA;&#xA;FROM &quot;+ @[$Project::PreStaging_Initial_Catalog] +&quot;.[dbo].[PSTG_EXT_DEPARTMENT]&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FullRefresh_Query">
+      <DTS:VariableValue
+        DTS:DataType="8">delete from  [dbo].[STG_EXT_DEPARTMENT]
+
+insert into [dbo].[STG_EXT_DEPARTMENT]
+
+SELECT  [Department]
+      ,[Descr]
+,getdate()
+,getdate()
+
+FROM RPDW_UAT_PSTG.[dbo].[PSTG_EXT_DEPARTMENT]</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F488C56C-2011-4F1C-A3D3-A85C55E793E9}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="insertcount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{62773029-A711-4C07-8ABC-7DB3911D97F6}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_name">
+      <DTS:VariableValue
+        DTS:DataType="8">PSTG_LEO_FYP_ATTD</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5B703633-934D-4DF4-8B95-C2D5D29F9EA1}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JOB_STATUS_ID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C1DB2731-BED6-42C5-9079-7CB890884965}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Result">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9CA1AD77-7891-45A0-9584-DB73060F79DF}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprocesseddate">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{52A40622-ECB6-43B4-BEF9-CC084F904C51}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="STAGE">
+      <DTS:VariableValue
+        DTS:DataType="8">PSTG</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2230B6A9-FECB-405D-86EE-50D481A05155}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="tempdate">
+      <DTS:VariableValue
+        DTS:DataType="8">20190311</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{507482B3-E659-4463-B194-1CDFEA30C0FC}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTableName">
+      <DTS:VariableValue
+        DTS:DataType="8">PSTG_LEO_FYP_ATTD</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B82BBA3B-7C8E-4DBA-9BE7-D292987BC085}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TotalCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{85B90F9B-684F-4252-B112-9B39C9CF81DD}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="TotalCountinfile">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\One time Load"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{13B4A403-29A0-4F57-943D-B5128ACCA3D4}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="One time Load"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\One time Load\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\One time Load\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\One time Load\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\One time Load\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\One time Load\Derived Column.Outputs[Derived Column Output].Columns[Created_date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\One time Load\Derived Column.Outputs[Derived Column Output].Columns[Created_date]"
+                      name="Created_date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[GETDATE]()</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">GETDATE()</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\One time Load\Derived Column.Outputs[Derived Column Output].Columns[Modified_Date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\One time Load\Derived Column.Outputs[Derived Column Output].Columns[Modified_Date]"
+                      name="Modified_Date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[GETDATE]()</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">GETDATE()</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\One time Load\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\One time Load\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\One time Load\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\One time Load\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\One time Load\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\One time Load\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\One time Load\Excel Source"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Sheet1$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\One time Load\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\One time Load\Excel Source.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Acad Year]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Acad Year]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Acad Year]"
+                      name="Acad Year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Acad Sem]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Acad Sem]"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Acad Sem]"
+                      name="Acad Sem"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[School]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[School]"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[School]"
+                      name="School"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Diploma]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Diploma]"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Diploma]"
+                      name="Diploma"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[StudentID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[StudentID]"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[StudentID]"
+                      name="StudentID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Name]"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Name]"
+                      name="Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Module Code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Module Code]"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Module Code]"
+                      name="Module Code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Company Attached]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Company Attached]"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Company Attached]"
+                      name="Company Attached"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Local/Overseas]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Local/Overseas]"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Local/Overseas]"
+                      name="Local/Overseas"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[School Supervisor]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[School Supervisor]"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[School Supervisor]"
+                      name="School Supervisor"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[School %]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[School %]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[School %]"
+                      name="School %"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q1]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Q1]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q1]"
+                      name="Q1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q2]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Q2]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q2]"
+                      name="Q2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q3]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Q3]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q3]"
+                      name="Q3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q4]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Q4]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q4]"
+                      name="Q4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q5]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Q5]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q5]"
+                      name="Q5"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q6]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Q6]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q6]"
+                      name="Q6"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Company %]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Company %]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Company %]"
+                      name="Company %"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q7]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Q7]"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q7]"
+                      name="Q7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Valid Absence]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Valid Absence]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Valid Absence]"
+                      name="Valid Absence"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[AWOL]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[AWOL]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[AWOL]"
+                      name="AWOL"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Final Percentage]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Final Percentage]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Final Percentage]"
+                      name="Final Percentage"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[IIP Grade]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[IIP Grade]"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[IIP Grade]"
+                      name="IIP Grade"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Consider Offer]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Consider Offer]"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Consider Offer]"
+                      name="Consider Offer"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Comments]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Comments]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Comments]"
+                      name="Comments"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Acad Year]"
+                      dataType="r8"
+                      name="Acad Year" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Acad Sem]"
+                      dataType="wstr"
+                      length="255"
+                      name="Acad Sem" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[School]"
+                      dataType="wstr"
+                      length="255"
+                      name="School" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Diploma]"
+                      dataType="wstr"
+                      length="255"
+                      name="Diploma" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[StudentID]"
+                      dataType="wstr"
+                      length="255"
+                      name="StudentID" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Name]"
+                      dataType="wstr"
+                      length="255"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Module Code]"
+                      dataType="wstr"
+                      length="255"
+                      name="Module Code" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Company Attached]"
+                      dataType="wstr"
+                      length="255"
+                      name="Company Attached" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Local/Overseas]"
+                      dataType="wstr"
+                      length="255"
+                      name="Local/Overseas" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[School Supervisor]"
+                      dataType="wstr"
+                      length="255"
+                      name="School Supervisor" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[School %]"
+                      dataType="wstr"
+                      length="255"
+                      name="School %" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Q1]"
+                      dataType="r8"
+                      name="Q1" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Q2]"
+                      dataType="r8"
+                      name="Q2" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Q3]"
+                      dataType="r8"
+                      name="Q3" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Q4]"
+                      dataType="r8"
+                      name="Q4" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Q5]"
+                      dataType="r8"
+                      name="Q5" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Q6]"
+                      dataType="r8"
+                      name="Q6" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Company %]"
+                      dataType="r8"
+                      name="Company %" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Q7]"
+                      dataType="wstr"
+                      length="255"
+                      name="Q7" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Valid Absence]"
+                      dataType="r8"
+                      name="Valid Absence" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[AWOL]"
+                      dataType="r8"
+                      name="AWOL" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Final Percentage]"
+                      dataType="r8"
+                      name="Final Percentage" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[IIP Grade]"
+                      dataType="wstr"
+                      length="255"
+                      name="IIP Grade" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Consider Offer]"
+                      dataType="wstr"
+                      length="255"
+                      name="Consider Offer" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Comments]"
+                      dataType="nText"
+                      name="Comments" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Acad Year]"
+                      dataType="r8"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Acad Year]"
+                      name="Acad Year" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Acad Sem]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Acad Sem]"
+                      name="Acad Sem" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[School]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[School]"
+                      name="School" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Diploma]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Diploma]"
+                      name="Diploma" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[StudentID]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[StudentID]"
+                      name="StudentID" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Name]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Name]"
+                      name="Name" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Module Code]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Module Code]"
+                      name="Module Code" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Company Attached]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Company Attached]"
+                      name="Company Attached" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Local/Overseas]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Local/Overseas]"
+                      name="Local/Overseas" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[School Supervisor]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[School Supervisor]"
+                      name="School Supervisor" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[School %]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[School %]"
+                      name="School %" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Q1]"
+                      dataType="r8"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Q1]"
+                      name="Q1" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Q2]"
+                      dataType="r8"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Q2]"
+                      name="Q2" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Q3]"
+                      dataType="r8"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Q3]"
+                      name="Q3" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Q4]"
+                      dataType="r8"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Q4]"
+                      name="Q4" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Q5]"
+                      dataType="r8"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Q5]"
+                      name="Q5" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Q6]"
+                      dataType="r8"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Q6]"
+                      name="Q6" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Company %]"
+                      dataType="r8"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Company %]"
+                      name="Company %" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Q7]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Q7]"
+                      name="Q7" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Valid Absence]"
+                      dataType="r8"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Valid Absence]"
+                      name="Valid Absence" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[AWOL]"
+                      dataType="r8"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[AWOL]"
+                      name="AWOL" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Final Percentage]"
+                      dataType="r8"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Final Percentage]"
+                      name="Final Percentage" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[IIP Grade]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[IIP Grade]"
+                      name="IIP Grade" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Consider Offer]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Consider Offer]"
+                      name="Consider Offer" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Comments]"
+                      dataType="nText"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[Comments]"
+                      name="Comments" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\One time Load\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[STG_EXT_IIP_EVALUATION]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\One time Load\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[STG]"
+                  connectionManagerRefId="Package.ConnectionManagers[STG]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[School]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="School"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[School]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[School]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Diploma]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Diploma"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Diploma]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Diploma]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Name]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Name"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Name]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Q2]"
+                      cachedDataType="r8"
+                      cachedName="Q2"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Q2]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q2]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Q3]"
+                      cachedDataType="r8"
+                      cachedName="Q3"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Q3]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q3]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Q4]"
+                      cachedDataType="r8"
+                      cachedName="Q4"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Q4]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q4]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Q5]"
+                      cachedDataType="r8"
+                      cachedName="Q5"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Q5]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q5]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Q6]"
+                      cachedDataType="r8"
+                      cachedName="Q6"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Q6]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q6]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Q7]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Q7"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Q7]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q7]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[AWOL]"
+                      cachedDataType="r8"
+                      cachedName="AWOL"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AWOL]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[AWOL]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Comments]"
+                      cachedDataType="nText"
+                      cachedName="Comments"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Comments]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Comments]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Acad Year]"
+                      cachedDataType="r8"
+                      cachedName="Acad Year"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Acad_Year]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Acad Year]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Acad Sem]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Acad Sem"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Acad_Sem]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Acad Sem]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[StudentID]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="StudentID"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Student_ID]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[StudentID]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Module Code]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Module Code"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Module_Code]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Module Code]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Company Attached]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Company Attached"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Company_Attached]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Company Attached]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Local/Overseas]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Local/Overseas"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Local_Overseas]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Local/Overseas]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[School Supervisor]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="School Supervisor"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[School_Supervisor]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[School Supervisor]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[School %]"
+                      cachedDataType="r8"
+                      cachedName="School %"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[School_Percentange]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[School %]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Company %]"
+                      cachedDataType="r8"
+                      cachedName="Company %"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Company_Percentange]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Company %]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Valid Absence]"
+                      cachedDataType="r8"
+                      cachedName="Valid Absence"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Valid_Absence]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Valid Absence]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Final Percentage]"
+                      cachedDataType="r8"
+                      cachedName="Final Percentage"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Final_Percentage]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Final Percentage]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[IIP Grade]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="IIP Grade"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IIP_Grade]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[IIP Grade]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Consider Offer]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Consider Offer"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Consider_Offer]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Consider Offer]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Created_date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="Created_date"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_ON]"
+                      lineageId="Package\One time Load\Derived Column.Outputs[Derived Column Output].Columns[Created_date]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Modified_Date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="Modified_Date"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MODIFIED_ON]"
+                      lineageId="Package\One time Load\Derived Column.Outputs[Derived Column Output].Columns[Modified_Date]" />
+                    <inputColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Q1]"
+                      cachedDataType="r8"
+                      cachedName="Q1"
+                      externalMetadataColumnId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Q1]"
+                      lineageId="Package\One time Load\Excel Source.Outputs[Excel Source Output].Columns[Q1]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Acad_Year]"
+                      dataType="wstr"
+                      length="4"
+                      name="Acad_Year" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Acad_Sem]"
+                      dataType="wstr"
+                      length="5"
+                      name="Acad_Sem" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[School]"
+                      dataType="wstr"
+                      length="5"
+                      name="School" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Diploma]"
+                      dataType="wstr"
+                      length="10"
+                      name="Diploma" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Student_ID]"
+                      dataType="wstr"
+                      length="15"
+                      name="Student_ID" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
+                      dataType="wstr"
+                      length="50"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Module_Code]"
+                      dataType="wstr"
+                      length="5"
+                      name="Module_Code" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Company_Attached]"
+                      dataType="wstr"
+                      length="50"
+                      name="Company_Attached" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Local_Overseas]"
+                      dataType="wstr"
+                      length="10"
+                      name="Local_Overseas" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[School_Supervisor]"
+                      dataType="wstr"
+                      length="50"
+                      name="School_Supervisor" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[School_Percentange]"
+                      dataType="wstr"
+                      length="10"
+                      name="School_Percentange" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Q2]"
+                      dataType="wstr"
+                      length="10"
+                      name="Q2" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Q3]"
+                      dataType="wstr"
+                      length="10"
+                      name="Q3" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Q4]"
+                      dataType="wstr"
+                      length="10"
+                      name="Q4" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Q5]"
+                      dataType="wstr"
+                      length="10"
+                      name="Q5" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Q6]"
+                      dataType="wstr"
+                      length="10"
+                      name="Q6" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Company_Percentange]"
+                      dataType="wstr"
+                      length="10"
+                      name="Company_Percentange" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Q7]"
+                      dataType="wstr"
+                      length="15"
+                      name="Q7" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Valid_Absence]"
+                      dataType="wstr"
+                      length="10"
+                      name="Valid_Absence" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AWOL]"
+                      dataType="wstr"
+                      length="10"
+                      name="AWOL" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Final_Percentage]"
+                      dataType="wstr"
+                      length="10"
+                      name="Final_Percentage" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IIP_Grade]"
+                      dataType="wstr"
+                      length="5"
+                      name="IIP_Grade" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Consider_Offer]"
+                      dataType="wstr"
+                      length="5"
+                      name="Consider_Offer" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Comments]"
+                      dataType="wstr"
+                      length="100"
+                      name="Comments" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_ON]"
+                      dataType="dbTimeStamp"
+                      name="CREATED_ON" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MODIFIED_ON]"
+                      dataType="dbTimeStamp"
+                      name="MODIFIED_ON" />
+                    <externalMetadataColumn
+                      refId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Q1]"
+                      dataType="wstr"
+                      length="10"
+                      name="Q1" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\One time Load\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\One time Load\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\One time Load\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\One time Load\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\One time Load\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\One time Load.Paths[Derived Column Output]"
+              endId="Package\One time Load\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\One time Load\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\One time Load.Paths[Excel Source Output]"
+              endId="Package\One time Load\Derived Column.Inputs[Derived Column Input]"
+              name="Excel Source Output"
+              startId="Package\One time Load\Excel Source.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{9B6AE689-4661-4D33-805D-AA6848765AA2}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{45E92E25-24AB-4DB1-99CD-9C89792F44C4}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL_ERROR_LOG"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{2BCBAF1A-B251-42B5-A99D-D897D1737CAF}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL_ERROR_LOG">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{906C376B-41C7-47FF-A458-E3B87C60FD5B}"
+              SQLTask:SqlStatementSource="[dbo].[usp_InsertETLErrorLog] ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="131"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssge="clr-namespace:Microsoft.SqlServer.Graph.Extended;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        <NodeLayout
+          Size="151,42"
+          Id="Package\One time Load"
+          TopLeft="443,138" />
+        <AnnotationLayout
+          Text="Problem Student_ID having NULL values &#xA;need to fix"
+          ParentId="Package"
+          Size="229,51"
+          Id="8af2883e-4984-4541-908b-bf2bb8a5f707"
+          TopLeft="687,160">
+          <AnnotationLayout.FontInfo>
+            <mssge:FontInfo
+              Color="#FF000000">
+              <mssge:FontInfo.TextDecorations>
+                <av:TextDecorationCollection />
+              </mssge:FontInfo.TextDecorations>
+            </mssge:FontInfo>
+          </AnnotationLayout.FontInfo>
+        </AnnotationLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="162,42"
+          Id="Package.EventHandlers[OnError]\ETL_ERROR_LOG"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\One time Load">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="171,42"
+          Id="Package\One time Load\OLE DB Destination"
+          TopLeft="327,178" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\One time Load\Derived Column"
+          TopLeft="526,117" />
+        <NodeLayout
+          Size="139,42"
+          Id="Package\One time Load\Excel Source"
+          TopLeft="231,53" />
+        <EdgeLayout
+          Id="Package\One time Load.Paths[Excel Source Output]"
+          TopLeft="370,74">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="156,64"
+              Start="0,0"
+              End="148.5,64">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="74,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="74,0"
+                    Point2="78,0"
+                    Point3="78,4" />
+                  <mssgle:LineSegment
+                    End="78,60" />
+                  <mssgle:CubicBezierSegment
+                    Point1="78,60"
+                    Point2="78,64"
+                    Point3="82,64" />
+                  <mssgle:LineSegment
+                    End="148.5,64" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\One time Load.Paths[Derived Column Output]"
+          TopLeft="526,143.666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="-28,55.3333333333333"
+              Start="0,0"
+              End="-20.5,55.3333333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-7.81651376146789,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-7.81651376146789,0"
+                    Point2="-11.8165137614679,0"
+                    Point3="-11.8165137614679,4" />
+                  <mssgle:LineSegment
+                    End="-11.8165137614679,51.3333333333333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-11.8165137614679,51.3333333333333"
+                    Point2="-11.8165137614679,55.3333333333333"
+                    Point3="-15.8165137614679,55.3333333333333" />
+                  <mssgle:LineSegment
+                    End="-20.5,55.3333333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\One time Load\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\One time Load\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

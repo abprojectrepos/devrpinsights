@@ -1,0 +1,1444 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/31/2019 4:40:18 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-140119GM07"
+  DTS:CreatorName="NCS\P0500450"
+  DTS:DTSID="{E86B97C8-43DD-4E8E-BBA7-067027C57AB8}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="DW_APPLICANT_DETAILS"
+  DTS:PackageType="5"
+  DTS:VersionBuild="133"
+  DTS:VersionGUID="{60D6AF31-076A-4823-B33D-042D6E7829DD}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{1544337A-D96E-4BAD-940C-1404C6746F8F}"
+      DTS:ObjectName="RPDW_DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT;Provider=SQLNCLI11.1;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiAXqJL5xwkap+hp6D6sPxwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACl/81QQ9tMX40CI5s/vZhiIVmHNv/kKyX/V4w45dpH3wAAAAAOgAAAAAIAACAAAACNYuFbRP2y+3nkC7FHqNEk6WaqjT6qYwkDxFUOdNHMDTAAAAChikuzDoePG3XnZtL0BaK5v24f7zwnotnTZbbG/u8c4Z5/ru9t6piP4VUtbP+qeaRAAAAAy1CPXD37z69EKOpUOmUTCn02r0KuXpqn0VhHaOC8/ybX7k6cYGgbaMgiJq2caKmuyIuZ/uAaD5BbEgD5yOg1Kw</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_STG]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{B65DDFA4-D140-47CE-A9A2-39C0BCAB10B4}"
+      DTS:ObjectName="RPDW_STG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::Staging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT_STG;Provider=SQLNCLI11.1;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiAXqJL5xwkap+hp6D6sPxwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAD1VTfpwMiKHnHx/mOcJxYKRyAhY3EXp8UrCasjyQvBPQAAAAAOgAAAAAIAACAAAABTqx3PhPx+J3gwFT3I6MUwPt3hSmVBV9tX13nlZAONnTAAAAC7jyys2aLHlEvgE5n2gOpCGgUfzZLxB7rsvAtoCaQBqm/xCCBkHxcu06HRaugEZKlAAAAAuxFtUXkw0yb1GureHEu/HWFa6HJ1GXqNczucDZWrNOAMZuMQt3QyNrFKUHZ1D8tP9+eULRYaYQSafYAAqLbQiA</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D6AC3603-CC3C-4E7F-A17B-E003A053EF39}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;------------&#xA;DECLARE @LastDWProcessdate datetime&#xA;,@processeddatetime datetime&#xA;,@jobstatusid varchar(5)&#xA;select @jobstatusid=&quot;+ (DT_STR, 5,1252) @[User::JobStatusId] +&quot;&#xA;select @LastDWProcessdate=isnull(max(Modified_on),'1900-01-01 00:00:00.000') from DW_APPLICANT_DETAILS&#xA;select  @processeddatetime= getdate()&#xA;--select @LastDWProcessdate&#xA;&#xA;;WITH cte&#xA;as &#xA;(select row_number() over(partition by student_id,primary_ind order by national_id_type) row_num,* from&#xA; &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..[STG_OASIS_STUDENT_NATIONAL_INFO])&#xA;&#xA;&#xA; ,temp_OASIS_STUDENT_NATIONAL_INFO&#xA;as (SELECT student_id,Country,&#xA;&#xA;max(CASE WHEN primary_ind='Y' and  row_num = 1 THEN [National_ID_Type] ELSE '' END )AS [Primary_National_ID_Type],&#xA;max(CASE WHEN primary_ind='Y' and  row_num = 1 THEN national_id ELSE '' END )AS [Primary_National_ID],&#xA;max(CASE WHEN primary_ind='N' and  row_num = 1 THEN [National_ID_Type] ELSE '' END )AS [Non_Primary_National_ID_Type_1],&#xA;max(CASE WHEN primary_ind='N' and  row_num = 1 THEN national_id ELSE '' END )AS [Non_Primary_National_ID_1],&#xA;max(CASE WHEN primary_ind='N' and  row_num = 2 THEN [National_ID_Type] ELSE '' END )AS [Non_Primary_National_ID_Type_2],&#xA;max(CASE WHEN primary_ind='N' and  row_num = 2 THEN national_id ELSE '' END )AS [Non_Primary_National_ID_2],&#xA;max(CASE WHEN primary_ind='N' and  row_num = 3 THEN [National_ID_Type] ELSE '' END )AS [Non_Primary_National_ID_Type_3],&#xA;max(CASE WHEN primary_ind='N' and  row_num = 3 THEN national_id ELSE '' END )AS [Non_Primary_National_ID_3],&#xA;max(CASE WHEN primary_ind='N' and  row_num = 4 THEN [National_ID_Type] ELSE null END )AS [Non_Primary_National_ID_Type_4],&#xA;max(CASE WHEN primary_ind='N' and  row_num = 4 THEN national_id ELSE null END )AS [Non_Primary_National_ID_4]&#xA;FROM cte&#xA;group by student_id,Country)&#xA;&#xA;&#xA;,TMP_DW_APPLICANT_DETAILS&#xA;AS (&#xA;SELECT distinct&#xA; AD.Applicant_Id&#xA;,AD.Qual_Type&#xA;,AD.Student_Career_Number&#xA;,AD.App_Number&#xA;,AD.App_Center&#xA;,AD.Admit_Type&#xA;,AD.Appeals&#xA;,AD.App_Date&#xA;,AD.Saf_Indicator&#xA;,AD.Entry_Type&#xA;,AD.App_Method&#xA;,AD.Part_Time_Full_Fee_Indicator&#xA;,AD.Join_Phase&#xA;,AD.App_Scheme&#xA;,AD.Entry_Qual&#xA;,AD.Other_Qual&#xA;,AD.Level_Of_Qual_1&#xA;,AD.Highest_Qual&#xA;,AD.Other_Highest_Qual&#xA;,AD.Name_Of_Institution_1&#xA;,AD.Gpa1&#xA;,AD.Level_Of_Qual_2&#xA;,AD.Second_Highest_Qual&#xA;,AD.Other_Second_Highest_Qual&#xA;,AD.Name_Of_Institution_2&#xA;,AD.Gpa2&#xA;,AD.Diploma_Enrolled_Sp&#xA;,AD.Diploma_Enrolled_Np&#xA;,AD.Diploma_Enrolled_Nyp&#xA;,AD.Diploma_Enrolled_Rp&#xA;,AD.Diploma_Enrolled_Tp&#xA;,AD.Diploma_Enrolled_Nus_And_Others&#xA;,AD.No_Of_Sem_Attended&#xA;,AD.Recd_Tuition_Grant_Before&#xA;,AD.Others&#xA;,AD.Diploma_Holder&#xA;,AD.Degree_Holder&#xA;,AD.Rp_Staff_Student&#xA;,AD.Acad&#xA;,AD.Offence&#xA;,AD.Reject_Grant&#xA;,AD.Reason_Not_Eligible_TG&#xA;,AD.Not_Eligible_for_Grant&#xA;,AD.No_of_TG_Received_Before_RP&#xA;,AD.RPI_Student&#xA;,AD.Max_TG_Allowed&#xA;,AD.Status&#xA;,AD.Fee_Type&#xA;,AD.RP_Alumni&#xA;,AD.RP_Staff&#xA;,AD.RP_Student&#xA;,AD.Not_RP_Alumni_Staff_Student&#xA;,AD.Club_Republic_RP_Staff_RP_Student_ID&#xA;,AD.Received_MOE&#xA;,AD.Name_Course&#xA;,AD.Awarding_Polytechnics&#xA;,AD.Completed&#xA;,AD.Year_Graduation&#xA;,AD.Number_certificates_completed&#xA;,AD.Received_WTS_letter&#xA;&#xA;,ISNULL(Admit_Term,'NA') AS Admit_Term&#xA;&#xA;,ISNULL(ASR.Event_Id,'NA') AS Event_Id&#xA;&#xA;,ISNULL(ASR.Event_Meeting_Number,'NA') AS Event_Meeting_Number&#xA;,ASR.DESCR&#xA;,ASR.SHORT_DESCR&#xA;,ASR.Attendee&#xA;,ASR.Meeting_Date&#xA;,ASR.Status AS Recruitmt_Status&#xA;,ASR.Last_School_Attended&#xA;,ASR.Name_Of_Secondary_School&#xA;,ASR.Graduation_Date&#xA;,ASR.Last_Institution_Attended&#xA;,ASR.Name_Of_Institution&#xA;,ASR.Agent_Name&#xA;,ASR.Agency_Name&#xA;,ASR.Knew_Abt_Our_App_Ex_Frm_Straits_Tms&#xA;,ASR.Knew_Abt_Our_App_Ex_Frm_Mailr_Frm_RP&#xA;,ASR.Knew_Abt_Our_App_Ex_Frm_Friends&#xA;,ASR.Knew_Abt_Our_App_Ex_Frm_Others&#xA;,ASR.Knew_Abt_Our_App_Ex_Frm_Internet&#xA;,ASR.Knew_Abt_Our_App_Ex_Frm_Genrl_Enquiry_RP&#xA;,ASR.Knew_Abt_Our_App_Ex_Frm_Lecturers&#xA;,ES.Raw_Hsc&#xA;,ES.Raw_Arch&#xA;,ES.Raw_Gpa&#xA;,ES.Highest_Qual AS [Evolution_Highest_Qual]&#xA;,ES.Nettech&#xA;,ES.Net_Ntech&#xA;,ES.Net_Hsc&#xA;,ES.Net_Arch&#xA;,ES.Net_Gpa&#xA;,ES.El1_Bgrd&#xA;,ES.El2_Bgrd&#xA;,ES.Gp_Bgrd&#xA;,ES.Avg_Marks&#xA;,ES.Avg_Grd_Pnt&#xA;,ES.Gpb4&#xA;,ES.Test_indicator&#xA;,ES.Prog&#xA;,ES.Batch_Id&#xA;,ES.Test_Type&#xA;,ES.Eng_Mark&#xA;,ES.Oral&#xA;,ES.Math_Mark&#xA;,ES.Overall&#xA;,ES.Sci_Mark&#xA;,ES.Raw_Posted_Agg&#xA;,ES.Course_Offered&#xA;,ES.Net_Posted_Agg&#xA;,ES.Dpa_Offered_Course&#xA;,TS.Sports_Type&#xA;,TS.Sports_Level&#xA;,TS.Sports_Role&#xA;,TS.Sports_Desc&#xA;,TS.Arts_Type&#xA;,TS.Arts_Level&#xA;,TS.Arts_Desc&#xA;,TS.Community_Service_Type&#xA;,TS.Community_Service_Desc&#xA;,TS.Cca_Leadership_Type&#xA;,TS.Cca_Leadership_Role&#xA;,TS.Cca_Leadership_Desc&#xA;,TS.Entreprenuership_Desc&#xA;,TS.Work_Attachment_Desc&#xA;,a.Long_Name as Qual_type_desc&#xA;,b.Long_Name as Admit_type_desc&#xA;,c.Long_Name as Qual_Level_desc&#xA;,d.Long_Name as Qual_Level2_desc&#xA;,SNI.Primary_National_ID_Type&#xA;,SNI.Primary_National_ID&#xA;,SNI.Non_Primary_National_ID_Type_1&#xA;,SNI.Non_Primary_National_ID_1&#xA;,SNI.Non_Primary_National_ID_Type_2&#xA;,SNI.Non_Primary_National_ID_2&#xA;,SNI.Non_Primary_National_ID_Type_3&#xA;,SNI.Non_Primary_National_ID_3&#xA;,SNI.Non_Primary_National_ID_Type_4&#xA;,SNI.Non_Primary_National_ID_4&#xA;&#xA;&#xA;&#xA;FROM  &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_APP_DATA AD&#xA;LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_APP_SCHOOL_RECRUITING ASR &#xA;ON ASR.Latest_Ind='Y' AND  AD.Applicant_Id = ASR.Applicant_Id AND AD.Qual_Type=ASR.Qual_Type&#xA;AND AD.Student_Career_Number=ASR.student_career_Number AND AD.App_Number=ASR.ADM_App_Number&#xA;LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_EVALUATION_SUMMARY ES ON ES.Latest_Ind='Y' AND ES.Applicant_Id=AD.Applicant_Id&#xA;AND ES.Qual_Type=AD.Qual_Type AND ES.App_Number=AD.App_Number&#xA;LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_TALENT_SUMMARY TS ON TS.Latest_Ind='Y' AND AD.Applicant_Id=TS.Applicant_Id&#xA;AND TS.Qual_Type=AD.Qual_Type AND TS.App_Number=AD.App_Number&#xA;&#xA;LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_MASTER_CODE a ON AD.Qual_Type=a.Field_Value and a.Field_Name='ACAD_CAREER'&#xA;LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_MASTER_CODE b ON AD.Admit_Type=b.Field_Value and b.Field_Name='ADMIT_TYPE'&#xA;LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_MASTER_CODE c ON AD.Level_Of_Qual_1=c.Field_Value and c.Field_Name='A_QUALIFICATION_LV'&#xA;LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_MASTER_CODE d ON AD.Level_Of_Qual_2=d.Field_Value and d.Field_Name='A_QUALIFICATN_LV2'&#xA;&#xA;LEFT OUTER JOIN temp_OASIS_STUDENT_NATIONAL_INFO SNI&#xA;  ON AD.Applicant_Id=SNI.STUDENT_ID&#xA;&#xA;WHERE AD.Latest_Ind='Y'&#xA;AND AD.[Modified_On]&gt;@LastDWProcessdate)&#xA;&#xA;&#xA;MERGE INTO DW_APPLICANT_DETAILS AS dst&#xA;   USING TMP_DW_APPLICANT_DETAILS AS src&#xA;   ON( dst.[Applicant_Id]=src.Applicant_Id&#xA;   AND dst.[Qual_Type]=src.[Qual_Type]&#xA;   AND dst.[Student_Career_Number]=src.[Student_Career_Number]&#xA;   AND dst.[App_Number]=src.[App_Number]&#xA;   AND dst.[Admit_Term]=src.[Admit_Term]&#xA;   AND dst.[Event_Id]=src.[Event_Id]&#xA;   AND dst.[Event_Meeting_Number]=src.[Event_Meeting_Number])&#xA;&#xA;   WHEN NOT MATCHED THEN&#xA;   INSERT&#xA;(&#xA;[Applicant_Id]&#xA;,[Qual_Type]&#xA;,[Student_Career_Number]&#xA;,[App_Number]&#xA;,[App_Center]&#xA;,[Admit_Type]&#xA;,[Appeals]&#xA;,[App_Date]&#xA;,[Saf_Indicator]&#xA;,[Entry_Type]&#xA;,[App_Method]&#xA;,[Part_Time_Full_Fee_Indicator]&#xA;,[Join_Phase]&#xA;,[App_Scheme]&#xA;,[Entry_Qual]&#xA;,[Other_Qual]&#xA;,[Level_Of_Qual_1]&#xA;,[Highest_Qual]&#xA;,[Other_Highest_Qual]&#xA;,[Name_Of_Institution_1]&#xA;,[Gpa1]&#xA;,[Level_Of_Qual_2]&#xA;,[Second_Highest_Qual]&#xA;,[Other_Second_Highest_Qual]&#xA;,[Name_Of_Institution_2]&#xA;,[Gpa2]&#xA;,[Diploma_Enrolled_Sp]&#xA;,[Diploma_Enrolled_Np]&#xA;,[Diploma_Enrolled_Nyp]&#xA;,[Diploma_Enrolled_Rp]&#xA;,[Diploma_Enrolled_Tp]&#xA;,[Diploma_Enrolled_Nus_And_Others]&#xA;,[No_Of_Sem_Attended]&#xA;,[Recd_Tuition_Grant_Before]&#xA;,[Others]&#xA;,[Diploma_Holder]&#xA;,[Degree_Holder]&#xA;,[Rp_Staff_Student]&#xA;,[Acad]&#xA;,[Offence]&#xA;,[Reject_Grant]&#xA;,[Reason_Not_Eligible_TG]&#xA;,[Not_Eligible_for_Grant]&#xA;,[No_of_TG_Received_Before_RP]&#xA;,[RPI_Student]&#xA;,[Max_TG_Allowed]&#xA;,[Status]&#xA;,[Fee_Type]&#xA;,[RP_Alumni]&#xA;,[RP_Staff]&#xA;,[RP_Student]&#xA;,[Not_RP_Alumni_Staff_Student]&#xA;,[Club_Republic_RP_Staff_RP_Student_ID]&#xA;,[Received_MOE]&#xA;,[Name_Course]&#xA;,[Awarding_Polytechnics]&#xA;,[Completed]&#xA;,[Year_Graduation]&#xA;,[Number_certificates_completed]&#xA;,[Received_WTS_letter]&#xA;,[Admit_Term]&#xA;,[Event_Id]&#xA;,[Event_Meeting_Number]&#xA;,[DESCR]&#xA;,[SHORT_DESCR]&#xA;,[Attendee]&#xA;,[Meeting_Date]&#xA;,[Recruitmt_Status]&#xA;,[Last_School_Attended]&#xA;,[Name_Of_Secondary_School]&#xA;,[Graduation_Date]&#xA;,[Last_Institution_Attended]&#xA;,[Name_Of_Institution]&#xA;,[Agent_Name]&#xA;,[Agency_Name]&#xA;,[Knew_Abt_Our_App_Ex_Frm_Straits_Tms]&#xA;,[Knew_Abt_Our_App_Ex_Frm_Mailr_Frm_RP]&#xA;,[Knew_Abt_Our_App_Ex_Frm_Friends]&#xA;,[Knew_Abt_Our_App_Ex_Frm_Others]&#xA;,[Knew_Abt_Our_App_Ex_Frm_Internet]&#xA;,[Knew_Abt_Our_App_Ex_Frm_Genrl_Enquiry_RP]&#xA;,[Knew_Abt_Our_App_Ex_Frm_Lecturers]&#xA;,[Raw_Hsc]&#xA;,[Raw_Arch]&#xA;,[Raw_Gpa]&#xA;,[Evolution_Highest_Qual]&#xA;,[Nettech]&#xA;,[Net_Ntech]&#xA;,[Net_Hsc]&#xA;,[Net_Arch]&#xA;,[Net_Gpa]&#xA;,[El1_Bgrd]&#xA;,[El2_Bgrd]&#xA;,[Gp_Bgrd]&#xA;,[Avg_Marks]&#xA;,[Avg_Grd_Pnt]&#xA;,[Gpb4]&#xA;,[Test_indicator]&#xA;,[Prog]&#xA;,[Batch_Id]&#xA;,[Test_Type]&#xA;,[Eng_Mark]&#xA;,[Oral]&#xA;,[Math_Mark]&#xA;,[Overall]&#xA;,[Sci_Mark]&#xA;,[Raw_Posted_Agg]&#xA;,[Course_Offered]&#xA;,[Net_Posted_Agg]&#xA;,[Dpa_Offered_Course]&#xA;,[Sports_Type]&#xA;,[Sports_Level]&#xA;,[Sports_Role]&#xA;,[Sports_Desc]&#xA;,[Arts_Type]&#xA;,[Arts_Level]&#xA;,[Arts_Desc]&#xA;,[Community_Service_Type]&#xA;,[Community_Service_Desc]&#xA;,[Cca_Leadership_Type]&#xA;,[Cca_Leadership_Role]&#xA;,[Cca_Leadership_Desc]&#xA;,[Entreprenuership_Desc]&#xA;,[Work_Attachment_Desc]&#xA;,[CREATED_ON]&#xA;,[MODIFIED_ON]&#xA;,Qualification_Type_Desc&#xA;,Admit_Type_Desc&#xA;,First_Level_Qualification_Desc&#xA;,Sceond_Level_Qualification_Desc&#xA;,[Primary_National_ID_Type]&#xA;,[Primary_National_ID]&#xA;,[Non_Primary_National_ID_Type_1]&#xA;,[Non_Primary_National_ID_1]&#xA;,[Non_Primary_National_ID_Type_2]&#xA;,[Non_Primary_National_ID_2]&#xA;,[Non_Primary_National_ID_Type_3]&#xA;,[Non_Primary_National_ID_3]&#xA;,[Non_Primary_National_ID_Type_4]&#xA;,[Non_Primary_National_ID_4])&#xA;   VALUES(  &#xA; src.[Applicant_Id]&#xA;,src.[Qual_Type]&#xA;,src.[Student_Career_Number]&#xA;,src.[App_Number]&#xA;,src.[App_Center]&#xA;,src.[Admit_Type]&#xA;,src.[Appeals]&#xA;,src.[App_Date]&#xA;,src.[Saf_Indicator]&#xA;,src.[Entry_Type]&#xA;,src.[App_Method]&#xA;,src.[Part_Time_Full_Fee_Indicator]&#xA;,src.[Join_Phase]&#xA;,src.[App_Scheme]&#xA;,src.[Entry_Qual]&#xA;,src.[Other_Qual]&#xA;,src.[Level_Of_Qual_1]&#xA;,src.[Highest_Qual]&#xA;,src.[Other_Highest_Qual]&#xA;,src.[Name_Of_Institution_1]&#xA;,src.[Gpa1]&#xA;,src.[Level_Of_Qual_2]&#xA;,src.[Second_Highest_Qual]&#xA;,src.[Other_Second_Highest_Qual]&#xA;,src.[Name_Of_Institution_2]&#xA;,src.[Gpa2]&#xA;,src.[Diploma_Enrolled_Sp]&#xA;,src.[Diploma_Enrolled_Np]&#xA;,src.[Diploma_Enrolled_Nyp]&#xA;,src.[Diploma_Enrolled_Rp]&#xA;,src.[Diploma_Enrolled_Tp]&#xA;,src.[Diploma_Enrolled_Nus_And_Others]&#xA;,src.[No_Of_Sem_Attended]&#xA;,src.[Recd_Tuition_Grant_Before]&#xA;,src.[Others]&#xA;,src.[Diploma_Holder]&#xA;,src.[Degree_Holder]&#xA;,src.[Rp_Staff_Student]&#xA;,src.[Acad]&#xA;,src.[Offence]&#xA;,src.[Reject_Grant]&#xA;,src.[Reason_Not_Eligible_TG]&#xA;,src.[Not_Eligible_for_Grant]&#xA;,src.[No_of_TG_Received_Before_RP]&#xA;,src.[RPI_Student]&#xA;,src.[Max_TG_Allowed]&#xA;,src.[Status]&#xA;,src.[Fee_Type]&#xA;,src.[RP_Alumni]&#xA;,src.[RP_Staff]&#xA;,src.[RP_Student]&#xA;,src.[Not_RP_Alumni_Staff_Student]&#xA;,src.[Club_Republic_RP_Staff_RP_Student_ID]&#xA;,src.[Received_MOE]&#xA;,src.[Name_Course]&#xA;,src.[Awarding_Polytechnics]&#xA;,src.[Completed]&#xA;,src.[Year_Graduation]&#xA;,src.[Number_certificates_completed]&#xA;,src.[Received_WTS_letter]&#xA;,src.[Admit_Term]&#xA;,src.[Event_Id]&#xA;,src.[Event_Meeting_Number]&#xA;,src.[DESCR]&#xA;,src.[SHORT_DESCR]&#xA;,src.[Attendee]&#xA;,src.[Meeting_Date]&#xA;,src.[Recruitmt_Status]&#xA;,src.[Last_School_Attended]&#xA;,src.[Name_Of_Secondary_School]&#xA;,src.[Graduation_Date]&#xA;,src.[Last_Institution_Attended]&#xA;,src.[Name_Of_Institution]&#xA;,src.[Agent_Name]&#xA;,src.[Agency_Name]&#xA;,src.[Knew_Abt_Our_App_Ex_Frm_Straits_Tms]&#xA;,src.[Knew_Abt_Our_App_Ex_Frm_Mailr_Frm_RP]&#xA;,src.[Knew_Abt_Our_App_Ex_Frm_Friends]&#xA;,src.[Knew_Abt_Our_App_Ex_Frm_Others]&#xA;,src.[Knew_Abt_Our_App_Ex_Frm_Internet]&#xA;,src.[Knew_Abt_Our_App_Ex_Frm_Genrl_Enquiry_RP]&#xA;,src.[Knew_Abt_Our_App_Ex_Frm_Lecturers]&#xA;,src.[Raw_Hsc]&#xA;,src.[Raw_Arch]&#xA;,src.[Raw_Gpa]&#xA;,src.[Evolution_Highest_Qual]&#xA;,src.[Nettech]&#xA;,src.[Net_Ntech]&#xA;,src.[Net_Hsc]&#xA;,src.[Net_Arch]&#xA;,src.[Net_Gpa]&#xA;,src.[El1_Bgrd]&#xA;,src.[El2_Bgrd]&#xA;,src.[Gp_Bgrd]&#xA;,src.[Avg_Marks]&#xA;,src.[Avg_Grd_Pnt]&#xA;,src.[Gpb4]&#xA;,src.[Test_indicator]&#xA;,src.[Prog]&#xA;,src.[Batch_Id]&#xA;,src.[Test_Type]&#xA;,src.[Eng_Mark]&#xA;,src.[Oral]&#xA;,src.[Math_Mark]&#xA;,src.[Overall]&#xA;,src.[Sci_Mark]&#xA;,src.[Raw_Posted_Agg]&#xA;,src.[Course_Offered]&#xA;,src.[Net_Posted_Agg]&#xA;,src.[Dpa_Offered_Course]&#xA;,src.[Sports_Type]&#xA;,src.[Sports_Level]&#xA;,src.[Sports_Role]&#xA;,src.[Sports_Desc]&#xA;,src.[Arts_Type]&#xA;,src.[Arts_Level]&#xA;,src.[Arts_Desc]&#xA;,src.[Community_Service_Type]&#xA;,src.[Community_Service_Desc]&#xA;,src.[Cca_Leadership_Type]&#xA;,src.[Cca_Leadership_Role]&#xA;,src.[Cca_Leadership_Desc]&#xA;,src.[Entreprenuership_Desc]&#xA;,src.[Work_Attachment_Desc]&#xA;,  @processeddatetime,@processeddatetime&#xA;,src.Qual_type_desc&#xA;,src.Admit_type_desc&#xA;,src.Qual_Level_desc&#xA;,src. Qual_Level2_desc&#xA;,src.[Primary_National_ID_Type]&#xA;,src.[Primary_National_ID]&#xA;,src.[Non_Primary_National_ID_Type_1]&#xA;,src.[Non_Primary_National_ID_1]&#xA;,src.[Non_Primary_National_ID_Type_2]&#xA;,src.[Non_Primary_National_ID_2]&#xA;,src.[Non_Primary_National_ID_Type_3]&#xA;,src.[Non_Primary_National_ID_3]&#xA;,src.[Non_Primary_National_ID_Type_4]&#xA;,src.[Non_Primary_National_ID_4])&#xA;   WHEN MATCHED&#xA;   &#xA;   THEN UPDATE&#xA;   SET &#x9; &#xA;&#xA;DST.[App_Center] = SRC.[App_Center]&#xA;,DST.[Admit_Type] = SRC.[Admit_Type]&#xA;,DST.[Appeals] = SRC.[Appeals]&#xA;,DST.[App_Date] = SRC.[App_Date]&#xA;,DST.[Saf_Indicator] = SRC.[Saf_Indicator]&#xA;,DST.[Entry_Type] = SRC.[Entry_Type]&#xA;,DST.[App_Method] = SRC.[App_Method]&#xA;,DST.[Part_Time_Full_Fee_Indicator] = SRC.[Part_Time_Full_Fee_Indicator]&#xA;,DST.[Join_Phase] = SRC.[Join_Phase]&#xA;,DST.[App_Scheme] = SRC.[App_Scheme]&#xA;,DST.[Entry_Qual] = SRC.[Entry_Qual]&#xA;,DST.[Other_Qual] = SRC.[Other_Qual]&#xA;,DST.[Level_Of_Qual_1] = SRC.[Level_Of_Qual_1]&#xA;,DST.[Highest_Qual] = SRC.[Highest_Qual]&#xA;,DST.[Other_Highest_Qual] = SRC.[Other_Highest_Qual]&#xA;,DST.[Name_Of_Institution_1] = SRC.[Name_Of_Institution_1]&#xA;,DST.[Gpa1] = SRC.[Gpa1]&#xA;,DST.[Level_Of_Qual_2] = SRC.[Level_Of_Qual_2]&#xA;,DST.[Second_Highest_Qual] = SRC.[Second_Highest_Qual]&#xA;,DST.[Other_Second_Highest_Qual] = SRC.[Other_Second_Highest_Qual]&#xA;,DST.[Name_Of_Institution_2] = SRC.[Name_Of_Institution_2]&#xA;,DST.[Gpa2] = SRC.[Gpa2]&#xA;,DST.[Diploma_Enrolled_Sp] = SRC.[Diploma_Enrolled_Sp]&#xA;,DST.[Diploma_Enrolled_Np] = SRC.[Diploma_Enrolled_Np]&#xA;,DST.[Diploma_Enrolled_Nyp] = SRC.[Diploma_Enrolled_Nyp]&#xA;,DST.[Diploma_Enrolled_Rp] = SRC.[Diploma_Enrolled_Rp]&#xA;,DST.[Diploma_Enrolled_Tp] = SRC.[Diploma_Enrolled_Tp]&#xA;,DST.[Diploma_Enrolled_Nus_And_Others] = SRC.[Diploma_Enrolled_Nus_And_Others]&#xA;,DST.[No_Of_Sem_Attended] = SRC.[No_Of_Sem_Attended]&#xA;,DST.[Recd_Tuition_Grant_Before] = SRC.[Recd_Tuition_Grant_Before]&#xA;,DST.[Others] = SRC.[Others]&#xA;,DST.[Diploma_Holder] = SRC.[Diploma_Holder]&#xA;,DST.[Degree_Holder] = SRC.[Degree_Holder]&#xA;,DST.[Rp_Staff_Student] = SRC.[Rp_Staff_Student]&#xA;,DST.[Acad] = SRC.[Acad]&#xA;,DST.[Offence] = SRC.[Offence]&#xA;,DST.[Reject_Grant] = SRC.[Reject_Grant]&#xA;,DST.[Reason_Not_Eligible_TG] = SRC.[Reason_Not_Eligible_TG]&#xA;,DST.[Not_Eligible_for_Grant] = SRC.[Not_Eligible_for_Grant]&#xA;,DST.[No_of_TG_Received_Before_RP] = SRC.[No_of_TG_Received_Before_RP]&#xA;,DST.[RPI_Student] = SRC.[RPI_Student]&#xA;,DST.[Max_TG_Allowed] = SRC.[Max_TG_Allowed]&#xA;,DST.[Status] = SRC.[Status]&#xA;,DST.[Fee_Type] = SRC.[Fee_Type]&#xA;,DST.[RP_Alumni] = SRC.[RP_Alumni]&#xA;,DST.[RP_Staff] = SRC.[RP_Staff]&#xA;,DST.[RP_Student] = SRC.[RP_Student]&#xA;,DST.[Not_RP_Alumni_Staff_Student] = SRC.[Not_RP_Alumni_Staff_Student]&#xA;,DST.[Club_Republic_RP_Staff_RP_Student_ID] = SRC.[Club_Republic_RP_Staff_RP_Student_ID]&#xA;,DST.[Received_MOE] = SRC.[Received_MOE]&#xA;,DST.[Name_Course] = SRC.[Name_Course]&#xA;,DST.[Awarding_Polytechnics] = SRC.[Awarding_Polytechnics]&#xA;,DST.[Completed] = SRC.[Completed]&#xA;,DST.[Year_Graduation] = SRC.[Year_Graduation]&#xA;,DST.[Number_certificates_completed] = SRC.[Number_certificates_completed]&#xA;,DST.[Received_WTS_letter] = SRC.[Received_WTS_letter]&#xA;,DST.[DESCR] = SRC.[DESCR]&#xA;,DST.[SHORT_DESCR] = SRC.[SHORT_DESCR]&#xA;,DST.[Attendee] = SRC.[Attendee]&#xA;,DST.[Meeting_Date] = SRC.[Meeting_Date]&#xA;,DST.[Recruitmt_Status] = SRC.[Recruitmt_Status]&#xA;,DST.[Last_School_Attended] = SRC.[Last_School_Attended]&#xA;,DST.[Name_Of_Secondary_School] = SRC.[Name_Of_Secondary_School]&#xA;,DST.[Graduation_Date] = SRC.[Graduation_Date]&#xA;,DST.[Last_Institution_Attended] = SRC.[Last_Institution_Attended]&#xA;,DST.[Name_Of_Institution] = SRC.[Name_Of_Institution]&#xA;,DST.[Agent_Name] = SRC.[Agent_Name]&#xA;,DST.[Agency_Name] = SRC.[Agency_Name]&#xA;,DST.[Knew_Abt_Our_App_Ex_Frm_Straits_Tms] = SRC.[Knew_Abt_Our_App_Ex_Frm_Straits_Tms]&#xA;,DST.[Knew_Abt_Our_App_Ex_Frm_Mailr_Frm_RP] = SRC.[Knew_Abt_Our_App_Ex_Frm_Mailr_Frm_RP]&#xA;,DST.[Knew_Abt_Our_App_Ex_Frm_Friends] = SRC.[Knew_Abt_Our_App_Ex_Frm_Friends]&#xA;,DST.[Knew_Abt_Our_App_Ex_Frm_Others] = SRC.[Knew_Abt_Our_App_Ex_Frm_Others]&#xA;,DST.[Knew_Abt_Our_App_Ex_Frm_Internet] = SRC.[Knew_Abt_Our_App_Ex_Frm_Internet]&#xA;,DST.[Knew_Abt_Our_App_Ex_Frm_Genrl_Enquiry_RP] = SRC.[Knew_Abt_Our_App_Ex_Frm_Genrl_Enquiry_RP]&#xA;,DST.[Knew_Abt_Our_App_Ex_Frm_Lecturers] = SRC.[Knew_Abt_Our_App_Ex_Frm_Lecturers]&#xA;,DST.[Raw_Hsc] = SRC.[Raw_Hsc]&#xA;,DST.[Raw_Arch] = SRC.[Raw_Arch]&#xA;,DST.[Raw_Gpa] = SRC.[Raw_Gpa]&#xA;,DST.[Evolution_Highest_Qual] = SRC.[Evolution_Highest_Qual]&#xA;,DST.[Nettech] = SRC.[Nettech]&#xA;,DST.[Net_Ntech] = SRC.[Net_Ntech]&#xA;,DST.[Net_Hsc] = SRC.[Net_Hsc]&#xA;,DST.[Net_Arch] = SRC.[Net_Arch]&#xA;,DST.[Net_Gpa] = SRC.[Net_Gpa]&#xA;,DST.[El1_Bgrd] = SRC.[El1_Bgrd]&#xA;,DST.[El2_Bgrd] = SRC.[El2_Bgrd]&#xA;,DST.[Gp_Bgrd] = SRC.[Gp_Bgrd]&#xA;,DST.[Avg_Marks] = SRC.[Avg_Marks]&#xA;,DST.[Avg_Grd_Pnt] = SRC.[Avg_Grd_Pnt]&#xA;,DST.[Gpb4] = SRC.[Gpb4]&#xA;,DST.[Test_indicator] = SRC.[Test_indicator]&#xA;,DST.[Prog] = SRC.[Prog]&#xA;,DST.[Batch_Id] = SRC.[Batch_Id]&#xA;,DST.[Test_Type] = SRC.[Test_Type]&#xA;,DST.[Eng_Mark] = SRC.[Eng_Mark]&#xA;,DST.[Oral] = SRC.[Oral]&#xA;,DST.[Math_Mark] = SRC.[Math_Mark]&#xA;,DST.[Overall] = SRC.[Overall]&#xA;,DST.[Sci_Mark] = SRC.[Sci_Mark]&#xA;,DST.[Raw_Posted_Agg] = SRC.[Raw_Posted_Agg]&#xA;,DST.[Course_Offered] = SRC.[Course_Offered]&#xA;,DST.[Net_Posted_Agg] = SRC.[Net_Posted_Agg]&#xA;,DST.[Dpa_Offered_Course] = SRC.[Dpa_Offered_Course]&#xA;,DST.[Sports_Type] = SRC.[Sports_Type]&#xA;,DST.[Sports_Level] = SRC.[Sports_Level]&#xA;,DST.[Sports_Role] = SRC.[Sports_Role]&#xA;,DST.[Sports_Desc] = SRC.[Sports_Desc]&#xA;,DST.[Arts_Type] = SRC.[Arts_Type]&#xA;,DST.[Arts_Level] = SRC.[Arts_Level]&#xA;,DST.[Arts_Desc] = SRC.[Arts_Desc]&#xA;,DST.[Community_Service_Type] = SRC.[Community_Service_Type]&#xA;,DST.[Community_Service_Desc] = SRC.[Community_Service_Desc]&#xA;,DST.[Cca_Leadership_Type] = SRC.[Cca_Leadership_Type]&#xA;,DST.[Cca_Leadership_Role] = SRC.[Cca_Leadership_Role]&#xA;,DST.[Cca_Leadership_Desc] = SRC.[Cca_Leadership_Desc]&#xA;,DST.[Entreprenuership_Desc] = SRC.[Entreprenuership_Desc]&#xA;,DST.[Work_Attachment_Desc] = SRC.[Work_Attachment_Desc]&#xA;,DST.Qualification_Type_Desc=src.Qual_type_desc&#xA;,DST.Admit_Type_Desc=src.Admit_type_desc&#xA;,DST.First_Level_Qualification_Desc=src.Qual_Level_desc&#xA;,DST.Sceond_Level_Qualification_Desc=src. Qual_Level2_desc&#xA;,DST.[Primary_National_ID_Type]=src.[Primary_National_ID_Type]&#xA;,DST.[Primary_National_ID]=src.[Primary_National_ID]&#xA;,DST.[Non_Primary_National_ID_Type_1]=src.[Non_Primary_National_ID_Type_1]&#xA;,DST.[Non_Primary_National_ID_1]=src.[Non_Primary_National_ID_1]&#xA;,DST.[Non_Primary_National_ID_Type_2]=src.[Non_Primary_National_ID_Type_2]&#xA;,DST.[Non_Primary_National_ID_2]=src.[Non_Primary_National_ID_2]&#xA;,DST.[Non_Primary_National_ID_Type_3]=src.[Non_Primary_National_ID_Type_3]&#xA;,DST.[Non_Primary_National_ID_3]=src.[Non_Primary_National_ID_3]&#xA;,DST.[Non_Primary_National_ID_Type_4]=src.[Non_Primary_National_ID_Type_4]&#xA;,DST.[Non_Primary_National_ID_4]=src.[Non_Primary_National_ID_4]&#xA; ,dst.Modified_On=@processeddatetime;&#xA;&#x9;&#x9;&#xA;&#xA;--------------------------------------&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,@processeddatetime  as created_on&#xA;  &#xA;  &#xA;END CATCH  &#xA;GO&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="InsertQuery">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+------------
+DECLARE @LastDWProcessdate datetime
+,@processeddatetime datetime
+,@jobstatusid varchar(5)
+select @jobstatusid=0
+select @LastDWProcessdate=isnull(max(Modified_on),'1900-01-01 00:00:00.000') from DW_APPLICANT_DETAILS
+select  @processeddatetime= getdate()
+--select @LastDWProcessdate
+
+;WITH cte
+as 
+(select row_number() over(partition by student_id,primary_ind order by national_id_type) row_num,* from
+ RPDW_UAT_STG..[STG_OASIS_STUDENT_NATIONAL_INFO])
+
+
+ ,temp_OASIS_STUDENT_NATIONAL_INFO
+as (SELECT student_id,Country,
+
+max(CASE WHEN primary_ind='Y' and  row_num = 1 THEN [National_ID_Type] ELSE '' END )AS [Primary_National_ID_Type],
+max(CASE WHEN primary_ind='Y' and  row_num = 1 THEN national_id ELSE '' END )AS [Primary_National_ID],
+max(CASE WHEN primary_ind='N' and  row_num = 1 THEN [National_ID_Type] ELSE '' END )AS [Non_Primary_National_ID_Type_1],
+max(CASE WHEN primary_ind='N' and  row_num = 1 THEN national_id ELSE '' END )AS [Non_Primary_National_ID_1],
+max(CASE WHEN primary_ind='N' and  row_num = 2 THEN [National_ID_Type] ELSE '' END )AS [Non_Primary_National_ID_Type_2],
+max(CASE WHEN primary_ind='N' and  row_num = 2 THEN national_id ELSE '' END )AS [Non_Primary_National_ID_2],
+max(CASE WHEN primary_ind='N' and  row_num = 3 THEN [National_ID_Type] ELSE '' END )AS [Non_Primary_National_ID_Type_3],
+max(CASE WHEN primary_ind='N' and  row_num = 3 THEN national_id ELSE '' END )AS [Non_Primary_National_ID_3],
+max(CASE WHEN primary_ind='N' and  row_num = 4 THEN [National_ID_Type] ELSE null END )AS [Non_Primary_National_ID_Type_4],
+max(CASE WHEN primary_ind='N' and  row_num = 4 THEN national_id ELSE null END )AS [Non_Primary_National_ID_4]
+FROM cte
+group by student_id,Country)
+
+
+,TMP_DW_APPLICANT_DETAILS
+AS (
+SELECT distinct
+ AD.Applicant_Id
+,AD.Qual_Type
+,AD.Student_Career_Number
+,AD.App_Number
+,AD.App_Center
+,AD.Admit_Type
+,AD.Appeals
+,AD.App_Date
+,AD.Saf_Indicator
+,AD.Entry_Type
+,AD.App_Method
+,AD.Part_Time_Full_Fee_Indicator
+,AD.Join_Phase
+,AD.App_Scheme
+,AD.Entry_Qual
+,AD.Other_Qual
+,AD.Level_Of_Qual_1
+,AD.Highest_Qual
+,AD.Other_Highest_Qual
+,AD.Name_Of_Institution_1
+,AD.Gpa1
+,AD.Level_Of_Qual_2
+,AD.Second_Highest_Qual
+,AD.Other_Second_Highest_Qual
+,AD.Name_Of_Institution_2
+,AD.Gpa2
+,AD.Diploma_Enrolled_Sp
+,AD.Diploma_Enrolled_Np
+,AD.Diploma_Enrolled_Nyp
+,AD.Diploma_Enrolled_Rp
+,AD.Diploma_Enrolled_Tp
+,AD.Diploma_Enrolled_Nus_And_Others
+,AD.No_Of_Sem_Attended
+,AD.Recd_Tuition_Grant_Before
+,AD.Others
+,AD.Diploma_Holder
+,AD.Degree_Holder
+,AD.Rp_Staff_Student
+,AD.Acad
+,AD.Offence
+,AD.Reject_Grant
+,AD.Reason_Not_Eligible_TG
+,AD.Not_Eligible_for_Grant
+,AD.No_of_TG_Received_Before_RP
+,AD.RPI_Student
+,AD.Max_TG_Allowed
+,AD.Status
+,AD.Fee_Type
+,AD.RP_Alumni
+,AD.RP_Staff
+,AD.RP_Student
+,AD.Not_RP_Alumni_Staff_Student
+,AD.Club_Republic_RP_Staff_RP_Student_ID
+,AD.Received_MOE
+,AD.Name_Course
+,AD.Awarding_Polytechnics
+,AD.Completed
+,AD.Year_Graduation
+,AD.Number_certificates_completed
+,AD.Received_WTS_letter
+
+,ISNULL(Admit_Term,'NA') AS Admit_Term
+
+,ISNULL(ASR.Event_Id,'NA') AS Event_Id
+
+,ISNULL(ASR.Event_Meeting_Number,'NA') AS Event_Meeting_Number
+,ASR.DESCR
+,ASR.SHORT_DESCR
+,ASR.Attendee
+,ASR.Meeting_Date
+,ASR.Status AS Recruitmt_Status
+,ASR.Last_School_Attended
+,ASR.Name_Of_Secondary_School
+,ASR.Graduation_Date
+,ASR.Last_Institution_Attended
+,ASR.Name_Of_Institution
+,ASR.Agent_Name
+,ASR.Agency_Name
+,ASR.Knew_Abt_Our_App_Ex_Frm_Straits_Tms
+,ASR.Knew_Abt_Our_App_Ex_Frm_Mailr_Frm_RP
+,ASR.Knew_Abt_Our_App_Ex_Frm_Friends
+,ASR.Knew_Abt_Our_App_Ex_Frm_Others
+,ASR.Knew_Abt_Our_App_Ex_Frm_Internet
+,ASR.Knew_Abt_Our_App_Ex_Frm_Genrl_Enquiry_RP
+,ASR.Knew_Abt_Our_App_Ex_Frm_Lecturers
+,ES.Raw_Hsc
+,ES.Raw_Arch
+,ES.Raw_Gpa
+,ES.Highest_Qual AS [Evolution_Highest_Qual]
+,ES.Nettech
+,ES.Net_Ntech
+,ES.Net_Hsc
+,ES.Net_Arch
+,ES.Net_Gpa
+,ES.El1_Bgrd
+,ES.El2_Bgrd
+,ES.Gp_Bgrd
+,ES.Avg_Marks
+,ES.Avg_Grd_Pnt
+,ES.Gpb4
+,ES.Test_indicator
+,ES.Prog
+,ES.Batch_Id
+,ES.Test_Type
+,ES.Eng_Mark
+,ES.Oral
+,ES.Math_Mark
+,ES.Overall
+,ES.Sci_Mark
+,ES.Raw_Posted_Agg
+,ES.Course_Offered
+,ES.Net_Posted_Agg
+,ES.Dpa_Offered_Course
+,TS.Sports_Type
+,TS.Sports_Level
+,TS.Sports_Role
+,TS.Sports_Desc
+,TS.Arts_Type
+,TS.Arts_Level
+,TS.Arts_Desc
+,TS.Community_Service_Type
+,TS.Community_Service_Desc
+,TS.Cca_Leadership_Type
+,TS.Cca_Leadership_Role
+,TS.Cca_Leadership_Desc
+,TS.Entreprenuership_Desc
+,TS.Work_Attachment_Desc
+,a.Long_Name as Qual_type_desc
+,b.Long_Name as Admit_type_desc
+,c.Long_Name as Qual_Level_desc
+,d.Long_Name as Qual_Level2_desc
+,SNI.Primary_National_ID_Type
+,SNI.Primary_National_ID
+,SNI.Non_Primary_National_ID_Type_1
+,SNI.Non_Primary_National_ID_1
+,SNI.Non_Primary_National_ID_Type_2
+,SNI.Non_Primary_National_ID_2
+,SNI.Non_Primary_National_ID_Type_3
+,SNI.Non_Primary_National_ID_3
+,SNI.Non_Primary_National_ID_Type_4
+,SNI.Non_Primary_National_ID_4
+
+
+
+FROM  RPDW_UAT_STG..STG_OASIS_APP_DATA AD
+LEFT JOIN RPDW_UAT_STG..STG_OASIS_APP_SCHOOL_RECRUITING ASR 
+ON ASR.Latest_Ind='Y' AND  AD.Applicant_Id = ASR.Applicant_Id AND AD.Qual_Type=ASR.Qual_Type
+AND AD.Student_Career_Number=ASR.student_career_Number AND AD.App_Number=ASR.ADM_App_Number
+LEFT JOIN RPDW_UAT_STG..STG_OASIS_EVALUATION_SUMMARY ES ON ES.Latest_Ind='Y' AND ES.Applicant_Id=AD.Applicant_Id
+AND ES.Qual_Type=AD.Qual_Type AND ES.App_Number=AD.App_Number
+LEFT JOIN RPDW_UAT_STG..STG_OASIS_TALENT_SUMMARY TS ON TS.Latest_Ind='Y' AND AD.Applicant_Id=TS.Applicant_Id
+AND TS.Qual_Type=AD.Qual_Type AND TS.App_Number=AD.App_Number
+
+LEFT JOIN RPDW_UAT_STG..STG_OASIS_MASTER_CODE a ON AD.Qual_Type=a.Field_Value and a.Field_Name='ACAD_CAREER'
+LEFT JOIN RPDW_UAT_STG..STG_OASIS_MASTER_CODE b ON AD.Admit_Type=b.Field_Value and b.Field_Name='ADMIT_TYPE'
+LEFT JOIN RPDW_UAT_STG..STG_OASIS_MASTER_CODE c ON AD.Level_Of_Qual_1=c.Field_Value and c.Field_Name='A_QUALIFICATION_LV'
+LEFT JOIN RPDW_UAT_STG..STG_OASIS_MASTER_CODE d ON AD.Level_Of_Qual_2=d.Field_Value and d.Field_Name='A_QUALIFICATN_LV2'
+
+LEFT OUTER JOIN temp_OASIS_STUDENT_NATIONAL_INFO SNI
+  ON AD.Applicant_Id=SNI.STUDENT_ID
+
+WHERE AD.Latest_Ind='Y'
+AND AD.[Modified_On]&gt;@LastDWProcessdate)
+
+
+MERGE INTO DW_APPLICANT_DETAILS AS dst
+   USING TMP_DW_APPLICANT_DETAILS AS src
+   ON( dst.[Applicant_Id]=src.Applicant_Id
+   AND dst.[Qual_Type]=src.[Qual_Type]
+   AND dst.[Student_Career_Number]=src.[Student_Career_Number]
+   AND dst.[App_Number]=src.[App_Number]
+   AND dst.[Admit_Term]=src.[Admit_Term]
+   AND dst.[Event_Id]=src.[Event_Id]
+   AND dst.[Event_Meeting_Number]=src.[Event_Meeting_Number])
+
+   WHEN NOT MATCHED THEN
+   INSERT
+(
+[Applicant_Id]
+,[Qual_Type]
+,[Student_Career_Number]
+,[App_Number]
+,[App_Center]
+,[Admit_Type]
+,[Appeals]
+,[App_Date]
+,[Saf_Indicator]
+,[Entry_Type]
+,[App_Method]
+,[Part_Time_Full_Fee_Indicator]
+,[Join_Phase]
+,[App_Scheme]
+,[Entry_Qual]
+,[Other_Qual]
+,[Level_Of_Qual_1]
+,[Highest_Qual]
+,[Other_Highest_Qual]
+,[Name_Of_Institution_1]
+,[Gpa1]
+,[Level_Of_Qual_2]
+,[Second_Highest_Qual]
+,[Other_Second_Highest_Qual]
+,[Name_Of_Institution_2]
+,[Gpa2]
+,[Diploma_Enrolled_Sp]
+,[Diploma_Enrolled_Np]
+,[Diploma_Enrolled_Nyp]
+,[Diploma_Enrolled_Rp]
+,[Diploma_Enrolled_Tp]
+,[Diploma_Enrolled_Nus_And_Others]
+,[No_Of_Sem_Attended]
+,[Recd_Tuition_Grant_Before]
+,[Others]
+,[Diploma_Holder]
+,[Degree_Holder]
+,[Rp_Staff_Student]
+,[Acad]
+,[Offence]
+,[Reject_Grant]
+,[Reason_Not_Eligible_TG]
+,[Not_Eligible_for_Grant]
+,[No_of_TG_Received_Before_RP]
+,[RPI_Student]
+,[Max_TG_Allowed]
+,[Status]
+,[Fee_Type]
+,[RP_Alumni]
+,[RP_Staff]
+,[RP_Student]
+,[Not_RP_Alumni_Staff_Student]
+,[Club_Republic_RP_Staff_RP_Student_ID]
+,[Received_MOE]
+,[Name_Course]
+,[Awarding_Polytechnics]
+,[Completed]
+,[Year_Graduation]
+,[Number_certificates_completed]
+,[Received_WTS_letter]
+,[Admit_Term]
+,[Event_Id]
+,[Event_Meeting_Number]
+,[DESCR]
+,[SHORT_DESCR]
+,[Attendee]
+,[Meeting_Date]
+,[Recruitmt_Status]
+,[Last_School_Attended]
+,[Name_Of_Secondary_School]
+,[Graduation_Date]
+,[Last_Institution_Attended]
+,[Name_Of_Institution]
+,[Agent_Name]
+,[Agency_Name]
+,[Knew_Abt_Our_App_Ex_Frm_Straits_Tms]
+,[Knew_Abt_Our_App_Ex_Frm_Mailr_Frm_RP]
+,[Knew_Abt_Our_App_Ex_Frm_Friends]
+,[Knew_Abt_Our_App_Ex_Frm_Others]
+,[Knew_Abt_Our_App_Ex_Frm_Internet]
+,[Knew_Abt_Our_App_Ex_Frm_Genrl_Enquiry_RP]
+,[Knew_Abt_Our_App_Ex_Frm_Lecturers]
+,[Raw_Hsc]
+,[Raw_Arch]
+,[Raw_Gpa]
+,[Evolution_Highest_Qual]
+,[Nettech]
+,[Net_Ntech]
+,[Net_Hsc]
+,[Net_Arch]
+,[Net_Gpa]
+,[El1_Bgrd]
+,[El2_Bgrd]
+,[Gp_Bgrd]
+,[Avg_Marks]
+,[Avg_Grd_Pnt]
+,[Gpb4]
+,[Test_indicator]
+,[Prog]
+,[Batch_Id]
+,[Test_Type]
+,[Eng_Mark]
+,[Oral]
+,[Math_Mark]
+,[Overall]
+,[Sci_Mark]
+,[Raw_Posted_Agg]
+,[Course_Offered]
+,[Net_Posted_Agg]
+,[Dpa_Offered_Course]
+,[Sports_Type]
+,[Sports_Level]
+,[Sports_Role]
+,[Sports_Desc]
+,[Arts_Type]
+,[Arts_Level]
+,[Arts_Desc]
+,[Community_Service_Type]
+,[Community_Service_Desc]
+,[Cca_Leadership_Type]
+,[Cca_Leadership_Role]
+,[Cca_Leadership_Desc]
+,[Entreprenuership_Desc]
+,[Work_Attachment_Desc]
+,[CREATED_ON]
+,[MODIFIED_ON]
+,Qualification_Type_Desc
+,Admit_Type_Desc
+,First_Level_Qualification_Desc
+,Sceond_Level_Qualification_Desc
+,[Primary_National_ID_Type]
+,[Primary_National_ID]
+,[Non_Primary_National_ID_Type_1]
+,[Non_Primary_National_ID_1]
+,[Non_Primary_National_ID_Type_2]
+,[Non_Primary_National_ID_2]
+,[Non_Primary_National_ID_Type_3]
+,[Non_Primary_National_ID_3]
+,[Non_Primary_National_ID_Type_4]
+,[Non_Primary_National_ID_4])
+   VALUES(  
+ src.[Applicant_Id]
+,src.[Qual_Type]
+,src.[Student_Career_Number]
+,src.[App_Number]
+,src.[App_Center]
+,src.[Admit_Type]
+,src.[Appeals]
+,src.[App_Date]
+,src.[Saf_Indicator]
+,src.[Entry_Type]
+,src.[App_Method]
+,src.[Part_Time_Full_Fee_Indicator]
+,src.[Join_Phase]
+,src.[App_Scheme]
+,src.[Entry_Qual]
+,src.[Other_Qual]
+,src.[Level_Of_Qual_1]
+,src.[Highest_Qual]
+,src.[Other_Highest_Qual]
+,src.[Name_Of_Institution_1]
+,src.[Gpa1]
+,src.[Level_Of_Qual_2]
+,src.[Second_Highest_Qual]
+,src.[Other_Second_Highest_Qual]
+,src.[Name_Of_Institution_2]
+,src.[Gpa2]
+,src.[Diploma_Enrolled_Sp]
+,src.[Diploma_Enrolled_Np]
+,src.[Diploma_Enrolled_Nyp]
+,src.[Diploma_Enrolled_Rp]
+,src.[Diploma_Enrolled_Tp]
+,src.[Diploma_Enrolled_Nus_And_Others]
+,src.[No_Of_Sem_Attended]
+,src.[Recd_Tuition_Grant_Before]
+,src.[Others]
+,src.[Diploma_Holder]
+,src.[Degree_Holder]
+,src.[Rp_Staff_Student]
+,src.[Acad]
+,src.[Offence]
+,src.[Reject_Grant]
+,src.[Reason_Not_Eligible_TG]
+,src.[Not_Eligible_for_Grant]
+,src.[No_of_TG_Received_Before_RP]
+,src.[RPI_Student]
+,src.[Max_TG_Allowed]
+,src.[Status]
+,src.[Fee_Type]
+,src.[RP_Alumni]
+,src.[RP_Staff]
+,src.[RP_Student]
+,src.[Not_RP_Alumni_Staff_Student]
+,src.[Club_Republic_RP_Staff_RP_Student_ID]
+,src.[Received_MOE]
+,src.[Name_Course]
+,src.[Awarding_Polytechnics]
+,src.[Completed]
+,src.[Year_Graduation]
+,src.[Number_certificates_completed]
+,src.[Received_WTS_letter]
+,src.[Admit_Term]
+,src.[Event_Id]
+,src.[Event_Meeting_Number]
+,src.[DESCR]
+,src.[SHORT_DESCR]
+,src.[Attendee]
+,src.[Meeting_Date]
+,src.[Recruitmt_Status]
+,src.[Last_School_Attended]
+,src.[Name_Of_Secondary_School]
+,src.[Graduation_Date]
+,src.[Last_Institution_Attended]
+,src.[Name_Of_Institution]
+,src.[Agent_Name]
+,src.[Agency_Name]
+,src.[Knew_Abt_Our_App_Ex_Frm_Straits_Tms]
+,src.[Knew_Abt_Our_App_Ex_Frm_Mailr_Frm_RP]
+,src.[Knew_Abt_Our_App_Ex_Frm_Friends]
+,src.[Knew_Abt_Our_App_Ex_Frm_Others]
+,src.[Knew_Abt_Our_App_Ex_Frm_Internet]
+,src.[Knew_Abt_Our_App_Ex_Frm_Genrl_Enquiry_RP]
+,src.[Knew_Abt_Our_App_Ex_Frm_Lecturers]
+,src.[Raw_Hsc]
+,src.[Raw_Arch]
+,src.[Raw_Gpa]
+,src.[Evolution_Highest_Qual]
+,src.[Nettech]
+,src.[Net_Ntech]
+,src.[Net_Hsc]
+,src.[Net_Arch]
+,src.[Net_Gpa]
+,src.[El1_Bgrd]
+,src.[El2_Bgrd]
+,src.[Gp_Bgrd]
+,src.[Avg_Marks]
+,src.[Avg_Grd_Pnt]
+,src.[Gpb4]
+,src.[Test_indicator]
+,src.[Prog]
+,src.[Batch_Id]
+,src.[Test_Type]
+,src.[Eng_Mark]
+,src.[Oral]
+,src.[Math_Mark]
+,src.[Overall]
+,src.[Sci_Mark]
+,src.[Raw_Posted_Agg]
+,src.[Course_Offered]
+,src.[Net_Posted_Agg]
+,src.[Dpa_Offered_Course]
+,src.[Sports_Type]
+,src.[Sports_Level]
+,src.[Sports_Role]
+,src.[Sports_Desc]
+,src.[Arts_Type]
+,src.[Arts_Level]
+,src.[Arts_Desc]
+,src.[Community_Service_Type]
+,src.[Community_Service_Desc]
+,src.[Cca_Leadership_Type]
+,src.[Cca_Leadership_Role]
+,src.[Cca_Leadership_Desc]
+,src.[Entreprenuership_Desc]
+,src.[Work_Attachment_Desc]
+,  @processeddatetime,@processeddatetime
+,src.Qual_type_desc
+,src.Admit_type_desc
+,src.Qual_Level_desc
+,src. Qual_Level2_desc
+,src.[Primary_National_ID_Type]
+,src.[Primary_National_ID]
+,src.[Non_Primary_National_ID_Type_1]
+,src.[Non_Primary_National_ID_1]
+,src.[Non_Primary_National_ID_Type_2]
+,src.[Non_Primary_National_ID_2]
+,src.[Non_Primary_National_ID_Type_3]
+,src.[Non_Primary_National_ID_3]
+,src.[Non_Primary_National_ID_Type_4]
+,src.[Non_Primary_National_ID_4])
+   WHEN MATCHED
+   
+   THEN UPDATE
+   SET 	 
+
+DST.[App_Center] = SRC.[App_Center]
+,DST.[Admit_Type] = SRC.[Admit_Type]
+,DST.[Appeals] = SRC.[Appeals]
+,DST.[App_Date] = SRC.[App_Date]
+,DST.[Saf_Indicator] = SRC.[Saf_Indicator]
+,DST.[Entry_Type] = SRC.[Entry_Type]
+,DST.[App_Method] = SRC.[App_Method]
+,DST.[Part_Time_Full_Fee_Indicator] = SRC.[Part_Time_Full_Fee_Indicator]
+,DST.[Join_Phase] = SRC.[Join_Phase]
+,DST.[App_Scheme] = SRC.[App_Scheme]
+,DST.[Entry_Qual] = SRC.[Entry_Qual]
+,DST.[Other_Qual] = SRC.[Other_Qual]
+,DST.[Level_Of_Qual_1] = SRC.[Level_Of_Qual_1]
+,DST.[Highest_Qual] = SRC.[Highest_Qual]
+,DST.[Other_Highest_Qual] = SRC.[Other_Highest_Qual]
+,DST.[Name_Of_Institution_1] = SRC.[Name_Of_Institution_1]
+,DST.[Gpa1] = SRC.[Gpa1]
+,DST.[Level_Of_Qual_2] = SRC.[Level_Of_Qual_2]
+,DST.[Second_Highest_Qual] = SRC.[Second_Highest_Qual]
+,DST.[Other_Second_Highest_Qual] = SRC.[Other_Second_Highest_Qual]
+,DST.[Name_Of_Institution_2] = SRC.[Name_Of_Institution_2]
+,DST.[Gpa2] = SRC.[Gpa2]
+,DST.[Diploma_Enrolled_Sp] = SRC.[Diploma_Enrolled_Sp]
+,DST.[Diploma_Enrolled_Np] = SRC.[Diploma_Enrolled_Np]
+,DST.[Diploma_Enrolled_Nyp] = SRC.[Diploma_Enrolled_Nyp]
+,DST.[Diploma_Enrolled_Rp] = SRC.[Diploma_Enrolled_Rp]
+,DST.[Diploma_Enrolled_Tp] = SRC.[Diploma_Enrolled_Tp]
+,DST.[Diploma_Enrolled_Nus_And_Others] = SRC.[Diploma_Enrolled_Nus_And_Others]
+,DST.[No_Of_Sem_Attended] = SRC.[No_Of_Sem_Attended]
+,DST.[Recd_Tuition_Grant_Before] = SRC.[Recd_Tuition_Grant_Before]
+,DST.[Others] = SRC.[Others]
+,DST.[Diploma_Holder] = SRC.[Diploma_Holder]
+,DST.[Degree_Holder] = SRC.[Degree_Holder]
+,DST.[Rp_Staff_Student] = SRC.[Rp_Staff_Student]
+,DST.[Acad] = SRC.[Acad]
+,DST.[Offence] = SRC.[Offence]
+,DST.[Reject_Grant] = SRC.[Reject_Grant]
+,DST.[Reason_Not_Eligible_TG] = SRC.[Reason_Not_Eligible_TG]
+,DST.[Not_Eligible_for_Grant] = SRC.[Not_Eligible_for_Grant]
+,DST.[No_of_TG_Received_Before_RP] = SRC.[No_of_TG_Received_Before_RP]
+,DST.[RPI_Student] = SRC.[RPI_Student]
+,DST.[Max_TG_Allowed] = SRC.[Max_TG_Allowed]
+,DST.[Status] = SRC.[Status]
+,DST.[Fee_Type] = SRC.[Fee_Type]
+,DST.[RP_Alumni] = SRC.[RP_Alumni]
+,DST.[RP_Staff] = SRC.[RP_Staff]
+,DST.[RP_Student] = SRC.[RP_Student]
+,DST.[Not_RP_Alumni_Staff_Student] = SRC.[Not_RP_Alumni_Staff_Student]
+,DST.[Club_Republic_RP_Staff_RP_Student_ID] = SRC.[Club_Republic_RP_Staff_RP_Student_ID]
+,DST.[Received_MOE] = SRC.[Received_MOE]
+,DST.[Name_Course] = SRC.[Name_Course]
+,DST.[Awarding_Polytechnics] = SRC.[Awarding_Polytechnics]
+,DST.[Completed] = SRC.[Completed]
+,DST.[Year_Graduation] = SRC.[Year_Graduation]
+,DST.[Number_certificates_completed] = SRC.[Number_certificates_completed]
+,DST.[Received_WTS_letter] = SRC.[Received_WTS_letter]
+,DST.[DESCR] = SRC.[DESCR]
+,DST.[SHORT_DESCR] = SRC.[SHORT_DESCR]
+,DST.[Attendee] = SRC.[Attendee]
+,DST.[Meeting_Date] = SRC.[Meeting_Date]
+,DST.[Recruitmt_Status] = SRC.[Recruitmt_Status]
+,DST.[Last_School_Attended] = SRC.[Last_School_Attended]
+,DST.[Name_Of_Secondary_School] = SRC.[Name_Of_Secondary_School]
+,DST.[Graduation_Date] = SRC.[Graduation_Date]
+,DST.[Last_Institution_Attended] = SRC.[Last_Institution_Attended]
+,DST.[Name_Of_Institution] = SRC.[Name_Of_Institution]
+,DST.[Agent_Name] = SRC.[Agent_Name]
+,DST.[Agency_Name] = SRC.[Agency_Name]
+,DST.[Knew_Abt_Our_App_Ex_Frm_Straits_Tms] = SRC.[Knew_Abt_Our_App_Ex_Frm_Straits_Tms]
+,DST.[Knew_Abt_Our_App_Ex_Frm_Mailr_Frm_RP] = SRC.[Knew_Abt_Our_App_Ex_Frm_Mailr_Frm_RP]
+,DST.[Knew_Abt_Our_App_Ex_Frm_Friends] = SRC.[Knew_Abt_Our_App_Ex_Frm_Friends]
+,DST.[Knew_Abt_Our_App_Ex_Frm_Others] = SRC.[Knew_Abt_Our_App_Ex_Frm_Others]
+,DST.[Knew_Abt_Our_App_Ex_Frm_Internet] = SRC.[Knew_Abt_Our_App_Ex_Frm_Internet]
+,DST.[Knew_Abt_Our_App_Ex_Frm_Genrl_Enquiry_RP] = SRC.[Knew_Abt_Our_App_Ex_Frm_Genrl_Enquiry_RP]
+,DST.[Knew_Abt_Our_App_Ex_Frm_Lecturers] = SRC.[Knew_Abt_Our_App_Ex_Frm_Lecturers]
+,DST.[Raw_Hsc] = SRC.[Raw_Hsc]
+,DST.[Raw_Arch] = SRC.[Raw_Arch]
+,DST.[Raw_Gpa] = SRC.[Raw_Gpa]
+,DST.[Evolution_Highest_Qual] = SRC.[Evolution_Highest_Qual]
+,DST.[Nettech] = SRC.[Nettech]
+,DST.[Net_Ntech] = SRC.[Net_Ntech]
+,DST.[Net_Hsc] = SRC.[Net_Hsc]
+,DST.[Net_Arch] = SRC.[Net_Arch]
+,DST.[Net_Gpa] = SRC.[Net_Gpa]
+,DST.[El1_Bgrd] = SRC.[El1_Bgrd]
+,DST.[El2_Bgrd] = SRC.[El2_Bgrd]
+,DST.[Gp_Bgrd] = SRC.[Gp_Bgrd]
+,DST.[Avg_Marks] = SRC.[Avg_Marks]
+,DST.[Avg_Grd_Pnt] = SRC.[Avg_Grd_Pnt]
+,DST.[Gpb4] = SRC.[Gpb4]
+,DST.[Test_indicator] = SRC.[Test_indicator]
+,DST.[Prog] = SRC.[Prog]
+,DST.[Batch_Id] = SRC.[Batch_Id]
+,DST.[Test_Type] = SRC.[Test_Type]
+,DST.[Eng_Mark] = SRC.[Eng_Mark]
+,DST.[Oral] = SRC.[Oral]
+,DST.[Math_Mark] = SRC.[Math_Mark]
+,DST.[Overall] = SRC.[Overall]
+,DST.[Sci_Mark] = SRC.[Sci_Mark]
+,DST.[Raw_Posted_Agg] = SRC.[Raw_Posted_Agg]
+,DST.[Course_Offered] = SRC.[Course_Offered]
+,DST.[Net_Posted_Agg] = SRC.[Net_Posted_Agg]
+,DST.[Dpa_Offered_Course] = SRC.[Dpa_Offered_Course]
+,DST.[Sports_Type] = SRC.[Sports_Type]
+,DST.[Sports_Level] = SRC.[Sports_Level]
+,DST.[Sports_Role] = SRC.[Sports_Role]
+,DST.[Sports_Desc] = SRC.[Sports_Desc]
+,DST.[Arts_Type] = SRC.[Arts_Type]
+,DST.[Arts_Level] = SRC.[Arts_Level]
+,DST.[Arts_Desc] = SRC.[Arts_Desc]
+,DST.[Community_Service_Type] = SRC.[Community_Service_Type]
+,DST.[Community_Service_Desc] = SRC.[Community_Service_Desc]
+,DST.[Cca_Leadership_Type] = SRC.[Cca_Leadership_Type]
+,DST.[Cca_Leadership_Role] = SRC.[Cca_Leadership_Role]
+,DST.[Cca_Leadership_Desc] = SRC.[Cca_Leadership_Desc]
+,DST.[Entreprenuership_Desc] = SRC.[Entreprenuership_Desc]
+,DST.[Work_Attachment_Desc] = SRC.[Work_Attachment_Desc]
+,DST.Qualification_Type_Desc=src.Qual_type_desc
+,DST.Admit_Type_Desc=src.Admit_type_desc
+,DST.First_Level_Qualification_Desc=src.Qual_Level_desc
+,DST.Sceond_Level_Qualification_Desc=src. Qual_Level2_desc
+,DST.[Primary_National_ID_Type]=src.[Primary_National_ID_Type]
+,DST.[Primary_National_ID]=src.[Primary_National_ID]
+,DST.[Non_Primary_National_ID_Type_1]=src.[Non_Primary_National_ID_Type_1]
+,DST.[Non_Primary_National_ID_1]=src.[Non_Primary_National_ID_1]
+,DST.[Non_Primary_National_ID_Type_2]=src.[Non_Primary_National_ID_Type_2]
+,DST.[Non_Primary_National_ID_2]=src.[Non_Primary_National_ID_2]
+,DST.[Non_Primary_National_ID_Type_3]=src.[Non_Primary_National_ID_Type_3]
+,DST.[Non_Primary_National_ID_3]=src.[Non_Primary_National_ID_3]
+,DST.[Non_Primary_National_ID_Type_4]=src.[Non_Primary_National_ID_Type_4]
+,DST.[Non_Primary_National_ID_4]=src.[Non_Primary_National_ID_4]
+ ,dst.Modified_On=@processeddatetime;
+		
+
+--------------------------------------
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+  ROLLBACK TRANSACTION
+INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,@processeddatetime  as created_on
+  
+  
+END CATCH  
+GO</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A64D8089-5AD4-4E3D-B7DD-3466B960E26C}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JobStatusId">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{880AB272-D74C-4E58-A655-FA9A240D637B}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="MndColumncheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B81F4325-379F-453F-AC67-A529905E9876}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="PrevJobStatus">
+      <DTS:VariableValue
+        DTS:DataType="3">1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DB8239B1-1683-4297-B9D6-5DA0D840337B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprimarykeycheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{158DBFEB-8EF0-4F7D-9EE0-5798F7430A10}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprocesseddate">
+      <DTS:VariableValue
+        DTS:DataType="7">2/27/2019 11:28:20 AM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{48AB7356-C357-43EB-9B61-B9DF3CE49EC0}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SrcTable">
+      <DTS:VariableValue
+        DTS:DataType="8">STG_OASIS_APP_DATA</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BFEBE964-FBDF-4AA9-95D6-8B2C7CAC06AB}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Stage">
+      <DTS:VariableValue
+        DTS:DataType="8">DW</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C40E1860-38AA-4D96-A359-BEB22DC435F4}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTable">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_APPLICANT_DETAILS</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\check previous job status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{49F3E485-B40F-4176-8975-D237F6C9BB7B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="check previous job status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1544337A-D96E-4BAD-940C-1404C6746F8F}"
+          SQLTask:SqlStatementSource="&#xA;SELECT CASE WHEN [JOB_STATUS] ='SUCCESS' THEN 1 ELSE 0 END AS PrevJobStatus&#xA;FROM [DBO].[ETL_JOB_STATUS] WHERE [JOB_STATUS_ID]=&#xA;(SELECT MAX([JOB_STATUS_ID]) FROM [DBO].[ETL_JOB_STATUS]&#xA;WHERE [TARGET_TABLENAME]=?&#xA;AND [STAGE]='STG')&#xA;&#xA;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="PrevJobStatus"
+            SQLTask:DtsVariableName="User::PrevJobStatus" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create ETL Job Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{2D11517C-6197-499C-BC04-546716F58F3C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create ETL Job Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1544337A-D96E-4BAD-940C-1404C6746F8F}"
+          SQLTask:SqlStatementSource="&#xA;EXEC dbo.[usp_InsertETLJobLog]  ?,?,?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::Stage"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\get Job Status Id"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{102B988A-3669-4229-89B1-9664E7DC79AF}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="get Job Status Id"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1544337A-D96E-4BAD-940C-1404C6746F8F}"
+          SQLTask:SqlStatementSource="declare  @JobstatusID int&#xA;&#xA;select @JobstatusID=max(job_status_id) from [ETL_JOB_STATUS]&#xA;where [TARGET_TABLENAME]=?&#xA;&#xA;&#xA;Select @JobstatusID "
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JobStatusId" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\getprocesseddate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{96B369F4-AA75-4AA0-9333-7BC839B08DE3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="getprocesseddate"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1544337A-D96E-4BAD-940C-1404C6746F8F}"
+          SQLTask:SqlStatementSource="SELECT GETDATE()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::sqlprocesseddate" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\insert into main table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{510CDA72-16C9-4258-9064-9B37FAE2C53C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="insert into main table"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1544337A-D96E-4BAD-940C-1404C6746F8F}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::InsertQuery" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\masking"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{BAC33884-7180-4FE2-A358-E6AECF9F5AC8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="masking"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1544337A-D96E-4BAD-940C-1404C6746F8F}"
+          SQLTask:SqlStatementSource="INSERT INTO DW_NATIONAL_ID_MASKING (NATIONAL_ID)&#xA;SELECT DISTINCT NRIC_NUMBER FROM &#xA;(&#xA;SELECT DISTINCT  Primary_National_ID AS NRIC_NUMBER FROM  DW_APPLICANT_DETAILS WITH (NOLOCK) WHERE  LEN(Primary_National_ID) &gt;4&#xA;union&#xA;SELECT DISTINCT  Non_Primary_National_ID_1 AS NRIC_NUMBER FROM  DW_APPLICANT_DETAILS WITH (NOLOCK) WHERE  LEN(Non_Primary_National_ID_1) &gt;4&#xA;union&#xA;SELECT DISTINCT  Non_Primary_National_ID_2 AS NRIC_NUMBER FROM  DW_APPLICANT_DETAILS WITH (NOLOCK) WHERE  LEN(Non_Primary_National_ID_2) &gt;4&#xA;union&#xA;SELECT DISTINCT  Non_Primary_National_ID_3 AS NRIC_NUMBER FROM  DW_APPLICANT_DETAILS WITH (NOLOCK) WHERE  LEN(Non_Primary_National_ID_3) &gt;4&#xA;union&#xA;SELECT DISTINCT  Non_Primary_National_ID_4 AS NRIC_NUMBER FROM  DW_APPLICANT_DETAILS WITH (NOLOCK) WHERE  LEN(Non_Primary_National_ID_4) &gt;4&#xA;&#xA;&#xA;&#xA;) T&#xA;&#xA;where NRIC_NUMBER not in (Select distinct NATIONAL_ID from DW_NATIONAL_ID_MASKING)&#xA;&#xA;&#xA;UPDATE A &#xA;SET  A.[Masked_Primary_National_ID]=U.MASKED_NATIONAL_ID &#xA;FROM DW_NATIONAL_ID_MASKING U &#xA;JOIN   DW_APPLICANT_DETAILS  A&#x9;&#xA;ON A.Primary_National_ID=U.NATIONAL_ID&#xA;&#xA;&#xA;UPDATE B &#xA;SET  B.[Masked_Non_Primary_National_ID_1]=U1.MASKED_NATIONAL_ID &#xA;FROM DW_NATIONAL_ID_MASKING U1 &#xA;JOIN   DW_APPLICANT_DETAILS  B&#x9;&#xA;ON B.Non_Primary_National_ID_1=U1.NATIONAL_ID&#xA;&#xA;UPDATE C &#xA;SET  C.[Masked_Non_Primary_National_ID_2]=U2.MASKED_NATIONAL_ID &#xA;FROM DW_NATIONAL_ID_MASKING U2 &#xA;JOIN   DW_APPLICANT_DETAILS  C&#x9;&#xA;ON C.Non_Primary_National_ID_2=U2.NATIONAL_ID&#xA;&#xA;UPDATE D &#xA;SET  D.[Masked_Non_Primary_National_ID_3]=U3.MASKED_NATIONAL_ID &#xA;FROM DW_NATIONAL_ID_MASKING U3 &#xA;JOIN   DW_APPLICANT_DETAILS  D&#x9;&#xA;ON D.Non_Primary_National_ID_3=U3.NATIONAL_ID&#xA;&#xA;UPDATE E &#xA;SET  E.[Masked_Non_Primary_National_ID_4]=U4.MASKED_NATIONAL_ID &#xA;FROM DW_NATIONAL_ID_MASKING U4 &#xA;JOIN   DW_APPLICANT_DETAILS  E&#x9;&#xA;ON E.Non_Primary_National_ID_4=U4.NATIONAL_ID" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\update on failure"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C899A679-8F8B-42CE-B107-FC1BD4C1DE35}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="update on failure"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1544337A-D96E-4BAD-940C-1404C6746F8F}"
+          SQLTask:SqlStatementSource="   UPDATE [DBO].[ETL_JOB_STATUS]&#xA;  SET [JOB_STATUS]='Fail',&#xA;[ERROR_MSG]='Last Job not completed sucessfully'&#xA;  where [JOB_STATUS_ID]=?&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\UpdateJobStatus"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{A3D3C9B4-5695-46C8-9A5C-D69419E25A51}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="UpdateJobStatus"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1544337A-D96E-4BAD-940C-1404C6746F8F}"
+          SQLTask:SqlStatementSource="&#xA; &#xA;&#xA;DECLARE &#xA;@jobstatusid INT&#xA;select @jobstatusid=?&#xA;IF EXISTS(SELECT * FROM dbo.ETL_ERROR_LOG WHERE [JOB_STATUS_ID]=@jobstatusid)&#xA;&#xA; BEGIN&#xA;&#xA;&#xA;&#xA; UPDATE [dbo].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='FAIL'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;  END&#xA;&#xA;ELSE&#xA;&#xA;BEGIN&#xA;&#xA;UPDATE [DBO].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='Success'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;END&#xA;&#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{DBA2A420-F358-4BCF-B0B2-6112308DFBA4}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::PrevJobStatus]==0"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\update on failure" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{F1174D78-32F8-4519-9392-D400CC8ADF5C}"
+      DTS:From="Package\Create ETL Job Log"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\get Job Status Id" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{40E13A7B-0EC7-4029-881E-CD283AD67C8C}"
+      DTS:From="Package\getprocesseddate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\insert into main table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{EA37951C-F954-45AE-918B-EC25C81E8C9A}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::PrevJobStatus]==1"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\getprocesseddate" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{6F71AA0F-1A49-488B-A841-429C62116076}"
+      DTS:From="Package\get Job Status Id"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\check previous job status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{BCD8F528-4D54-4C1B-A8A1-C140B05C394D}"
+      DTS:From="Package\insert into main table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\masking" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{F29C9428-FC6D-47F2-9A4E-BCB7AF669359}"
+      DTS:From="Package\masking"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\UpdateJobStatus" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{1E1FD8D8-470A-4EEE-AD36-21AF0ED331DA}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{938B60DD-2940-4282-97FB-DE466A1BD255}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\Error Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{57EA8104-5414-410E-9628-13B77FA38301}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Error Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{1544337A-D96E-4BAD-940C-1404C6746F8F}"
+              SQLTask:SqlStatementSource="  insert into [dbo].[ETL_ERROR_LOG]([JOB_STATUS_ID],[ERROR_RECORD])&#xA;  select ?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL Job Status Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{BC99BD41-E7C7-4F2D-891A-5A92E957D75F}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL Job Status Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{1544337A-D96E-4BAD-940C-1404C6746F8F}"
+              SQLTask:SqlStatementSource="update [ETL_JOB_STATUS]&#xA;set Job_Status='Fail'&#xA;,Error_Msg=?&#xA;where job_status_id=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{1CC25B28-1D72-4C57-95AF-FCF2343C0137}"
+          DTS:From="Package.EventHandlers[OnError]\Error Log"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package.EventHandlers[OnError]\ETL Job Status Log" />
+      </DTS:PrecedenceConstraints>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="198,42"
+          Id="Package\check previous job status"
+          TopLeft="415,32" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Create ETL Job Log"
+          TopLeft="9,30" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\get Job Status Id"
+          TopLeft="225,31" />
+        <NodeLayout
+          Size="162,42"
+          Id="Package\getprocesseddate"
+          TopLeft="660,29" />
+        <NodeLayout
+          Size="179,42"
+          Id="Package\insert into main table"
+          TopLeft="648,128" />
+        <NodeLayout
+          Size="120,42"
+          Id="Package\masking"
+          TopLeft="860,139" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\update on failure"
+          TopLeft="418,164" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\UpdateJobStatus"
+          TopLeft="661,214" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="514,74">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-16.5,90"
+              Start="0,0"
+              End="-16.5,82.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,41"
+                    Point2="0,45"
+                    Point3="-4,45" />
+                  <mssgle:LineSegment
+                    End="-12.5,45" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-12.5,45"
+                    Point2="-16.5,45"
+                    Point3="-16.5,49" />
+                  <mssgle:LineSegment
+                    End="-16.5,82.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-16.25,50,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="179,51.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="46,0"
+              Start="0,0"
+              End="38.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="38.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="739.25,71">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,57"
+              Start="0,0"
+              End="0,49.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="613,51.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="47,0"
+              Start="0,0"
+              End="39.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="39.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="11.75,5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="384,52.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="31,0"
+              Start="0,0"
+              End="23.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="23.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="827,149">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="33,11"
+              Start="0,0"
+              End="25.5,11">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="12.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="12.5,0"
+                    Point2="16.5,0"
+                    Point3="16.5,4" />
+                  <mssgle:LineSegment
+                    End="16.5,7" />
+                  <mssgle:CubicBezierSegment
+                    Point1="16.5,7"
+                    Point2="16.5,11"
+                    Point3="20.5,11" />
+                  <mssgle:LineSegment
+                    End="25.5,11" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="920,181">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-180,33"
+              Start="0,0"
+              End="-180,25.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.5"
+                    Point2="0,16.5"
+                    Point3="-4,16.5" />
+                  <mssgle:LineSegment
+                    End="-176,16.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-176,16.5"
+                    Point2="-180,16.5"
+                    Point3="-180,20.5" />
+                  <mssgle:LineSegment
+                    End="-180,25.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package.EventHandlers[OnError]\Error Log"
+          TopLeft="60,60" />
+        <NodeLayout
+          Size="169,42"
+          Id="Package.EventHandlers[OnError]\ETL Job Status Log"
+          TopLeft="60,162" />
+        <EdgeLayout
+          Id="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          TopLeft="121.5,102">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="23,60"
+              Start="0,0"
+              End="23,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26"
+                    Point2="0,30"
+                    Point3="4,30" />
+                  <mssgle:LineSegment
+                    End="19,30" />
+                  <mssgle:CubicBezierSegment
+                    Point1="19,30"
+                    Point2="23,30"
+                    Point3="23,34" />
+                  <mssgle:LineSegment
+                    End="23,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

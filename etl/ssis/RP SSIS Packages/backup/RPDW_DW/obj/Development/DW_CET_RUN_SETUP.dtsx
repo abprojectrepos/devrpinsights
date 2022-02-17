@@ -1,0 +1,1108 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/30/2019 1:46:31 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-110119GM22"
+  DTS:CreatorName="NCS\P0500388"
+  DTS:DelayValidation="True"
+  DTS:DTSID="{8ABE65DA-A85D-465A-B44E-7FB3907B6A10}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="DW_CET_RUN_SETUP"
+  DTS:PackageType="5"
+  DTS:VersionBuild="126"
+  DTS:VersionGUID="{99F9C006-6753-4E01-84CC-A2D576F87D54}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{E32FBE07-81EE-44CA-A60D-37D1779857BA}"
+      DTS:ObjectName="DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=10.168.212.13;User ID=svc-dw-uat-etl;Initial Catalog=RPDW;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAdGBqS7B1CkWG301g2fxV+wAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACedBQJlFoUY2oiOyVwncydAAAAAASAAACgAAAAEAAAAMJ8K4EX2sB1Id9TQy5J4EwYAAAAvireARtZDt6k66Lp23diTX5D4ovJ2XSiFAAAAJJViSST2MPcSNlDjFJHtRsOUyfy</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ErrorLog]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9D6C23E8-5AB1-4C9B-B797-CD1FFF96566B}"
+      DTS:ObjectName="ErrorLog">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=10.168.212.13;User ID=svc-dw-uat-etl;Initial Catalog=RPDW;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAdGBqS7B1CkWG301g2fxV+wAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADZQuw9LuEmSlch1qLzCWMlAAAAAASAAACgAAAAEAAAAIG0yqunlYkOBhgEIGp3SykYAAAA6mGIU+g3n75C0q19af3p809FtRlQJ1JEFAAAACtmlC/sfRR7emC0daFdhX4HUQCX</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{19C73BB3-C490-4242-8614-58C4C1861632}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Duplicate_Check">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7CA9B7DA-7257-448E-B053-CBC3952061C7}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_name">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_CET_RUN_SETUP</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E29CBC67-68B2-4CD3-8C55-5CFAF8B5EAAE}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_Status">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{60B61684-AA45-4A57-8D88-9EE5BA95EFC3}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JOB_STATUS_ID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B8EE6985-6505-4F5F-AC39-80EA5FE5FA5A}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Mandatory_constraint_Check">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3CD9C7F9-E320-4FBA-BE8B-22D94BD42A2B}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Process_date">
+      <DTS:VariableValue
+        DTS:DataType="7">2/1/2019 2:58:00 PM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1363FD75-F4B2-4675-BA01-D304717D7FE2}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SourceTable">
+      <DTS:VariableValue
+        DTS:DataType="8">STG_OASIS_CET_RUN_SETUP</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{963402B2-1AEB-44DA-B8E3-825BB8D444C9}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;&#xA;BEGIN TRY&#xA;&#xA;------------&#xA;&#xA;DECLARE @LastDWProcessdate datetime&#xA;&#xA;,@processeddatetime datetime&#xA;,@jobstatusid varchar(5)&#xA;select @jobstatusid=&quot;+ (DT_STR, 5,1252) @[User::JOB_STATUS_ID] +&quot;&#xA;&#xA;select @LastDWProcessdate= Isnull(max(Modified_on),'1990-01-01 00:00:00.000') from [dbo].[DW_CET_RUN_SETUP]--dw table&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;--select  @processeddatetime=?&#xA;&#xA;--select @LastDWProcessdate&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;;with TMP_DW_CET_RUN_SETUP ([Institution]&#xA;      ,[Qual_Type]&#xA;      ,[Qual_Type_Descr]&#xA;      ,[Programme]&#xA;      ,[Programme_Descr]&#xA;      ,[Specialisatn]&#xA;      ,[Student_Attribute]&#xA;      ,[Acad_Term]&#xA;      ,[Admit_Term]&#xA;      ,[Run_Number]&#xA;      ,[Course_Title]&#xA;      ,[Course_Start_Date]&#xA;      ,[Course_End_Date]&#xA;      ,[Date_Closed]&#xA;      ,[Cert_Qual_Type]&#xA;      ,[Cert_Qual_Type_Descr]&#xA;      ,[Cert_Programme]&#xA;      ,[Cert_Programme_Descr]&#xA;      ,[Cert_Specialisatn]&#xA;      ,[Cert_Run_Number]&#xA;      ,[Sgpn_Standard_Rate_Course_Fee]&#xA;      ,[Sgpn_Standard_Rate_Item_Type]&#xA;      ,[Sgpn_Zero_Rated_Course_Fee]&#xA;      ,[Sgpn_Zero_Rated_Item_Type]&#xA;      ,[Sgpn_PR_Standard_Rate_Course_Fee]&#xA;      ,[Sgpn_PR_Standard_Rate_Item_Type]&#xA;      ,[Sgpn_PR_Zero_Rated_Course_Fee]&#xA;      ,[Sgpn_PR_Zero_Rated_Item_Type]&#xA;      ,[Foriegner_Standard_Rate_Course_Fee]&#xA;      ,[Foreigner_Standard_Rate_Item_Type]&#xA;      ,[Foriegner_Zero_Rated_Course_Fee]&#xA;      ,[Foreigner_Zero_Rated_Item_Type]&#xA;      ,[Charge_Item_Type_1]&#xA;      ,[Payment_Item_Type_1]&#xA;      ,[Sub_Req_Qual_Type_1]&#xA;      ,[Sub_Req_Prog_1]&#xA;      ,[Sub_Req_Specialisatn_1]&#xA;      ,[Sub_Req_Qual_Type_2]&#xA;      ,[Sub_Req_Prog_2]&#xA;      ,[Sub_Req_Specialisatn_2]&#xA;      ,[MUC_Qual_Type]&#xA;      ,[MUC_Prog]&#xA;      ,[MUC_Specialisatn]&#xA;      ,[Discount_Type]&#xA;      ,[Discount_Descr]&#xA;      ,[Percent_Value]&#xA;      ,[Numeral_Value]&#xA;      ,[Residency_Sgpn]&#xA;      ,[Residency_Sgpn_Pr]&#xA;      ,[Residency_Foreign_Nationals]&#xA;      ,[Self_Sponsor]&#xA;      ,[Comp_Sponsor]&#xA;      ,[Subsidy_Type]&#xA;      ,[Subsidy_Descr]&#xA;      ,[Payment_Item_Type_2]&#xA;      ,[Charge_Item_Type_2]&#xA;      ,[Comp_ID]&#xA;&#xA;      )&#xA;&#xA;         as&#xA;&#xA;  (&#xA;&#xA;SELECT &#xA;a.Inst&#xA;,a.Qual_Type_1&#xA;,d.Long_Name&#xA;,a.Prog_1&#xA;,e.Prog_Formal_Descr&#xA;,a.Specialisatn_1&#xA;,a.Student_Attribute&#xA;,a.Term&#xA;,a.Admit_Term&#xA;,a.Run_Number_1&#xA;,a.Course_Title&#xA;,a.Course_Start_Date&#xA;,a.Course_End_Date&#xA;,a.Date_Closed&#xA;,a.Qual_Type_2&#xA;,f.Long_Name&#xA;,a.Prog_2&#xA;,g.Prog_Formal_Descr&#xA;,a.Specialisatn_2&#xA;,a.Run_Number_2&#xA;,a.Sgpn_Standard_Rate_Course_Fee&#xA;,a.Sgpn_Standard_Rate_Item_Type&#xA;,a.Sgpn_Zero_Rated_Course_Fee&#xA;,a.Sgpn_Zero_Rated_Item_Type&#xA;,a.Sgpn_PR_Standard_Rate_Course_Fee&#xA;,a.Sgpn_PR_Standard_Rate_Item_Type&#xA;,a.Sgpn_PR_Zero_Rated_Course_Fee&#xA;,a.Sgpn_PR_Zero_Rated_Item_Type&#xA;,a.Foriegner_Standard_Rate_Course_Fee&#xA;,a.Foreigner_Standard_Rate_Item_Type&#xA;,a.Foriegner_Zero_Rated_Course_Fee&#xA;,a.Foreigner_Zero_Rated_Item_Type&#xA;,a.Charge_Item_Type&#xA;,a.Payment_Item_Type&#xA;,a.Sub_Req_Qual_Type_1&#xA;,a.Sub_Req_Prog_1&#xA;,a.Sub_Req_Specialisatn_1&#xA;,a.Sub_Req_Qual_Type_2&#xA;,a.Sub_Req_Prog_2&#xA;,a.Sub_Req_Specialisatn_2&#xA;,a.MUC_Qual_Type&#xA;,a.MUC_Prog&#xA;,a.MUC_Specialisatn&#xA;,ISNULL(b.Discount_Type,'NA')&#xA;,b.Descr&#xA;,b.Percent_Value&#xA;,b.Numeral_Value&#xA;,b.Residency_Sgpn&#xA;,b.Residency_Sgpn_Pr&#xA;,b.Residency_Foreign_Nationals&#xA;,b.Self_Sponsor&#xA;,b.Comp_Sponsor&#xA;,ISNULL(c.Subsidy_Type,'NA')&#xA;,c.Descr&#xA;,c.Payment_Item_Type&#xA;,c.Charge_Item_Type&#xA;,c.Comp_ID&#xA;&#xA;&#xA;  FROM &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_CET_RUN_SETUP] a left join &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_CET_RUN_SETUP_DISCOUNT_TYPE] b&#xA;&#xA;   on b.[Latest_Ind]='Y'and a.Qual_Type_1=b.Qual_Type and a.Prog_1=b.Prog and a.Specialisatn_1=b.Specialisatn and a.Student_Attribute=b.Student_Attribute and a.Term=b.Term&#xA;and a.Run_Number_1=b.Run_Number&#xA;&#xA;  left join &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_CET_RUN_SETUP_SUBSIDY_TYPE] c&#xA;&#xA;   on c.[Latest_Ind]='Y' and a.Qual_Type_1=c.Qual_Type and a.Prog_1=c.Prog and a.Specialisatn_1=c.Specialisatn and a.Student_Attribute=c.Student_Attribute and a.Term=c.Term&#xA;and a.Run_Number_1=c.Run_Number&#xA;&#xA;Left JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_MASTER_CODE] d&#xA;  on a.QUAL_TYPE_1=d.FIELD_VALUE and d.FIELD_NAME='ACAD_CAREER' and d.EFFECTIVE_STATUS = 'A' &#xA;&#xA;left join &#xA;  ( select  PROG_CODE,Prog_Formal_Descr from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_PROG_TABLE] a1&#xA;&#x9;&#x9; where a1.LATEST_IND='Y'  and a1.EFFECTIVE_DATE in (select max(b1.EFFECTIVE_DATE) from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_PROG_TABLE] b1&#xA;&#x9;&#x9; where b1.Prog_Code=a1.PROG_CODE)) e on a.Prog_1=e.Prog_Code&#x9;&#xA;&#x9;&#x9; &#xA;Left JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_MASTER_CODE] f&#xA;  on a.QUAL_TYPE_2=f.FIELD_VALUE and f.FIELD_NAME='ACAD_CAREER' and f.EFFECTIVE_STATUS = 'A'  &#xA;&#xA;left join &#xA;  ( select  PROG_CODE,Prog_Formal_Descr from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_PROG_TABLE] a1&#xA;&#x9;&#x9; where a1.LATEST_IND='Y'  and a1.EFFECTIVE_DATE in (select max(b1.EFFECTIVE_DATE) from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_PROG_TABLE] b1&#xA;&#x9;&#x9; where b1.Prog_Code=a1.PROG_CODE)) g on a.Prog_2=g.Prog_Code&#x9;&#xA;&#xA;where a.[Latest_Ind]='Y'   and a.[Modified_On]&gt;@LastDWProcessdate)&#xA;&#xA;&#xA;&#xA;       &#xA;&#xA;&#xA;&#xA;MERGE INTO dbo.DW_CET_RUN_SETUP AS dst&#xA;&#xA;   USING TMP_DW_CET_RUN_SETUP AS src&#xA;&#xA;   ON( dst.Qual_Type=src.Qual_Type and dst.Programme=src.Programme and dst.Specialisatn=Src.Specialisatn and dst.Acad_Term=src.Acad_Term&#xA;&#xA;  and  dst.Run_Number=src.Run_Number and dst.Cert_Qual_Type=src.Cert_Qual_Type and dst.Sub_Req_Qual_Type_1=src.Sub_Req_Qual_Type_1&#xA;  and dst.Sub_Req_Qual_Type_2=src.Sub_Req_Qual_Type_2 and src.MUC_Qual_Type=dst.MUC_Qual_Type&#xA;  and dst.Discount_Type=src.Discount_Type and dst.Subsidy_Type=src.Subsidy_Type)&#xA;&#xA;&#xA;&#xA;   WHEN NOT MATCHED THEN&#xA;&#xA;   INSERT&#xA;&#xA;         ( [Institution]&#xA;      ,[Qual_Type]&#xA;      ,[Qual_Type_Descr]&#xA;      ,[Programme]&#xA;      ,[Programme_Descr]&#xA;      ,[Specialisatn]&#xA;      ,[Student_Attribute]&#xA;      ,[Acad_Term]&#xA;      ,[Admit_Term]&#xA;      ,[Run_Number]&#xA;      ,[Course_Title]&#xA;      ,[Course_Start_Date]&#xA;      ,[Course_End_Date]&#xA;      ,[Date_Closed]&#xA;      ,[Cert_Qual_Type]&#xA;      ,[Cert_Qual_Type_Descr]&#xA;      ,[Cert_Programme]&#xA;      ,[Cert_Programme_Descr]&#xA;      ,[Cert_Specialisatn]&#xA;      ,[Cert_Run_Number]&#xA;      ,[Sgpn_Standard_Rate_Course_Fee]&#xA;      ,[Sgpn_Standard_Rate_Item_Type]&#xA;      ,[Sgpn_Zero_Rated_Course_Fee]&#xA;      ,[Sgpn_Zero_Rated_Item_Type]&#xA;      ,[Sgpn_PR_Standard_Rate_Course_Fee]&#xA;      ,[Sgpn_PR_Standard_Rate_Item_Type]&#xA;      ,[Sgpn_PR_Zero_Rated_Course_Fee]&#xA;      ,[Sgpn_PR_Zero_Rated_Item_Type]&#xA;      ,[Foriegner_Standard_Rate_Course_Fee]&#xA;      ,[Foreigner_Standard_Rate_Item_Type]&#xA;      ,[Foriegner_Zero_Rated_Course_Fee]&#xA;      ,[Foreigner_Zero_Rated_Item_Type]&#xA;      ,[Charge_Item_Type_1]&#xA;      ,[Payment_Item_Type_1]&#xA;      ,[Sub_Req_Qual_Type_1]&#xA;      ,[Sub_Req_Prog_1]&#xA;      ,[Sub_Req_Specialisatn_1]&#xA;      ,[Sub_Req_Qual_Type_2]&#xA;      ,[Sub_Req_Prog_2]&#xA;      ,[Sub_Req_Specialisatn_2]&#xA;      ,[MUC_Qual_Type]&#xA;      ,[MUC_Prog]&#xA;      ,[MUC_Specialisatn]&#xA;      ,[Discount_Type]&#xA;      ,[Discount_Descr]&#xA;      ,[Percent_Value]&#xA;      ,[Numeral_Value]&#xA;      ,[Residency_Sgpn]&#xA;      ,[Residency_Sgpn_Pr]&#xA;      ,[Residency_Foreign_Nationals]&#xA;      ,[Self_Sponsor]&#xA;      ,[Comp_Sponsor]&#xA;      ,[Subsidy_Type]&#xA;      ,[Subsidy_Descr]&#xA;      ,[Payment_Item_Type_2]&#xA;      ,[Charge_Item_Type_2]&#xA;      ,[Comp_ID]&#xA;&#xA;       ,[Created_On]&#xA;&#xA;      ,[Modified_On])&#xA;&#xA;   VALUES(  &#xA;&#xA;           SRC.[Institution]&#xA;      ,SRC.[Qual_Type]&#xA;      ,SRC.[Qual_Type_Descr]&#xA;      ,SRC.[Programme]&#xA;      ,SRC.[Programme_Descr]&#xA;      ,SRC.[Specialisatn]&#xA;      ,SRC.[Student_Attribute]&#xA;      ,SRC.[Acad_Term]&#xA;      ,SRC.[Admit_Term]&#xA;      ,SRC.[Run_Number]&#xA;      ,SRC.[Course_Title]&#xA;      ,SRC.[Course_Start_Date]&#xA;      ,SRC.[Course_End_Date]&#xA;      ,SRC.[Date_Closed]&#xA;      ,SRC.[Cert_Qual_Type]&#xA;      ,SRC.[Cert_Qual_Type_Descr]&#xA;      ,SRC.[Cert_Programme]&#xA;      ,SRC.[Cert_Programme_Descr]&#xA;      ,SRC.[Cert_Specialisatn]&#xA;      ,SRC.[Cert_Run_Number]&#xA;      ,SRC.[Sgpn_Standard_Rate_Course_Fee]&#xA;      ,SRC.[Sgpn_Standard_Rate_Item_Type]&#xA;      ,SRC.[Sgpn_Zero_Rated_Course_Fee]&#xA;      ,SRC.[Sgpn_Zero_Rated_Item_Type]&#xA;      ,SRC.[Sgpn_PR_Standard_Rate_Course_Fee]&#xA;      ,SRC.[Sgpn_PR_Standard_Rate_Item_Type]&#xA;      ,SRC.[Sgpn_PR_Zero_Rated_Course_Fee]&#xA;      ,SRC.[Sgpn_PR_Zero_Rated_Item_Type]&#xA;      ,SRC.[Foriegner_Standard_Rate_Course_Fee]&#xA;      ,SRC.[Foreigner_Standard_Rate_Item_Type]&#xA;      ,SRC.[Foriegner_Zero_Rated_Course_Fee]&#xA;      ,SRC.[Foreigner_Zero_Rated_Item_Type]&#xA;      ,SRC.[Charge_Item_Type_1]&#xA;      ,SRC.[Payment_Item_Type_1]&#xA;      ,SRC.[Sub_Req_Qual_Type_1]&#xA;      ,SRC.[Sub_Req_Prog_1]&#xA;      ,SRC.[Sub_Req_Specialisatn_1]&#xA;      ,SRC.[Sub_Req_Qual_Type_2]&#xA;      ,SRC.[Sub_Req_Prog_2]&#xA;      ,SRC.[Sub_Req_Specialisatn_2]&#xA;      ,SRC.[MUC_Qual_Type]&#xA;      ,SRC.[MUC_Prog]&#xA;      ,SRC.[MUC_Specialisatn]&#xA;      ,SRC.[Discount_Type]&#xA;      ,SRC.[Discount_Descr]&#xA;      ,SRC.[Percent_Value]&#xA;      ,SRC.[Numeral_Value]&#xA;      ,SRC.[Residency_Sgpn]&#xA;      ,SRC.[Residency_Sgpn_Pr]&#xA;      ,SRC.[Residency_Foreign_Nationals]&#xA;      ,SRC.[Self_Sponsor]&#xA;      ,SRC.[Comp_Sponsor]&#xA;      ,SRC.[Subsidy_Type]&#xA;      ,SRC.[Subsidy_Descr]&#xA;      ,SRC.[Payment_Item_Type_2]&#xA;      ,SRC.[Charge_Item_Type_2]&#xA;      ,SRC.[Comp_ID]&#xA;&#xA;       ,  getdate(),getdate())&#xA;&#xA;   WHEN MATCHED&#xA;&#xA;   &#xA;&#xA;   THEN UPDATE&#xA;&#xA;   SET        dst.Institution=src.Institution&#xA;&#xA;              ,dst.Qual_Type_Descr=src.Qual_Type_Descr&#xA;&#xA;             ,dst.Programme_Descr=src.Programme_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Student_Attribute=src.Student_Attribute&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Admit_Term=src.Admit_Term&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Course_Title=src.Course_Title&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Course_Start_Date=src.Course_Start_Date&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Course_End_Date=src.Course_End_Date&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Date_Closed=src.Date_Closed&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Cert_Programme=src.Cert_Programme&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Cert_Programme_Descr=src.Cert_Programme_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Cert_Specialisatn=src.Cert_Specialisatn&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Cert_Run_Number=src.Cert_Run_Number&#xA;&#xA;&#x9;&#x9;&#x9; ,dst.Sgpn_Standard_Rate_Course_Fee=src.Sgpn_Standard_Rate_Course_Fee&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Sgpn_Standard_Rate_Item_Type=src.Sgpn_Standard_Rate_Item_Type&#xA;&#xA;&#x9;&#x9;&#x9;   ,dst.Sgpn_Zero_Rated_Course_Fee=src.Sgpn_Zero_Rated_Course_Fee&#xA;&#xA;&#x9;&#x9;&#x9;    ,dst.Sgpn_Zero_Rated_Item_Type=src.Sgpn_Zero_Rated_Item_Type&#xA;&#xA;&#x9;&#x9;&#x9;&#x9; ,dst.Sgpn_PR_Standard_Rate_Course_Fee=src.Sgpn_PR_Standard_Rate_Course_Fee&#xA;&#xA;&#x9;&#x9;&#x9;&#x9;  ,dst.Sgpn_PR_Standard_Rate_Item_Type=src.Sgpn_PR_Standard_Rate_Item_Type&#xA;&#xA;,dst.Sgpn_PR_Zero_Rated_Course_Fee=src.Sgpn_PR_Zero_Rated_Course_Fee&#xA;,dst.Sgpn_PR_Zero_Rated_Item_Type=src.Sgpn_PR_Zero_Rated_Item_Type&#xA;,dst.Foriegner_Standard_Rate_Course_Fee=src.Foriegner_Standard_Rate_Course_Fee&#xA;,dst.Foreigner_Standard_Rate_Item_Type=src.Foreigner_Standard_Rate_Item_Type&#xA;,dst.Foriegner_Zero_Rated_Course_Fee=src.Foriegner_Zero_Rated_Course_Fee&#xA;,dst.Foreigner_Zero_Rated_Item_Type=src.Foreigner_Zero_Rated_Item_Type&#xA;,dst.Charge_Item_Type_1=src.Charge_Item_Type_1&#xA;,dst.Payment_Item_Type_1=src.Payment_Item_Type_1&#xA;,dst.Sub_Req_Prog_1=src.Sub_Req_Prog_1&#xA;,dst.Sub_Req_Specialisatn_1=src.Sub_Req_Specialisatn_1&#xA;,dst.Sub_Req_Prog_2=src.Sub_Req_Prog_2&#xA;,dst.Sub_Req_Specialisatn_2=src.Sub_Req_Specialisatn_2&#xA;,dst.MUC_Prog=src.MUC_Prog&#xA;,dst.MUC_Specialisatn=src.MUC_Specialisatn&#xA;&#xA;--,dst.Discount_Type=src.Discount_Type&#xA;,dst.Discount_Descr=src.Discount_Descr&#xA;,dst.Percent_Value=src.Percent_Value&#xA;,dst.Numeral_Value=src.Numeral_Value&#xA;,dst.Residency_Sgpn=src.Residency_Sgpn&#xA;,dst.Residency_Sgpn_Pr=src.Residency_Sgpn_Pr&#xA;,dst.Residency_Foreign_Nationals=src.Residency_Foreign_Nationals&#xA;,dst.Self_Sponsor=src.Self_Sponsor&#xA;,dst.Comp_Sponsor=src.Comp_Sponsor&#xA;--,dst.Subsidy_Type=src.Subsidy_Type&#xA;,dst.Subsidy_Descr=src.Subsidy_Descr&#xA;,dst.Payment_Item_Type_2=src.Payment_Item_Type_2&#xA;,dst.Charge_Item_Type_2=src.Charge_Item_Type_2&#xA;,dst.Comp_ID=src.Comp_ID&#xA;,dst.Modified_On=getdate();&#xA;&#xA;              &#xA;&#xA;&#xA;&#xA;--------------------------------------&#xA;&#xA;COMMIT TRANSACTION&#xA;&#xA;END TRY&#xA;&#xA;&#xA;&#xA;BEGIN CATCH&#xA;&#xA;  ROLLBACK TRANSACTION&#xA;&#xA;  INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,getdate()  as created_on&#xA;&#xA;  &#xA;&#xA;END CATCH  &#xA;&#xA;GO&#xA;&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_DW_Load">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+
+BEGIN TRY
+
+------------
+
+DECLARE @LastDWProcessdate datetime
+
+,@processeddatetime datetime
+,@jobstatusid varchar(5)
+select @jobstatusid=0
+
+select @LastDWProcessdate= Isnull(max(Modified_on),'1990-01-01 00:00:00.000') from [dbo].[DW_CET_RUN_SETUP]--dw table
+
+
+
+
+
+
+
+
+
+--select  @processeddatetime=?
+
+--select @LastDWProcessdate
+
+
+
+
+
+;with TMP_DW_CET_RUN_SETUP ([Institution]
+      ,[Qual_Type]
+      ,[Qual_Type_Descr]
+      ,[Programme]
+      ,[Programme_Descr]
+      ,[Specialisatn]
+      ,[Student_Attribute]
+      ,[Acad_Term]
+      ,[Admit_Term]
+      ,[Run_Number]
+      ,[Course_Title]
+      ,[Course_Start_Date]
+      ,[Course_End_Date]
+      ,[Date_Closed]
+      ,[Cert_Qual_Type]
+      ,[Cert_Qual_Type_Descr]
+      ,[Cert_Programme]
+      ,[Cert_Programme_Descr]
+      ,[Cert_Specialisatn]
+      ,[Cert_Run_Number]
+      ,[Sgpn_Standard_Rate_Course_Fee]
+      ,[Sgpn_Standard_Rate_Item_Type]
+      ,[Sgpn_Zero_Rated_Course_Fee]
+      ,[Sgpn_Zero_Rated_Item_Type]
+      ,[Sgpn_PR_Standard_Rate_Course_Fee]
+      ,[Sgpn_PR_Standard_Rate_Item_Type]
+      ,[Sgpn_PR_Zero_Rated_Course_Fee]
+      ,[Sgpn_PR_Zero_Rated_Item_Type]
+      ,[Foriegner_Standard_Rate_Course_Fee]
+      ,[Foreigner_Standard_Rate_Item_Type]
+      ,[Foriegner_Zero_Rated_Course_Fee]
+      ,[Foreigner_Zero_Rated_Item_Type]
+      ,[Charge_Item_Type_1]
+      ,[Payment_Item_Type_1]
+      ,[Sub_Req_Qual_Type_1]
+      ,[Sub_Req_Prog_1]
+      ,[Sub_Req_Specialisatn_1]
+      ,[Sub_Req_Qual_Type_2]
+      ,[Sub_Req_Prog_2]
+      ,[Sub_Req_Specialisatn_2]
+      ,[MUC_Qual_Type]
+      ,[MUC_Prog]
+      ,[MUC_Specialisatn]
+      ,[Discount_Type]
+      ,[Discount_Descr]
+      ,[Percent_Value]
+      ,[Numeral_Value]
+      ,[Residency_Sgpn]
+      ,[Residency_Sgpn_Pr]
+      ,[Residency_Foreign_Nationals]
+      ,[Self_Sponsor]
+      ,[Comp_Sponsor]
+      ,[Subsidy_Type]
+      ,[Subsidy_Descr]
+      ,[Payment_Item_Type_2]
+      ,[Charge_Item_Type_2]
+      ,[Comp_ID]
+
+      )
+
+         as
+
+  (
+
+SELECT 
+a.Inst
+,a.Qual_Type_1
+,d.Long_Name
+,a.Prog_1
+,e.Prog_Formal_Descr
+,a.Specialisatn_1
+,a.Student_Attribute
+,a.Term
+,a.Admit_Term
+,a.Run_Number_1
+,a.Course_Title
+,a.Course_Start_Date
+,a.Course_End_Date
+,a.Date_Closed
+,a.Qual_Type_2
+,f.Long_Name
+,a.Prog_2
+,g.Prog_Formal_Descr
+,a.Specialisatn_2
+,a.Run_Number_2
+,a.Sgpn_Standard_Rate_Course_Fee
+,a.Sgpn_Standard_Rate_Item_Type
+,a.Sgpn_Zero_Rated_Course_Fee
+,a.Sgpn_Zero_Rated_Item_Type
+,a.Sgpn_PR_Standard_Rate_Course_Fee
+,a.Sgpn_PR_Standard_Rate_Item_Type
+,a.Sgpn_PR_Zero_Rated_Course_Fee
+,a.Sgpn_PR_Zero_Rated_Item_Type
+,a.Foriegner_Standard_Rate_Course_Fee
+,a.Foreigner_Standard_Rate_Item_Type
+,a.Foriegner_Zero_Rated_Course_Fee
+,a.Foreigner_Zero_Rated_Item_Type
+,a.Charge_Item_Type
+,a.Payment_Item_Type
+,a.Sub_Req_Qual_Type_1
+,a.Sub_Req_Prog_1
+,a.Sub_Req_Specialisatn_1
+,a.Sub_Req_Qual_Type_2
+,a.Sub_Req_Prog_2
+,a.Sub_Req_Specialisatn_2
+,a.MUC_Qual_Type
+,a.MUC_Prog
+,a.MUC_Specialisatn
+,ISNULL(b.Discount_Type,'NA')
+,b.Descr
+,b.Percent_Value
+,b.Numeral_Value
+,b.Residency_Sgpn
+,b.Residency_Sgpn_Pr
+,b.Residency_Foreign_Nationals
+,b.Self_Sponsor
+,b.Comp_Sponsor
+,ISNULL(c.Subsidy_Type,'NA')
+,c.Descr
+,c.Payment_Item_Type
+,c.Charge_Item_Type
+,c.Comp_ID
+
+
+  FROM RPDW_STG.[dbo].[STG_OASIS_CET_RUN_SETUP] a left join RPDW_STG.[dbo].[STG_OASIS_CET_RUN_SETUP_DISCOUNT_TYPE] b
+
+   on b.[Latest_Ind]='Y'and a.Qual_Type_1=b.Qual_Type and a.Prog_1=b.Prog and a.Specialisatn_1=b.Specialisatn and a.Student_Attribute=b.Student_Attribute and a.Term=b.Term
+and a.Run_Number_1=b.Run_Number
+
+  left join RPDW_STG.[dbo].[STG_OASIS_CET_RUN_SETUP_SUBSIDY_TYPE] c
+
+   on c.[Latest_Ind]='Y' and a.Qual_Type_1=c.Qual_Type and a.Prog_1=c.Prog and a.Specialisatn_1=c.Specialisatn and a.Student_Attribute=c.Student_Attribute and a.Term=c.Term
+and a.Run_Number_1=c.Run_Number
+
+Left JOIN RPDW_STG.[dbo].[STG_OASIS_MASTER_CODE] d
+  on a.QUAL_TYPE_1=d.FIELD_VALUE and d.FIELD_NAME='ACAD_CAREER' and d.EFFECTIVE_STATUS = 'A' 
+
+left join 
+  ( select  PROG_CODE,Prog_Formal_Descr from RPDW_STG.[dbo].[STG_OASIS_PROG_TABLE] a1
+		 where a1.LATEST_IND='Y'  and a1.EFFECTIVE_DATE in (select max(b1.EFFECTIVE_DATE) from RPDW_STG.[dbo].[STG_OASIS_PROG_TABLE] b1
+		 where b1.Prog_Code=a1.PROG_CODE)) e on a.Prog_1=e.Prog_Code	
+		 
+Left JOIN RPDW_STG.[dbo].[STG_OASIS_MASTER_CODE] f
+  on a.QUAL_TYPE_2=f.FIELD_VALUE and f.FIELD_NAME='ACAD_CAREER' and f.EFFECTIVE_STATUS = 'A'  
+
+left join 
+  ( select  PROG_CODE,Prog_Formal_Descr from RPDW_STG.[dbo].[STG_OASIS_PROG_TABLE] a1
+		 where a1.LATEST_IND='Y'  and a1.EFFECTIVE_DATE in (select max(b1.EFFECTIVE_DATE) from RPDW_STG.[dbo].[STG_OASIS_PROG_TABLE] b1
+		 where b1.Prog_Code=a1.PROG_CODE)) g on a.Prog_2=g.Prog_Code	
+
+where a.[Latest_Ind]='Y'   and a.[Modified_On]&gt;@LastDWProcessdate)
+
+
+
+       
+
+
+
+MERGE INTO dbo.DW_CET_RUN_SETUP AS dst
+
+   USING TMP_DW_CET_RUN_SETUP AS src
+
+   ON( dst.Qual_Type=src.Qual_Type and dst.Programme=src.Programme and dst.Specialisatn=Src.Specialisatn and dst.Acad_Term=src.Acad_Term
+
+  and  dst.Run_Number=src.Run_Number and dst.Cert_Qual_Type=src.Cert_Qual_Type and dst.Sub_Req_Qual_Type_1=src.Sub_Req_Qual_Type_1
+  and dst.Sub_Req_Qual_Type_2=src.Sub_Req_Qual_Type_2 and src.MUC_Qual_Type=dst.MUC_Qual_Type
+  and dst.Discount_Type=src.Discount_Type and dst.Subsidy_Type=src.Subsidy_Type)
+
+
+
+   WHEN NOT MATCHED THEN
+
+   INSERT
+
+         ( [Institution]
+      ,[Qual_Type]
+      ,[Qual_Type_Descr]
+      ,[Programme]
+      ,[Programme_Descr]
+      ,[Specialisatn]
+      ,[Student_Attribute]
+      ,[Acad_Term]
+      ,[Admit_Term]
+      ,[Run_Number]
+      ,[Course_Title]
+      ,[Course_Start_Date]
+      ,[Course_End_Date]
+      ,[Date_Closed]
+      ,[Cert_Qual_Type]
+      ,[Cert_Qual_Type_Descr]
+      ,[Cert_Programme]
+      ,[Cert_Programme_Descr]
+      ,[Cert_Specialisatn]
+      ,[Cert_Run_Number]
+      ,[Sgpn_Standard_Rate_Course_Fee]
+      ,[Sgpn_Standard_Rate_Item_Type]
+      ,[Sgpn_Zero_Rated_Course_Fee]
+      ,[Sgpn_Zero_Rated_Item_Type]
+      ,[Sgpn_PR_Standard_Rate_Course_Fee]
+      ,[Sgpn_PR_Standard_Rate_Item_Type]
+      ,[Sgpn_PR_Zero_Rated_Course_Fee]
+      ,[Sgpn_PR_Zero_Rated_Item_Type]
+      ,[Foriegner_Standard_Rate_Course_Fee]
+      ,[Foreigner_Standard_Rate_Item_Type]
+      ,[Foriegner_Zero_Rated_Course_Fee]
+      ,[Foreigner_Zero_Rated_Item_Type]
+      ,[Charge_Item_Type_1]
+      ,[Payment_Item_Type_1]
+      ,[Sub_Req_Qual_Type_1]
+      ,[Sub_Req_Prog_1]
+      ,[Sub_Req_Specialisatn_1]
+      ,[Sub_Req_Qual_Type_2]
+      ,[Sub_Req_Prog_2]
+      ,[Sub_Req_Specialisatn_2]
+      ,[MUC_Qual_Type]
+      ,[MUC_Prog]
+      ,[MUC_Specialisatn]
+      ,[Discount_Type]
+      ,[Discount_Descr]
+      ,[Percent_Value]
+      ,[Numeral_Value]
+      ,[Residency_Sgpn]
+      ,[Residency_Sgpn_Pr]
+      ,[Residency_Foreign_Nationals]
+      ,[Self_Sponsor]
+      ,[Comp_Sponsor]
+      ,[Subsidy_Type]
+      ,[Subsidy_Descr]
+      ,[Payment_Item_Type_2]
+      ,[Charge_Item_Type_2]
+      ,[Comp_ID]
+
+       ,[Created_On]
+
+      ,[Modified_On])
+
+   VALUES(  
+
+           SRC.[Institution]
+      ,SRC.[Qual_Type]
+      ,SRC.[Qual_Type_Descr]
+      ,SRC.[Programme]
+      ,SRC.[Programme_Descr]
+      ,SRC.[Specialisatn]
+      ,SRC.[Student_Attribute]
+      ,SRC.[Acad_Term]
+      ,SRC.[Admit_Term]
+      ,SRC.[Run_Number]
+      ,SRC.[Course_Title]
+      ,SRC.[Course_Start_Date]
+      ,SRC.[Course_End_Date]
+      ,SRC.[Date_Closed]
+      ,SRC.[Cert_Qual_Type]
+      ,SRC.[Cert_Qual_Type_Descr]
+      ,SRC.[Cert_Programme]
+      ,SRC.[Cert_Programme_Descr]
+      ,SRC.[Cert_Specialisatn]
+      ,SRC.[Cert_Run_Number]
+      ,SRC.[Sgpn_Standard_Rate_Course_Fee]
+      ,SRC.[Sgpn_Standard_Rate_Item_Type]
+      ,SRC.[Sgpn_Zero_Rated_Course_Fee]
+      ,SRC.[Sgpn_Zero_Rated_Item_Type]
+      ,SRC.[Sgpn_PR_Standard_Rate_Course_Fee]
+      ,SRC.[Sgpn_PR_Standard_Rate_Item_Type]
+      ,SRC.[Sgpn_PR_Zero_Rated_Course_Fee]
+      ,SRC.[Sgpn_PR_Zero_Rated_Item_Type]
+      ,SRC.[Foriegner_Standard_Rate_Course_Fee]
+      ,SRC.[Foreigner_Standard_Rate_Item_Type]
+      ,SRC.[Foriegner_Zero_Rated_Course_Fee]
+      ,SRC.[Foreigner_Zero_Rated_Item_Type]
+      ,SRC.[Charge_Item_Type_1]
+      ,SRC.[Payment_Item_Type_1]
+      ,SRC.[Sub_Req_Qual_Type_1]
+      ,SRC.[Sub_Req_Prog_1]
+      ,SRC.[Sub_Req_Specialisatn_1]
+      ,SRC.[Sub_Req_Qual_Type_2]
+      ,SRC.[Sub_Req_Prog_2]
+      ,SRC.[Sub_Req_Specialisatn_2]
+      ,SRC.[MUC_Qual_Type]
+      ,SRC.[MUC_Prog]
+      ,SRC.[MUC_Specialisatn]
+      ,SRC.[Discount_Type]
+      ,SRC.[Discount_Descr]
+      ,SRC.[Percent_Value]
+      ,SRC.[Numeral_Value]
+      ,SRC.[Residency_Sgpn]
+      ,SRC.[Residency_Sgpn_Pr]
+      ,SRC.[Residency_Foreign_Nationals]
+      ,SRC.[Self_Sponsor]
+      ,SRC.[Comp_Sponsor]
+      ,SRC.[Subsidy_Type]
+      ,SRC.[Subsidy_Descr]
+      ,SRC.[Payment_Item_Type_2]
+      ,SRC.[Charge_Item_Type_2]
+      ,SRC.[Comp_ID]
+
+       ,  getdate(),getdate())
+
+   WHEN MATCHED
+
+   
+
+   THEN UPDATE
+
+   SET        dst.Institution=src.Institution
+
+              ,dst.Qual_Type_Descr=src.Qual_Type_Descr
+
+             ,dst.Programme_Descr=src.Programme_Descr
+
+			  ,dst.Student_Attribute=src.Student_Attribute
+
+			  ,dst.Admit_Term=src.Admit_Term
+
+			  ,dst.Course_Title=src.Course_Title
+
+			  ,dst.Course_Start_Date=src.Course_Start_Date
+
+			  ,dst.Course_End_Date=src.Course_End_Date
+
+			  ,dst.Date_Closed=src.Date_Closed
+
+			  ,dst.Cert_Programme=src.Cert_Programme
+
+			  ,dst.Cert_Programme_Descr=src.Cert_Programme_Descr
+
+			  ,dst.Cert_Specialisatn=src.Cert_Specialisatn
+
+			  ,dst.Cert_Run_Number=src.Cert_Run_Number
+
+			 ,dst.Sgpn_Standard_Rate_Course_Fee=src.Sgpn_Standard_Rate_Course_Fee
+
+			  ,dst.Sgpn_Standard_Rate_Item_Type=src.Sgpn_Standard_Rate_Item_Type
+
+			   ,dst.Sgpn_Zero_Rated_Course_Fee=src.Sgpn_Zero_Rated_Course_Fee
+
+			    ,dst.Sgpn_Zero_Rated_Item_Type=src.Sgpn_Zero_Rated_Item_Type
+
+				 ,dst.Sgpn_PR_Standard_Rate_Course_Fee=src.Sgpn_PR_Standard_Rate_Course_Fee
+
+				  ,dst.Sgpn_PR_Standard_Rate_Item_Type=src.Sgpn_PR_Standard_Rate_Item_Type
+
+,dst.Sgpn_PR_Zero_Rated_Course_Fee=src.Sgpn_PR_Zero_Rated_Course_Fee
+,dst.Sgpn_PR_Zero_Rated_Item_Type=src.Sgpn_PR_Zero_Rated_Item_Type
+,dst.Foriegner_Standard_Rate_Course_Fee=src.Foriegner_Standard_Rate_Course_Fee
+,dst.Foreigner_Standard_Rate_Item_Type=src.Foreigner_Standard_Rate_Item_Type
+,dst.Foriegner_Zero_Rated_Course_Fee=src.Foriegner_Zero_Rated_Course_Fee
+,dst.Foreigner_Zero_Rated_Item_Type=src.Foreigner_Zero_Rated_Item_Type
+,dst.Charge_Item_Type_1=src.Charge_Item_Type_1
+,dst.Payment_Item_Type_1=src.Payment_Item_Type_1
+,dst.Sub_Req_Prog_1=src.Sub_Req_Prog_1
+,dst.Sub_Req_Specialisatn_1=src.Sub_Req_Specialisatn_1
+,dst.Sub_Req_Prog_2=src.Sub_Req_Prog_2
+,dst.Sub_Req_Specialisatn_2=src.Sub_Req_Specialisatn_2
+,dst.MUC_Prog=src.MUC_Prog
+,dst.MUC_Specialisatn=src.MUC_Specialisatn
+
+--,dst.Discount_Type=src.Discount_Type
+,dst.Discount_Descr=src.Discount_Descr
+,dst.Percent_Value=src.Percent_Value
+,dst.Numeral_Value=src.Numeral_Value
+,dst.Residency_Sgpn=src.Residency_Sgpn
+,dst.Residency_Sgpn_Pr=src.Residency_Sgpn_Pr
+,dst.Residency_Foreign_Nationals=src.Residency_Foreign_Nationals
+,dst.Self_Sponsor=src.Self_Sponsor
+,dst.Comp_Sponsor=src.Comp_Sponsor
+--,dst.Subsidy_Type=src.Subsidy_Type
+,dst.Subsidy_Descr=src.Subsidy_Descr
+,dst.Payment_Item_Type_2=src.Payment_Item_Type_2
+,dst.Charge_Item_Type_2=src.Charge_Item_Type_2
+,dst.Comp_ID=src.Comp_ID
+,dst.Modified_On=getdate();
+
+              
+
+
+
+--------------------------------------
+
+COMMIT TRANSACTION
+
+END TRY
+
+
+
+BEGIN CATCH
+
+  ROLLBACK TRANSACTION
+
+  INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,getdate()  as created_on
+
+  
+
+END CATCH  
+
+GO
+</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BD09BBB8-3408-45D2-8745-0385F03013EF}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="STAGE">
+      <DTS:VariableValue
+        DTS:DataType="8">DW</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8306AF1E-183E-4978-A875-721CD5FC990D}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTableName">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_CET_RUN_SETUP</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create ETL Job Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{7A6BCB5C-1F1F-4131-92DD-B7E68774107A}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create ETL Job Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9D6C23E8-5AB1-4C9B-B797-CD1FFF96566B}"
+          SQLTask:SqlStatementSource="Exec [dbo].[usp_InsertETLJobLog] ?, ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Job_name"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::STAGE"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::SourceTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::TgtTableName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Error Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{6DEAE6D5-CA06-4560-8AAF-55CFE021DA44}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Error Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9D6C23E8-5AB1-4C9B-B797-CD1FFF96566B}"
+          SQLTask:SqlStatementSource="UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET&#xA;ERROR_MSG = 'STG table is not completed',&#xA;JOB_STATUS ='Fail'&#xA;--PROCESSED_ON =getdate()&#xA;WHERE JOB_STATUS_ID=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\JOB_STATUS_ID"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{1D539CAF-8ADA-4D86-941E-E2C15F47D7DC}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="JOB_STATUS_ID"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9D6C23E8-5AB1-4C9B-B797-CD1FFF96566B}"
+          SQLTask:SqlStatementSource="SELECT max([JOB_STATUS_ID])&#xA;      &#xA;  FROM [dbo].[ETL_JOB_STATUS] where [SOURCE_FILENAME]=? &#xA;---and convert(varchar(8),CREATED_ON,112)=convert--(varchar(8) ,getdate(),112)"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::SourceTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Into DW"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F8ED9336-D76F-45B4-BBD5-0D7734421B78}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Into DW"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{E32FBE07-81EE-44CA-A60D-37D1779857BA}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::SQL_DW_Load" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Process_Date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{BABED253-DE8F-45F5-911C-E74E78296AD3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Process_Date"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{E32FBE07-81EE-44CA-A60D-37D1779857BA}"
+          SQLTask:SqlStatementSource="Select getdate()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::Process_date" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Process_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="135"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update Job Status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{A47E79EE-BB53-4053-8F03-A786C11E592D}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Job Status"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9D6C23E8-5AB1-4C9B-B797-CD1FFF96566B}"
+          SQLTask:SqlStatementSource="DECLARE &#xA;@jobstatusid INT &#xA;select @jobstatusid=?&#xA;IF exists(select * from dbo.ETL_ERROR_LOG where [JOB_STATUS_ID]=@jobstatusid)&#xA; BEGIN&#xA; Update [dbo].[ETL_JOB_STATUS]&#xA;SET [PROCESSED_ON] =getdate(),&#xA;[JOB_STATUS]='Fail'&#xA;where [JOB_STATUS_ID]=@jobstatusid&#xA;  END&#xA;ELSE&#xA;BEGIN&#xA;Update [dbo].[ETL_JOB_STATUS]&#xA;SET [PROCESSED_ON] =getdate(),&#xA;[JOB_STATUS]='Success'&#xA;where [JOB_STATUS_ID]=@jobstatusid&#xA;END" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Validate job status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{980BF3E3-1DE9-4353-AE58-0251D1ED2357}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Validate job status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9D6C23E8-5AB1-4C9B-B797-CD1FFF96566B}"
+          SQLTask:SqlStatementSource="select CASE WHEN JOB_STATUS='Success' then 0 ELSE 1 END AS  JOB_STATUS&#xA;&#xA;from [dbo].[ETL_JOB_STATUS]&#xA;  where STAGE='STG' and TARGET_TABLENAME='STG_OASIS_STUDENT_DEBARMT' and &#xA;  JOB_STATUS_ID in (Select max(JOB_STATUS_ID) from [dbo].[ETL_JOB_STATUS]&#xA;  where STAGE='STG' and TARGET_TABLENAME='STG_OASIS_STUDENT_DEBARMT')"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::Job_Status" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::STAGE"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{B8CEB738-D733-4830-9DCD-02919CA69945}"
+      DTS:From="Package\Process_Date"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Load Into DW" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{97584D0A-85E1-43A2-BA9B-883D99B9FE00}"
+      DTS:From="Package\Create ETL Job Log"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\JOB_STATUS_ID" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{67D28159-E90F-474F-8F74-EE569022668C}"
+      DTS:From="Package\JOB_STATUS_ID"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Validate job status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{5E12AA8F-4A08-4219-9D67-1242A2595879}"
+      DTS:From="Package\Load Into DW"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Update Job Status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[False]"
+      DTS:CreationName=""
+      DTS:DTSID="{780DD80F-10D4-4C77-92BE-3719BD558E76}"
+      DTS:Expression="@[User::Job_Status]==1"
+      DTS:From="Package\Validate job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="False"
+      DTS:To="Package\Error Log" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[True]"
+      DTS:CreationName=""
+      DTS:DTSID="{718C72FE-E138-44CF-A74D-C9D698201849}"
+      DTS:Expression="@[User::Job_Status]==0"
+      DTS:From="Package\Validate job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="True"
+      DTS:To="Package\Process_Date" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{F5DBF376-1BDC-4555-AAF0-91CD7B14B189}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{894D7C14-738D-4D24-AC55-55459B17CBE3}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL_ERROR_LOG"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{C99C497C-3A64-4EEB-A80F-D2D11BC6221C}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL_ERROR_LOG">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{9D6C23E8-5AB1-4C9B-B797-CD1FFF96566B}"
+              SQLTask:SqlStatementSource="[dbo].[usp_InsertETLErrorLog] ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="131"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Create ETL Job Log"
+          TopLeft="17,13" />
+        <NodeLayout
+          Size="123,42"
+          Id="Package\Error Log"
+          TopLeft="699,21" />
+        <NodeLayout
+          Size="142,42"
+          Id="Package\JOB_STATUS_ID"
+          TopLeft="231,18" />
+        <NodeLayout
+          Size="144,42"
+          Id="Package\Load Into DW"
+          TopLeft="484,217" />
+        <NodeLayout
+          Size="142,42"
+          Id="Package\Process_Date"
+          TopLeft="487,131" />
+        <NodeLayout
+          Size="165,42"
+          Id="Package\Update Job Status"
+          TopLeft="526,322" />
+        <NodeLayout
+          Size="166,42"
+          Id="Package\Validate job status"
+          TopLeft="446,22" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="557,173">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44"
+              Start="0,0"
+              End="0,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="187,36.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="44,0"
+              Start="0,0"
+              End="36.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="36.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="373,41">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="73,0"
+              Start="0,0"
+              End="65.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="65.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="556,259">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="52.5,63"
+              Start="0,0"
+              End="52.5,55.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,27.5"
+                    Point2="0,31.5"
+                    Point3="4,31.5" />
+                  <mssgle:LineSegment
+                    End="48.5,31.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="48.5,31.5"
+                    Point2="52.5,31.5"
+                    Point3="52.5,35.5" />
+                  <mssgle:LineSegment
+                    End="52.5,55.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[False]"
+          TopLeft="612,42.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="87,0"
+              Start="0,0"
+              End="79.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="79.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="28.01365234375,5,23.4726953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[True]"
+          TopLeft="529,64">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="29,67"
+              Start="0,0"
+              End="29,59.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.5"
+                    Point2="0,33.5"
+                    Point3="4,33.5" />
+                  <mssgle:LineSegment
+                    End="25,33.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="25,33.5"
+                    Point2="29,33.5"
+                    Point3="29,37.5" />
+                  <mssgle:LineSegment
+                    End="29,59.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="3.48755859375,38.5,22.0248828125,9.421875"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="162,42"
+          Id="Package.EventHandlers[OnError]\ETL_ERROR_LOG"
+          TopLeft="370,98" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PrecedenceConstraint
+    design-time-name="Package.PrecedenceConstraints[False]">
+    <ShowAnnotation>ConstraintName</ShowAnnotation>
+  </PrecedenceConstraint>
+  <PrecedenceConstraint
+    design-time-name="Package.PrecedenceConstraints[True]">
+    <ShowAnnotation>ConstraintName</ShowAnnotation>
+  </PrecedenceConstraint>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

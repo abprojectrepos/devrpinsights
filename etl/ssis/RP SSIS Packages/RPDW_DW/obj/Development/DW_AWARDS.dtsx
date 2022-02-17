@@ -1,0 +1,1040 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/31/2019 4:40:18 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-140119GM07"
+  DTS:CreatorName="NCS\P0500450"
+  DTS:DTSID="{20BF5006-F80B-4546-9D5A-EEFC3E38C12C}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="DW_AWARD"
+  DTS:PackageType="5"
+  DTS:VersionBuild="134"
+  DTS:VersionGUID="{FA6FC7DB-AA6E-4D2E-8BF1-859D4C86FBDB}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{23064BF9-0498-4399-BC09-CC80004BE963}"
+      DTS:ObjectName="RPDW_DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT;Provider=SQLNCLI11.1;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiAXqJL5xwkap+hp6D6sPxwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACc45AdZOtPKS9xk2GK4J91qoEeMssWpBBUnMz2jQ16xQAAAAAOgAAAAAIAACAAAAAg3wWr3aKAqba3b1Ghs1cihfSx7ryPgM9YrNUZzviolzAAAABQjZlzyrKHeWAvXhJC5acs0mH+TxJplpeasc/IFwpG3hMUPgZ65HIxQNBV9DN55DhAAAAAYQlxRXEnNkjF3HLatU+DZBW9/P57frpdqSLLcjZNwe+PLDGPIB15tua2Q9AmHmFnbL/PhVjKfoCeVZo86R7slA</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_STG]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{37851446-FBBE-4CA2-BC3E-351F534FB49C}"
+      DTS:ObjectName="RPDW_STG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::Staging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT_STG;Provider=SQLNCLI11.1;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiAXqJL5xwkap+hp6D6sPxwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAADmuq6zIkJTw0PQhsuIxSGENQTp1S96eKCCL1XwcD6QhQAAAAAOgAAAAAIAACAAAADqVOqMW5dQw/INwB3lNTLSFV9D0ncBprFEMVWXfr0GKjAAAAB/VAvgegpYMHGLzfKwGVX0UOKjSezLWonQQy7xCoBPIbasKmH1574KmMHVRUkoeQxAAAAAjZVY+6CFsS9P2SaYVfcfNhE6qiYNkjftIAmnVae7Ia4r7fdsdAU9eAl2ZR2x80Fa2loAIoaksdhb1fK1F5m08A</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DF1AED01-A86A-472C-A27E-C17E391F28DF}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;BEGIN&#xA;----------&#xA;DECLARE @LastDWProcessdate datetime&#xA;,@processeddatetime datetime&#xA;,@jobstatusid varchar(5)&#xA;select @jobstatusid=&quot;+ (DT_STR, 5,1252) @[User::JobStatusId] +&quot;&#xA;select @LastDWProcessdate=isnull(max(Modified_on),'1900-01-01 00:00:00.000') from DW_AWARDS&#xA;select  @processeddatetime= getdate()&#xA;--select @LastDWProcessdate&#xA;&#xA;;with tmp_STG_OASIS_PROG_TABLE (qual_type,PROG_CODE,Prog_Formal_Descr,EFFECTIVE_DATE,latest_ind,ra)&#xA;as&#xA;&#xA;(select distinct qual_type,PROG_CODE,Prog_Formal_Descr,EFFECTIVE_DATE,latest_ind,&#xA;row_number()over(partition by PROG_CODE order by EFFECTIVE_DATE desc)ra from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;..STG_OASIS_PROG_TABLE&#xA;--where PROG_CODE='DBA'&#xA;)&#xA;&#xA;, TMP_OASIS_PRIZE_AND_AWARD ([Inst]&#xA;,[Student_ID]&#xA;,[Name]&#xA;,[Qual_Type]&#xA;,[Qual_Type_Descr]&#xA;,[School_Centre]&#xA;,[Prog]&#xA;,[Prog_Descr]&#xA;,[Term]&#xA;,[Current_Prog_Status]&#xA;,[Current_Prog_Status_Descr]&#xA;,[Student_Prog_Status_N_AT]&#xA;,[Student_GPA_N_AT]&#xA;,[Student_Prog_Status_N_AT_Descr]&#xA;,[Module_Grade_Score]&#xA;,[Rqmt_Term]&#xA;,[Current_Phase]&#xA;,[Student_Award_Status]&#xA;,[Award_ID]&#xA;,[Descr]&#xA;,[Award_Type]&#xA;,[Awd_Mode_1]&#xA;,[Awd_Mode_1_Amt]&#xA;,[Awd_Mode_2]&#xA;,[Awd_Mode_2_Amt]&#xA;,[Awd_Mode_3]&#xA;,[Awd_Mode_3_Amt]&#xA;,[Award_Amount]&#xA;,[Comment]&#xA;,[Donor_Code]&#xA;,[Donor_Name]&#xA;,[Soliciting_School]&#xA;,[Recipient_School]&#xA;,[Stage]&#xA;,[Award_Prog]&#xA;,[Award_Specialisatn]&#xA;,[Award_Module_ID]&#xA;,[Award_Module_Code]&#xA;,[Award_Long_Module_Title]&#xA;,[Award_Qual_Type]&#xA;,[Award_Status]&#xA;,[Disbursement_Date]&#xA;,[Disbursement_Status]&#xA;,[Batch_ID]&#xA;,Student_Award_Status_Desc&#xA;,Award_Type_Desc&#xA;,Awd_Mode1_Desc&#xA;,Awd_Mode2_Desc&#xA;,Awd_Mode3_Desc&#xA;,Award_Status_Desc&#xA;)&#xA;as&#xA;(select &#xA;[Inst]&#xA;,[Student_ID]&#xA;,[Name]&#xA;,PA.[Qual_Type]&#xA;,MC.Long_Name as [Qual_Type_Descr]&#xA;,PA.[School_Centre]&#xA;,[Prog]&#xA;,PT.Prog_Formal_Descr as [Prog_Descr]&#xA;,[Term]&#xA;,[Current_Prog_Status]&#xA;,mc1.long_name as [Current_Prog_Status_Descr]&#xA;,[Student_Prog_Status_N_AT]&#xA;,[Student_GPA_N_AT]&#xA;,mc2.long_name as [Student_Prog_Status_N_AT_Descr]&#xA;,[Module_Grade_Score]&#xA;,[Rqmt_Term]&#xA;,[Current_Phase]&#xA;,[Student_Award_Status]&#xA;,[Award_ID]&#xA;,[Descr]&#xA;,[Award_Type]&#xA;,[Awd_Mode_1]&#xA;,[Awd_Mode_1_Amt]&#xA;,[Awd_Mode_2]&#xA;,[Awd_Mode_2_Amt]&#xA;,[Awd_Mode_3]&#xA;,[Awd_Mode_3_Amt]&#xA;,[Award_Amount]&#xA;,[Comment]&#xA;,[Donor_Code]&#xA;,[Donor_Name]&#xA;,[Soliciting_School]&#xA;,[Recipient_School]&#xA;,[Stage]&#xA;,[Award_Prog]&#xA;,[Award_Specialisatn]&#xA;,[Award_Module_ID]&#xA;,[Award_Module_Code]&#xA;,[Award_Long_Module_Title]&#xA;,[Award_Qual_Type]&#xA;,[Award_Status]&#xA;,[Disbursement_Date]&#xA;,[Disbursement_Status]&#xA;,[Batch_ID]&#xA;,MC3.Long_Name &#xA;,MC4.Long_Name &#xA;,MC5.Long_Name &#xA;,MC6.Long_Name &#xA;,MC7.Long_Name &#xA;,MC8.Long_Name &#xA;from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_PRIZE_AND_AWARD]  PA LEFT OUTER JOIN&#xA;&quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].STG_OASIS_MASTER_CODE MC&#xA;ON PA.QUAL_TYPE=MC.FIELD_VALUE AND  FIELD_NAME='ACAD_CAREER' AND EFFECTIVE_STATUS = 'A'&#xA;LEFT OUTER JOIN  tmp_STG_OASIS_PROG_TABLE PT ON PA.PROG=PT.PROG_CODE  and  PT.LATEST_IND='Y' and PT.RA=1&#xA;----and max(EFFECTIVE_DATE)=&#xA;LEFT OUTER JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].STG_OASIS_MASTER_CODE MC1 &#xA;ON PA.CURRENT_PROG_STATUS=MC1.FIELD_VALUE AND  MC1.FIELD_NAME='PROG_STATUS' AND MC1.EFFECTIVE_STATUS = 'A'&#xA;LEFT OUTER JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].STG_OASIS_MASTER_CODE MC2 &#xA;ON PA.STUDENT_PROG_STATUS_N_AT=MC2.FIELD_VALUE AND  MC2.FIELD_NAME='A_AWD_PROG_STATUS' AND MC2.EFFECTIVE_STATUS = 'A'&#xA;&#xA;LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].STG_OASIS_MASTER_CODE MC3 on PA.Student_Award_Status=MC3.Field_Value and MC3.Field_Name='A_GRAW_AWD_STA' and MC3.Effective_Status='A'&#xA;LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].STG_OASIS_MASTER_CODE MC4 on PA.Award_Type=MC4.Field_Value and MC4.Field_Name='A_GRAW_TYPE' and MC4.Effective_Status='A'&#xA;LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].STG_OASIS_MASTER_CODE MC5 on PA.Awd_Mode_1=MC5.Field_Value and MC5.Field_Name='A_AW_MODE1' and MC5.Effective_Status='A'&#xA;LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].STG_OASIS_MASTER_CODE MC6 on PA.Awd_Mode_2=MC6.Field_Value and MC6.Field_Name='A_AW_MODE2' and MC6.Effective_Status='A'&#xA;LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].STG_OASIS_MASTER_CODE MC7 on PA.Awd_Mode_3=MC7.Field_Value and MC7.Field_Name='A_AW_MODE3' and MC7.Effective_Status='A'&#xA;LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].STG_OASIS_MASTER_CODE MC8 on PA.Award_Status=MC8.Field_Value and MC8.Field_Name='A_GRAW_STATUS' and MC8.Effective_Status='A'&#xA;&#xA;&#xA;where PA.[Latest_Ind]='Y'and PA.[Modified_On]&gt;@LastDWProcessdate&#xA;)&#xA;&#xA;&#xA;MERGE INTO DW_AWARDs AS dst&#xA;USING TMP_OASIS_PRIZE_AND_AWARD AS src&#xA;ON( dst.[Acad_Term]=src.[Term] and dst.[Student_Id]=src.[Student_Id]  and dst.[Award_ID]=src.[Award_ID] &#xA;   and  dst.[Qual_Type]=src.[Qual_Type] and   dst.[Inst]=src.[Inst]and   dst.[Prog]=src.[Prog]&#xA;   and   dst.[School_Centre]=src.[School_Centre] )&#xA;&#xA;WHEN NOT MATCHED THEN&#xA;INSERT&#xA;(&#xA;[Inst]&#xA;,[Student_ID]&#xA;,[Name]&#xA;,[Qual_Type]&#xA;,[Qual_Type_Descr]&#xA;,[School_Centre]&#xA;,[Prog]&#xA;,[Prog_Descr]&#xA;,[Acad_Term]&#xA;,[Current_Prog_Status]&#xA;,[Current_Prog_Status_Descr]&#xA;,[Student_Prog_Status_N_AT]&#xA;,[Student_GPA_N_AT]&#xA;,[Student_Prog_Status_N_AT_Descr]&#xA;,[Module_Grade_Score]&#xA;,[Rqmt_Term]&#xA;,[Current_Phase]&#xA;,[Student_Award_Status]&#xA;,[Award_ID]&#xA;,[Descr]&#xA;,[Award_Type]&#xA;,[Awd_Mode_1]&#xA;,[Awd_Mode_1_Amt]&#xA;,[Awd_Mode_2]&#xA;,[Awd_Mode_2_Amt]&#xA;,[Awd_Mode_3]&#xA;,[Awd_Mode_3_Amt]&#xA;,[Award_Amount]&#xA;,[Comment]&#xA;,[Donor_Code]&#xA;,[Donor_Name]&#xA;,[Soliciting_School]&#xA;,[Recipient_School]&#xA;,[Stage]&#xA;,[Award_Prog]&#xA;,[Award_Specialisatn]&#xA;,[Award_Module_ID]&#xA;,[Award_Module_Code]&#xA;,[Award_Long_Module_Title]&#xA;,[Award_Qual_Type]&#xA;,[Award_Status]&#xA;,[Disbursement_Date]&#xA;,[Disbursement_Status]&#xA;,[Batch_ID]&#xA;,[Created_On]&#xA;,[Modified_On]&#xA;,Student_Award_Status_Desc&#xA;,Award_Type_Desc&#xA;,Awd_Mode1_Desc&#xA;,Awd_Mode2_Desc&#xA;,Awd_Mode3_Desc&#xA;,Award_Status_Desc&#xA;)&#xA;VALUES(  &#xA;&#xA;src.[Inst]&#xA;,src.[Student_ID]&#xA;,src.[Name]&#xA;,src.[Qual_Type]&#xA;,src.[Qual_Type_Descr]&#xA;,src.[School_Centre]&#xA;,src.[Prog]&#xA;,src.[Prog_Descr]&#xA;,src.[Term]&#xA;,src.[Current_Prog_Status]&#xA;,src.[Current_Prog_Status_Descr]&#xA;,src.[Student_Prog_Status_N_AT]&#xA;,src.[Student_GPA_N_AT]&#xA;,src.[Student_Prog_Status_N_AT_Descr]&#xA;,src.[Module_Grade_Score]&#xA;,src.[Rqmt_Term]&#xA;,src.[Current_Phase]&#xA;,src.[Student_Award_Status]&#xA;,src.[Award_ID]&#xA;,src.[Descr]&#xA;,src.[Award_Type]&#xA;,src.[Awd_Mode_1]&#xA;,src.[Awd_Mode_1_Amt]&#xA;,src.[Awd_Mode_2]&#xA;,src.[Awd_Mode_2_Amt]&#xA;,src.[Awd_Mode_3]&#xA;,src.[Awd_Mode_3_Amt]&#xA;,src.[Award_Amount]&#xA;,src.[Comment]&#xA;,src.[Donor_Code]&#xA;,src.[Donor_Name]&#xA;,src.[Soliciting_School]&#xA;,src.[Recipient_School]&#xA;,src.[Stage]&#xA;,src.[Award_Prog]&#xA;,src.[Award_Specialisatn]&#xA;,src.[Award_Module_ID]&#xA;,src.[Award_Module_Code]&#xA;,src.[Award_Long_Module_Title]&#xA;,src.[Award_Qual_Type]&#xA;,src.[Award_Status]&#xA;,src.[Disbursement_Date]&#xA;,src.[Disbursement_Status]&#xA;,src.[Batch_ID]&#xA;,  @processeddatetime,@processeddatetime&#xA;,src.Student_Award_Status_Desc&#xA;,src.Award_Type_Desc&#xA;,src.Awd_Mode1_Desc&#xA;,src.Awd_Mode2_Desc&#xA;,src.Awd_Mode3_Desc&#xA;,src.Award_Status_Desc&#xA;)&#xA;WHEN MATCHED&#xA;   &#xA;THEN UPDATE&#xA;SET &#x9;  dst.[Inst] = src.[Inst]&#xA;,dst.[Name] =  src.[Name]&#xA;,dst.[Qual_Type] =  src.[Qual_Type]&#xA;,dst.[Qual_Type_Descr]=src.[Qual_Type_Descr]&#xA;,dst.[School_Centre] =  src.[School_Centre]&#xA;,dst.[Prog] =  src.[Prog]&#xA;,dst.[Prog_Descr]= src.[Prog_Descr]&#xA;,dst.[Current_Prog_Status] =  src.[Current_Prog_Status]&#xA;,dst.[Student_Prog_Status_N_AT] =  src.[Student_Prog_Status_N_AT]&#xA;,dst.[Student_GPA_N_AT] =  src.[Student_GPA_N_AT]&#xA;,dst.[Module_Grade_Score] =  src.[Module_Grade_Score]&#xA;,dst.[Rqmt_Term] =  src.[Rqmt_Term]&#xA;,dst.[Current_Phase] =  src.[Current_Phase]&#xA;,dst.[Student_Award_Status] =  src.[Student_Award_Status]&#xA;,dst.[Current_Prog_Status_Descr]=src.[Current_Prog_Status_Descr]&#xA;,dst.[DESCR] =  src.[DESCR]&#xA;,dst.[Student_Prog_Status_N_AT_Descr]=src.[Student_Prog_Status_N_AT_Descr]&#xA;,dst.[Award_Type] =  src.[Award_Type]&#xA;,dst.[Awd_Mode_1] =  src.[Awd_Mode_1]&#xA;,dst.[Awd_Mode_1_Amt] =  src.[Awd_Mode_1_Amt]&#xA;,dst.[Awd_Mode_2] =  src.[Awd_Mode_2]&#xA;,dst.[Awd_Mode_2_Amt] =  src.[Awd_Mode_2_Amt]&#xA;,dst.[Awd_Mode_3] =  src.[Awd_Mode_3]&#xA;,dst.[Awd_Mode_3_Amt] =  src.[Awd_Mode_3_Amt]&#xA;,dst.[Award_Amount] =  src.[Award_Amount]&#xA;,dst.[Comment] =  src.[Comment]&#xA;,dst.[Donor_Code] =  src.[Donor_Code]&#xA;,dst.[Donor_Name] =  src.[Donor_Name]&#xA;,dst.[Soliciting_School] =  src.[Soliciting_School]&#xA;,dst.[Recipient_School] =  src.[Recipient_School]&#xA;,dst.[Stage] =  src.[Stage]&#xA;,dst.[Award_Prog] =  src.[Award_Prog]&#xA;,dst.[Award_Specialisatn] =  src.[Award_Specialisatn]&#xA;,dst.[Award_Module_ID] =  src.[Award_Module_ID]&#xA;,dst.[Award_Module_Code] =  src.[Award_Module_Code]&#xA;,dst.[Award_Long_Module_Title] =  src.[Award_Long_Module_Title]&#xA;,dst.[Award_Qual_Type] =  src.[Award_Qual_Type]&#xA;,dst.[Award_Status] =  src.[Award_Status]&#xA;,dst.[Disbursement_Date] =  src.[Disbursement_Date]&#xA;,dst.[Disbursement_Status] =  src.[Disbursement_Status]&#xA;,dst.[Batch_ID] =  src.[Batch_ID]&#xA;&#xA;,dst.Student_Award_Status_Desc=src.Student_Award_Status_Desc&#xA;,dst.Award_Type_Desc=src.Award_Type_Desc&#xA;,dst.Awd_Mode1_Desc=src.Awd_Mode1_Desc&#xA;,dst.Awd_Mode2_Desc=src.Awd_Mode2_Desc&#xA;,dst.Awd_Mode3_Desc=src.Awd_Mode3_Desc&#xA;,dst.Award_Status_Desc=src.Award_Status_Desc&#xA;&#xA;,dst.Modified_On=@processeddatetime;&#xA;&#x9;&#x9;&#xA;&#xA;------------------------------------&#xA;COMMIT TRANSACTION&#xA;END&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,@processeddatetime  as created_on&#xA;  &#xA;  END CATCH  &#xA;GO&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="InsertQuery">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+BEGIN
+----------
+DECLARE @LastDWProcessdate datetime
+,@processeddatetime datetime
+,@jobstatusid varchar(5)
+select @jobstatusid=0
+select @LastDWProcessdate=isnull(max(Modified_on),'1900-01-01 00:00:00.000') from DW_AWARDS
+select  @processeddatetime= getdate()
+--select @LastDWProcessdate
+
+;with tmp_STG_OASIS_PROG_TABLE (qual_type,PROG_CODE,Prog_Formal_Descr,EFFECTIVE_DATE,latest_ind,ra)
+as
+
+(select distinct qual_type,PROG_CODE,Prog_Formal_Descr,EFFECTIVE_DATE,latest_ind,
+row_number()over(partition by PROG_CODE order by EFFECTIVE_DATE desc)ra from RPDW_UAT_STG..STG_OASIS_PROG_TABLE
+--where PROG_CODE='DBA'
+)
+
+, TMP_OASIS_PRIZE_AND_AWARD ([Inst]
+,[Student_ID]
+,[Name]
+,[Qual_Type]
+,[Qual_Type_Descr]
+,[School_Centre]
+,[Prog]
+,[Prog_Descr]
+,[Term]
+,[Current_Prog_Status]
+,[Current_Prog_Status_Descr]
+,[Student_Prog_Status_N_AT]
+,[Student_GPA_N_AT]
+,[Student_Prog_Status_N_AT_Descr]
+,[Module_Grade_Score]
+,[Rqmt_Term]
+,[Current_Phase]
+,[Student_Award_Status]
+,[Award_ID]
+,[Descr]
+,[Award_Type]
+,[Awd_Mode_1]
+,[Awd_Mode_1_Amt]
+,[Awd_Mode_2]
+,[Awd_Mode_2_Amt]
+,[Awd_Mode_3]
+,[Awd_Mode_3_Amt]
+,[Award_Amount]
+,[Comment]
+,[Donor_Code]
+,[Donor_Name]
+,[Soliciting_School]
+,[Recipient_School]
+,[Stage]
+,[Award_Prog]
+,[Award_Specialisatn]
+,[Award_Module_ID]
+,[Award_Module_Code]
+,[Award_Long_Module_Title]
+,[Award_Qual_Type]
+,[Award_Status]
+,[Disbursement_Date]
+,[Disbursement_Status]
+,[Batch_ID]
+,Student_Award_Status_Desc
+,Award_Type_Desc
+,Awd_Mode1_Desc
+,Awd_Mode2_Desc
+,Awd_Mode3_Desc
+,Award_Status_Desc
+)
+as
+(select 
+[Inst]
+,[Student_ID]
+,[Name]
+,PA.[Qual_Type]
+,MC.Long_Name as [Qual_Type_Descr]
+,PA.[School_Centre]
+,[Prog]
+,PT.Prog_Formal_Descr as [Prog_Descr]
+,[Term]
+,[Current_Prog_Status]
+,mc1.long_name as [Current_Prog_Status_Descr]
+,[Student_Prog_Status_N_AT]
+,[Student_GPA_N_AT]
+,mc2.long_name as [Student_Prog_Status_N_AT_Descr]
+,[Module_Grade_Score]
+,[Rqmt_Term]
+,[Current_Phase]
+,[Student_Award_Status]
+,[Award_ID]
+,[Descr]
+,[Award_Type]
+,[Awd_Mode_1]
+,[Awd_Mode_1_Amt]
+,[Awd_Mode_2]
+,[Awd_Mode_2_Amt]
+,[Awd_Mode_3]
+,[Awd_Mode_3_Amt]
+,[Award_Amount]
+,[Comment]
+,[Donor_Code]
+,[Donor_Name]
+,[Soliciting_School]
+,[Recipient_School]
+,[Stage]
+,[Award_Prog]
+,[Award_Specialisatn]
+,[Award_Module_ID]
+,[Award_Module_Code]
+,[Award_Long_Module_Title]
+,[Award_Qual_Type]
+,[Award_Status]
+,[Disbursement_Date]
+,[Disbursement_Status]
+,[Batch_ID]
+,MC3.Long_Name 
+,MC4.Long_Name 
+,MC5.Long_Name 
+,MC6.Long_Name 
+,MC7.Long_Name 
+,MC8.Long_Name 
+from RPDW_UAT_STG.[dbo].[STG_OASIS_PRIZE_AND_AWARD]  PA LEFT OUTER JOIN
+RPDW_UAT_STG.[dbo].STG_OASIS_MASTER_CODE MC
+ON PA.QUAL_TYPE=MC.FIELD_VALUE AND  FIELD_NAME='ACAD_CAREER' AND EFFECTIVE_STATUS = 'A'
+LEFT OUTER JOIN  tmp_STG_OASIS_PROG_TABLE PT ON PA.PROG=PT.PROG_CODE  and  PT.LATEST_IND='Y' and PT.RA=1
+----and max(EFFECTIVE_DATE)=
+LEFT OUTER JOIN RPDW_UAT_STG.[dbo].STG_OASIS_MASTER_CODE MC1 
+ON PA.CURRENT_PROG_STATUS=MC1.FIELD_VALUE AND  MC1.FIELD_NAME='PROG_STATUS' AND MC1.EFFECTIVE_STATUS = 'A'
+LEFT OUTER JOIN RPDW_UAT_STG.[dbo].STG_OASIS_MASTER_CODE MC2 
+ON PA.STUDENT_PROG_STATUS_N_AT=MC2.FIELD_VALUE AND  MC2.FIELD_NAME='A_AWD_PROG_STATUS' AND MC2.EFFECTIVE_STATUS = 'A'
+
+LEFT JOIN RPDW_UAT_STG.[dbo].STG_OASIS_MASTER_CODE MC3 on PA.Student_Award_Status=MC3.Field_Value and MC3.Field_Name='A_GRAW_AWD_STA' and MC3.Effective_Status='A'
+LEFT JOIN RPDW_UAT_STG.[dbo].STG_OASIS_MASTER_CODE MC4 on PA.Award_Type=MC4.Field_Value and MC4.Field_Name='A_GRAW_TYPE' and MC4.Effective_Status='A'
+LEFT JOIN RPDW_UAT_STG.[dbo].STG_OASIS_MASTER_CODE MC5 on PA.Awd_Mode_1=MC5.Field_Value and MC5.Field_Name='A_AW_MODE1' and MC5.Effective_Status='A'
+LEFT JOIN RPDW_UAT_STG.[dbo].STG_OASIS_MASTER_CODE MC6 on PA.Awd_Mode_2=MC6.Field_Value and MC6.Field_Name='A_AW_MODE2' and MC6.Effective_Status='A'
+LEFT JOIN RPDW_UAT_STG.[dbo].STG_OASIS_MASTER_CODE MC7 on PA.Awd_Mode_3=MC7.Field_Value and MC7.Field_Name='A_AW_MODE3' and MC7.Effective_Status='A'
+LEFT JOIN RPDW_UAT_STG.[dbo].STG_OASIS_MASTER_CODE MC8 on PA.Award_Status=MC8.Field_Value and MC8.Field_Name='A_GRAW_STATUS' and MC8.Effective_Status='A'
+
+
+where PA.[Latest_Ind]='Y'and PA.[Modified_On]&gt;@LastDWProcessdate
+)
+
+
+MERGE INTO DW_AWARDs AS dst
+USING TMP_OASIS_PRIZE_AND_AWARD AS src
+ON( dst.[Acad_Term]=src.[Term] and dst.[Student_Id]=src.[Student_Id]  and dst.[Award_ID]=src.[Award_ID] 
+   and  dst.[Qual_Type]=src.[Qual_Type] and   dst.[Inst]=src.[Inst]and   dst.[Prog]=src.[Prog]
+   and   dst.[School_Centre]=src.[School_Centre] )
+
+WHEN NOT MATCHED THEN
+INSERT
+(
+[Inst]
+,[Student_ID]
+,[Name]
+,[Qual_Type]
+,[Qual_Type_Descr]
+,[School_Centre]
+,[Prog]
+,[Prog_Descr]
+,[Acad_Term]
+,[Current_Prog_Status]
+,[Current_Prog_Status_Descr]
+,[Student_Prog_Status_N_AT]
+,[Student_GPA_N_AT]
+,[Student_Prog_Status_N_AT_Descr]
+,[Module_Grade_Score]
+,[Rqmt_Term]
+,[Current_Phase]
+,[Student_Award_Status]
+,[Award_ID]
+,[Descr]
+,[Award_Type]
+,[Awd_Mode_1]
+,[Awd_Mode_1_Amt]
+,[Awd_Mode_2]
+,[Awd_Mode_2_Amt]
+,[Awd_Mode_3]
+,[Awd_Mode_3_Amt]
+,[Award_Amount]
+,[Comment]
+,[Donor_Code]
+,[Donor_Name]
+,[Soliciting_School]
+,[Recipient_School]
+,[Stage]
+,[Award_Prog]
+,[Award_Specialisatn]
+,[Award_Module_ID]
+,[Award_Module_Code]
+,[Award_Long_Module_Title]
+,[Award_Qual_Type]
+,[Award_Status]
+,[Disbursement_Date]
+,[Disbursement_Status]
+,[Batch_ID]
+,[Created_On]
+,[Modified_On]
+,Student_Award_Status_Desc
+,Award_Type_Desc
+,Awd_Mode1_Desc
+,Awd_Mode2_Desc
+,Awd_Mode3_Desc
+,Award_Status_Desc
+)
+VALUES(  
+
+src.[Inst]
+,src.[Student_ID]
+,src.[Name]
+,src.[Qual_Type]
+,src.[Qual_Type_Descr]
+,src.[School_Centre]
+,src.[Prog]
+,src.[Prog_Descr]
+,src.[Term]
+,src.[Current_Prog_Status]
+,src.[Current_Prog_Status_Descr]
+,src.[Student_Prog_Status_N_AT]
+,src.[Student_GPA_N_AT]
+,src.[Student_Prog_Status_N_AT_Descr]
+,src.[Module_Grade_Score]
+,src.[Rqmt_Term]
+,src.[Current_Phase]
+,src.[Student_Award_Status]
+,src.[Award_ID]
+,src.[Descr]
+,src.[Award_Type]
+,src.[Awd_Mode_1]
+,src.[Awd_Mode_1_Amt]
+,src.[Awd_Mode_2]
+,src.[Awd_Mode_2_Amt]
+,src.[Awd_Mode_3]
+,src.[Awd_Mode_3_Amt]
+,src.[Award_Amount]
+,src.[Comment]
+,src.[Donor_Code]
+,src.[Donor_Name]
+,src.[Soliciting_School]
+,src.[Recipient_School]
+,src.[Stage]
+,src.[Award_Prog]
+,src.[Award_Specialisatn]
+,src.[Award_Module_ID]
+,src.[Award_Module_Code]
+,src.[Award_Long_Module_Title]
+,src.[Award_Qual_Type]
+,src.[Award_Status]
+,src.[Disbursement_Date]
+,src.[Disbursement_Status]
+,src.[Batch_ID]
+,  @processeddatetime,@processeddatetime
+,src.Student_Award_Status_Desc
+,src.Award_Type_Desc
+,src.Awd_Mode1_Desc
+,src.Awd_Mode2_Desc
+,src.Awd_Mode3_Desc
+,src.Award_Status_Desc
+)
+WHEN MATCHED
+   
+THEN UPDATE
+SET 	  dst.[Inst] = src.[Inst]
+,dst.[Name] =  src.[Name]
+,dst.[Qual_Type] =  src.[Qual_Type]
+,dst.[Qual_Type_Descr]=src.[Qual_Type_Descr]
+,dst.[School_Centre] =  src.[School_Centre]
+,dst.[Prog] =  src.[Prog]
+,dst.[Prog_Descr]= src.[Prog_Descr]
+,dst.[Current_Prog_Status] =  src.[Current_Prog_Status]
+,dst.[Student_Prog_Status_N_AT] =  src.[Student_Prog_Status_N_AT]
+,dst.[Student_GPA_N_AT] =  src.[Student_GPA_N_AT]
+,dst.[Module_Grade_Score] =  src.[Module_Grade_Score]
+,dst.[Rqmt_Term] =  src.[Rqmt_Term]
+,dst.[Current_Phase] =  src.[Current_Phase]
+,dst.[Student_Award_Status] =  src.[Student_Award_Status]
+,dst.[Current_Prog_Status_Descr]=src.[Current_Prog_Status_Descr]
+,dst.[DESCR] =  src.[DESCR]
+,dst.[Student_Prog_Status_N_AT_Descr]=src.[Student_Prog_Status_N_AT_Descr]
+,dst.[Award_Type] =  src.[Award_Type]
+,dst.[Awd_Mode_1] =  src.[Awd_Mode_1]
+,dst.[Awd_Mode_1_Amt] =  src.[Awd_Mode_1_Amt]
+,dst.[Awd_Mode_2] =  src.[Awd_Mode_2]
+,dst.[Awd_Mode_2_Amt] =  src.[Awd_Mode_2_Amt]
+,dst.[Awd_Mode_3] =  src.[Awd_Mode_3]
+,dst.[Awd_Mode_3_Amt] =  src.[Awd_Mode_3_Amt]
+,dst.[Award_Amount] =  src.[Award_Amount]
+,dst.[Comment] =  src.[Comment]
+,dst.[Donor_Code] =  src.[Donor_Code]
+,dst.[Donor_Name] =  src.[Donor_Name]
+,dst.[Soliciting_School] =  src.[Soliciting_School]
+,dst.[Recipient_School] =  src.[Recipient_School]
+,dst.[Stage] =  src.[Stage]
+,dst.[Award_Prog] =  src.[Award_Prog]
+,dst.[Award_Specialisatn] =  src.[Award_Specialisatn]
+,dst.[Award_Module_ID] =  src.[Award_Module_ID]
+,dst.[Award_Module_Code] =  src.[Award_Module_Code]
+,dst.[Award_Long_Module_Title] =  src.[Award_Long_Module_Title]
+,dst.[Award_Qual_Type] =  src.[Award_Qual_Type]
+,dst.[Award_Status] =  src.[Award_Status]
+,dst.[Disbursement_Date] =  src.[Disbursement_Date]
+,dst.[Disbursement_Status] =  src.[Disbursement_Status]
+,dst.[Batch_ID] =  src.[Batch_ID]
+
+,dst.Student_Award_Status_Desc=src.Student_Award_Status_Desc
+,dst.Award_Type_Desc=src.Award_Type_Desc
+,dst.Awd_Mode1_Desc=src.Awd_Mode1_Desc
+,dst.Awd_Mode2_Desc=src.Awd_Mode2_Desc
+,dst.Awd_Mode3_Desc=src.Awd_Mode3_Desc
+,dst.Award_Status_Desc=src.Award_Status_Desc
+
+,dst.Modified_On=@processeddatetime;
+		
+
+------------------------------------
+COMMIT TRANSACTION
+END
+END TRY
+
+BEGIN CATCH
+  ROLLBACK TRANSACTION
+INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,@processeddatetime  as created_on
+  
+  END CATCH  
+GO</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DC18D882-6456-4658-8B25-814E1423E10E}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JobStatusId">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E396DEAD-5D30-4E2B-8A69-77783F67D80F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="MndColumncheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1433BF99-B7AA-4941-871E-F8701CC42732}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="PrevJobStatus">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{03021D62-6269-4ACA-8F70-88F92684071B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprimarykeycheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BB14AD90-0BB5-4787-B3D1-7ACA59C8A902}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprocesseddate">
+      <DTS:VariableValue
+        DTS:DataType="7">2/27/2019 11:28:20 AM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DDCB6CE1-ECA3-4918-9BB9-3C19C50E463D}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SrcTable">
+      <DTS:VariableValue
+        DTS:DataType="8">STG_OASIS_PRIZE_AND_AWARD</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{246B3B20-36BB-4DD7-9382-13525B26E50B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Stage">
+      <DTS:VariableValue
+        DTS:DataType="8">DW</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F1B4AF17-3A8C-42AD-BCAB-605B053C5E64}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTable">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_AWARDS</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\check previous job status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5F76F658-8FE2-4021-9257-CC8A5B338316}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="check previous job status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{23064BF9-0498-4399-BC09-CC80004BE963}"
+          SQLTask:SqlStatementSource="&#xA;SELECT CASE WHEN [JOB_STATUS] ='SUCCESS' THEN 1 ELSE 0 END AS PrevJobStatus&#xA;FROM [DBO].[ETL_JOB_STATUS] WHERE [JOB_STATUS_ID]=&#xA;(SELECT MAX([JOB_STATUS_ID]) FROM [DBO].[ETL_JOB_STATUS]&#xA;WHERE [TARGET_TABLENAME]=?&#xA;AND [STAGE]='STG')&#xA;&#xA;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="PrevJobStatus"
+            SQLTask:DtsVariableName="User::PrevJobStatus" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create ETL Job Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{33164E69-628F-4345-AF9C-A1BAF060F000}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create ETL Job Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{23064BF9-0498-4399-BC09-CC80004BE963}"
+          SQLTask:SqlStatementSource="&#xA;EXEC dbo.[usp_InsertETLJobLog]  ?,?,?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::Stage"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\get Job Status Id"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0881762E-CCF3-463D-96D1-4A7CCEE47791}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="get Job Status Id"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{23064BF9-0498-4399-BC09-CC80004BE963}"
+          SQLTask:SqlStatementSource="declare  @JobstatusID int&#xA;&#xA;select @JobstatusID=max(job_status_id) from [ETL_JOB_STATUS]&#xA;where [TARGET_TABLENAME]=?&#xA;&#xA;&#xA;Select @JobstatusID "
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JobStatusId" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\getprocesseddate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3674F733-31A2-4A50-BFFA-7E7E06E1EEB8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="getprocesseddate"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{23064BF9-0498-4399-BC09-CC80004BE963}"
+          SQLTask:SqlStatementSource="SELECT GETDATE()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::sqlprocesseddate" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\insert into main table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{CA5640FD-10FC-496F-AB90-B9F5979A3FF4}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="insert into main table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{23064BF9-0498-4399-BC09-CC80004BE963}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::InsertQuery" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\update on failure"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D49BCC25-3D66-4F81-B65B-EE323FAB18F5}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="update on failure"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{23064BF9-0498-4399-BC09-CC80004BE963}"
+          SQLTask:SqlStatementSource="   UPDATE [DBO].[ETL_JOB_STATUS]&#xA;  SET [JOB_STATUS]='Fail',&#xA;[ERROR_MSG]='Last Job not completed sucessfully'&#xA;  where [JOB_STATUS_ID]=?&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\UpdateJobStatus"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{BD2DD8C7-6142-4962-B7E5-DAFF6FE70B95}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="UpdateJobStatus"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{23064BF9-0498-4399-BC09-CC80004BE963}"
+          SQLTask:SqlStatementSource="&#xA; &#xA;&#xA;DECLARE &#xA;@jobstatusid INT&#xA;select @jobstatusid=?&#xA;IF EXISTS(SELECT * FROM dbo.ETL_ERROR_LOG WHERE [JOB_STATUS_ID]=@jobstatusid)&#xA;&#xA; BEGIN&#xA;&#xA;&#xA;&#xA; UPDATE [dbo].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='FAIL'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;  END&#xA;&#xA;ELSE&#xA;&#xA;BEGIN&#xA;&#xA;UPDATE [DBO].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='Success'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;END&#xA;&#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{1019CE26-954D-4A3D-8DB5-7C0F7F81B0F6}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::PrevJobStatus]==0"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\update on failure" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{E66E65DD-12EB-42A2-9B7D-831A6287A3EF}"
+      DTS:From="Package\Create ETL Job Log"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\get Job Status Id" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{B769D032-6337-4035-A9C8-6A00A855B443}"
+      DTS:From="Package\getprocesseddate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\insert into main table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{3C6037BD-C658-4737-81E1-7378443BB368}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::PrevJobStatus]==1"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\getprocesseddate" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{89B5F01D-C51A-40B2-A667-EE4E44BC60E6}"
+      DTS:From="Package\get Job Status Id"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\check previous job status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{1EA14C63-14D6-4236-B894-50F95BAF2AF6}"
+      DTS:From="Package\insert into main table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\UpdateJobStatus" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{1ED03F96-3662-40A4-A601-7658F4AE234E}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{DD4E60DE-FA54-495B-A6FE-2FC608BB9A7C}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\Error Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{0B8FF8FB-8ED6-4681-843B-0608B8241D50}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Error Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{23064BF9-0498-4399-BC09-CC80004BE963}"
+              SQLTask:SqlStatementSource="  insert into [dbo].[ETL_ERROR_LOG]([JOB_STATUS_ID],[ERROR_RECORD])&#xA;  select ?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL Job Status Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{35DC1968-1383-431D-BB82-E7CEB4E6A974}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL Job Status Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{23064BF9-0498-4399-BC09-CC80004BE963}"
+              SQLTask:SqlStatementSource="update [ETL_JOB_STATUS]&#xA;set Job_Status='Fail'&#xA;,Error_Msg=?&#xA;where job_status_id=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{7A0EDFE6-D79F-4E60-8AF4-D0CB3ACEB1CD}"
+          DTS:From="Package.EventHandlers[OnError]\Error Log"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package.EventHandlers[OnError]\ETL Job Status Log" />
+      </DTS:PrecedenceConstraints>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="198,42"
+          Id="Package\check previous job status"
+          TopLeft="415,32" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Create ETL Job Log"
+          TopLeft="13,31" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\get Job Status Id"
+          TopLeft="226,34" />
+        <NodeLayout
+          Size="162,42"
+          Id="Package\getprocesseddate"
+          TopLeft="660,29" />
+        <NodeLayout
+          Size="179,42"
+          Id="Package\insert into main table"
+          TopLeft="648,128" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\update on failure"
+          TopLeft="431,147" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\UpdateJobStatus"
+          TopLeft="661,214" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="512.25,74">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,73"
+              Start="0,0"
+              End="0,65.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,65.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,24.75,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="183,53.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="43,0"
+              Start="0,0"
+              End="35.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="35.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="739.25,71">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,57"
+              Start="0,0"
+              End="0,49.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="613,51.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="47,0"
+              Start="0,0"
+              End="39.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="39.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="11.75,5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="385,54">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="30,0"
+              Start="0,0"
+              End="22.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="22.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="738.75,170">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44"
+              Start="0,0"
+              End="0,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package.EventHandlers[OnError]\Error Log"
+          TopLeft="60,60" />
+        <NodeLayout
+          Size="169,42"
+          Id="Package.EventHandlers[OnError]\ETL Job Status Log"
+          TopLeft="60,162" />
+        <EdgeLayout
+          Id="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          TopLeft="121.5,102">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="23,60"
+              Start="0,0"
+              End="23,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26"
+                    Point2="0,30"
+                    Point3="4,30" />
+                  <mssgle:LineSegment
+                    End="19,30" />
+                  <mssgle:CubicBezierSegment
+                    Point1="19,30"
+                    Point2="23,30"
+                    Point3="23,34" />
+                  <mssgle:LineSegment
+                    End="23,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

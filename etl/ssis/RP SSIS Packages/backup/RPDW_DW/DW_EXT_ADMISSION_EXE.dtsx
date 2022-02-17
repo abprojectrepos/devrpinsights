@@ -1,0 +1,1754 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/31/2019 4:40:18 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-140119GM07"
+  DTS:CreatorName="NCS\P0500450"
+  DTS:DTSID="{007EC3DC-46DD-4338-96B0-79067E18E946}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="DW_EXT_ADMISSION_EXE"
+  DTS:PackageType="5"
+  DTS:VersionBuild="163"
+  DTS:VersionGUID="{EAE9A6AE-7892-4D0C-828B-74BFBFC6D539}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{61960883-9316-4227-9842-B5C98EBA9BA0}"
+      DTS:ObjectName="RPDW_DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.22.2.38;User ID=svc-dw-prod-etl;Initial Catalog=RPDW_PRD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAdt5ruCW0f0SpuyAxH6oiUQAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADqOm4eSvTh41o45W7kYdoVAAAAAASAAACgAAAAEAAAAFTs3LjcG2kkqjlKIgRrTXkYAAAATsd//PaoRxyP5CwIBWCnCdCmp6Sa9IyDFAAAAKEIy9VJhA7ui9z1ePfyAyVpTYsF</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_STG]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{1863B3FE-601F-4371-8C51-08DF4F1FBB97}"
+      DTS:ObjectName="RPDW_STG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::Staging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.22.2.38;User ID=svc-dw-prod-etl;Initial Catalog=RPDW_PRD_STG;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAdt5ruCW0f0SpuyAxH6oiUQAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACMA5RJNjB2OmnqWbjFpVGrAAAAAASAAACgAAAAEAAAAAoZJugZn1IE/Vy41zbmrKYYAAAA4k/a7lyZv8t3XzxA0MQyFHFa0lAWOj2oFAAAAKNKlUxJEKYBviJ24NxbxW3K8hHW</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{12957DB4-C8D3-426F-A2D7-02EF1BAD88D8}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;------------&#xA;DECLARE @LastDWProcessdate datetime&#xA;,@processeddatetime datetime&#xA;,@jobstatusid varchar(5)&#xA;select @jobstatusid=&quot;+ (DT_STR, 5,1252) @[User::JobStatusId] +&quot;&#xA;select @LastDWProcessdate=isnull(max(Modified_on),'1900-01-01 00:00:00.000') from [dbo].[DW_EXT_DPAEAE_JAE]&#xA;select  @processeddatetime= getdate()&#xA;&#xA;;WITH TMP_EXT_DPAEAE_JAE2&#xA;AS&#xA;(&#xA;SELECT [UIN]&#xA;      ,[STATUTORY_NM]&#xA;      ,[POSTED_COURSE_CD]&#xA;      ,[JAE_SUBJECT_CD_1]&#xA;      ,[JAE_GRADE_1]&#xA;      ,[BETTER_GRADE _1]&#xA;      ,[JAE_SUBJECT_CD_2]&#xA;      ,[JAE_GRADE_2]&#xA;      ,[BETTER_GRADE_2]&#xA;      ,[JAE_SUBJECT_CD_3]&#xA;      ,[JAE_GRADE_3]&#xA;      ,[BETTER_GRADE _3]&#xA;      ,[JAE_SUBJECT_CD_4]&#xA;      ,[JAE_GRADE_4]&#xA;      ,[BETTER_GRADE _4]&#xA;      ,[JAE_SUBJECT_CD_5]&#xA;      ,[JAE_GRADE_5]&#xA;      ,[BETTER_GRADE _5]&#xA;      ,[JAE_SUBJECT_CD_6]&#xA;      ,[JAE_GRADE_6]&#xA;      ,[BETTER_GRADE_6]&#xA;      ,[JAE_SUBJECT_CD_7]&#xA;      ,[JAE_GRADE_7]&#xA;      ,[BETTER_GRADE_7]&#xA;      ,[JAE_SUBJECT_CD_8]&#xA;      ,[JAE_GRADE_8]&#xA;      ,[BETTER_GRADE_8]&#xA;      ,[JAE_SUBJECT_CD_9]&#xA;      ,[JAE_GRADE_9]&#xA;      ,[BETTER_GRADE_9]&#xA;      ,[JAE_SUBJECT_CD_10]&#xA;      ,[JAE_GRADE_10]&#xA;      ,[BETTER_GRADE_10]&#xA;      ,[JAE_SUBJECT_CD_11]&#xA;      ,[JAE_GRADE_11]&#xA;      ,[BETTER_GRADE_11]&#xA;      ,[JAE_SUBJECT_CD_12]&#xA;      ,[JAE_GRADE_12]&#xA;      ,[BETTER_GRADE_12]&#xA;      ,[ECA_GRADE]&#xA;      ,[YR_FIRST_SITTING]&#xA;      ,[YR_SECOND_SITTING]&#xA;      ,[RAW_AGGREGATE]&#xA;      ,[NET_AGGREGATE]&#xA;      ,[DPA_IND]&#xA;      ,[COMBINED_SITTING]&#xA;      ,[CREATED_ON]&#xA;      ,[MODIFIED_ON]&#xA;      ,[AY_YEAR]&#xA;      ,[AY_SEM]&#xA;   FROM &quot;+@[$Project::Staging_Initial_Catalog]+&quot;.[dbo].[STG_EXT_DPAEAE_JAE2]&#xA;   where [Latest_Ind] ='Y' &#xA;AND [MODIFIED_ON]&gt;@LastDWProcessdate&#xA;)&#xA;&#xA;&#xA;MERGE INTO [DW_EXT_DPAEAE_JAE] AS dst&#xA;   USING TMP_EXT_DPAEAE_JAE2 AS src&#xA;  ON (&#xA;  SRC. [AY_SEM] = DST.[AY_SEM] AND   &#xA;  SRC. [AY_YEAR] = DST.[AY_YEAR] AND   &#xA;  SRC. [UIN] = DST.[UIN]&#xA;     )&#xA;&#xA;   WHEN NOT MATCHED THEN&#xA;   INSERT&#xA;&#x9;(&#xA;&#x9;   [UIN]&#xA;      ,[STATUTORY_NM]&#xA;      ,[POSTED_COURSE_CD]&#xA;      ,[JAE_SUBJECT_CD_1]&#xA;      ,[JAE_GRADE_1]&#xA;      ,[BETTER_GRADE _1]&#xA;      ,[JAE_SUBJECT_CD_2]&#xA;      ,[JAE_GRADE_2]&#xA;      ,[BETTER_GRADE_2]&#xA;      ,[JAE_SUBJECT_CD_3]&#xA;      ,[JAE_GRADE_3]&#xA;      ,[BETTER_GRADE _3]&#xA;      ,[JAE_SUBJECT_CD_4]&#xA;      ,[JAE_GRADE_4]&#xA;      ,[BETTER_GRADE _4]&#xA;      ,[JAE_SUBJECT_CD_5]&#xA;      ,[JAE_GRADE_5]&#xA;      ,[BETTER_GRADE _5]&#xA;      ,[JAE_SUBJECT_CD_6]&#xA;      ,[JAE_GRADE_6]&#xA;      ,[BETTER_GRADE_6]&#xA;      ,[JAE_SUBJECT_CD_7]&#xA;      ,[JAE_GRADE_7]&#xA;      ,[BETTER_GRADE_7]&#xA;      ,[JAE_SUBJECT_CD_8]&#xA;      ,[JAE_GRADE_8]&#xA;      ,[BETTER_GRADE_8]&#xA;      ,[JAE_SUBJECT_CD_9]&#xA;      ,[JAE_GRADE_9]&#xA;      ,[BETTER_GRADE_9]&#xA;      ,[JAE_SUBJECT_CD_10]&#xA;      ,[JAE_GRADE_10]&#xA;      ,[BETTER_GRADE_10]&#xA;      ,[JAE_SUBJECT_CD_11]&#xA;      ,[JAE_GRADE_11]&#xA;      ,[BETTER_GRADE_11]&#xA;      ,[JAE_SUBJECT_CD_12]&#xA;      ,[JAE_GRADE_12]&#xA;      ,[BETTER_GRADE_12]&#xA;      ,[ECA_GRADE]&#xA;      ,[YR_FIRST_SITTING]&#xA;      ,[YR_SECOND_SITTING]&#xA;      ,[RAW_AGGREGATE]&#xA;      ,[NET_AGGREGATE]&#xA;      ,[DPA_IND]&#xA;      ,[COMBINED_SITTING]&#xA;      ,[CREATED_ON]&#xA;      ,[MODIFIED_ON]&#xA;      ,[AY_YEAR]&#xA;      ,[AY_SEM]&#xA;&#x9;  )&#xA;VALUES&#xA;&#x9;(  &#xA;       SRC.[UIN]&#xA;      ,SRC.[STATUTORY_NM]&#xA;      ,SRC.[POSTED_COURSE_CD]&#xA;      ,SRC.[JAE_SUBJECT_CD_1]&#xA;      ,SRC.[JAE_GRADE_1]&#xA;      ,SRC.[BETTER_GRADE _1]&#xA;      ,SRC.[JAE_SUBJECT_CD_2]&#xA;      ,SRC.[JAE_GRADE_2]&#xA;      ,SRC.[BETTER_GRADE_2]&#xA;      ,SRC.[JAE_SUBJECT_CD_3]&#xA;      ,SRC.[JAE_GRADE_3]&#xA;      ,SRC.[BETTER_GRADE _3]&#xA;      ,SRC.[JAE_SUBJECT_CD_4]&#xA;      ,SRC.[JAE_GRADE_4]&#xA;      ,SRC.[BETTER_GRADE _4]&#xA;      ,SRC.[JAE_SUBJECT_CD_5]&#xA;      ,SRC.[JAE_GRADE_5]&#xA;      ,SRC.[BETTER_GRADE _5]&#xA;      ,SRC.[JAE_SUBJECT_CD_6]&#xA;      ,SRC.[JAE_GRADE_6]&#xA;      ,SRC.[BETTER_GRADE_6]&#xA;      ,SRC.[JAE_SUBJECT_CD_7]&#xA;      ,SRC.[JAE_GRADE_7]&#xA;      ,SRC.[BETTER_GRADE_7]&#xA;      ,SRC.[JAE_SUBJECT_CD_8]&#xA;      ,SRC.[JAE_GRADE_8]&#xA;      ,SRC.[BETTER_GRADE_8]&#xA;      ,SRC.[JAE_SUBJECT_CD_9]&#xA;      ,SRC.[JAE_GRADE_9]&#xA;      ,SRC.[BETTER_GRADE_9]&#xA;      ,SRC.[JAE_SUBJECT_CD_10]&#xA;      ,SRC.[JAE_GRADE_10]&#xA;      ,SRC.[BETTER_GRADE_10]&#xA;      ,SRC.[JAE_SUBJECT_CD_11]&#xA;      ,SRC.[JAE_GRADE_11]&#xA;      ,SRC.[BETTER_GRADE_11]&#xA;      ,SRC.[JAE_SUBJECT_CD_12]&#xA;      ,SRC.[JAE_GRADE_12]&#xA;      ,SRC.[BETTER_GRADE_12]&#xA;      ,SRC.[ECA_GRADE]&#xA;      ,SRC.[YR_FIRST_SITTING]&#xA;      ,SRC.[YR_SECOND_SITTING]&#xA;      ,SRC.[RAW_AGGREGATE]&#xA;      ,SRC.[NET_AGGREGATE]&#xA;      ,SRC.[DPA_IND]&#xA;      ,SRC.[COMBINED_SITTING]&#xA;      ,SRC.[CREATED_ON]&#xA;      ,SRC.[MODIFIED_ON]&#xA;      ,SRC.[AY_YEAR]&#xA;      ,SRC.[AY_SEM]&#xA;&#x9;)&#xA;   WHEN MATCHED&#xA;   &#xA;   THEN UPDATE&#xA;   SET &#x9; &#xA;   DST.[AY_SEM] =  ISNULL(SRC.[AY_SEM],'')  ,  &#xA;   DST.[AY_YEAR] =  ISNULL(SRC.[AY_YEAR],'')  ,  &#xA;   DST.[BETTER_GRADE _1] =  ISNULL(SRC.[BETTER_GRADE _1],'')  ,  &#xA;   DST.[BETTER_GRADE _3] =  ISNULL(SRC.[BETTER_GRADE _3],'')  ,  &#xA;   DST.[BETTER_GRADE _4] =  ISNULL(SRC.[BETTER_GRADE _4],'')  ,  &#xA;   DST.[BETTER_GRADE _5] =  ISNULL(SRC.[BETTER_GRADE _5],'')  ,  &#xA;   DST.[BETTER_GRADE_10] =  ISNULL(SRC.[BETTER_GRADE_10],'')  ,  &#xA;   DST.[BETTER_GRADE_11] =  ISNULL(SRC.[BETTER_GRADE_11],'')  ,  &#xA;   DST.[BETTER_GRADE_12] =  ISNULL(SRC.[BETTER_GRADE_12],'')  ,  &#xA;   DST.[BETTER_GRADE_2] =  ISNULL(SRC.[BETTER_GRADE_2],'')  ,  &#xA;   DST.[BETTER_GRADE_6] =  ISNULL(SRC.[BETTER_GRADE_6],'')  ,  &#xA;   DST.[BETTER_GRADE_7] =  ISNULL(SRC.[BETTER_GRADE_7],'')  ,  &#xA;   DST.[BETTER_GRADE_8] =  ISNULL(SRC.[BETTER_GRADE_8],'')  ,  &#xA;   DST.[BETTER_GRADE_9] =  ISNULL(SRC.[BETTER_GRADE_9],'')  ,  &#xA;   DST.[COMBINED_SITTING] =  ISNULL(SRC.[COMBINED_SITTING],'')  ,  &#xA;   DST.[CREATED_ON] =  ISNULL(SRC.[CREATED_ON],'')  ,  &#xA;   DST.[DPA_IND] =  ISNULL(SRC.[DPA_IND],'')  ,  &#xA;   DST.[ECA_GRADE] =  ISNULL(SRC.[ECA_GRADE],'')  ,  &#xA;   DST.[JAE_GRADE_1] =  ISNULL(SRC.[JAE_GRADE_1],'')  ,  &#xA;   DST.[JAE_GRADE_10] =  ISNULL(SRC.[JAE_GRADE_10],'')  ,  &#xA;   DST.[JAE_GRADE_11] =  ISNULL(SRC.[JAE_GRADE_11],'')  ,  &#xA;   DST.[JAE_GRADE_12] =  ISNULL(SRC.[JAE_GRADE_12],'')  ,  &#xA;   DST.[JAE_GRADE_2] =  ISNULL(SRC.[JAE_GRADE_2],'')  ,  &#xA;   DST.[JAE_GRADE_3] =  ISNULL(SRC.[JAE_GRADE_3],'')  ,  &#xA;   DST.[JAE_GRADE_4] =  ISNULL(SRC.[JAE_GRADE_4],'')  ,  &#xA;   DST.[JAE_GRADE_5] =  ISNULL(SRC.[JAE_GRADE_5],'')  ,  &#xA;   DST.[JAE_GRADE_6] =  ISNULL(SRC.[JAE_GRADE_6],'')  ,  &#xA;   DST.[JAE_GRADE_7] =  ISNULL(SRC.[JAE_GRADE_7],'')  ,  &#xA;   DST.[JAE_GRADE_8] =  ISNULL(SRC.[JAE_GRADE_8],'')  ,  &#xA;   DST.[JAE_GRADE_9] =  ISNULL(SRC.[JAE_GRADE_9],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_1] =  ISNULL(SRC.[JAE_SUBJECT_CD_1],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_10] =  ISNULL(SRC.[JAE_SUBJECT_CD_10],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_11] =  ISNULL(SRC.[JAE_SUBJECT_CD_11],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_12] =  ISNULL(SRC.[JAE_SUBJECT_CD_12],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_2] =  ISNULL(SRC.[JAE_SUBJECT_CD_2],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_3] =  ISNULL(SRC.[JAE_SUBJECT_CD_3],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_4] =  ISNULL(SRC.[JAE_SUBJECT_CD_4],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_5] =  ISNULL(SRC.[JAE_SUBJECT_CD_5],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_6] =  ISNULL(SRC.[JAE_SUBJECT_CD_6],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_7] =  ISNULL(SRC.[JAE_SUBJECT_CD_7],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_8] =  ISNULL(SRC.[JAE_SUBJECT_CD_8],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_9] =  ISNULL(SRC.[JAE_SUBJECT_CD_9],'')  ,  &#xA;   DST.[MODIFIED_ON] =  ISNULL(SRC.[MODIFIED_ON],'')  ,  &#xA;   DST.[NET_AGGREGATE] =  ISNULL(SRC.[NET_AGGREGATE],'')  ,  &#xA;   DST.[POSTED_COURSE_CD] =  ISNULL(SRC.[POSTED_COURSE_CD],'')  , &#xA;   DST.[RAW_AGGREGATE] =  ISNULL(SRC.[RAW_AGGREGATE],'')  ,  &#xA;   DST.[STATUTORY_NM] =  ISNULL(SRC.[STATUTORY_NM],'')  ,  &#xA;   DST.[UIN] =  ISNULL(SRC.[UIN],'')  , &#xA;   DST.[YR_FIRST_SITTING] =  ISNULL(SRC.[YR_FIRST_SITTING],'')  ,  &#xA;   DST.[YR_SECOND_SITTING] =  ISNULL(SRC.[YR_SECOND_SITTING],'') ; &#xA;&#x9;&#xA;&#xA;--------------------------------------&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,@processeddatetime  as created_on&#xA;  &#xA;  &#xA;END CATCH  &#xA;GO&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="InsertQuery">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+------------
+DECLARE @LastDWProcessdate datetime
+,@processeddatetime datetime
+,@jobstatusid varchar(5)
+select @jobstatusid=0
+select @LastDWProcessdate=isnull(max(Modified_on),'1900-01-01 00:00:00.000') from [dbo].[DW_EXT_DPAEAE_JAE]
+select  @processeddatetime= getdate()
+
+;WITH TMP_EXT_DPAEAE_JAE2
+AS
+(
+SELECT [UIN]
+      ,[STATUTORY_NM]
+      ,[POSTED_COURSE_CD]
+      ,[JAE_SUBJECT_CD_1]
+      ,[JAE_GRADE_1]
+      ,[BETTER_GRADE _1]
+      ,[JAE_SUBJECT_CD_2]
+      ,[JAE_GRADE_2]
+      ,[BETTER_GRADE_2]
+      ,[JAE_SUBJECT_CD_3]
+      ,[JAE_GRADE_3]
+      ,[BETTER_GRADE _3]
+      ,[JAE_SUBJECT_CD_4]
+      ,[JAE_GRADE_4]
+      ,[BETTER_GRADE _4]
+      ,[JAE_SUBJECT_CD_5]
+      ,[JAE_GRADE_5]
+      ,[BETTER_GRADE _5]
+      ,[JAE_SUBJECT_CD_6]
+      ,[JAE_GRADE_6]
+      ,[BETTER_GRADE_6]
+      ,[JAE_SUBJECT_CD_7]
+      ,[JAE_GRADE_7]
+      ,[BETTER_GRADE_7]
+      ,[JAE_SUBJECT_CD_8]
+      ,[JAE_GRADE_8]
+      ,[BETTER_GRADE_8]
+      ,[JAE_SUBJECT_CD_9]
+      ,[JAE_GRADE_9]
+      ,[BETTER_GRADE_9]
+      ,[JAE_SUBJECT_CD_10]
+      ,[JAE_GRADE_10]
+      ,[BETTER_GRADE_10]
+      ,[JAE_SUBJECT_CD_11]
+      ,[JAE_GRADE_11]
+      ,[BETTER_GRADE_11]
+      ,[JAE_SUBJECT_CD_12]
+      ,[JAE_GRADE_12]
+      ,[BETTER_GRADE_12]
+      ,[ECA_GRADE]
+      ,[YR_FIRST_SITTING]
+      ,[YR_SECOND_SITTING]
+      ,[RAW_AGGREGATE]
+      ,[NET_AGGREGATE]
+      ,[DPA_IND]
+      ,[COMBINED_SITTING]
+      ,[CREATED_ON]
+      ,[MODIFIED_ON]
+      ,[AY_YEAR]
+      ,[AY_SEM]
+   FROM RPDW_PRD_STG.[dbo].[STG_EXT_DPAEAE_JAE2]
+   where [Latest_Ind] ='Y' 
+AND [MODIFIED_ON]&gt;@LastDWProcessdate
+)
+
+
+MERGE INTO [DW_EXT_DPAEAE_JAE] AS dst
+   USING TMP_EXT_DPAEAE_JAE2 AS src
+  ON (
+  SRC. [AY_SEM] = DST.[AY_SEM] AND   
+  SRC. [AY_YEAR] = DST.[AY_YEAR] AND   
+  SRC. [UIN] = DST.[UIN]
+     )
+
+   WHEN NOT MATCHED THEN
+   INSERT
+	(
+	   [UIN]
+      ,[STATUTORY_NM]
+      ,[POSTED_COURSE_CD]
+      ,[JAE_SUBJECT_CD_1]
+      ,[JAE_GRADE_1]
+      ,[BETTER_GRADE _1]
+      ,[JAE_SUBJECT_CD_2]
+      ,[JAE_GRADE_2]
+      ,[BETTER_GRADE_2]
+      ,[JAE_SUBJECT_CD_3]
+      ,[JAE_GRADE_3]
+      ,[BETTER_GRADE _3]
+      ,[JAE_SUBJECT_CD_4]
+      ,[JAE_GRADE_4]
+      ,[BETTER_GRADE _4]
+      ,[JAE_SUBJECT_CD_5]
+      ,[JAE_GRADE_5]
+      ,[BETTER_GRADE _5]
+      ,[JAE_SUBJECT_CD_6]
+      ,[JAE_GRADE_6]
+      ,[BETTER_GRADE_6]
+      ,[JAE_SUBJECT_CD_7]
+      ,[JAE_GRADE_7]
+      ,[BETTER_GRADE_7]
+      ,[JAE_SUBJECT_CD_8]
+      ,[JAE_GRADE_8]
+      ,[BETTER_GRADE_8]
+      ,[JAE_SUBJECT_CD_9]
+      ,[JAE_GRADE_9]
+      ,[BETTER_GRADE_9]
+      ,[JAE_SUBJECT_CD_10]
+      ,[JAE_GRADE_10]
+      ,[BETTER_GRADE_10]
+      ,[JAE_SUBJECT_CD_11]
+      ,[JAE_GRADE_11]
+      ,[BETTER_GRADE_11]
+      ,[JAE_SUBJECT_CD_12]
+      ,[JAE_GRADE_12]
+      ,[BETTER_GRADE_12]
+      ,[ECA_GRADE]
+      ,[YR_FIRST_SITTING]
+      ,[YR_SECOND_SITTING]
+      ,[RAW_AGGREGATE]
+      ,[NET_AGGREGATE]
+      ,[DPA_IND]
+      ,[COMBINED_SITTING]
+      ,[CREATED_ON]
+      ,[MODIFIED_ON]
+      ,[AY_YEAR]
+      ,[AY_SEM]
+	  )
+VALUES
+	(  
+       SRC.[UIN]
+      ,SRC.[STATUTORY_NM]
+      ,SRC.[POSTED_COURSE_CD]
+      ,SRC.[JAE_SUBJECT_CD_1]
+      ,SRC.[JAE_GRADE_1]
+      ,SRC.[BETTER_GRADE _1]
+      ,SRC.[JAE_SUBJECT_CD_2]
+      ,SRC.[JAE_GRADE_2]
+      ,SRC.[BETTER_GRADE_2]
+      ,SRC.[JAE_SUBJECT_CD_3]
+      ,SRC.[JAE_GRADE_3]
+      ,SRC.[BETTER_GRADE _3]
+      ,SRC.[JAE_SUBJECT_CD_4]
+      ,SRC.[JAE_GRADE_4]
+      ,SRC.[BETTER_GRADE _4]
+      ,SRC.[JAE_SUBJECT_CD_5]
+      ,SRC.[JAE_GRADE_5]
+      ,SRC.[BETTER_GRADE _5]
+      ,SRC.[JAE_SUBJECT_CD_6]
+      ,SRC.[JAE_GRADE_6]
+      ,SRC.[BETTER_GRADE_6]
+      ,SRC.[JAE_SUBJECT_CD_7]
+      ,SRC.[JAE_GRADE_7]
+      ,SRC.[BETTER_GRADE_7]
+      ,SRC.[JAE_SUBJECT_CD_8]
+      ,SRC.[JAE_GRADE_8]
+      ,SRC.[BETTER_GRADE_8]
+      ,SRC.[JAE_SUBJECT_CD_9]
+      ,SRC.[JAE_GRADE_9]
+      ,SRC.[BETTER_GRADE_9]
+      ,SRC.[JAE_SUBJECT_CD_10]
+      ,SRC.[JAE_GRADE_10]
+      ,SRC.[BETTER_GRADE_10]
+      ,SRC.[JAE_SUBJECT_CD_11]
+      ,SRC.[JAE_GRADE_11]
+      ,SRC.[BETTER_GRADE_11]
+      ,SRC.[JAE_SUBJECT_CD_12]
+      ,SRC.[JAE_GRADE_12]
+      ,SRC.[BETTER_GRADE_12]
+      ,SRC.[ECA_GRADE]
+      ,SRC.[YR_FIRST_SITTING]
+      ,SRC.[YR_SECOND_SITTING]
+      ,SRC.[RAW_AGGREGATE]
+      ,SRC.[NET_AGGREGATE]
+      ,SRC.[DPA_IND]
+      ,SRC.[COMBINED_SITTING]
+      ,SRC.[CREATED_ON]
+      ,SRC.[MODIFIED_ON]
+      ,SRC.[AY_YEAR]
+      ,SRC.[AY_SEM]
+	)
+   WHEN MATCHED
+   
+   THEN UPDATE
+   SET 	 
+   DST.[AY_SEM] =  ISNULL(SRC.[AY_SEM],'')  ,  
+   DST.[AY_YEAR] =  ISNULL(SRC.[AY_YEAR],'')  ,  
+   DST.[BETTER_GRADE _1] =  ISNULL(SRC.[BETTER_GRADE _1],'')  ,  
+   DST.[BETTER_GRADE _3] =  ISNULL(SRC.[BETTER_GRADE _3],'')  ,  
+   DST.[BETTER_GRADE _4] =  ISNULL(SRC.[BETTER_GRADE _4],'')  ,  
+   DST.[BETTER_GRADE _5] =  ISNULL(SRC.[BETTER_GRADE _5],'')  ,  
+   DST.[BETTER_GRADE_10] =  ISNULL(SRC.[BETTER_GRADE_10],'')  ,  
+   DST.[BETTER_GRADE_11] =  ISNULL(SRC.[BETTER_GRADE_11],'')  ,  
+   DST.[BETTER_GRADE_12] =  ISNULL(SRC.[BETTER_GRADE_12],'')  ,  
+   DST.[BETTER_GRADE_2] =  ISNULL(SRC.[BETTER_GRADE_2],'')  ,  
+   DST.[BETTER_GRADE_6] =  ISNULL(SRC.[BETTER_GRADE_6],'')  ,  
+   DST.[BETTER_GRADE_7] =  ISNULL(SRC.[BETTER_GRADE_7],'')  ,  
+   DST.[BETTER_GRADE_8] =  ISNULL(SRC.[BETTER_GRADE_8],'')  ,  
+   DST.[BETTER_GRADE_9] =  ISNULL(SRC.[BETTER_GRADE_9],'')  ,  
+   DST.[COMBINED_SITTING] =  ISNULL(SRC.[COMBINED_SITTING],'')  ,  
+   DST.[CREATED_ON] =  ISNULL(SRC.[CREATED_ON],'')  ,  
+   DST.[DPA_IND] =  ISNULL(SRC.[DPA_IND],'')  ,  
+   DST.[ECA_GRADE] =  ISNULL(SRC.[ECA_GRADE],'')  ,  
+   DST.[JAE_GRADE_1] =  ISNULL(SRC.[JAE_GRADE_1],'')  ,  
+   DST.[JAE_GRADE_10] =  ISNULL(SRC.[JAE_GRADE_10],'')  ,  
+   DST.[JAE_GRADE_11] =  ISNULL(SRC.[JAE_GRADE_11],'')  ,  
+   DST.[JAE_GRADE_12] =  ISNULL(SRC.[JAE_GRADE_12],'')  ,  
+   DST.[JAE_GRADE_2] =  ISNULL(SRC.[JAE_GRADE_2],'')  ,  
+   DST.[JAE_GRADE_3] =  ISNULL(SRC.[JAE_GRADE_3],'')  ,  
+   DST.[JAE_GRADE_4] =  ISNULL(SRC.[JAE_GRADE_4],'')  ,  
+   DST.[JAE_GRADE_5] =  ISNULL(SRC.[JAE_GRADE_5],'')  ,  
+   DST.[JAE_GRADE_6] =  ISNULL(SRC.[JAE_GRADE_6],'')  ,  
+   DST.[JAE_GRADE_7] =  ISNULL(SRC.[JAE_GRADE_7],'')  ,  
+   DST.[JAE_GRADE_8] =  ISNULL(SRC.[JAE_GRADE_8],'')  ,  
+   DST.[JAE_GRADE_9] =  ISNULL(SRC.[JAE_GRADE_9],'')  ,  
+   DST.[JAE_SUBJECT_CD_1] =  ISNULL(SRC.[JAE_SUBJECT_CD_1],'')  ,  
+   DST.[JAE_SUBJECT_CD_10] =  ISNULL(SRC.[JAE_SUBJECT_CD_10],'')  ,  
+   DST.[JAE_SUBJECT_CD_11] =  ISNULL(SRC.[JAE_SUBJECT_CD_11],'')  ,  
+   DST.[JAE_SUBJECT_CD_12] =  ISNULL(SRC.[JAE_SUBJECT_CD_12],'')  ,  
+   DST.[JAE_SUBJECT_CD_2] =  ISNULL(SRC.[JAE_SUBJECT_CD_2],'')  ,  
+   DST.[JAE_SUBJECT_CD_3] =  ISNULL(SRC.[JAE_SUBJECT_CD_3],'')  ,  
+   DST.[JAE_SUBJECT_CD_4] =  ISNULL(SRC.[JAE_SUBJECT_CD_4],'')  ,  
+   DST.[JAE_SUBJECT_CD_5] =  ISNULL(SRC.[JAE_SUBJECT_CD_5],'')  ,  
+   DST.[JAE_SUBJECT_CD_6] =  ISNULL(SRC.[JAE_SUBJECT_CD_6],'')  ,  
+   DST.[JAE_SUBJECT_CD_7] =  ISNULL(SRC.[JAE_SUBJECT_CD_7],'')  ,  
+   DST.[JAE_SUBJECT_CD_8] =  ISNULL(SRC.[JAE_SUBJECT_CD_8],'')  ,  
+   DST.[JAE_SUBJECT_CD_9] =  ISNULL(SRC.[JAE_SUBJECT_CD_9],'')  ,  
+   DST.[MODIFIED_ON] =  ISNULL(SRC.[MODIFIED_ON],'')  ,  
+   DST.[NET_AGGREGATE] =  ISNULL(SRC.[NET_AGGREGATE],'')  ,  
+   DST.[POSTED_COURSE_CD] =  ISNULL(SRC.[POSTED_COURSE_CD],'')  , 
+   DST.[RAW_AGGREGATE] =  ISNULL(SRC.[RAW_AGGREGATE],'')  ,  
+   DST.[STATUTORY_NM] =  ISNULL(SRC.[STATUTORY_NM],'')  ,  
+   DST.[UIN] =  ISNULL(SRC.[UIN],'')  , 
+   DST.[YR_FIRST_SITTING] =  ISNULL(SRC.[YR_FIRST_SITTING],'')  ,  
+   DST.[YR_SECOND_SITTING] =  ISNULL(SRC.[YR_SECOND_SITTING],'') ; 
+	
+
+--------------------------------------
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+  ROLLBACK TRANSACTION
+INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,@processeddatetime  as created_on
+  
+  
+END CATCH  
+GO</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0DE1D0BD-F2C4-483C-958E-C513AF6FFF57}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JobStatusId">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7BFED50D-5790-4C3F-ACA1-1449AA64A029}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_Name">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_EXT_ADMISSION_EXE</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{217956CE-81AA-487E-86A9-DCF1812BB222}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JOB_STATUS">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DC1E0F64-68B8-4875-9BF3-81A968E62910}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="MndColumncheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CF7A70BC-625A-4875-8292-3159A5857F3C}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="PrevJobStatus">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D0E0A44F-F7A7-4779-8B32-A5ACE36F9369}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprimarykeycheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BF0FE492-ADC6-40F8-825E-29DDB43E32D0}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprocesseddate">
+      <DTS:VariableValue
+        DTS:DataType="7">2/27/2019 11:28:00 AM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{983916A6-011B-4E5E-8C56-12465D8823E0}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;--------------------------------------&#xA;DECLARE @jobstatusid varchar(5)&#xA;select @jobstatusid=&quot;+ (DT_STR, 5,1252) @[User::JobStatusId] +&quot;&#xA;&#xA;&#xA;&#xA;&#xA;DROP TABLE EXT_TMP_ADMISSION &#xA;SELECT  * INTO EXT_TMP_ADMISSION FROM (&#xA;SELECT &#xA;UIN &#xA;,MASKED_NATIONAL_ID&#xA;,'JAE' AS ADMISSION_EXERCISE&#xA;,FILE_NAME_ACADEMIC_YEAR AS ACAD_YEAR&#xA;,FILE_NAME_SEMESTER AS SEMESTER&#xA;,STATUTORY_NM AS APPLICANT_NAME&#xA;,DOB AS DATE_OF_BIRTH&#xA;,SEC_SCHOOL_CD AS SEC_SCHOOL_CODE&#xA;,CASE &#xA;WHEN SEC_SCHOOL_CD='S' THEN 'SPECIAL'&#xA;WHEN SEC_SCHOOL_CD='E' THEN 'EXPRESS'&#xA;WHEN SEC_SCHOOL_CD='N'THEN 'NORMAL'&#xA;--ELSE 'NON-SCHOOL STUDENT/NOT AVAILABLE'&#xA;END SEC_SCHOOL_DESC&#xA;,CITIZENSHIP_CD CITIZENSHIP_CODE&#xA;,CASE &#xA;WHEN CITIZENSHIP_CD='10' Then 'SINGAPORE CITIZEN'                                                                                      &#xA;WHEN CITIZENSHIP_CD='30' Then 'MALAYSIAN'    &#xA;WHEN CITIZENSHIP_CD='50' Then 'BRUNEIAN'                                                         &#xA;WHEN CITIZENSHIP_CD='51' Then 'MYANMAR'                                                          &#xA;WHEN CITIZENSHIP_CD='52' Then 'INDONESIAN'                                                       &#xA;WHEN CITIZENSHIP_CD='53' Then 'FILIPINO'                                                         &#xA;WHEN CITIZENSHIP_CD='54' Then 'THAI'                                                             &#xA;WHEN CITIZENSHIP_CD='55' Then 'VIETNAMESE'  &#xA;WHEN CITIZENSHIP_CD='60' Then 'CHINESE'   &#xA;WHEN CITIZENSHIP_CD='63' Then 'INDIAN'&#xA;Else '' END CITIZENSHIP&#xA;,GENDER GENDER_CODE&#xA;,CASE WHEN ISNULL(GENDER,'')='1' Then 'Male'&#xA;&#x9;  WHEN ISNULL(GENDER,'')='2' Then 'Female' &#xA;&#x9;  WHEN ISNULL(GENDER,'')='M' Then 'Male'&#xA;&#x9;  WHEN ISNULL(GENDER,'')='F' Then 'Female' END  GENDER&#xA;,RACE_CD RACE_CODE&#xA;,CASE &#xA;WHEN RACE_CD='1' Then 'MALAY'          &#xA;WHEN RACE_CD='2' Then 'CHINESE'        &#xA;WHEN RACE_CD='3' Then 'IND/PAK/SL'    &#xA;WHEN RACE_CD='4' Then 'EURASIAN'       &#xA;WHEN RACE_CD='5' Then 'INDON EXTRACT'  &#xA;WHEN RACE_CD='6' Then 'IND/PAK/SL (NT)'&#xA;WHEN RACE_CD='7' Then 'CAUCASIAN'      &#xA;WHEN RACE_CD='9' Then 'OTHERS'&#xA;Else '' END  RACE&#xA;,JAE_SUBJECT_CD_1  AS SUBJECT_CODE_1&#xA;,JAE_SUBJECT_CD_2  AS SUBJECT_CODE_2&#xA;,JAE_SUBJECT_CD_3  AS SUBJECT_CODE_3&#xA;,JAE_SUBJECT_CD_4  AS SUBJECT_CODE_4&#xA;,JAE_SUBJECT_CD_5  AS SUBJECT_CODE_5&#xA;,JAE_SUBJECT_CD_6  AS SUBJECT_CODE_6&#xA;,JAE_SUBJECT_CD_7  AS SUBJECT_CODE_7&#xA;,JAE_SUBJECT_CD_8  AS SUBJECT_CODE_8&#xA;,JAE_SUBJECT_CD_9  AS SUBJECT_CODE_9&#xA;,JAE_SUBJECT_CD_10 AS SUBJECT_CODE_10&#xA;,JAE_SUBJECT_CD_11 AS SUBJECT_CODE_11&#xA;,JAE_SUBJECT_CD_12 AS SUBJECT_CODE_12&#xA;,JAE_GRADE_1  AS GRADE_1&#xA;,JAE_GRADE_2  AS GRADE_2&#xA;,JAE_GRADE_3  AS GRADE_3&#xA;,JAE_GRADE_4  AS GRADE_4&#xA;,JAE_GRADE_5  AS GRADE_5&#xA;,JAE_GRADE_6  AS GRADE_6&#xA;,JAE_GRADE_7  AS GRADE_7&#xA;,JAE_GRADE_8  AS GRADE_8&#xA;,JAE_GRADE_9  AS GRADE_9&#xA;,JAE_GRADE_10 AS GRADE_10&#xA;,JAE_GRADE_11 AS GRADE_11&#xA;,JAE_GRADE_12 AS GRADE_12&#xA;,COURSE_CD_1  AS COURSE_CODE_CHOICE_1                  &#xA;,COURSE_CD_2  AS COURSE_CODE_CHOICE_2&#xA;,COURSE_CD_3  AS COURSE_CODE_CHOICE_3&#xA;,COURSE_CD_4  AS COURSE_CODE_CHOICE_4&#xA;,COURSE_CD_5  AS COURSE_CODE_CHOICE_5&#xA;,COURSE_CD_6  AS COURSE_CODE_CHOICE_6&#xA;,COURSE_CD_7  AS COURSE_CODE_CHOICE_7&#xA;,COURSE_CD_8  AS COURSE_CODE_CHOICE_8&#xA;,COURSE_CD_9  AS COURSE_CODE_CHOICE_9&#xA;,COURSE_CD_10 AS COURSE_CODE_CHOICE_10&#xA;,COURSE_CD_11 AS COURSE_CODE_CHOICE_11&#xA;,COURSE_CD_12 AS COURSE_CODE_CHOICE_12&#xA;,POSTED_COURSE POSTED_COURSE&#xA;,'' as POSTED_CENTRE&#xA;,'' as POSTED_CHOICE_ORDER&#xA;,ECA_GRADE&#xA;,POSTED_POINT RAW_AGG&#xA;,AGG_POSTED NET_AGG&#xA;,GETDATE() CREATED_ON&#xA;,CREATED_ON MODIFIED_ON&#xA;FROM [RPDW_PRD].[dbo].[DW_EXT_JAE]&#xA;&#xA;union all&#xA;&#xA;SELECT &#xA;UIN &#xA;,MASKED_NATIONAL_ID&#xA;,'DPA' AS ADMISSION_EXERCISE&#xA;,AY_YEAR AS  ACAD_YEAR&#xA;,AY_SEM AS SEMESTER&#xA;,STATUTORY_NM AS APPLICANT_NAME&#xA;,'' AS  DATE_OF_BIRTH&#xA;,'' AS SEC_SCHOOL_CODE&#xA;,'' AS SEC_SCHOOL_DESC&#xA;,'' AS CITIZENSHIP_CODE&#xA;,'' AS CITIZENSHIP&#xA;,'' AS GENDER_CODE&#xA;,'' AS GENDER&#xA;,'' AS RACE_CODE&#xA;,'' AS RACE&#xA;,JAE_SUBJECT_CD_1  AS SUBJECT_CODE_1&#xA;,JAE_SUBJECT_CD_2  AS SUBJECT_CODE_2&#xA;,JAE_SUBJECT_CD_3  AS SUBJECT_CODE_3&#xA;,JAE_SUBJECT_CD_4  AS SUBJECT_CODE_4&#xA;,JAE_SUBJECT_CD_5  AS SUBJECT_CODE_5&#xA;,JAE_SUBJECT_CD_6  AS SUBJECT_CODE_6&#xA;,JAE_SUBJECT_CD_7  AS SUBJECT_CODE_7&#xA;,JAE_SUBJECT_CD_8  AS SUBJECT_CODE_8&#xA;,JAE_SUBJECT_CD_9  AS SUBJECT_CODE_9&#xA;,JAE_SUBJECT_CD_10 AS SUBJECT_CODE_10&#xA;,JAE_SUBJECT_CD_11 AS SUBJECT_CODE_11&#xA;,JAE_SUBJECT_CD_12 AS SUBJECT_CODE_12&#xA;,JAE_GRADE_1  AS GRADE_1&#xA;,JAE_GRADE_2  AS GRADE_2&#xA;,JAE_GRADE_3  AS GRADE_3&#xA;,JAE_GRADE_4  AS GRADE_4&#xA;,JAE_GRADE_5  AS GRADE_5&#xA;,JAE_GRADE_6  AS GRADE_6&#xA;,JAE_GRADE_7  AS GRADE_7&#xA;,JAE_GRADE_8  AS GRADE_8&#xA;,JAE_GRADE_9  AS GRADE_9&#xA;,JAE_GRADE_10 AS GRADE_10&#xA;,JAE_GRADE_11 AS GRADE_11&#xA;,JAE_GRADE_12 AS GRADE_12&#xA;,'' AS COURSE_CODE_CHOICE_1 &#xA;,'' AS COURSE_CODE_CHOICE_2&#xA;,'' AS COURSE_CODE_CHOICE_3&#xA;,'' AS COURSE_CODE_CHOICE_4&#xA;,'' AS COURSE_CODE_CHOICE_5&#xA;,'' AS COURSE_CODE_CHOICE_6&#xA;,'' AS COURSE_CODE_CHOICE_7&#xA;,'' AS COURSE_CODE_CHOICE_8&#xA;,'' AS COURSE_CODE_CHOICE_9&#xA;,'' AS COURSE_CODE_CHOICE_10&#xA;,'' AS COURSE_CODE_CHOICE_11&#xA;,'' AS COURSE_CODE_CHOICE_12&#xA;,POSTED_COURSE_CD POSTED_COURSE&#xA;,'' POSTED_CENTRE &#xA;,'' POSTED_CHOICE_ORDER&#xA;,ECA_GRADE&#xA;,RAW_AGGREGATE RAW_AGG&#xA;,NET_AGGREGATE NET_AGG&#xA;,GETDATE() CREATED_ON&#xA;,CREATED_ON MODIFIED_ON&#xA;FROM [RPDW_PRD].[dbo].[DW_EXT_DPAEAE_JAE]&#xA;&#xA;union all&#xA;&#xA;SELECT &#xA;NRIC_FIN UIN&#xA;,MASKED_NATIONAL_ID&#xA;,'JPE' AS ADMISSION_EXERCISE&#xA;,FILE_NAME_ACADEMIC_YEAR AS ACAD_YEAR&#xA;,FILE_NAME_SEMESTER AS SEMESTER&#xA;,Name AS APPLICANT_NAME&#xA;,DATE_OF_BIRTH&#xA;,'' AS SEC_SCHOOL_CODE&#xA;,'' AS SEC_SCHOOL_DESC&#xA;,SG_Citizenship_Status CITIZENSHIP_CODE&#xA;,CASE &#xA;WHEN SG_Citizenship_Status='10' Then 'SINGAPORE CITIZEN'                                                                                      &#xA;WHEN SG_Citizenship_Status='30' Then 'MALAYSIAN'    &#xA;WHEN SG_Citizenship_Status='50' Then 'BRUNEIAN'                                                         &#xA;WHEN SG_Citizenship_Status='51' Then 'MYANMAR'                                                          &#xA;WHEN SG_Citizenship_Status='52' Then 'INDONESIAN'                                                       &#xA;WHEN SG_Citizenship_Status='53' Then 'FILIPINO'                                                         &#xA;WHEN SG_Citizenship_Status='54' Then 'THAI'                                                             &#xA;WHEN SG_Citizenship_Status='55' Then 'VIETNAMESE'  &#xA;WHEN SG_Citizenship_Status='60' Then 'CHINESE'   &#xA;WHEN SG_Citizenship_Status='63' Then 'INDIAN'&#xA;Else '' END CITIZENSHIP&#xA;,GENDER GENDER_CODE&#xA;,CASE WHEN ISNULL(GENDER,'')='1' Then 'Male'&#xA;&#x9;  WHEN ISNULL(GENDER,'')='2' Then 'Female' &#xA;&#x9;  WHEN ISNULL(GENDER,'')='M' Then 'Male'&#xA;&#x9;  WHEN ISNULL(GENDER,'')='F' Then 'Female' END  GENDER&#xA;,RACE RACE_CODE&#xA;,CASE &#xA;WHEN RACE='1' Then 'MALAY'          &#xA;WHEN RACE='2' Then 'CHINESE'        &#xA;WHEN RACE='3' Then 'IND/PAK/SL'    &#xA;WHEN RACE='4' Then 'EURASIAN'       &#xA;WHEN RACE='5' Then 'INDON EXTRACT'  &#xA;WHEN RACE='6' Then 'IND/PAK/SL (NT)'&#xA;WHEN RACE='7' Then 'CAUCASIAN'      &#xA;WHEN RACE='9' Then 'OTHERS'&#xA;Else '' END [RACE]&#xA;,'' AS SUBJECT_CODE_1&#xA;,'' AS SUBJECT_CODE_2&#xA;,'' AS SUBJECT_CODE_3&#xA;,'' AS SUBJECT_CODE_4&#xA;,'' AS SUBJECT_CODE_5&#xA;,'' AS SUBJECT_CODE_6&#xA;,'' AS SUBJECT_CODE_7&#xA;,'' AS SUBJECT_CODE_8&#xA;,'' AS SUBJECT_CODE_9&#xA;,'' AS SUBJECT_CODE_10&#xA;,'' AS SUBJECT_CODE_11&#xA;,'' AS SUBJECT_CODE_12&#xA;,'' AS GRADE_1&#xA;,'' AS GRADE_2&#xA;,'' AS GRADE_3&#xA;,'' AS GRADE_4&#xA;,'' AS GRADE_5&#xA;,'' AS GRADE_6&#xA;,'' AS GRADE_7&#xA;,'' AS GRADE_8&#xA;,'' AS GRADE_9&#xA;,'' AS GRADE_10&#xA;,'' AS GRADE_11&#xA;,'' AS GRADE_12&#xA;,CH1  AS COURSE_CODE_CHOICE_1  &#xA;,CH2  AS COURSE_CODE_CHOICE_2&#xA;,CH3  AS COURSE_CODE_CHOICE_3&#xA;,CH4  AS COURSE_CODE_CHOICE_4&#xA;,CH5  AS COURSE_CODE_CHOICE_5&#xA;,CH6  AS COURSE_CODE_CHOICE_6&#xA;,CH7  AS COURSE_CODE_CHOICE_7&#xA;,CH8  AS COURSE_CODE_CHOICE_8&#xA;,CH9  AS COURSE_CODE_CHOICE_9&#xA;,CH10 AS COURSE_CODE_CHOICE_10&#xA;,CH11 AS COURSE_CODE_CHOICE_11&#xA;,CH12 AS COURSE_CODE_CHOICE_12&#xA;,POSTED_COURSE&#xA;,POSTED_POLY AS POSTED_CENTRE&#xA;,Posted_Choice_Order AS POSTED_CHOICE_ORDER&#xA;,ITE_CCA_GRADE ECA_GRADE&#xA;,RAW_GPA RAW_AGG&#xA;,NET_GPA NET_AGG&#xA;,GETDATE() CREATED_ON&#xA;,CREATED_ON MODIFIED_ON&#xA;from [RPDW_PRD].[dbo].[DW_EXT_JPAE_POSTFILE]&#xA;&#xA;union all&#xA;&#xA;SELECT &#xA;UIN&#xA;,MASKED_NATIONAL_ID&#xA;,'PFP' AS ADMISSION_EXERCISE&#xA;,[AY_YEAR] AS ACAD_YEAR&#xA;,[AY_SEM] AS SEMESTER&#xA;,'' AS APPLICANT_NAME&#xA;,[DATE OF BIRTH] DATE_OF_BIRTH&#xA;,[SECONDARY SCHOOL] SEC_SCHOOL_CODE&#xA;,CASE &#xA;WHEN [SECONDARY SCHOOL]='S' THEN 'SPECIAL'&#xA;WHEN [SECONDARY SCHOOL]='E' THEN 'EXPRESS'&#xA;WHEN [SECONDARY SCHOOL]='N'THEN 'NORMAL'&#xA;--ELSE 'NON-SCHOOL STUDENT/NOT AVAILABLE'&#xA;END SEC_SCHOOL_DESC&#xA;,CITIZENSHIP CITIZENSHIP_CODE&#xA;,CASE &#xA;WHEN CITIZENSHIP='10' Then 'SINGAPORE CITIZEN'                                                                                      &#xA;WHEN CITIZENSHIP='30' Then 'MALAYSIAN'    &#xA;WHEN CITIZENSHIP='50' Then 'BRUNEIAN'                                                         &#xA;WHEN CITIZENSHIP='51' Then 'MYANMAR'                                                          &#xA;WHEN CITIZENSHIP='52' Then 'INDONESIAN'                                                       &#xA;WHEN CITIZENSHIP='53' Then 'FILIPINO'                                                         &#xA;WHEN CITIZENSHIP='54' Then 'THAI'                                                             &#xA;WHEN CITIZENSHIP='55' Then 'VIETNAMESE'  &#xA;WHEN CITIZENSHIP='60' Then 'CHINESE'   &#xA;WHEN CITIZENSHIP='63' Then 'INDIAN'&#xA;Else '' END CITIZENSHIP&#xA;,GENDER GENDER_CODE&#xA;,CASE WHEN ISNULL(GENDER,'')='1' Then 'Male'&#xA;&#x9;  WHEN ISNULL(GENDER,'')='2' Then 'Female' &#xA;&#x9;  WHEN ISNULL(GENDER,'')='M' Then 'Male'&#xA;&#x9;  WHEN ISNULL(GENDER,'')='F' Then 'Female' END  GENDER&#xA;,[RACE CODE]&#xA;,CASE &#xA;WHEN [RACE CODE]='1' Then 'MALAY'          &#xA;WHEN [RACE CODE]='2' Then 'CHINESE'        &#xA;WHEN [RACE CODE]='3' Then 'IND/PAK/SL'    &#xA;WHEN [RACE CODE]='4' Then 'EURASIAN'       &#xA;WHEN [RACE CODE]='5' Then 'INDON EXTRACT'  &#xA;WHEN [RACE CODE]='6' Then 'IND/PAK/SL (NT)'&#xA;WHEN [RACE CODE]='7' Then 'CAUCASIAN'      &#xA;WHEN [RACE CODE]='9' Then 'OTHERS'&#xA;Else '' END [RACE]&#xA;,'' AS SUBJECT_CODE_1&#xA;,'' AS SUBJECT_CODE_2&#xA;,'' AS SUBJECT_CODE_3&#xA;,'' AS SUBJECT_CODE_4&#xA;,'' AS SUBJECT_CODE_5&#xA;,'' AS SUBJECT_CODE_6&#xA;,'' AS SUBJECT_CODE_7&#xA;,'' AS SUBJECT_CODE_8&#xA;,'' AS SUBJECT_CODE_9&#xA;,'' AS SUBJECT_CODE_10&#xA;,'' AS SUBJECT_CODE_11&#xA;,'' AS SUBJECT_CODE_12&#xA;,''  AS GRADE_1&#xA;,''  AS GRADE_2&#xA;,''  AS GRADE_3&#xA;,''  AS GRADE_4&#xA;,''  AS GRADE_5&#xA;,''  AS GRADE_6&#xA;,''  AS GRADE_7&#xA;,''  AS GRADE_8&#xA;,''  AS GRADE_9&#xA;,'' AS GRADE_10&#xA;,'' AS GRADE_11&#xA;,'' AS GRADE_12&#xA;,[COURSE CHOICE_1] AS COURSE_CODE_CHOICE_1&#xA;,[COURSE CHOICE_2] AS COURSE_CODE_CHOICE_2&#xA;,[COURSE CHOICE_3] AS COURSE_CODE_CHOICE_3&#xA;,[COURSE CHOICE_4] AS COURSE_CODE_CHOICE_4&#xA;,[COURSE CHOICE_5] AS COURSE_CODE_CHOICE_5&#xA;,'' AS COURSE_CODE_CHOICE_6&#xA;,'' AS COURSE_CODE_CHOICE_7&#xA;,'' AS COURSE_CODE_CHOICE_8&#xA;,'' AS COURSE_CODE_CHOICE_9&#xA;,'' AS COURSE_CODE_CHOICE_10&#xA;,'' AS COURSE_CODE_CHOICE_11&#xA;,'' AS COURSE_CODE_CHOICE_12&#xA;,[POSTED COURSE] POSTED_COURSE&#xA;,[POSTED CENTRE CODE] POSTED_CENTRE&#xA;,[POSTED CHOICE ORDER] &#xA;,[CCA GRADE] ECA_GRADE&#xA;,[FINAL RAW SCORE] as RAW_AGG&#xA;,[FINAL NET SCORE] NET_AGG&#xA;,GETDATE() CREATED_ON&#xA;,CREATED_ON MODIFIED_ON&#xA;FROM [RPDW_PRD].[dbo].[DW_EXT_PFP]&#xA;&#xA;&#xA;union all&#xA;&#xA;SELECT &#xA;[NRIC FIN] UIN&#xA;,MASKED_NATIONAL_ID&#xA;,'JSE' AS ADMISSION_EXERCISE&#xA;,FILE_NAME_ACADEMIC_YEAR AS ACAD_YEAR&#xA;,FILE_NAME_SEMESTER AS SEMESTER&#xA;,NAME APPLICANT_NAME&#xA;,[Date of Birth] DATE_OF_BIRTH&#xA;,[Sec School] AS SEC_SCHOOL_CODE&#xA;,CASE &#xA;WHEN [Sec School]='S' THEN 'SPECIAL'&#xA;WHEN [Sec School]='E' THEN 'EXPRESS'&#xA;WHEN [Sec School]='N'THEN 'NORMAL'&#xA;--ELSE 'NON-SCHOOL STUDENT/NOT AVAILABLE'&#xA;END SEC_SCHOOL_DESC&#xA;,CITIZENSHIP AS CITIZENSHIP_CODE&#xA;,CASE &#xA;WHEN CITIZENSHIP='10' Then 'SINGAPORE CITIZEN'                                                                                      &#xA;WHEN CITIZENSHIP='30' Then 'MALAYSIAN'    &#xA;WHEN CITIZENSHIP='50' Then 'BRUNEIAN'                                                         &#xA;WHEN CITIZENSHIP='51' Then 'MYANMAR'                                                          &#xA;WHEN CITIZENSHIP='52' Then 'INDONESIAN'                                                       &#xA;WHEN CITIZENSHIP='53' Then 'FILIPINO'                                                         &#xA;WHEN CITIZENSHIP='54' Then 'THAI'                                                             &#xA;WHEN CITIZENSHIP='55' Then 'VIETNAMESE'  &#xA;WHEN CITIZENSHIP='60' Then 'CHINESE'   &#xA;WHEN CITIZENSHIP='63' Then 'INDIAN'&#xA;Else '' END CITIZENSHIP&#xA;,GENDER GENDER_CODE&#xA;,CASE WHEN ISNULL(GENDER,'')='1' Then 'Male'&#xA;&#x9;  WHEN ISNULL(GENDER,'')='2' Then 'Female' &#xA;&#x9;  WHEN ISNULL(GENDER,'')='M' Then 'Male'&#xA;&#x9;  WHEN ISNULL(GENDER,'')='F' Then 'Female' END  GENDER&#xA;,RACE AS RACE_CODE&#xA;,CASE &#xA;WHEN RACE='1' Then 'MALAY'          &#xA;WHEN RACE='2' Then 'CHINESE'        &#xA;WHEN RACE='3' Then 'IND/PAK/SL'    &#xA;WHEN RACE='4' Then 'EURASIAN'       &#xA;WHEN RACE='5' Then 'INDON EXTRACT'  &#xA;WHEN RACE='6' Then 'IND/PAK/SL (NT)'&#xA;WHEN RACE='7' Then 'CAUCASIAN'      &#xA;WHEN RACE='9' Then 'OTHERS'&#xA;Else '' END RACE&#xA;,[SUBJECT CODE_1] AS SUBJECT_CODE_1&#xA;,[SUBJECT CODE_2]  AS SUBJECT_CODE_2&#xA;,[SUBJECT CODE_3]  AS SUBJECT_CODE_3&#xA;,[SUBJECT CODE_4]  AS SUBJECT_CODE_4&#xA;,[SUBJECT CODE_5]  AS SUBJECT_CODE_5&#xA;,[SUBJECT CODE_6]  AS SUBJECT_CODE_6&#xA;,[SUBJECT CODE_7]  AS SUBJECT_CODE_7&#xA;,[SUBJECT CODE_8]  AS SUBJECT_CODE_8&#xA;,[SUBJECT CODE_9]  AS SUBJECT_CODE_9&#xA;,[SUBJECT CODE_10] AS SUBJECT_CODE_10&#xA;,[SUBJECT CODE_11] AS SUBJECT_CODE_11&#xA;,[SUBJECT CODE_12] AS SUBJECT_CODE_12&#xA;,[ SUBJECT GRADE_1]  AS GRADE_1&#xA;,[ SUBJECT GRADE_2]  AS GRADE_2&#xA;,[ SUBJECT GRADE_3]  AS GRADE_3&#xA;,[ SUBJECT GRADE_4]  AS GRADE_4&#xA;,[ SUBJECT GRADE_5]  AS GRADE_5&#xA;,[ SUBJECT GRADE_6]  AS GRADE_6&#xA;,[ SUBJECT GRADE_7]  AS GRADE_7&#xA;,[ SUBJECT GRADE_8]  AS GRADE_8&#xA;,[ SUBJECT GRADE_9]  AS GRADE_9&#xA;,[ SUBJECT GRADE_10] AS GRADE_10&#xA;,[ SUBJECT GRADE_11] AS GRADE_11&#xA;,[ SUBJECT GRADE_12] AS GRADE_12&#xA;,[Choice 1]  AS COURSE_CODE_CHOICE_1&#xA;,[Choice 2]  AS COURSE_CODE_CHOICE_2&#xA;,[Choice 3]  AS COURSE_CODE_CHOICE_3&#xA;,'' AS COURSE_CODE_CHOICE_4&#xA;,'' AS COURSE_CODE_CHOICE_5&#xA;,'' AS COURSE_CODE_CHOICE_6&#xA;,'' AS COURSE_CODE_CHOICE_7&#xA;,'' AS COURSE_CODE_CHOICE_8&#xA;,'' AS COURSE_CODE_CHOICE_9&#xA;,'' AS COURSE_CODE_CHOICE_10&#xA;,'' AS COURSE_CODE_CHOICE_11&#xA;,'' AS COURSE_CODE_CHOICE_12&#xA;,[JPSAE Posted Course] POSTED_COURSE&#xA;,[Posted Institution] POSTED_CENTRE&#xA;,[Posted Choice] POSTED_CHOICE_ORDER&#xA;,[CCA Grade] AS ECA_GRADE&#xA;,[POSTED AGGREGATE] RAW_AGG&#xA;,[NET POSTED AGGREGATE] NET_AGG&#xA;,GETDATE() CREATED_ON&#xA;,CREATED_ON MODIFIED_ON&#xA;FROM [RPDW_PRD].[dbo].[DW_EXT_JPSAE]&#xA;&#xA;union all&#xA;&#xA;SELECT &#xA;NRIC_FIN UIN&#xA;,MASKED_NATIONAL_ID&#xA;,'EAE-I' AS ADMISSION_EXERCISE&#xA;,AY_YEAR AS ACAD_YEAR&#xA;,AY_SEM AS SEMESTER&#xA;,NAME as APPLICANT_NAME&#xA;,[DATE OF BIRTH]  AS DATE_OF_BIRTH&#xA;,[Sec School] AS SEC_SCHOOL_CODE&#xA;,CASE &#xA;WHEN [Sec School]='S' THEN 'SPECIAL'&#xA;WHEN [Sec School]='E' THEN 'EXPRESS'&#xA;WHEN [Sec School]='N'THEN 'NORMAL'&#xA;--ELSE 'NON-SCHOOL STUDENT/NOT AVAILABLE'&#xA;END SEC_SCHOOL_DESC&#xA;,CITIZENSHIP AS CITIZENSHIP_CODE&#xA;,CASE &#xA;WHEN CITIZENSHIP='10' Then 'SINGAPORE CITIZEN'                                                                                      &#xA;WHEN CITIZENSHIP='30' Then 'MALAYSIAN'    &#xA;WHEN CITIZENSHIP='50' Then 'BRUNEIAN'                                                         &#xA;WHEN CITIZENSHIP='51' Then 'MYANMAR'                                                          &#xA;WHEN CITIZENSHIP='52' Then 'INDONESIAN'                                                       &#xA;WHEN CITIZENSHIP='53' Then 'FILIPINO'                                                         &#xA;WHEN CITIZENSHIP='54' Then 'THAI'                                                             &#xA;WHEN CITIZENSHIP='55' Then 'VIETNAMESE'  &#xA;WHEN CITIZENSHIP='60' Then 'CHINESE'   &#xA;WHEN CITIZENSHIP='63' Then 'INDIAN'&#xA;Else '' END CITIZENSHIP&#xA;,GENDER GENDER_CODE&#xA;,CASE WHEN ISNULL(GENDER,'')='1' Then 'Male'&#xA;&#x9;  WHEN ISNULL(GENDER,'')='2' Then 'Female' &#xA;&#x9;  WHEN ISNULL(GENDER,'')='M' Then 'Male'&#xA;&#x9;  WHEN ISNULL(GENDER,'')='F' Then 'Female' END  GENDER&#xA;,RACE RACE_CODE&#xA;,CASE &#xA;WHEN RACE='1' Then 'MALAY'          &#xA;WHEN RACE='2' Then 'CHINESE'        &#xA;WHEN RACE='3' Then 'IND/PAK/SL'    &#xA;WHEN RACE='4' Then 'EURASIAN'       &#xA;WHEN RACE='5' Then 'INDON EXTRACT'  &#xA;WHEN RACE='6' Then 'IND/PAK/SL (NT)'&#xA;WHEN RACE='7' Then 'CAUCASIAN'      &#xA;WHEN RACE='9' Then 'OTHERS'&#xA;Else '' END RACE&#xA;,[SUBJECT CODE 1]  AS SUBJECT_CODE_1&#xA;,[SUBJECT CODE 2]  AS SUBJECT_CODE_2&#xA;,[SUBJECT CODE 3]  AS SUBJECT_CODE_3&#xA;,[SUBJECT CODE 4]  AS SUBJECT_CODE_4&#xA;,[SUBJECT CODE 5]  AS SUBJECT_CODE_5&#xA;,[SUBJECT CODE 6]  AS SUBJECT_CODE_6&#xA;,[SUBJECT CODE 7]  AS SUBJECT_CODE_7&#xA;,[SUBJECT CODE 8]  AS SUBJECT_CODE_8&#xA;,[SUBJECT CODE 9]  AS SUBJECT_CODE_9&#xA;,[SUBJECT CODE 10] AS SUBJECT_CODE_10&#xA;,[SUBJECT CODE 11] AS SUBJECT_CODE_11&#xA;,[SUBJECT CODE 12] AS SUBJECT_CODE_12&#xA;,[SUBJECT GRADE 1]  AS GRADE_1&#xA;,[SUBJECT GRADE 2]  AS GRADE_2&#xA;,[SUBJECT GRADE 3]  AS GRADE_3&#xA;,[SUBJECT GRADE 4]  AS GRADE_4&#xA;,[SUBJECT GRADE 5]  AS GRADE_5&#xA;,[SUBJECT GRADE 6]  AS GRADE_6&#xA;,[SUBJECT GRADE 7]  AS GRADE_7&#xA;,[SUBJECT GRADE 8]  AS GRADE_8&#xA;,[SUBJECT GRADE 9]  AS GRADE_9&#xA;,[SUBJECT GRADE 10] AS GRADE_10&#xA;,[SUBJECT GRADE 11] AS GRADE_11&#xA;,[SUBJECT GRADE 12] AS GRADE_12&#xA;,[Choice 1] AS COURSE_CODE_CHOICE_1&#xA;,[Choice 2] AS COURSE_CODE_CHOICE_2&#xA;,[Choice 3] AS COURSE_CODE_CHOICE_3&#xA;,'' AS COURSE_CODE_CHOICE_4&#xA;,'' AS COURSE_CODE_CHOICE_5&#xA;,'' AS COURSE_CODE_CHOICE_6&#xA;,'' AS COURSE_CODE_CHOICE_7&#xA;,'' AS COURSE_CODE_CHOICE_8&#xA;,'' AS COURSE_CODE_CHOICE_9&#xA;,'' AS COURSE_CODE_CHOICE_10&#xA;,'' AS COURSE_CODE_CHOICE_11&#xA;,'' AS COURSE_CODE_CHOICE_12&#xA;,[JPSAE POSTED COURSE] POSTED_COURSE&#xA;,[POSTED INSTITUTION] POSTED_CENTRE&#xA;,[POSTED CHOICE] POSTED_CHOICE_ORDER&#xA;,[CCA GRADE] ECA_GRADE&#xA;,[POSTED AGGREGATE] RAW_AGG&#xA;,[NET POSTED AGGREGATE] NET_AGG&#xA;,GETDATE() CREATED_ON&#xA;,CREATED_ON MODIFIED_ON&#xA;FROM [RPDW_PRD].[dbo].[DW_EXT_EAE]&#xA;&#xA;union all&#xA;&#xA;SELECT &#xA;[NRIC_FIN] UIN&#xA;,MASKED_NATIONAL_ID&#xA;,'EAE-O' AS ADMISSION_EXERCISE&#xA;,[FILE_NAME_ACADEMIC_YEAR] AS ACAD_YEAR&#xA;,[FILE_NAME_SEMESTER] AS SEMESTER&#xA;,NAME as APPLICANT_NAME&#xA;,[DATE OF BIRTH]  AS DATE_OF_BIRTH&#xA;,[School Code] AS SEC_SCHOOL_CODE&#xA;,CASE &#xA;WHEN [School Code]='S' THEN 'SPECIAL'&#xA;WHEN [School Code]='E' THEN 'EXPRESS'&#xA;WHEN [School Code]='N'THEN 'NORMAL'&#xA;--ELSE 'NON-SCHOOL STUDENT/NOT AVAILABLE'&#xA;END SEC_SCHOOL_DESC&#xA;,[Citizenship] AS CITIZENSHIP_CODE&#xA;,CASE &#xA;WHEN CITIZENSHIP='10' Then 'SINGAPORE CITIZEN'                                                                                      &#xA;WHEN CITIZENSHIP='30' Then 'MALAYSIAN'    &#xA;WHEN CITIZENSHIP='50' Then 'BRUNEIAN'                                                         &#xA;WHEN CITIZENSHIP='51' Then 'MYANMAR'                                                          &#xA;WHEN CITIZENSHIP='52' Then 'INDONESIAN'                                                       &#xA;WHEN CITIZENSHIP='53' Then 'FILIPINO'                                                         &#xA;WHEN CITIZENSHIP='54' Then 'THAI'                                                             &#xA;WHEN CITIZENSHIP='55' Then 'VIETNAMESE'  &#xA;WHEN CITIZENSHIP='60' Then 'CHINESE'   &#xA;WHEN CITIZENSHIP='63' Then 'INDIAN'&#xA;Else '' END CITIZENSHIP&#xA;,[Gender] GENDER_CODE&#xA;,CASE WHEN ISNULL([Gender],'')='1' Then 'Male'&#xA;&#x9;  WHEN ISNULL([Gender],'')='2' Then 'Female' &#xA;&#x9;  WHEN ISNULL([Gender],'')='M' Then 'Male'&#xA;&#x9;  WHEN ISNULL([Gender],'')='F' Then 'Female' END  GENDER&#xA;,[Race] RACE_CODE&#xA;,CASE &#xA;WHEN [Race]='1' Then 'MALAY'          &#xA;WHEN [Race]='2' Then 'CHINESE'        &#xA;WHEN [Race]='3' Then 'IND/PAK/SL'    &#xA;WHEN [Race]='4' Then 'EURASIAN'       &#xA;WHEN [Race]='5' Then 'INDON EXTRACT'  &#xA;WHEN [Race]='6' Then 'IND/PAK/SL (NT)'&#xA;WHEN [Race]='7' Then 'CAUCASIAN'      &#xA;WHEN [Race]='9' Then 'OTHERS'&#xA;Else '' END RACE&#xA;,''  AS SUBJECT_CODE_1&#xA;,''  AS SUBJECT_CODE_2&#xA;,''  AS SUBJECT_CODE_3&#xA;,''  AS SUBJECT_CODE_4&#xA;,''  AS SUBJECT_CODE_5&#xA;,''  AS SUBJECT_CODE_6&#xA;,''  AS SUBJECT_CODE_7&#xA;,''  AS SUBJECT_CODE_8&#xA;,''  AS SUBJECT_CODE_9&#xA;,'' AS SUBJECT_CODE_10&#xA;,'' AS SUBJECT_CODE_11&#xA;,'' AS SUBJECT_CODE_12&#xA;,''  AS GRADE_1&#xA;,''  AS GRADE_2&#xA;,''  AS GRADE_3&#xA;,''  AS GRADE_4&#xA;,'' AS GRADE_5&#xA;,''  AS GRADE_6&#xA;,'' AS GRADE_7&#xA;,''  AS GRADE_8&#xA;,''  AS GRADE_9&#xA;,'' AS GRADE_10&#xA;,'' AS GRADE_11&#xA;,'' AS GRADE_12&#xA;,[Choice Course_1] AS COURSE_CODE_CHOICE_1&#xA;,[Choice Course_2] AS COURSE_CODE_CHOICE_2&#xA;,[Choice Course_3] AS COURSE_CODE_CHOICE_3&#xA;,'' AS COURSE_CODE_CHOICE_4&#xA;,'' AS COURSE_CODE_CHOICE_5&#xA;,'' AS COURSE_CODE_CHOICE_6&#xA;,'' AS COURSE_CODE_CHOICE_7&#xA;,'' AS COURSE_CODE_CHOICE_8&#xA;,'' AS COURSE_CODE_CHOICE_9&#xA;,'' AS COURSE_CODE_CHOICE_10&#xA;,'' AS COURSE_CODE_CHOICE_11&#xA;,'' AS COURSE_CODE_CHOICE_12&#xA;,[Posted Course] POSTED_COURSE&#xA;,[Posted Poly] POSTED_CENTRE&#xA;,[Posted Choice No] POSTED_CHOICE_ORDER&#xA;,'' ECA_GRADE&#xA;,[Posted Agg] RAW_AGG&#xA;,'' NET_AGG&#xA;,GETDATE() CREATED_ON&#xA;,CREATED_ON MODIFIED_ON&#xA;FROM [RPDW_PRD].[dbo].[DW_EXT_DPAEAE_APPLICANTS]&#xA;) T&#xA;&#xA;DROP TABLE [DW_EXT_TMP_ADMISSION_EXE]&#xA;&#xA;select * into [DW_EXT_TMP_ADMISSION_EXE] from&#xA;(&#xA;SELECT&#xA; convert(varchar(12),TRIM([UIN]))&#x9;AS &#x9;[UIN]&#xA;,convert(varchar(12),TRIM([MASKED_NATIONAL_ID])&#x9;)AS &#x9;[M)ASKED_NATIONAL_ID]&#xA;,convert(varchar(12),TRIM([ADMISSION_EXERCISE])&#x9;)AS &#x9;[ADMISSION_EXERCISE]&#xA;,convert(varchar(4),TRIM([ACAD_YEAR])&#x9;)AS &#x9;[ACAD_YEAR]&#xA;,convert(varchar(2),TRIM([SEMESTER])&#x9;)AS &#x9;[SEMESTER]&#xA;,convert(varchar(100),TRIM([APPLICANT_NAME])&#x9;)AS &#x9;[APPLICANT_NAME]&#xA;,convert(varchar(10),TRIM([DATE_OF_BIRTH])&#x9;)AS &#x9;[DATE_OF_BIRTH]&#xA;,convert(varchar(10),TRIM([SEC_SCHOOL_CODE])&#x9;)AS &#x9;[SEC_SCHOOL_CODE]&#xA;/*,convert(varchar(100),TRIM([SEC_SCHOOL_DESC])&#x9;)AS &#x9;[SEC_SCHOOL_DESC]*/&#xA;,convert(varchar(2),TRIM([CITIZENSHIP_CODE])&#x9;)AS &#x9;[CITIZENSHIP_CODE]&#xA;,convert(varchar(50),TRIM([CITIZENSHIP])&#x9;)AS &#x9;[CITIZENSHIP]&#xA;,convert(varchar(1),TRIM([GENDER_CODE])&#x9;)AS &#x9;[GENDER_CODE]&#xA;,convert(varchar(10),TRIM([GENDER])&#x9;)AS &#x9;[GENDER]&#xA;,convert(varchar(2),TRIM([RACE_CODE])&#x9;)AS &#x9;[RACE_CODE]&#xA;,convert(varchar(50),TRIM([RACE])&#x9;)AS &#x9;[RACE]&#xA;,convert(varchar(4),TRIM([SUBJECT_CODE_1])&#x9;)AS &#x9;[SUBJECT_CODE_1]&#xA;,convert(varchar(4),TRIM([SUBJECT_CODE_2])&#x9;)AS &#x9;[SUBJECT_CODE_2]&#xA;,convert(varchar(4),TRIM([SUBJECT_CODE_3])&#x9;)AS &#x9;[SUBJECT_CODE_3]&#xA;,convert(varchar(4),TRIM([SUBJECT_CODE_4])&#x9;)AS &#x9;[SUBJECT_CODE_4]&#xA;,convert(varchar(4),TRIM([SUBJECT_CODE_5])&#x9;)AS &#x9;[SUBJECT_CODE_5]&#xA;,convert(varchar(4),TRIM([SUBJECT_CODE_6])&#x9;)AS &#x9;[SUBJECT_CODE_6]&#xA;,convert(varchar(4),TRIM([SUBJECT_CODE_7])&#x9;)AS &#x9;[SUBJECT_CODE_7]&#xA;,convert(varchar(4),TRIM([SUBJECT_CODE_8])&#x9;)AS &#x9;[SUBJECT_CODE_8]&#xA;,convert(varchar(4),TRIM([SUBJECT_CODE_9])&#x9;)AS &#x9;[SUBJECT_CODE_9]&#xA;,convert(varchar(4),TRIM([SUBJECT_CODE_10])&#x9;)AS &#x9;[SUBJECT_CODE_10]&#xA;,convert(varchar(4),TRIM([SUBJECT_CODE_11])&#x9;)AS &#x9;[SUBJECT_CODE_11]&#xA;,convert(varchar(4),TRIM([SUBJECT_CODE_12])&#x9;)AS &#x9;[SUBJECT_CODE_12]&#xA;,convert(varchar(1),TRIM([GRADE_1])&#x9;)AS &#x9;[GRADE_1]&#xA;,convert(varchar(1),TRIM([GRADE_2])&#x9;)AS &#x9;[GRADE_2]&#xA;,convert(varchar(1),TRIM([GRADE_3])&#x9;)AS &#x9;[GRADE_3]&#xA;,convert(varchar(1),TRIM([GRADE_4])&#x9;)AS &#x9;[GRADE_4]&#xA;,convert(varchar(1),TRIM([GRADE_5])&#x9;)AS &#x9;[GRADE_5]&#xA;,convert(varchar(1),TRIM([GRADE_6])&#x9;)AS &#x9;[GRADE_6]&#xA;,convert(varchar(1),TRIM([GRADE_7])&#x9;)AS &#x9;[GRADE_7]&#xA;,convert(varchar(1),TRIM([GRADE_8])&#x9;)AS &#x9;[GRADE_8]&#xA;,convert(varchar(1),TRIM([GRADE_9])&#x9;)AS &#x9;[GRADE_9]&#xA;,convert(varchar(1),TRIM([GRADE_10])&#x9;)AS &#x9;[GRADE_10]&#xA;,convert(varchar(1),TRIM([GRADE_11])&#x9;)AS &#x9;[GRADE_11]&#xA;,convert(varchar(1),TRIM([GRADE_12])&#x9;)AS &#x9;[GRADE_12]&#xA;,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_1])&#x9;)AS &#x9;[COURSE_CODE_CHOICE_1]&#xA;,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_2])&#x9;)AS &#x9;[COURSE_CODE_CHOICE_2]&#xA;,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_3])&#x9;)AS &#x9;[COURSE_CODE_CHOICE_3]&#xA;,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_4])&#x9;)AS &#x9;[COURSE_CODE_CHOICE_4]&#xA;,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_5])&#x9;)AS &#x9;[COURSE_CODE_CHOICE_5]&#xA;,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_6])&#x9;)AS &#x9;[COURSE_CODE_CHOICE_6]&#xA;,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_7])&#x9;)AS &#x9;[COURSE_CODE_CHOICE_7]&#xA;,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_8])&#x9;)AS &#x9;[COURSE_CODE_CHOICE_8]&#xA;,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_9])&#x9;)AS &#x9;[COURSE_CODE_CHOICE_9]&#xA;,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_10])&#x9;)AS &#x9;[COURSE_CODE_CHOICE_10]&#xA;,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_11])&#x9;)AS &#x9;[COURSE_CODE_CHOICE_11]&#xA;,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_12])&#x9;)AS &#x9;[COURSE_CODE_CHOICE_12]&#xA;,convert(varchar(6),TRIM([POSTED_COURSE])&#x9;)AS &#x9;[POSTED_COURSE]&#xA;,convert(varchar(10),TRIM([POSTED_CENTRE])&#x9;)AS &#x9;[POSTED_CENTRE]&#xA;,convert(varchar(2),TRIM([POSTED_CHOICE_ORDER])&#x9;)AS &#x9;[POSTED_CHOICE_ORDER]&#xA;,convert(varchar(1),TRIM([ECA_GRADE])&#x9;)AS &#x9;[ECA_GRADE]&#xA;,convert(varchar(6),TRIM([RAW_AGG])&#x9;)AS &#x9;[RAW_AGG]&#xA;,convert(varchar(6),TRIM([NET_AGG])&#x9;)AS &#x9;[NET_AGG]&#xA;,[CREATED_ON]&#x9;AS &#x9;[CREATED_ON]&#xA;,[MODIFIED_ON]&#x9;AS &#x9;[MODIFIED_ON]&#xA;FROM [dbo].EXT_TMP_ADMISSION &#xA;)t&#xA;&#xA;TRUNCATE TABLE DW_EXT_ADMISSION_EXE&#xA;insert into DW_EXT_ADMISSION_EXE select * from [DW_EXT_TMP_ADMISSION_EXE]&#xA;&#xA;--SELECT *  FROM DW_EXT_ADMISSION_EXE&#xA;&#xA;update [RPDW_PRD].[dbo].[DW_EXT_JPSAE] set [Net Posted Aggregate]= null where [Net Posted Aggregate]='0'&#xA;update [RPDW_PRD].[dbo].[DW_EXT_EAE] set [NET POSTED AGGREGATE]= null where [NET POSTED AGGREGATE] ='0'&#xA;update [RPDW_PRD].[dbo].[DW_EXT_DPAEAE_JAE] set NET_AGGREGATE= null where NET_AGGREGATE ='0'&#xA;update [RPDW_PRD].[dbo].[DW_EXT_PFP] set [FINAL RAW SCORE]= null where [FINAL RAW SCORE] ='0'&#xA;update [RPDW_PRD].[dbo].[DW_EXT_JAE] set [AGG_POSTED]= null where [AGG_POSTED] ='0'&#xA;update [RPDW_PRD].[dbo].[DW_EXT_JPAE_POSTFILE] set Net_GPA= null where Net_GPA ='0'&#xA;update [RPDW_PRD].[dbo].[DW_EXT_ADMISSION_EXE] set RAW_AGG= null where RAW_AGG='0'&#xA;&#xA;&#xA;&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;ROLLBACK TRANSACTION&#xA;&#xA;  INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,getdate()  as created_on&#xA;END CATCH  &#xA;GO&#xA;&#xA;&#xA;&#xA;&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_DW_load">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+--------------------------------------
+DECLARE @jobstatusid varchar(5)
+select @jobstatusid=0
+
+
+
+
+DROP TABLE EXT_TMP_ADMISSION 
+SELECT  * INTO EXT_TMP_ADMISSION FROM (
+SELECT 
+UIN 
+,MASKED_NATIONAL_ID
+,'JAE' AS ADMISSION_EXERCISE
+,FILE_NAME_ACADEMIC_YEAR AS ACAD_YEAR
+,FILE_NAME_SEMESTER AS SEMESTER
+,STATUTORY_NM AS APPLICANT_NAME
+,DOB AS DATE_OF_BIRTH
+,SEC_SCHOOL_CD AS SEC_SCHOOL_CODE
+,CASE 
+WHEN SEC_SCHOOL_CD='S' THEN 'SPECIAL'
+WHEN SEC_SCHOOL_CD='E' THEN 'EXPRESS'
+WHEN SEC_SCHOOL_CD='N'THEN 'NORMAL'
+--ELSE 'NON-SCHOOL STUDENT/NOT AVAILABLE'
+END SEC_SCHOOL_DESC
+,CITIZENSHIP_CD CITIZENSHIP_CODE
+,CASE 
+WHEN CITIZENSHIP_CD='10' Then 'SINGAPORE CITIZEN'                                                                                      
+WHEN CITIZENSHIP_CD='30' Then 'MALAYSIAN'    
+WHEN CITIZENSHIP_CD='50' Then 'BRUNEIAN'                                                         
+WHEN CITIZENSHIP_CD='51' Then 'MYANMAR'                                                          
+WHEN CITIZENSHIP_CD='52' Then 'INDONESIAN'                                                       
+WHEN CITIZENSHIP_CD='53' Then 'FILIPINO'                                                         
+WHEN CITIZENSHIP_CD='54' Then 'THAI'                                                             
+WHEN CITIZENSHIP_CD='55' Then 'VIETNAMESE'  
+WHEN CITIZENSHIP_CD='60' Then 'CHINESE'   
+WHEN CITIZENSHIP_CD='63' Then 'INDIAN'
+Else '' END CITIZENSHIP
+,GENDER GENDER_CODE
+,CASE WHEN ISNULL(GENDER,'')='1' Then 'Male'
+	  WHEN ISNULL(GENDER,'')='2' Then 'Female' 
+	  WHEN ISNULL(GENDER,'')='M' Then 'Male'
+	  WHEN ISNULL(GENDER,'')='F' Then 'Female' END  GENDER
+,RACE_CD RACE_CODE
+,CASE 
+WHEN RACE_CD='1' Then 'MALAY'          
+WHEN RACE_CD='2' Then 'CHINESE'        
+WHEN RACE_CD='3' Then 'IND/PAK/SL'    
+WHEN RACE_CD='4' Then 'EURASIAN'       
+WHEN RACE_CD='5' Then 'INDON EXTRACT'  
+WHEN RACE_CD='6' Then 'IND/PAK/SL (NT)'
+WHEN RACE_CD='7' Then 'CAUCASIAN'      
+WHEN RACE_CD='9' Then 'OTHERS'
+Else '' END  RACE
+,JAE_SUBJECT_CD_1  AS SUBJECT_CODE_1
+,JAE_SUBJECT_CD_2  AS SUBJECT_CODE_2
+,JAE_SUBJECT_CD_3  AS SUBJECT_CODE_3
+,JAE_SUBJECT_CD_4  AS SUBJECT_CODE_4
+,JAE_SUBJECT_CD_5  AS SUBJECT_CODE_5
+,JAE_SUBJECT_CD_6  AS SUBJECT_CODE_6
+,JAE_SUBJECT_CD_7  AS SUBJECT_CODE_7
+,JAE_SUBJECT_CD_8  AS SUBJECT_CODE_8
+,JAE_SUBJECT_CD_9  AS SUBJECT_CODE_9
+,JAE_SUBJECT_CD_10 AS SUBJECT_CODE_10
+,JAE_SUBJECT_CD_11 AS SUBJECT_CODE_11
+,JAE_SUBJECT_CD_12 AS SUBJECT_CODE_12
+,JAE_GRADE_1  AS GRADE_1
+,JAE_GRADE_2  AS GRADE_2
+,JAE_GRADE_3  AS GRADE_3
+,JAE_GRADE_4  AS GRADE_4
+,JAE_GRADE_5  AS GRADE_5
+,JAE_GRADE_6  AS GRADE_6
+,JAE_GRADE_7  AS GRADE_7
+,JAE_GRADE_8  AS GRADE_8
+,JAE_GRADE_9  AS GRADE_9
+,JAE_GRADE_10 AS GRADE_10
+,JAE_GRADE_11 AS GRADE_11
+,JAE_GRADE_12 AS GRADE_12
+,COURSE_CD_1  AS COURSE_CODE_CHOICE_1                  
+,COURSE_CD_2  AS COURSE_CODE_CHOICE_2
+,COURSE_CD_3  AS COURSE_CODE_CHOICE_3
+,COURSE_CD_4  AS COURSE_CODE_CHOICE_4
+,COURSE_CD_5  AS COURSE_CODE_CHOICE_5
+,COURSE_CD_6  AS COURSE_CODE_CHOICE_6
+,COURSE_CD_7  AS COURSE_CODE_CHOICE_7
+,COURSE_CD_8  AS COURSE_CODE_CHOICE_8
+,COURSE_CD_9  AS COURSE_CODE_CHOICE_9
+,COURSE_CD_10 AS COURSE_CODE_CHOICE_10
+,COURSE_CD_11 AS COURSE_CODE_CHOICE_11
+,COURSE_CD_12 AS COURSE_CODE_CHOICE_12
+,POSTED_COURSE POSTED_COURSE
+,'' as POSTED_CENTRE
+,'' as POSTED_CHOICE_ORDER
+,ECA_GRADE
+,POSTED_POINT RAW_AGG
+,AGG_POSTED NET_AGG
+,GETDATE() CREATED_ON
+,CREATED_ON MODIFIED_ON
+FROM [RPDW_PRD].[dbo].[DW_EXT_JAE]
+
+union all
+
+SELECT 
+UIN 
+,MASKED_NATIONAL_ID
+,'DPA' AS ADMISSION_EXERCISE
+,AY_YEAR AS  ACAD_YEAR
+,AY_SEM AS SEMESTER
+,STATUTORY_NM AS APPLICANT_NAME
+,'' AS  DATE_OF_BIRTH
+,'' AS SEC_SCHOOL_CODE
+,'' AS SEC_SCHOOL_DESC
+,'' AS CITIZENSHIP_CODE
+,'' AS CITIZENSHIP
+,'' AS GENDER_CODE
+,'' AS GENDER
+,'' AS RACE_CODE
+,'' AS RACE
+,JAE_SUBJECT_CD_1  AS SUBJECT_CODE_1
+,JAE_SUBJECT_CD_2  AS SUBJECT_CODE_2
+,JAE_SUBJECT_CD_3  AS SUBJECT_CODE_3
+,JAE_SUBJECT_CD_4  AS SUBJECT_CODE_4
+,JAE_SUBJECT_CD_5  AS SUBJECT_CODE_5
+,JAE_SUBJECT_CD_6  AS SUBJECT_CODE_6
+,JAE_SUBJECT_CD_7  AS SUBJECT_CODE_7
+,JAE_SUBJECT_CD_8  AS SUBJECT_CODE_8
+,JAE_SUBJECT_CD_9  AS SUBJECT_CODE_9
+,JAE_SUBJECT_CD_10 AS SUBJECT_CODE_10
+,JAE_SUBJECT_CD_11 AS SUBJECT_CODE_11
+,JAE_SUBJECT_CD_12 AS SUBJECT_CODE_12
+,JAE_GRADE_1  AS GRADE_1
+,JAE_GRADE_2  AS GRADE_2
+,JAE_GRADE_3  AS GRADE_3
+,JAE_GRADE_4  AS GRADE_4
+,JAE_GRADE_5  AS GRADE_5
+,JAE_GRADE_6  AS GRADE_6
+,JAE_GRADE_7  AS GRADE_7
+,JAE_GRADE_8  AS GRADE_8
+,JAE_GRADE_9  AS GRADE_9
+,JAE_GRADE_10 AS GRADE_10
+,JAE_GRADE_11 AS GRADE_11
+,JAE_GRADE_12 AS GRADE_12
+,'' AS COURSE_CODE_CHOICE_1 
+,'' AS COURSE_CODE_CHOICE_2
+,'' AS COURSE_CODE_CHOICE_3
+,'' AS COURSE_CODE_CHOICE_4
+,'' AS COURSE_CODE_CHOICE_5
+,'' AS COURSE_CODE_CHOICE_6
+,'' AS COURSE_CODE_CHOICE_7
+,'' AS COURSE_CODE_CHOICE_8
+,'' AS COURSE_CODE_CHOICE_9
+,'' AS COURSE_CODE_CHOICE_10
+,'' AS COURSE_CODE_CHOICE_11
+,'' AS COURSE_CODE_CHOICE_12
+,POSTED_COURSE_CD POSTED_COURSE
+,'' POSTED_CENTRE 
+,'' POSTED_CHOICE_ORDER
+,ECA_GRADE
+,RAW_AGGREGATE RAW_AGG
+,NET_AGGREGATE NET_AGG
+,GETDATE() CREATED_ON
+,CREATED_ON MODIFIED_ON
+FROM [RPDW_PRD].[dbo].[DW_EXT_DPAEAE_JAE]
+
+union all
+
+SELECT 
+NRIC_FIN UIN
+,MASKED_NATIONAL_ID
+,'JPE' AS ADMISSION_EXERCISE
+,FILE_NAME_ACADEMIC_YEAR AS ACAD_YEAR
+,FILE_NAME_SEMESTER AS SEMESTER
+,Name AS APPLICANT_NAME
+,DATE_OF_BIRTH
+,'' AS SEC_SCHOOL_CODE
+,'' AS SEC_SCHOOL_DESC
+,SG_Citizenship_Status CITIZENSHIP_CODE
+,CASE 
+WHEN SG_Citizenship_Status='10' Then 'SINGAPORE CITIZEN'                                                                                      
+WHEN SG_Citizenship_Status='30' Then 'MALAYSIAN'    
+WHEN SG_Citizenship_Status='50' Then 'BRUNEIAN'                                                         
+WHEN SG_Citizenship_Status='51' Then 'MYANMAR'                                                          
+WHEN SG_Citizenship_Status='52' Then 'INDONESIAN'                                                       
+WHEN SG_Citizenship_Status='53' Then 'FILIPINO'                                                         
+WHEN SG_Citizenship_Status='54' Then 'THAI'                                                             
+WHEN SG_Citizenship_Status='55' Then 'VIETNAMESE'  
+WHEN SG_Citizenship_Status='60' Then 'CHINESE'   
+WHEN SG_Citizenship_Status='63' Then 'INDIAN'
+Else '' END CITIZENSHIP
+,GENDER GENDER_CODE
+,CASE WHEN ISNULL(GENDER,'')='1' Then 'Male'
+	  WHEN ISNULL(GENDER,'')='2' Then 'Female' 
+	  WHEN ISNULL(GENDER,'')='M' Then 'Male'
+	  WHEN ISNULL(GENDER,'')='F' Then 'Female' END  GENDER
+,RACE RACE_CODE
+,CASE 
+WHEN RACE='1' Then 'MALAY'          
+WHEN RACE='2' Then 'CHINESE'        
+WHEN RACE='3' Then 'IND/PAK/SL'    
+WHEN RACE='4' Then 'EURASIAN'       
+WHEN RACE='5' Then 'INDON EXTRACT'  
+WHEN RACE='6' Then 'IND/PAK/SL (NT)'
+WHEN RACE='7' Then 'CAUCASIAN'      
+WHEN RACE='9' Then 'OTHERS'
+Else '' END [RACE]
+,'' AS SUBJECT_CODE_1
+,'' AS SUBJECT_CODE_2
+,'' AS SUBJECT_CODE_3
+,'' AS SUBJECT_CODE_4
+,'' AS SUBJECT_CODE_5
+,'' AS SUBJECT_CODE_6
+,'' AS SUBJECT_CODE_7
+,'' AS SUBJECT_CODE_8
+,'' AS SUBJECT_CODE_9
+,'' AS SUBJECT_CODE_10
+,'' AS SUBJECT_CODE_11
+,'' AS SUBJECT_CODE_12
+,'' AS GRADE_1
+,'' AS GRADE_2
+,'' AS GRADE_3
+,'' AS GRADE_4
+,'' AS GRADE_5
+,'' AS GRADE_6
+,'' AS GRADE_7
+,'' AS GRADE_8
+,'' AS GRADE_9
+,'' AS GRADE_10
+,'' AS GRADE_11
+,'' AS GRADE_12
+,CH1  AS COURSE_CODE_CHOICE_1  
+,CH2  AS COURSE_CODE_CHOICE_2
+,CH3  AS COURSE_CODE_CHOICE_3
+,CH4  AS COURSE_CODE_CHOICE_4
+,CH5  AS COURSE_CODE_CHOICE_5
+,CH6  AS COURSE_CODE_CHOICE_6
+,CH7  AS COURSE_CODE_CHOICE_7
+,CH8  AS COURSE_CODE_CHOICE_8
+,CH9  AS COURSE_CODE_CHOICE_9
+,CH10 AS COURSE_CODE_CHOICE_10
+,CH11 AS COURSE_CODE_CHOICE_11
+,CH12 AS COURSE_CODE_CHOICE_12
+,POSTED_COURSE
+,POSTED_POLY AS POSTED_CENTRE
+,Posted_Choice_Order AS POSTED_CHOICE_ORDER
+,ITE_CCA_GRADE ECA_GRADE
+,RAW_GPA RAW_AGG
+,NET_GPA NET_AGG
+,GETDATE() CREATED_ON
+,CREATED_ON MODIFIED_ON
+from [RPDW_PRD].[dbo].[DW_EXT_JPAE_POSTFILE]
+
+union all
+
+SELECT 
+UIN
+,MASKED_NATIONAL_ID
+,'PFP' AS ADMISSION_EXERCISE
+,[AY_YEAR] AS ACAD_YEAR
+,[AY_SEM] AS SEMESTER
+,'' AS APPLICANT_NAME
+,[DATE OF BIRTH] DATE_OF_BIRTH
+,[SECONDARY SCHOOL] SEC_SCHOOL_CODE
+,CASE 
+WHEN [SECONDARY SCHOOL]='S' THEN 'SPECIAL'
+WHEN [SECONDARY SCHOOL]='E' THEN 'EXPRESS'
+WHEN [SECONDARY SCHOOL]='N'THEN 'NORMAL'
+--ELSE 'NON-SCHOOL STUDENT/NOT AVAILABLE'
+END SEC_SCHOOL_DESC
+,CITIZENSHIP CITIZENSHIP_CODE
+,CASE 
+WHEN CITIZENSHIP='10' Then 'SINGAPORE CITIZEN'                                                                                      
+WHEN CITIZENSHIP='30' Then 'MALAYSIAN'    
+WHEN CITIZENSHIP='50' Then 'BRUNEIAN'                                                         
+WHEN CITIZENSHIP='51' Then 'MYANMAR'                                                          
+WHEN CITIZENSHIP='52' Then 'INDONESIAN'                                                       
+WHEN CITIZENSHIP='53' Then 'FILIPINO'                                                         
+WHEN CITIZENSHIP='54' Then 'THAI'                                                             
+WHEN CITIZENSHIP='55' Then 'VIETNAMESE'  
+WHEN CITIZENSHIP='60' Then 'CHINESE'   
+WHEN CITIZENSHIP='63' Then 'INDIAN'
+Else '' END CITIZENSHIP
+,GENDER GENDER_CODE
+,CASE WHEN ISNULL(GENDER,'')='1' Then 'Male'
+	  WHEN ISNULL(GENDER,'')='2' Then 'Female' 
+	  WHEN ISNULL(GENDER,'')='M' Then 'Male'
+	  WHEN ISNULL(GENDER,'')='F' Then 'Female' END  GENDER
+,[RACE CODE]
+,CASE 
+WHEN [RACE CODE]='1' Then 'MALAY'          
+WHEN [RACE CODE]='2' Then 'CHINESE'        
+WHEN [RACE CODE]='3' Then 'IND/PAK/SL'    
+WHEN [RACE CODE]='4' Then 'EURASIAN'       
+WHEN [RACE CODE]='5' Then 'INDON EXTRACT'  
+WHEN [RACE CODE]='6' Then 'IND/PAK/SL (NT)'
+WHEN [RACE CODE]='7' Then 'CAUCASIAN'      
+WHEN [RACE CODE]='9' Then 'OTHERS'
+Else '' END [RACE]
+,'' AS SUBJECT_CODE_1
+,'' AS SUBJECT_CODE_2
+,'' AS SUBJECT_CODE_3
+,'' AS SUBJECT_CODE_4
+,'' AS SUBJECT_CODE_5
+,'' AS SUBJECT_CODE_6
+,'' AS SUBJECT_CODE_7
+,'' AS SUBJECT_CODE_8
+,'' AS SUBJECT_CODE_9
+,'' AS SUBJECT_CODE_10
+,'' AS SUBJECT_CODE_11
+,'' AS SUBJECT_CODE_12
+,''  AS GRADE_1
+,''  AS GRADE_2
+,''  AS GRADE_3
+,''  AS GRADE_4
+,''  AS GRADE_5
+,''  AS GRADE_6
+,''  AS GRADE_7
+,''  AS GRADE_8
+,''  AS GRADE_9
+,'' AS GRADE_10
+,'' AS GRADE_11
+,'' AS GRADE_12
+,[COURSE CHOICE_1] AS COURSE_CODE_CHOICE_1
+,[COURSE CHOICE_2] AS COURSE_CODE_CHOICE_2
+,[COURSE CHOICE_3] AS COURSE_CODE_CHOICE_3
+,[COURSE CHOICE_4] AS COURSE_CODE_CHOICE_4
+,[COURSE CHOICE_5] AS COURSE_CODE_CHOICE_5
+,'' AS COURSE_CODE_CHOICE_6
+,'' AS COURSE_CODE_CHOICE_7
+,'' AS COURSE_CODE_CHOICE_8
+,'' AS COURSE_CODE_CHOICE_9
+,'' AS COURSE_CODE_CHOICE_10
+,'' AS COURSE_CODE_CHOICE_11
+,'' AS COURSE_CODE_CHOICE_12
+,[POSTED COURSE] POSTED_COURSE
+,[POSTED CENTRE CODE] POSTED_CENTRE
+,[POSTED CHOICE ORDER] 
+,[CCA GRADE] ECA_GRADE
+,[FINAL RAW SCORE] as RAW_AGG
+,[FINAL NET SCORE] NET_AGG
+,GETDATE() CREATED_ON
+,CREATED_ON MODIFIED_ON
+FROM [RPDW_PRD].[dbo].[DW_EXT_PFP]
+
+
+union all
+
+SELECT 
+[NRIC FIN] UIN
+,MASKED_NATIONAL_ID
+,'JSE' AS ADMISSION_EXERCISE
+,FILE_NAME_ACADEMIC_YEAR AS ACAD_YEAR
+,FILE_NAME_SEMESTER AS SEMESTER
+,NAME APPLICANT_NAME
+,[Date of Birth] DATE_OF_BIRTH
+,[Sec School] AS SEC_SCHOOL_CODE
+,CASE 
+WHEN [Sec School]='S' THEN 'SPECIAL'
+WHEN [Sec School]='E' THEN 'EXPRESS'
+WHEN [Sec School]='N'THEN 'NORMAL'
+--ELSE 'NON-SCHOOL STUDENT/NOT AVAILABLE'
+END SEC_SCHOOL_DESC
+,CITIZENSHIP AS CITIZENSHIP_CODE
+,CASE 
+WHEN CITIZENSHIP='10' Then 'SINGAPORE CITIZEN'                                                                                      
+WHEN CITIZENSHIP='30' Then 'MALAYSIAN'    
+WHEN CITIZENSHIP='50' Then 'BRUNEIAN'                                                         
+WHEN CITIZENSHIP='51' Then 'MYANMAR'                                                          
+WHEN CITIZENSHIP='52' Then 'INDONESIAN'                                                       
+WHEN CITIZENSHIP='53' Then 'FILIPINO'                                                         
+WHEN CITIZENSHIP='54' Then 'THAI'                                                             
+WHEN CITIZENSHIP='55' Then 'VIETNAMESE'  
+WHEN CITIZENSHIP='60' Then 'CHINESE'   
+WHEN CITIZENSHIP='63' Then 'INDIAN'
+Else '' END CITIZENSHIP
+,GENDER GENDER_CODE
+,CASE WHEN ISNULL(GENDER,'')='1' Then 'Male'
+	  WHEN ISNULL(GENDER,'')='2' Then 'Female' 
+	  WHEN ISNULL(GENDER,'')='M' Then 'Male'
+	  WHEN ISNULL(GENDER,'')='F' Then 'Female' END  GENDER
+,RACE AS RACE_CODE
+,CASE 
+WHEN RACE='1' Then 'MALAY'          
+WHEN RACE='2' Then 'CHINESE'        
+WHEN RACE='3' Then 'IND/PAK/SL'    
+WHEN RACE='4' Then 'EURASIAN'       
+WHEN RACE='5' Then 'INDON EXTRACT'  
+WHEN RACE='6' Then 'IND/PAK/SL (NT)'
+WHEN RACE='7' Then 'CAUCASIAN'      
+WHEN RACE='9' Then 'OTHERS'
+Else '' END RACE
+,[SUBJECT CODE_1] AS SUBJECT_CODE_1
+,[SUBJECT CODE_2]  AS SUBJECT_CODE_2
+,[SUBJECT CODE_3]  AS SUBJECT_CODE_3
+,[SUBJECT CODE_4]  AS SUBJECT_CODE_4
+,[SUBJECT CODE_5]  AS SUBJECT_CODE_5
+,[SUBJECT CODE_6]  AS SUBJECT_CODE_6
+,[SUBJECT CODE_7]  AS SUBJECT_CODE_7
+,[SUBJECT CODE_8]  AS SUBJECT_CODE_8
+,[SUBJECT CODE_9]  AS SUBJECT_CODE_9
+,[SUBJECT CODE_10] AS SUBJECT_CODE_10
+,[SUBJECT CODE_11] AS SUBJECT_CODE_11
+,[SUBJECT CODE_12] AS SUBJECT_CODE_12
+,[ SUBJECT GRADE_1]  AS GRADE_1
+,[ SUBJECT GRADE_2]  AS GRADE_2
+,[ SUBJECT GRADE_3]  AS GRADE_3
+,[ SUBJECT GRADE_4]  AS GRADE_4
+,[ SUBJECT GRADE_5]  AS GRADE_5
+,[ SUBJECT GRADE_6]  AS GRADE_6
+,[ SUBJECT GRADE_7]  AS GRADE_7
+,[ SUBJECT GRADE_8]  AS GRADE_8
+,[ SUBJECT GRADE_9]  AS GRADE_9
+,[ SUBJECT GRADE_10] AS GRADE_10
+,[ SUBJECT GRADE_11] AS GRADE_11
+,[ SUBJECT GRADE_12] AS GRADE_12
+,[Choice 1]  AS COURSE_CODE_CHOICE_1
+,[Choice 2]  AS COURSE_CODE_CHOICE_2
+,[Choice 3]  AS COURSE_CODE_CHOICE_3
+,'' AS COURSE_CODE_CHOICE_4
+,'' AS COURSE_CODE_CHOICE_5
+,'' AS COURSE_CODE_CHOICE_6
+,'' AS COURSE_CODE_CHOICE_7
+,'' AS COURSE_CODE_CHOICE_8
+,'' AS COURSE_CODE_CHOICE_9
+,'' AS COURSE_CODE_CHOICE_10
+,'' AS COURSE_CODE_CHOICE_11
+,'' AS COURSE_CODE_CHOICE_12
+,[JPSAE Posted Course] POSTED_COURSE
+,[Posted Institution] POSTED_CENTRE
+,[Posted Choice] POSTED_CHOICE_ORDER
+,[CCA Grade] AS ECA_GRADE
+,[POSTED AGGREGATE] RAW_AGG
+,[NET POSTED AGGREGATE] NET_AGG
+,GETDATE() CREATED_ON
+,CREATED_ON MODIFIED_ON
+FROM [RPDW_PRD].[dbo].[DW_EXT_JPSAE]
+
+union all
+
+SELECT 
+NRIC_FIN UIN
+,MASKED_NATIONAL_ID
+,'EAE-I' AS ADMISSION_EXERCISE
+,AY_YEAR AS ACAD_YEAR
+,AY_SEM AS SEMESTER
+,NAME as APPLICANT_NAME
+,[DATE OF BIRTH]  AS DATE_OF_BIRTH
+,[Sec School] AS SEC_SCHOOL_CODE
+,CASE 
+WHEN [Sec School]='S' THEN 'SPECIAL'
+WHEN [Sec School]='E' THEN 'EXPRESS'
+WHEN [Sec School]='N'THEN 'NORMAL'
+--ELSE 'NON-SCHOOL STUDENT/NOT AVAILABLE'
+END SEC_SCHOOL_DESC
+,CITIZENSHIP AS CITIZENSHIP_CODE
+,CASE 
+WHEN CITIZENSHIP='10' Then 'SINGAPORE CITIZEN'                                                                                      
+WHEN CITIZENSHIP='30' Then 'MALAYSIAN'    
+WHEN CITIZENSHIP='50' Then 'BRUNEIAN'                                                         
+WHEN CITIZENSHIP='51' Then 'MYANMAR'                                                          
+WHEN CITIZENSHIP='52' Then 'INDONESIAN'                                                       
+WHEN CITIZENSHIP='53' Then 'FILIPINO'                                                         
+WHEN CITIZENSHIP='54' Then 'THAI'                                                             
+WHEN CITIZENSHIP='55' Then 'VIETNAMESE'  
+WHEN CITIZENSHIP='60' Then 'CHINESE'   
+WHEN CITIZENSHIP='63' Then 'INDIAN'
+Else '' END CITIZENSHIP
+,GENDER GENDER_CODE
+,CASE WHEN ISNULL(GENDER,'')='1' Then 'Male'
+	  WHEN ISNULL(GENDER,'')='2' Then 'Female' 
+	  WHEN ISNULL(GENDER,'')='M' Then 'Male'
+	  WHEN ISNULL(GENDER,'')='F' Then 'Female' END  GENDER
+,RACE RACE_CODE
+,CASE 
+WHEN RACE='1' Then 'MALAY'          
+WHEN RACE='2' Then 'CHINESE'        
+WHEN RACE='3' Then 'IND/PAK/SL'    
+WHEN RACE='4' Then 'EURASIAN'       
+WHEN RACE='5' Then 'INDON EXTRACT'  
+WHEN RACE='6' Then 'IND/PAK/SL (NT)'
+WHEN RACE='7' Then 'CAUCASIAN'      
+WHEN RACE='9' Then 'OTHERS'
+Else '' END RACE
+,[SUBJECT CODE 1]  AS SUBJECT_CODE_1
+,[SUBJECT CODE 2]  AS SUBJECT_CODE_2
+,[SUBJECT CODE 3]  AS SUBJECT_CODE_3
+,[SUBJECT CODE 4]  AS SUBJECT_CODE_4
+,[SUBJECT CODE 5]  AS SUBJECT_CODE_5
+,[SUBJECT CODE 6]  AS SUBJECT_CODE_6
+,[SUBJECT CODE 7]  AS SUBJECT_CODE_7
+,[SUBJECT CODE 8]  AS SUBJECT_CODE_8
+,[SUBJECT CODE 9]  AS SUBJECT_CODE_9
+,[SUBJECT CODE 10] AS SUBJECT_CODE_10
+,[SUBJECT CODE 11] AS SUBJECT_CODE_11
+,[SUBJECT CODE 12] AS SUBJECT_CODE_12
+,[SUBJECT GRADE 1]  AS GRADE_1
+,[SUBJECT GRADE 2]  AS GRADE_2
+,[SUBJECT GRADE 3]  AS GRADE_3
+,[SUBJECT GRADE 4]  AS GRADE_4
+,[SUBJECT GRADE 5]  AS GRADE_5
+,[SUBJECT GRADE 6]  AS GRADE_6
+,[SUBJECT GRADE 7]  AS GRADE_7
+,[SUBJECT GRADE 8]  AS GRADE_8
+,[SUBJECT GRADE 9]  AS GRADE_9
+,[SUBJECT GRADE 10] AS GRADE_10
+,[SUBJECT GRADE 11] AS GRADE_11
+,[SUBJECT GRADE 12] AS GRADE_12
+,[Choice 1] AS COURSE_CODE_CHOICE_1
+,[Choice 2] AS COURSE_CODE_CHOICE_2
+,[Choice 3] AS COURSE_CODE_CHOICE_3
+,'' AS COURSE_CODE_CHOICE_4
+,'' AS COURSE_CODE_CHOICE_5
+,'' AS COURSE_CODE_CHOICE_6
+,'' AS COURSE_CODE_CHOICE_7
+,'' AS COURSE_CODE_CHOICE_8
+,'' AS COURSE_CODE_CHOICE_9
+,'' AS COURSE_CODE_CHOICE_10
+,'' AS COURSE_CODE_CHOICE_11
+,'' AS COURSE_CODE_CHOICE_12
+,[JPSAE POSTED COURSE] POSTED_COURSE
+,[POSTED INSTITUTION] POSTED_CENTRE
+,[POSTED CHOICE] POSTED_CHOICE_ORDER
+,[CCA GRADE] ECA_GRADE
+,[POSTED AGGREGATE] RAW_AGG
+,[NET POSTED AGGREGATE] NET_AGG
+,GETDATE() CREATED_ON
+,CREATED_ON MODIFIED_ON
+FROM [RPDW_PRD].[dbo].[DW_EXT_EAE]
+
+union all
+
+SELECT 
+[NRIC_FIN] UIN
+,MASKED_NATIONAL_ID
+,'EAE-O' AS ADMISSION_EXERCISE
+,[FILE_NAME_ACADEMIC_YEAR] AS ACAD_YEAR
+,[FILE_NAME_SEMESTER] AS SEMESTER
+,NAME as APPLICANT_NAME
+,[DATE OF BIRTH]  AS DATE_OF_BIRTH
+,[School Code] AS SEC_SCHOOL_CODE
+,CASE 
+WHEN [School Code]='S' THEN 'SPECIAL'
+WHEN [School Code]='E' THEN 'EXPRESS'
+WHEN [School Code]='N'THEN 'NORMAL'
+--ELSE 'NON-SCHOOL STUDENT/NOT AVAILABLE'
+END SEC_SCHOOL_DESC
+,[Citizenship] AS CITIZENSHIP_CODE
+,CASE 
+WHEN CITIZENSHIP='10' Then 'SINGAPORE CITIZEN'                                                                                      
+WHEN CITIZENSHIP='30' Then 'MALAYSIAN'    
+WHEN CITIZENSHIP='50' Then 'BRUNEIAN'                                                         
+WHEN CITIZENSHIP='51' Then 'MYANMAR'                                                          
+WHEN CITIZENSHIP='52' Then 'INDONESIAN'                                                       
+WHEN CITIZENSHIP='53' Then 'FILIPINO'                                                         
+WHEN CITIZENSHIP='54' Then 'THAI'                                                             
+WHEN CITIZENSHIP='55' Then 'VIETNAMESE'  
+WHEN CITIZENSHIP='60' Then 'CHINESE'   
+WHEN CITIZENSHIP='63' Then 'INDIAN'
+Else '' END CITIZENSHIP
+,[Gender] GENDER_CODE
+,CASE WHEN ISNULL([Gender],'')='1' Then 'Male'
+	  WHEN ISNULL([Gender],'')='2' Then 'Female' 
+	  WHEN ISNULL([Gender],'')='M' Then 'Male'
+	  WHEN ISNULL([Gender],'')='F' Then 'Female' END  GENDER
+,[Race] RACE_CODE
+,CASE 
+WHEN [Race]='1' Then 'MALAY'          
+WHEN [Race]='2' Then 'CHINESE'        
+WHEN [Race]='3' Then 'IND/PAK/SL'    
+WHEN [Race]='4' Then 'EURASIAN'       
+WHEN [Race]='5' Then 'INDON EXTRACT'  
+WHEN [Race]='6' Then 'IND/PAK/SL (NT)'
+WHEN [Race]='7' Then 'CAUCASIAN'      
+WHEN [Race]='9' Then 'OTHERS'
+Else '' END RACE
+,''  AS SUBJECT_CODE_1
+,''  AS SUBJECT_CODE_2
+,''  AS SUBJECT_CODE_3
+,''  AS SUBJECT_CODE_4
+,''  AS SUBJECT_CODE_5
+,''  AS SUBJECT_CODE_6
+,''  AS SUBJECT_CODE_7
+,''  AS SUBJECT_CODE_8
+,''  AS SUBJECT_CODE_9
+,'' AS SUBJECT_CODE_10
+,'' AS SUBJECT_CODE_11
+,'' AS SUBJECT_CODE_12
+,''  AS GRADE_1
+,''  AS GRADE_2
+,''  AS GRADE_3
+,''  AS GRADE_4
+,'' AS GRADE_5
+,''  AS GRADE_6
+,'' AS GRADE_7
+,''  AS GRADE_8
+,''  AS GRADE_9
+,'' AS GRADE_10
+,'' AS GRADE_11
+,'' AS GRADE_12
+,[Choice Course_1] AS COURSE_CODE_CHOICE_1
+,[Choice Course_2] AS COURSE_CODE_CHOICE_2
+,[Choice Course_3] AS COURSE_CODE_CHOICE_3
+,'' AS COURSE_CODE_CHOICE_4
+,'' AS COURSE_CODE_CHOICE_5
+,'' AS COURSE_CODE_CHOICE_6
+,'' AS COURSE_CODE_CHOICE_7
+,'' AS COURSE_CODE_CHOICE_8
+,'' AS COURSE_CODE_CHOICE_9
+,'' AS COURSE_CODE_CHOICE_10
+,'' AS COURSE_CODE_CHOICE_11
+,'' AS COURSE_CODE_CHOICE_12
+,[Posted Course] POSTED_COURSE
+,[Posted Poly] POSTED_CENTRE
+,[Posted Choice No] POSTED_CHOICE_ORDER
+,'' ECA_GRADE
+,[Posted Agg] RAW_AGG
+,'' NET_AGG
+,GETDATE() CREATED_ON
+,CREATED_ON MODIFIED_ON
+FROM [RPDW_PRD].[dbo].[DW_EXT_DPAEAE_APPLICANTS]
+) T
+
+DROP TABLE [DW_EXT_TMP_ADMISSION_EXE]
+
+select * into [DW_EXT_TMP_ADMISSION_EXE] from
+(
+SELECT
+ convert(varchar(12),TRIM([UIN]))	AS 	[UIN]
+,convert(varchar(12),TRIM([MASKED_NATIONAL_ID])	)AS 	[M)ASKED_NATIONAL_ID]
+,convert(varchar(12),TRIM([ADMISSION_EXERCISE])	)AS 	[ADMISSION_EXERCISE]
+,convert(varchar(4),TRIM([ACAD_YEAR])	)AS 	[ACAD_YEAR]
+,convert(varchar(2),TRIM([SEMESTER])	)AS 	[SEMESTER]
+,convert(varchar(100),TRIM([APPLICANT_NAME])	)AS 	[APPLICANT_NAME]
+,convert(varchar(10),TRIM([DATE_OF_BIRTH])	)AS 	[DATE_OF_BIRTH]
+,convert(varchar(10),TRIM([SEC_SCHOOL_CODE])	)AS 	[SEC_SCHOOL_CODE]
+/*,convert(varchar(100),TRIM([SEC_SCHOOL_DESC])	)AS 	[SEC_SCHOOL_DESC]*/
+,convert(varchar(2),TRIM([CITIZENSHIP_CODE])	)AS 	[CITIZENSHIP_CODE]
+,convert(varchar(50),TRIM([CITIZENSHIP])	)AS 	[CITIZENSHIP]
+,convert(varchar(1),TRIM([GENDER_CODE])	)AS 	[GENDER_CODE]
+,convert(varchar(10),TRIM([GENDER])	)AS 	[GENDER]
+,convert(varchar(2),TRIM([RACE_CODE])	)AS 	[RACE_CODE]
+,convert(varchar(50),TRIM([RACE])	)AS 	[RACE]
+,convert(varchar(4),TRIM([SUBJECT_CODE_1])	)AS 	[SUBJECT_CODE_1]
+,convert(varchar(4),TRIM([SUBJECT_CODE_2])	)AS 	[SUBJECT_CODE_2]
+,convert(varchar(4),TRIM([SUBJECT_CODE_3])	)AS 	[SUBJECT_CODE_3]
+,convert(varchar(4),TRIM([SUBJECT_CODE_4])	)AS 	[SUBJECT_CODE_4]
+,convert(varchar(4),TRIM([SUBJECT_CODE_5])	)AS 	[SUBJECT_CODE_5]
+,convert(varchar(4),TRIM([SUBJECT_CODE_6])	)AS 	[SUBJECT_CODE_6]
+,convert(varchar(4),TRIM([SUBJECT_CODE_7])	)AS 	[SUBJECT_CODE_7]
+,convert(varchar(4),TRIM([SUBJECT_CODE_8])	)AS 	[SUBJECT_CODE_8]
+,convert(varchar(4),TRIM([SUBJECT_CODE_9])	)AS 	[SUBJECT_CODE_9]
+,convert(varchar(4),TRIM([SUBJECT_CODE_10])	)AS 	[SUBJECT_CODE_10]
+,convert(varchar(4),TRIM([SUBJECT_CODE_11])	)AS 	[SUBJECT_CODE_11]
+,convert(varchar(4),TRIM([SUBJECT_CODE_12])	)AS 	[SUBJECT_CODE_12]
+,convert(varchar(1),TRIM([GRADE_1])	)AS 	[GRADE_1]
+,convert(varchar(1),TRIM([GRADE_2])	)AS 	[GRADE_2]
+,convert(varchar(1),TRIM([GRADE_3])	)AS 	[GRADE_3]
+,convert(varchar(1),TRIM([GRADE_4])	)AS 	[GRADE_4]
+,convert(varchar(1),TRIM([GRADE_5])	)AS 	[GRADE_5]
+,convert(varchar(1),TRIM([GRADE_6])	)AS 	[GRADE_6]
+,convert(varchar(1),TRIM([GRADE_7])	)AS 	[GRADE_7]
+,convert(varchar(1),TRIM([GRADE_8])	)AS 	[GRADE_8]
+,convert(varchar(1),TRIM([GRADE_9])	)AS 	[GRADE_9]
+,convert(varchar(1),TRIM([GRADE_10])	)AS 	[GRADE_10]
+,convert(varchar(1),TRIM([GRADE_11])	)AS 	[GRADE_11]
+,convert(varchar(1),TRIM([GRADE_12])	)AS 	[GRADE_12]
+,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_1])	)AS 	[COURSE_CODE_CHOICE_1]
+,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_2])	)AS 	[COURSE_CODE_CHOICE_2]
+,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_3])	)AS 	[COURSE_CODE_CHOICE_3]
+,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_4])	)AS 	[COURSE_CODE_CHOICE_4]
+,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_5])	)AS 	[COURSE_CODE_CHOICE_5]
+,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_6])	)AS 	[COURSE_CODE_CHOICE_6]
+,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_7])	)AS 	[COURSE_CODE_CHOICE_7]
+,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_8])	)AS 	[COURSE_CODE_CHOICE_8]
+,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_9])	)AS 	[COURSE_CODE_CHOICE_9]
+,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_10])	)AS 	[COURSE_CODE_CHOICE_10]
+,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_11])	)AS 	[COURSE_CODE_CHOICE_11]
+,convert(varchar(6),TRIM([COURSE_CODE_CHOICE_12])	)AS 	[COURSE_CODE_CHOICE_12]
+,convert(varchar(6),TRIM([POSTED_COURSE])	)AS 	[POSTED_COURSE]
+,convert(varchar(10),TRIM([POSTED_CENTRE])	)AS 	[POSTED_CENTRE]
+,convert(varchar(2),TRIM([POSTED_CHOICE_ORDER])	)AS 	[POSTED_CHOICE_ORDER]
+,convert(varchar(1),TRIM([ECA_GRADE])	)AS 	[ECA_GRADE]
+,convert(varchar(6),TRIM([RAW_AGG])	)AS 	[RAW_AGG]
+,convert(varchar(6),TRIM([NET_AGG])	)AS 	[NET_AGG]
+,[CREATED_ON]	AS 	[CREATED_ON]
+,[MODIFIED_ON]	AS 	[MODIFIED_ON]
+FROM [dbo].EXT_TMP_ADMISSION 
+)t
+
+TRUNCATE TABLE DW_EXT_ADMISSION_EXE
+insert into DW_EXT_ADMISSION_EXE select * from [DW_EXT_TMP_ADMISSION_EXE]
+
+--SELECT *  FROM DW_EXT_ADMISSION_EXE
+
+update [RPDW_PRD].[dbo].[DW_EXT_JPSAE] set [Net Posted Aggregate]= null where [Net Posted Aggregate]='0'
+update [RPDW_PRD].[dbo].[DW_EXT_EAE] set [NET POSTED AGGREGATE]= null where [NET POSTED AGGREGATE] ='0'
+update [RPDW_PRD].[dbo].[DW_EXT_DPAEAE_JAE] set NET_AGGREGATE= null where NET_AGGREGATE ='0'
+update [RPDW_PRD].[dbo].[DW_EXT_PFP] set [FINAL RAW SCORE]= null where [FINAL RAW SCORE] ='0'
+update [RPDW_PRD].[dbo].[DW_EXT_JAE] set [AGG_POSTED]= null where [AGG_POSTED] ='0'
+update [RPDW_PRD].[dbo].[DW_EXT_JPAE_POSTFILE] set Net_GPA= null where Net_GPA ='0'
+update [RPDW_PRD].[dbo].[DW_EXT_ADMISSION_EXE] set RAW_AGG= null where RAW_AGG='0'
+
+
+
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+ROLLBACK TRANSACTION
+
+  INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,getdate()  as created_on
+END CATCH  
+GO
+
+
+
+</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BD3BDE2D-2FBA-45ED-BC73-0A202D29DB9A}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SrcTable">
+      <DTS:VariableValue
+        DTS:DataType="8">STG_EXT_DPAEAE_JAE2</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{03891DB9-5805-4FF4-8335-FC6F9EF93913}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Stage">
+      <DTS:VariableValue
+        DTS:DataType="8">DW</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6896989D-3F7D-4807-8D6D-A90EDFE46FF3}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTable">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_EXT_ADMISSION_EXE</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\check previous job status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{A105F633-33EC-455F-B652-4E5D16F40FA9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="check previous job status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{61960883-9316-4227-9842-B5C98EBA9BA0}"
+          SQLTask:SqlStatementSource="select top 1 col1 from (&#xA;select top 1 1 as col1 from DM_ORG_ADMISSION_EXERCISE &#xA;where created_on &lt; =(select max(created_on) &#xA;from DW_EXT_ADMISSION_EXE)&#xA;union &#xA;select 0 as col1) T ORDER BY COL1 DESC"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create ETL Job Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{AFCB764B-7C68-4473-800F-1F6DC8DD1525}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create ETL Job Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{61960883-9316-4227-9842-B5C98EBA9BA0}"
+          SQLTask:SqlStatementSource="&#xA;EXEC dbo.[usp_InsertETLJobLog]  ?,?,?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Job_Name"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::Stage"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\get Job Status Id"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{654B7445-236A-402D-B699-3E90BB69259C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="get Job Status Id"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{61960883-9316-4227-9842-B5C98EBA9BA0}"
+          SQLTask:SqlStatementSource="declare  @JobstatusID int&#xA;&#xA;select @JobstatusID=max(job_status_id) from [ETL_JOB_STATUS]&#xA;where [TARGET_TABLENAME]=?&#xA;&#xA;&#xA;Select @JobstatusID "
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JobStatusId" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\getprocesseddate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3635305F-A211-484C-A7F2-A5384B761844}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="getprocesseddate"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{61960883-9316-4227-9842-B5C98EBA9BA0}"
+          SQLTask:SqlStatementSource="SELECT GETDATE()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::sqlprocesseddate" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Loading ADMISSION_EXE"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{4ABA23FA-872E-4852-9383-AC09497C6B9A}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Loading ADMISSION_EXE"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{61960883-9316-4227-9842-B5C98EBA9BA0}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::SQL_DW_load" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{EC00B4F1-C780-483B-8AA4-A2C3F8CB9305}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{61960883-9316-4227-9842-B5C98EBA9BA0}"
+          SQLTask:SqlStatementSource="truncate table [DW_EXT_ADMISSION_EXE]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\update on failure"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{8C884B79-08DD-464B-8B64-559E8AE38E8C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="update on failure"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{61960883-9316-4227-9842-B5C98EBA9BA0}"
+          SQLTask:SqlStatementSource="   UPDATE [DBO].[ETL_JOB_STATUS]&#xA;  SET [JOB_STATUS]='Fail',&#xA;[ERROR_MSG]='Last Job not completed sucessfully'&#xA;  where [JOB_STATUS_ID]=?&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\UpdateJobStatus"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0DE7B6CF-9FBB-4540-8A7C-EF54EF6194F1}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="UpdateJobStatus"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{61960883-9316-4227-9842-B5C98EBA9BA0}"
+          SQLTask:SqlStatementSource="&#xA; &#xA;&#xA;DECLARE &#xA;@jobstatusid INT&#xA;select @jobstatusid=?&#xA;IF EXISTS(SELECT * FROM dbo.ETL_ERROR_LOG WHERE [JOB_STATUS_ID]=@jobstatusid)&#xA;&#xA; BEGIN&#xA;&#xA;&#xA;&#xA; UPDATE [dbo].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='FAIL'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;  END&#xA;&#xA;ELSE&#xA;&#xA;BEGIN&#xA;&#xA;UPDATE [DBO].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='Success'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;END&#xA;&#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{465E0E63-459A-425F-9194-8F385CC25BDE}"
+      DTS:Expression="@[User::JOB_STATUS]==0"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\update on failure" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{7597735F-D556-4482-AAA5-9D2DF1BD58DF}"
+      DTS:From="Package\Create ETL Job Log"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\get Job Status Id" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{03723528-77D4-4E53-8BDC-01A8058E40E7}"
+      DTS:From="Package\getprocesseddate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Truncate table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{E8F6F08C-A0AB-47DD-B2F3-64FB6C5DD916}"
+      DTS:Expression="@[User::JOB_STATUS]==1"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\getprocesseddate" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{631F0BEA-2E27-4816-B7BF-02821B427E0F}"
+      DTS:From="Package\get Job Status Id"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\check previous job status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{C3730D0E-BA72-4B12-BABC-806C73F97478}"
+      DTS:From="Package\Loading ADMISSION_EXE"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\UpdateJobStatus" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{DE8804C3-7A2D-4A8E-8215-6A53A672B9B8}"
+      DTS:From="Package\Truncate table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\Loading ADMISSION_EXE" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{03F00E1A-32C0-45BB-A059-FA8D11A3DFBC}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{B452BC9D-FDB7-4C5B-83EA-F85E64016835}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\Error Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{D464DF3A-308D-4A97-BDEC-CAA3D3FF3825}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Error Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{61960883-9316-4227-9842-B5C98EBA9BA0}"
+              SQLTask:SqlStatementSource="  insert into [dbo].[ETL_ERROR_LOG]([JOB_STATUS_ID],[ERROR_RECORD])&#xA;  select ?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL Job Status Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{29A666A7-36E5-4B72-8E1C-4C368E901AE3}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL Job Status Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{61960883-9316-4227-9842-B5C98EBA9BA0}"
+              SQLTask:SqlStatementSource="update [ETL_JOB_STATUS]&#xA;set Job_Status='Fail'&#xA;,Error_Msg=?&#xA;where job_status_id=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{292020E1-5573-4261-955E-DF86EBD37796}"
+          DTS:From="Package.EventHandlers[OnError]\Error Log"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package.EventHandlers[OnError]\ETL Job Status Log" />
+      </DTS:PrecedenceConstraints>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="198,42"
+          Id="Package\check previous job status"
+          TopLeft="415,32" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Create ETL Job Log"
+          TopLeft="9,30" />
+        <NodeLayout
+          Size="158.666666666667,42"
+          Id="Package\get Job Status Id"
+          TopLeft="225,31" />
+        <NodeLayout
+          Size="162,42"
+          Id="Package\getprocesseddate"
+          TopLeft="683,28" />
+        <NodeLayout
+          Size="168,42.6666666666667"
+          Id="Package\Loading ADMISSION_EXE"
+          TopLeft="680,203" />
+        <NodeLayout
+          Size="146.666666666667,42"
+          Id="Package\Truncate table"
+          TopLeft="689,108" />
+        <NodeLayout
+          Size="158.666666666667,42"
+          Id="Package\update on failure"
+          TopLeft="437,161" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\UpdateJobStatus"
+          TopLeft="682,296" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="515.25,74">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,87"
+              Start="0,0"
+              End="0,79.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,79.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="179,51.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="46,0"
+              Start="0,0"
+              End="38.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="38.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="763.25,70">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,38"
+              Start="0,0"
+              End="0,30.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="613,51">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="70,0"
+              Start="0,0"
+              End="62.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="62.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="384,52.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="31,0"
+              Start="0,0"
+              End="23.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="23.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="762.5,245.666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50.3333333333333"
+              Start="0,0"
+              End="0,42.8333333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.8333333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="763.166666666667,150">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,53"
+              Start="0,0"
+              End="0,45.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,45.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package.EventHandlers[OnError]\Error Log"
+          TopLeft="60,60" />
+        <NodeLayout
+          Size="169,42"
+          Id="Package.EventHandlers[OnError]\ETL Job Status Log"
+          TopLeft="60,162" />
+        <EdgeLayout
+          Id="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          TopLeft="121.5,102">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="23,60"
+              Start="0,0"
+              End="23,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26"
+                    Point2="0,30"
+                    Point3="4,30" />
+                  <mssgle:LineSegment
+                    End="19,30" />
+                  <mssgle:CubicBezierSegment
+                    Point1="19,30"
+                    Point2="23,30"
+                    Point3="23,34" />
+                  <mssgle:LineSegment
+                    End="23,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

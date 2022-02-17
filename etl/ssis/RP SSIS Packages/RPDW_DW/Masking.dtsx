@@ -1,0 +1,103 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/10/2019 12:29:31 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-220218AV03"
+  DTS:CreatorName="NCS\P1315781"
+  DTS:DTSID="{0CCF5FF5-8E11-4519-85DA-17B3C085229B}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Masking"
+  DTS:PackageType="5"
+  DTS:VersionBuild="12"
+  DTS:VersionGUID="{C8CC9386-6953-4B8D-BEC9-49776A492DDD}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{006C6369-7A64-4E60-88AC-55A5380B9BD6}"
+      DTS:ObjectName="RPDW_DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT;Provider=SQLNCLI11.1;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiTCZiygZU0CFUIPafxRImQAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACiI922xcSxF2RC3bD9CARaAAAAAASAAACgAAAAEAAAABwEAHd+YFxjDOmOS7gw2sYYAAAA9q1snvDVhTCpBtseJxkf+UnnoDb5vx9lFAAAAIMz8QROaqcchR8LuGapXlqk1RS8</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_STG]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{203354AD-2B8D-47F4-A89F-4A11A238E25C}"
+      DTS:ObjectName="RPDW_STG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::Staging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT_STG;Provider=SQLNCLI11.1;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiTCZiygZU0CFUIPafxRImQAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAFrNU7TbU1Axb9S3yix3YuAAAAAASAAACgAAAAEAAAAA4oeAabQ3Q4o7AQeCuRKpEYAAAAD/zM1eSfH9LogrST6lDGyv0hHfiv/ydcFAAAAIT8Pfge3WPc7L9/7zH5TjeHe+9B</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Masking"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{ADD693EA-F4E9-4144-AE01-C1DD133ADCB3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Masking"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{203354AD-2B8D-47F4-A89F-4A11A238E25C}"
+          SQLTask:SqlStatementSource="INSERT INTO NATIONAL_ID_MASKING (NATIONAL_ID)&#xA;SELECT DISTINCT NRIC_NUMBER FROM &#xA;(&#xA;SELECT DISTINCT  NRIC AS NRIC_NUMBER FROM  STG_EXT_JAE_APPEAL WITH (NOLOCK) WHERE  LEN(NRIC) &gt;4&#xA;UNION &#xA;SELECT DISTINCT  NRIC_FIN AS NRIC_NUMBER FROM  STG_EXT_JPAE_POSTFILE WITH (NOLOCK) WHERE  LEN(NRIC_FIN) &gt;4&#xA;UNION &#xA;SELECT DISTINCT  UIN AS NRIC_NUMBER FROM  STG_EXT_JAE_POSTFILE WITH (NOLOCK) WHERE  LEN(UIN) &gt;4&#xA;UNION &#xA;SELECT DISTINCT  NRIC_FIN AS NRIC_NUMBER FROM  STG_EXT_DPAEAE_APPLICANTS WITH (NOLOCK) WHERE  LEN(NRIC_FIN) &gt;4&#xA;UNION &#xA;SELECT DISTINCT  UIN_FIN_NO AS NRIC_NUMBER FROM  STG_EXT_DPAEAE_CCA WITH (NOLOCK) WHERE  LEN(UIN_FIN_NO) &gt;4&#xA;UNION &#xA;SELECT DISTINCT  UIN_FIN_NO AS NRIC_NUMBER FROM  STG_EXT_DPAEAE_CDP WITH (NOLOCK) WHERE  LEN(UIN_FIN_NO) &gt;4&#xA;UNION &#xA;SELECT DISTINCT  UIN AS NRIC_NUMBER FROM  STG_EXT_DPAEAE_JAE2 WITH (NOLOCK) WHERE  LEN(UIN) &gt;4&#xA;UNION &#xA;SELECT DISTINCT  UIN_FIN_NO  AS NRIC_NUMBER FROM  STG_EXT_DPAEAE_Strength WITH (NOLOCK) WHERE  LEN(UIN_FIN_NO) &gt;4&#xA;UNION &#xA;SELECT DISTINCT  UIN_FIN_NO AS NRIC_NUMBER FROM  STG_EXT_DPAEAE_PREVRESULTS WITH (NOLOCK) WHERE  LEN(UIN_FIN_NO) &gt;4&#xA;UNION &#xA;SELECT DISTINCT  NRIC_FIN AS NRIC_NUMBER FROM  STG_EXT_EAE WITH (NOLOCK) WHERE  LEN(NRIC_FIN) &gt;4&#xA;UNION &#xA;SELECT DISTINCT  NRIC AS NRIC_NUMBER FROM  STG_EXT_EXPOLY_ALL WITH (NOLOCK) WHERE  LEN(NRIC) &gt;4&#xA;UNION &#xA;SELECT DISTINCT  UIN AS NRIC_NUMBER FROM  STG_EXT_PFP WITH (NOLOCK) WHERE  LEN(UIN) &gt;4&#xA;UNION&#xA;SELECT DISTINCT  NRIC AS NRIC_NUMBER FROM  STG_EXT_JPSAE WITH (NOLOCK) WHERE  LEN(NRIC) &gt;4&#xA;UNION&#xA;SELECT DISTINCT National_ID AS NRIC_NUMBER FROM STG_OASIS_STUDENT_APP WITH (NOLOCK) WHERE LEN(National_ID)&gt;4&#xA;UNION&#xA;SELECT DISTINCT National_ID AS NRIC_NUMBER FROM STG_OASIS_FIN_SCHEMES_APP WITH (NOLOCK) WHERE LEN(National_ID)&gt;4&#xA;UNION&#xA;SELECT DISTINCT National_ID_Acct_Holder AS NRIC_NUMBER FROM STG_OASIS_STUD_GIRO_FUND WITH (NOLOCK) WHERE LEN(National_ID_Acct_Holder)&gt;4&#xA;UNION&#xA;SELECT DISTINCT UIN AS NRIC_NUMBER FROM STG_OASIS_WITHDRAWAL_APP WITH (NOLOCK) WHERE LEN(UIN)&gt;4&#xA;UNION&#xA;SELECT DISTINCT UIN AS NRIC_NUMBER FROM STG_OASIS_DEFERMENT_APP WITH (NOLOCK) WHERE LEN(UIN)&gt;4&#xA;UNION&#xA;SELECT DISTINCT NRIC AS NRIC_NUMBER FROM STG_OASIS_INTERVIEW_STUD_EAE WITH (NOLOCK) WHERE LEN(NRIC)&gt;4&#xA;UNION&#xA;SELECT DISTINCT National_ID AS NRIC_NUMBER FROM STG_OASIS_STUDENT_NATIONAL_INFO WITH (NOLOCK) WHERE LEN(National_ID)&gt;4&#xA;) T&#xA;&#xA;where NRIC_NUMBER not in (Select distinct NATIONAL_ID from NATIONAL_ID_MASKING)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="120,42"
+          Id="Package\Masking"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

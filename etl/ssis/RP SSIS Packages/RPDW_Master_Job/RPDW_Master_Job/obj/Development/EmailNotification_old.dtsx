@@ -1,0 +1,383 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/22/2019 10:29:55 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="RP-ETL-DW-UAT"
+  DTS:CreatorName="RP\admin.azim"
+  DTS:DelayValidation="True"
+  DTS:DTSID="{4DE2659E-EAF2-428A-BF24-A214A9200FA4}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="EmailNotification_old"
+  DTS:PackageType="5"
+  DTS:VersionBuild="36"
+  DTS:VersionGUID="{66EF6A8A-8A44-4997-B245-1207FFBA02CC}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{02610350-9040-43E0-A5FB-FA846615B2F5}"
+      DTS:ObjectName="RPDW">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=RP-DW-PROD;Initial Catalog=RPDW_PRD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SMTP Connection Manager]"
+      DTS:CreationName="SMTP"
+      DTS:DTSID="{CB917436-2DAC-486E-978F-89021089FF6D}"
+      DTS:ObjectName="SMTP Connection Manager">
+      <DTS:ObjectData>
+        <SmtpConnectionManager
+          ConnectionString="SmtpServer=202.21.159.230;UseWindowsAuthentication=False;EnableSsl=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7DDCF37D-8693-4583-BB8B-D61A9A15677D}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="count">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CECB366F-2916-4DC9-ADBD-3436659ED637}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="email_body">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{99DB875B-CEC5-488A-B756-7BF6F9CF9384}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="email_cc_recipients">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D8F6D421-A67F-4105-A494-3919A9AA8A89}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="email_from">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F1C210A0-041B-4447-9DAD-9047FEF3E779}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="email_recipients">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B428967B-8BA0-47BF-AEC0-4908BC2561EB}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Email_Report_Name">
+      <DTS:VariableValue
+        DTS:DataType="8">LD_DW</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DB625913-9610-4B58-8373-3A082D59D1A4}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="email_subject">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Get Email Info"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5F90F662-3497-4D82-BF0E-9EF867304435}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get Email Info"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{02610350-9040-43E0-A5FB-FA846615B2F5}"
+          SQLTask:SqlStatementSource="DECLARE &#xA;  &#xA;  @Report_Name NVARCHAR(50),&#xA;  @Sendor_Email_Id NVARCHAR(50),&#xA;  @Email_Subject NVARCHAR(500), &#xA;  @Email_Header NVARCHAR(500),&#xA;  @Email_Body NVARCHAR(500),&#xA;  @Email_Trailor NVARCHAR(500),&#xA;   &#xA;  @Job_Run_Date DATE, &#xA;  @Job_Status INT,&#xA;  @xml NVARCHAR(MAX), &#xA;  @body NVARCHAR(MAX),&#xA;  @Content NVARCHAR(MAX),&#xA;  @R_Content VARCHAR(5000),&#xA;  &#xA;  @Source_File_Name NVARCHAR(150),&#xA;  @Source_Table_Name NVARCHAR(150),&#xA;  @Job_Error_Descr NVARCHAR(200),&#xA;  @Recipients NVARCHAR(500),&#xA;  @Recipients_CC NVARCHAR(500),&#xA;  @Email_Report_Name NVARCHAR(50),&#xA;  &#xA;  @v_Srl INT,&#xA;  @Name NVARCHAR(500),&#xA;  @Email_ID NVARCHAR(50),&#xA;  @NewLineChar AS CHAR(2) = CHAR(13) + CHAR(10),&#xA;  @count int,&#xA;&#xA;  @body1 NVARCHAR(MAX),@body2 NVARCHAR(MAX),@body3 NVARCHAR(MAX)&#xA; , @body4 NVARCHAR(MAX), @body5 NVARCHAR(MAX), @v_dwh_count INT&#xA;&#xA;  select @Email_Report_Name =?&#xA;&#xA;  SET @Job_Run_Date = GETDATE()&#xA;  SET @Report_Name = @Email_Report_Name&#xA;  SET @Sendor_Email_Id = ''&#xA;  SET @Email_Subject = ''&#xA;  SET @Email_Header = ''&#xA;  SET @Email_Body = ''&#xA;  SET @Email_Trailor = ''&#xA;  SET @Recipients = ''&#xA;  SET @Recipients_CC = ''&#xA;  SET @Source_File_Name = ''&#xA;  SET @Source_Table_Name = ''&#xA;  SET @Job_Status = 0&#xA;  SET @v_Srl = 0&#xA;  SET @Name = ''&#xA;  SET @Email_ID = ''&#xA;  SET @body = ''&#xA;  SET @Content = ''&#xA;&#xA;&#xA;&#xA;  --IF @Job_Error_Descr is NOT NULL &#xA;  --BEGIN&#xA;&#x9; SELECT @Sendor_Email_Id = Sendor_Email_ID&#xA;           ,@Email_Subject   = Email_Subject&#xA;           ,@Email_Header    = Email_Header&#xA;           ,@Email_Body      = Email_Body&#xA;           ,@Email_Trailor   = Email_Trailor&#xA;     FROM dbo.Email_Config_Summary&#xA;     WHERE Report_Name = @Report_Name&#xA;AND ISActive = 1&#xA;     &#xA;&#x9; SELECT @Recipients = @Recipients + Email_ID + ';'&#xA;&#x9; FROM dbo.Email_Config_Detail&#xA;     WHERE Report_Name = @Report_Name&#xA;     AND Email_tocc_flag = 'TO'&#xA;AND IsActive = 1&#xA;&#xA;&#x9; SELECT @Recipients = SUBSTRING(@Recipients,1, LEN(@Recipients)-1)&#xA;&#xA;&#x9;SELECT @Recipients_CC = @Recipients_CC + Email_ID + ';'&#xA;&#x9;FROM dbo.Email_Config_Detail&#xA;    WHERE Report_Name = @Report_Name&#xA;   AND Email_tocc_flag = 'CC'&#xA;AND IsActive = 1&#xA;&#xA;&#x9;SELECT @Recipients_CC = SUBSTRING(@Recipients_CC,1, LEN(@Recipients_CC)-1)&#xA;&#xA;&#x9;&#xA;&#x9; SELECT &#xA;&#x9; @Name = @Name + CAST(row_number() over (order by Email_ID) as varchar(10)) + '   ' + First_name + ' ' + Last_name + '   ' + Email_ID + @NewLineChar&#xA;     FROM dbo.Email_Config_Detail&#xA;     WHERE Report_Name = @Report_Name&#xA;     AND Email_tocc_flag = 'CC'&#xA; AND IsActive = 1&#xA;&#xA;&#xA; IF @Report_Name='LD_PSTG_STG'&#xA; Begin&#xA; select @count=(select count(1) from ETL_JOB_STATUS where convert(varchar(8),CREATED_ON,112)=CONVERT(varchar(8),getdate(),112)&#xA; and JOB_STATUS='fail' and STAGE in ('PSTG','STG'))&#xA; IF @count&gt;=1&#xA; begin&#xA; SET @body =  @body + 'Job_Name: ' + @Report_Name +@NewLineChar&#xA;SET @body =  @body + 'Status:' +'Fail' + @NewLineChar&#xA;SET @body =  @body + 'Message:' + 'Please look into ETL JOB status table'&#xA;&#xA;SET @Content =@Content + @body&#xA;&#xA;SELECT  @Sendor_Email_Id, @Recipients, @Recipients_CC, @Email_Subject, @Content,@count&#xA;&#xA;--EXEC msdb.dbo.sp_send_dbmail&#xA;--@profile_name=''&#xA;--,@recipients=@Recipients&#xA;--,@subject=@Email_Subject&#xA;--,@body=@body&#xA;--,@body_format='HTML'&#xA;end&#xA;ELSE&#xA;BEGIN &#xA; SET @body =  @body + 'Job_Name: ' + @Report_Name +@NewLineChar&#xA;SET @body =  @body + 'Status:' +'Success' + @NewLineChar&#xA;SET @body =  @body + 'Message:' + 'Job ran successfully'&#xA;&#xA;&#xA;SET @Content =@Content + @body&#xA;&#xA;SELECT  @Sendor_Email_Id, @Recipients, @Recipients_CC, @Email_Subject, @Content,@count&#xA;&#xA;--EXEC msdb.dbo.sp_send_dbmail&#xA;--@profile_name=''&#xA;--,@recipients=@Recipients&#xA;--,@subject=@Email_Subject&#xA;--,@body=@body&#xA;--,@body_format='HTML'&#xA;END&#xA;&#xA; end&#xA; ELSE IF @Report_Name='LD_DW'&#xA; Begin&#xA; select @count=(select count(1) from ETL_JOB_STATUS where convert(varchar(8),CREATED_ON,112)=CONVERT(varchar(8),getdate(),112)&#xA; and JOB_STATUS='fail' and STAGE in ('DW'))&#xA; IF @count&gt;=1&#xA; begin&#xA; SET @body =  @body + 'Job_Name: ' + @Report_Name +@NewLineChar&#xA;SET @body =  @body + 'Status:' +'Fail' + @NewLineChar&#xA;SET @body =  @body + 'Message:' + 'Please look into ETL JOB status table'&#xA;&#xA;&#xA;SET @Content =@Content + @body&#xA;&#xA;SELECT  @Sendor_Email_Id, @Recipients, @Recipients_CC, @Email_Subject, @Content,@count&#xA;&#xA;--EXEC msdb.dbo.sp_send_dbmail&#xA;--@profile_name=''&#xA;--,@recipients=@Recipients&#xA;--,@subject=@Email_Subject&#xA;--,@body=@body&#xA;--,@body_format='HTML'&#xA;&#xA;&#xA;&#xA;end&#xA;ELSE&#xA;BEGIN &#xA; SET @body =  @body + 'Job_Name: ' + @Report_Name +@NewLineChar&#xA;SET @body =  @body + 'Status:' +'Success' + @NewLineChar&#xA;SET @body =  @body + 'Message:' + 'Job ran successfully'&#xA;&#xA;SET @Content =@Content + @body&#xA;&#xA;SELECT  @Sendor_Email_Id, @Recipients, @Recipients_CC, @Email_Subject, @Content,@count&#xA;&#xA;--EXEC msdb.dbo.sp_send_dbmail&#xA;--@profile_name=''&#xA;--,@recipients=@Recipients&#xA;--,@subject=@Email_Subject&#xA;--,@body=@body&#xA;--,@body_format='HTML'&#xA;END&#xA;end&#xA;--ELSE IF @Report_Name='LD_DM'&#xA;-- Begin&#xA;-- select @count=(select count(1) from ETL_JOB_STATUS where convert(varchar(8),CREATED_ON,112)=CONVERT(varchar(8),getdate(),112)&#xA;-- and JOB_STATUS='fail' and STAGE in ('DM'))&#xA;-- IF @count&gt;=1&#xA;-- begin&#xA;-- SET @body =  @body + 'Job_Name: ' + @Report_Name +@NewLineChar&#xA;--SET @body =  @body + 'Status:' +'Fail' + @NewLineChar&#xA;--SET @body =  @body + 'Message:' + 'Please look into ETL JOB status table'&#xA;&#xA;--EXEC msdb.dbo.sp_send_dbmail&#xA;--@profile_name=''&#xA;--,@recipients=@Recipients&#xA;--,@subject=@Email_Subject&#xA;--,@body=@body&#xA;--,@body_format='HTML'&#xA;&#xA;&#xA;&#xA;--end&#xA;--ELSE&#xA;--BEGIN &#xA;-- SET @body =  @body + 'Job_Name: ' + @Report_Name +@NewLineChar&#xA;--SET @body =  @body + 'Status:' +'Success' + @NewLineChar&#xA;--SET @body =  @body + 'Message:' + 'Job ran successfully'&#xA;&#xA;--EXEC msdb.dbo.sp_send_dbmail&#xA;--@profile_name=''&#xA;--,@recipients=@Recipients&#xA;--,@subject=@Email_Subject&#xA;--,@body=@body&#xA;--,@body_format='HTML'&#xA;--END&#xA;&#xA;&#xA;-- end&#xA;&#xA;&#xA;&#xA;--SELECT @Job_Status, @Job_Error_Descr, @Sendor_Email_Id, @Recipients, @Recipients_CC, @Email_Subject, @R_Content"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::email_from" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="1"
+            SQLTask:DtsVariableName="User::email_recipients" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="3"
+            SQLTask:DtsVariableName="User::email_subject" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="4"
+            SQLTask:DtsVariableName="User::email_body" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="5"
+            SQLTask:DtsVariableName="User::count" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Email_Report_Name"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Get Email Info 1"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{b6cab1ea-10d4-4dc2-a01f-aeb4a2cbe683}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get Email Info 1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{02610350-9040-43E0-A5FB-FA846615B2F5}"
+          SQLTask:SqlStatementSource="DECLARE &#xA;  &#xA;  @Report_Name NVARCHAR(50),&#xA;  @Sendor_Email_Id NVARCHAR(50),&#xA;  @Email_Subject NVARCHAR(500), &#xA;  @Email_Header NVARCHAR(500),&#xA;  @Email_Body NVARCHAR(500),&#xA;  @Email_Trailor NVARCHAR(500),&#xA;   &#xA;  @Job_Run_Date DATE, &#xA;  @Job_Status INT,&#xA;  @xml NVARCHAR(MAX), &#xA;  @body NVARCHAR(MAX),&#xA;  @Content NVARCHAR(MAX),&#xA;  @R_Content VARCHAR(5000),&#xA;  &#xA;  @Source_File_Name NVARCHAR(150),&#xA;  @Source_Table_Name NVARCHAR(150),&#xA;  @Job_Error_Descr NVARCHAR(200),&#xA;  @Recipients NVARCHAR(500),&#xA;  @Recipients_CC NVARCHAR(500),&#xA;  @Email_Report_Name NVARCHAR(50),&#xA;  &#xA;  @v_Srl INT,&#xA;  @Name NVARCHAR(500),&#xA;  @Email_ID NVARCHAR(50),&#xA;  @NewLineChar AS CHAR(2) = CHAR(13) + CHAR(10),&#xA;  @count int,&#xA;&#xA;  @body1 NVARCHAR(MAX),@body2 NVARCHAR(MAX),@body3 NVARCHAR(MAX)&#xA; , @body4 NVARCHAR(MAX), @body5 NVARCHAR(MAX), @v_dwh_count INT&#xA;&#xA;  select @Email_Report_Name =?&#xA;&#xA;  SET @Job_Run_Date = GETDATE()&#xA;--  SET @Report_Name = 'IRAS File Check'&#xA;  SET @Report_Name = @Email_Report_Name&#xA;  SET @Sendor_Email_Id = ''&#xA;  SET @Email_Subject = ''&#xA;  SET @Email_Header = ''&#xA;  SET @Email_Body = ''&#xA;  SET @Email_Trailor = ''&#xA;  SET @Recipients = ''&#xA;  SET @Recipients_CC = ''&#xA;  SET @Source_File_Name = ''&#xA;  SET @Source_Table_Name = ''&#xA;  SET @Job_Status = 0&#xA;  SET @v_Srl = 0&#xA;  SET @Name = ''&#xA;  SET @Email_ID = ''&#xA;  SET @body = ''&#xA;  SET @Content = ''&#xA;&#xA;&#xA;&#xA;  --IF @Job_Error_Descr is NOT NULL &#xA;  --BEGIN&#xA;  SELECT @Sendor_Email_Id = Sendor_Email_ID&#xA;           ,@Email_Subject   = Email_Subject&#xA;           ,@Email_Header    = Email_Header&#xA;           ,@Email_Body      = Email_Body&#xA;           ,@Email_Trailor   = Email_Trailor&#xA;     FROM dbo.Email_Config_Summary&#xA;     WHERE Report_Name = @Report_Name&#xA;AND ISActive = 1&#xA;     &#xA;  SELECT @Recipients = @Recipients + Email_ID + ';'&#xA;  FROM dbo.Email_Config_Detail&#xA;     WHERE Report_Name = @Report_Name&#xA;     AND Email_tocc_flag = 'TO'&#xA;AND IsActive = 1&#xA;&#xA;  SELECT @Recipients = SUBSTRING(@Recipients,1, LEN(@Recipients)-1)&#xA;&#xA;  SELECT @Recipients_CC = @Recipients_CC + Email_ID + ';'&#xA;  FROM dbo.Email_Config_Detail&#xA;     WHERE Report_Name = @Report_Name&#xA;     AND Email_tocc_flag = 'CC'&#xA;AND IsActive = 1&#xA;&#xA;  SELECT @Recipients_CC = SUBSTRING(@Recipients_CC,1, LEN(@Recipients_CC)-1)&#xA;&#xA; &#xA;  SELECT &#xA;  @Name = @Name + CAST(row_number() over (order by Email_ID) as varchar(10)) + '   ' + First_name + ' ' + Last_name + '   ' + Email_ID + @NewLineChar&#xA;     FROM dbo.Email_Config_Detail&#xA;     WHERE Report_Name = @Report_Name&#xA;     AND Email_tocc_flag = 'CC'&#xA; AND IsActive = 1&#xA;&#xA;&#xA; IF @Report_Name='LD_PSTG_STG'&#xA; Begin&#xA; select @count=(select count(1) from ETL_JOB_STATUS where convert(varchar(8),CREATED_ON,112)=CONVERT(varchar(8),getdate(),112)&#xA; and JOB_STATUS='fail' and STAGE in ('PSTG','STG'))&#xA; IF @count&gt;=1&#xA; begin&#xA; SET @body =  @body + 'Job_Name: ' + @Report_Name +@NewLineChar&#xA;SET @body =  @body + 'Status:' +'Fail' + @NewLineChar&#xA;SET @body =  @body + 'Message:' + 'Please look into ETL JOB status table'&#xA;&#xA;SET @Content =@Content + @body&#xA;&#xA;SELECT  @Sendor_Email_Id, @Recipients, @Recipients_CC, @Email_Subject, @Content,@count&#xA;&#xA;--EXEC msdb.dbo.sp_send_dbmail&#xA;--@profile_name=''&#xA;--,@recipients=@Recipients&#xA;--,@subject=@Email_Subject&#xA;--,@body=@body&#xA;--,@body_format='HTML'&#xA;end&#xA;ELSE&#xA;BEGIN &#xA; SET @body =  @body + 'Job_Name: ' + @Report_Name +@NewLineChar&#xA;SET @body =  @body + 'Status:' +'Success' + @NewLineChar&#xA;SET @body =  @body + 'Message:' + 'Job ran successfully'&#xA;&#xA;&#xA;SET @Content =@Content + @body&#xA;&#xA;SELECT  @Sendor_Email_Id, @Recipients, @Recipients_CC, @Email_Subject, @Content,@count&#xA;&#xA;--EXEC msdb.dbo.sp_send_dbmail&#xA;--@profile_name=''&#xA;--,@recipients=@Recipients&#xA;--,@subject=@Email_Subject&#xA;--,@body=@body&#xA;--,@body_format='HTML'&#xA;END&#xA;&#xA; end&#xA; ELSE IF @Report_Name='LD_DW'&#xA; Begin&#xA; select @count=(select count(1) from ETL_JOB_STATUS where convert(varchar(8),CREATED_ON,112)=CONVERT(varchar(8),getdate(),112)&#xA; and JOB_STATUS='fail' and STAGE in ('DW'))&#xA; IF @count&gt;=1&#xA; begin&#xA; SET @body =  @body + 'Job_Name: ' + @Report_Name +@NewLineChar&#xA;SET @body =  @body + 'Status:' +'Fail' + @NewLineChar&#xA;SET @body =  @body + 'Message:' + 'Please look into ETL JOB status table'&#xA;&#xA;&#xA;SET @Content =@Content + @body&#xA;&#xA;SELECT  @Sendor_Email_Id, @Recipients, @Recipients_CC, @Email_Subject, @Content,@count&#xA;&#xA;--EXEC msdb.dbo.sp_send_dbmail&#xA;--@profile_name=''&#xA;--,@recipients=@Recipients&#xA;--,@subject=@Email_Subject&#xA;--,@body=@body&#xA;--,@body_format='HTML'&#xA;&#xA;&#xA;&#xA;end&#xA;ELSE&#xA;BEGIN &#xA; SET @body =  @body + 'Job_Name: ' + @Report_Name +@NewLineChar&#xA;SET @body =  @body + 'Status:' +'Success' + @NewLineChar&#xA;SET @body =  @body + 'Message:' + 'Job ran successfully'&#xA;&#xA;SET @Content =@Content + @body&#xA;&#xA;SELECT  @Sendor_Email_Id, @Recipients, @Recipients_CC, @Email_Subject, @Content,@count&#xA;&#xA;--EXEC msdb.dbo.sp_send_dbmail&#xA;--@profile_name=''&#xA;--,@recipients=@Recipients&#xA;--,@subject=@Email_Subject&#xA;--,@body=@body&#xA;--,@body_format='HTML'&#xA;END&#xA;end&#xA;--ELSE IF @Report_Name='LD_DM'&#xA;-- Begin&#xA;-- select @count=(select count(1) from ETL_JOB_STATUS where convert(varchar(8),CREATED_ON,112)=CONVERT(varchar(8),getdate(),112)&#xA;-- and JOB_STATUS='fail' and STAGE in ('DM'))&#xA;-- IF @count&gt;=1&#xA;-- begin&#xA;-- SET @body =  @body + 'Job_Name: ' + @Report_Name +@NewLineChar&#xA;--SET @body =  @body + 'Status:' +'Fail' + @NewLineChar&#xA;--SET @body =  @body + 'Message:' + 'Please look into ETL JOB status table'&#xA;&#xA;--EXEC msdb.dbo.sp_send_dbmail&#xA;--@profile_name=''&#xA;--,@recipients=@Recipients&#xA;--,@subject=@Email_Subject&#xA;--,@body=@body&#xA;--,@body_format='HTML'&#xA;&#xA;&#xA;&#xA;--end&#xA;--ELSE&#xA;--BEGIN &#xA;-- SET @body =  @body + 'Job_Name: ' + @Report_Name +@NewLineChar&#xA;--SET @body =  @body + 'Status:' +'Success' + @NewLineChar&#xA;--SET @body =  @body + 'Message:' + 'Job ran successfully'&#xA;&#xA;--EXEC msdb.dbo.sp_send_dbmail&#xA;--@profile_name=''&#xA;--,@recipients=@Recipients&#xA;--,@subject=@Email_Subject&#xA;--,@body=@body&#xA;--,@body_format='HTML'&#xA;--END&#xA;&#xA;&#xA;-- end&#xA;&#xA;&#xA;&#xA;--SELECT @Job_Status, @Job_Error_Descr, @Sendor_Email_Id, @Recipients, @Recipients_CC, @Email_Subject, @R_Content"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::email_from" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="1"
+            SQLTask:DtsVariableName="User::email_recipients" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="2"
+            SQLTask:DtsVariableName="User::email_cc_recipients" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="3"
+            SQLTask:DtsVariableName="User::email_subject" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="4"
+            SQLTask:DtsVariableName="User::email_body" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="5"
+            SQLTask:DtsVariableName="User::count" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Email_Report_Name"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Send Mail Task"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="test"
+      DTS:DTSID="{454F4965-8024-465A-B6E4-07A204BF6BFF}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Send Mail Task"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="CCLine">@[User::email_cc_recipients]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Description">"test"</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="FromLine">@[User::email_from]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="MessageSource">"Job_Name: " + @[User::Email_Report_Name] +"\n"
++"Status: Success" +"\n"
++"Message: Job ran successfully"  +"\n"  +"\n"  +"\n"
+
++"Regards"  +"\n" +"OPS Team"</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Subject">@[User::email_subject]+":Success"</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ToLine">@[User::email_recipients]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{CB917436-2DAC-486E-978F-89021089FF6D}"
+          SendMailTask:Subject=":Success"
+          SendMailTask:MessageSource="Job_Name: LD_DW&#xA;Status: Success&#xA;Message: Job ran successfully&#xA;&#xA;&#xA;Regards&#xA;OPS Team" xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Send Mail Task _Error"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="test"
+      DTS:DTSID="{807bf08c-b8e1-49d9-acb6-960920032a44}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Send Mail Task _Error"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="CCLine">@[User::email_cc_recipients]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Description">"test"</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="FromLine">@[User::email_from]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="MessageSource">"Job_Name: " + @[User::Email_Report_Name] +"\n"
++"Status: Fail" +"\n"
++"Message: Please look into ETL JOB status table"+"\n"  +"\n"  +"\n"
+
++"Regards"  +"\n" +"OPS Team"</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Subject">@[User::email_subject]+":Failed"</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ToLine">@[User::email_recipients]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{CB917436-2DAC-486E-978F-89021089FF6D}"
+          SendMailTask:Subject=":Failed"
+          SendMailTask:MessageSource="Job_Name: LD_DW&#xA;Status: Fail&#xA;Message: Please look into ETL JOB status table&#xA;&#xA;&#xA;Regards&#xA;OPS Team" xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{5CE56A5C-106C-48A6-A67D-75480590B361}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::count]==0"
+      DTS:From="Package\Get Email Info"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Send Mail Task" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{894C725C-2D87-45FC-8B48-6C747CC37A46}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::count]&gt;=1"
+      DTS:From="Package\Get Email Info"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Send Mail Task _Error" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="147,42"
+          Id="Package\Get Email Info"
+          TopLeft="76,49" />
+        <NodeLayout
+          Size="147,42"
+          Id="Package\Get Email Info 1"
+          TopLeft="576,123" />
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Send Mail Task"
+          TopLeft="340,47" />
+        <NodeLayout
+          Size="182,42"
+          Id="Package\Send Mail Task _Error"
+          TopLeft="93,178" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="223,69">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="117,0"
+              Start="0,0"
+              End="109.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="109.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="46.75,5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="149.5,91">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="34.5,87"
+              Start="0,0"
+              End="34.5,79.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,39.5"
+                    Point2="0,43.5"
+                    Point3="4,43.5" />
+                  <mssgle:LineSegment
+                    End="30.5,43.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="30.5,43.5"
+                    Point2="34.5,43.5"
+                    Point3="34.5,47.5" />
+                  <mssgle:LineSegment
+                    End="34.5,79.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="9.25,48.5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,1468 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/30/2019 1:46:31 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-110119GM22"
+  DTS:CreatorName="NCS\P0500388"
+  DTS:DelayValidation="True"
+  DTS:DTSID="{D7BF4167-51CC-47FF-9635-556A01DC1313}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.166"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="DW_ENT_STUDENT_CCA_DETAILS"
+  DTS:PackageType="5"
+  DTS:VersionBuild="366"
+  DTS:VersionGUID="{7E84E9EF-6460-4E83-9C85-5A682245C7AB}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[OutputTextFile_Conn]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{885FE853-AE3D-424E-AC8A-000DDA3D4056}"
+      DTS:ObjectName="OutputTextFile_Conn">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Project::FTP_LocalPath_Weekly] + @[User::Filename]  +  RIGHT ((DT_STR,4,1252)YEAR(GETDATE()),4) + RIGHT ("0" + (DT_STR,2,1252)MONTH(GETDATE()),2) + RIGHT ("0" + (DT_STR,2,1252)DAY(GETDATE()),2) + ".txt"</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="E:\RPDW_USR\AIE\AIE_PRD\DW\Weekly\DW_CCA_20211012.txt">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C__x003B_"
+              DTS:MaximumWidth="11"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Student_ID"
+              DTS:DTSID="{E0636937-0DC8-457A-A774-8679888D00E8}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C__x003B_"
+              DTS:MaximumWidth="10"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="A_EV_EVENT_ID"
+              DTS:DTSID="{39415E5B-DCC5-4C04-B963-A18510F5CF10}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C__x003B_"
+              DTS:MaximumWidth="4"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ACAD_CAREER"
+              DTS:DTSID="{CCA3B9F2-D41C-4473-B96F-FBB7A0B93C1E}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C__x003B_"
+              DTS:MaximumWidth="4"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="A_EV_EVENT_TYPE"
+              DTS:DTSID="{22A9035D-461D-4058-B436-7C04E68ADA41}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C__x003B_"
+              DTS:DataType="133"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Actual_Event_Start_Date"
+              DTS:DTSID="{66320787-9FF4-495A-98C1-66C91BB1A17D}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="254"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Activity_Title"
+              DTS:DTSID="{0648C4F1-4C1F-4955-8388-F514F4CA5D46}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A54D94A9-61C6-4F06-B8D8-10B11B456202}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DepCursorCnt">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{232EEE89-8CD9-4F4B-A632-0FCC972CAE15}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DepFailCnt">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F7345B1C-4AFC-4909-80A2-2ADD55DCA904}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DepSuccessCnt">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{03669783-2204-4795-A8CC-6C2CE1F93853}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Duplicate_Check">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9A9EDCC7-FBAB-4559-B31D-280E581277F7}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DWSourceTable">
+      <DTS:VariableValue
+        DTS:DataType="8">DW</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{805BB56B-119A-4FF1-AC2A-EBA9829ABA06}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Filename">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_CCA_</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E0DA905A-6FCA-4E39-B3CD-E71041824D0A}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[System::PackageName]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_name">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_ENT_STUDENT_CCA_DETAILS</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0F6F50DC-CFF0-46C9-BFE3-37A089622219}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_Status">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F9ADF0BB-F3AD-4C03-BCE0-71DDFF5CB7D1}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JOB_STATUS_ID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{711C8729-CC45-41E2-807F-05D16573C735}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Mandatory_constraint_Check">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{508E8F06-3230-4C25-8D6D-3788C0D2C75F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Process_date">
+      <DTS:VariableValue
+        DTS:DataType="7">2/1/2019 2:58:00 PM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0C93BD03-4897-43F4-B9FF-7EF65C50DE6F}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SourceTable">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_CCA_ATTENDANCE,DW_EVENT_SETUP</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{107FEE37-06A4-4BCB-8B94-460FBED653AC}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_CheckDepndcy">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{04AE02CC-EFF0-4636-A082-37C919A52C9C}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;------------&#xA;&#xA;------------------------------------------------------------------------------------------&#xA;-- FRAMEWORK: ADD/REMOVE TEMP TABLE HERE AS NEEDED IN THE PROCESS&#xA;------------------------------------------------------------------------------------------&#xA;IF OBJECT_ID(N'tempdb..##TMP_Student_CCA_Details') IS NOT NULL&#xA;BEGIN&#xA;  DROP TABLE ##TMP_Student_CCA_Details&#xA;END&#xA;&#xA;IF OBJECT_ID(N'tempdb..##TMP_TBL1') IS NOT NULL&#xA;BEGIN&#xA;  DROP TABLE ##TMP_TBL1&#xA;END&#xA;&#xA;------------------------------------------------------------------------------------------&#xA;-- STORED VARIABLE DECLARATION AND SETTING OF INITIAL VALUES: DO NOT CHANGE ANYTHING &#xA;------------------------------------------------------------------------------------------&#xA;DECLARE @jobstatusid varchar(5)&#xA;,@condition varchar(100)&#xA;,@filter_criteria varchar(100)&#xA;,@QUAL_TYPE varchar(100)&#xA;,@query nvarchar(max)&#xA;,@job_name varchar(100)&#xA;,@source_cnt INT&#xA;,@target_cnt INT&#xA;,@all_queries varchar(4000)&#xA;,@outputfilename varchar(200)&#xA;,@date1 varchar(10)&#xA;;&#xA;&#xA;SET @source_cnt=0;&#xA;SET @target_cnt=0;&#xA;&#xA;&#xA;select @jobstatusid=&quot;+ (DT_STR, 5,1252) @[User::JOB_STATUS_ID] +&quot;;&#xA;select @date1=convert(varchar(10),GETDATE(),112);&#xA;select @outputfilename=CONCAT('&quot;+ @[User::Filename] +&quot;',@date1,'.txt');&#xA;&#xA;------------------------------------------------------------------------------------------&#xA;-- EXTRACTION OF PRE-DEFINED FILTER CRITERIA FROM ETL_PARM: DO NOT CHANGE ANYTHING &#xA;------------------------------------------------------------------------------------------&#xA;SELECT @filter_criteria=FILTER_CRITERIA, @QUAL_TYPE=QUAL_TYPE_CRITERIA FROM &quot;+ @[$Project::RPDW_USR_Initial_Catalog] +&quot;.[dbo].[ETL_JOB_PARAMS]  &#xA;WHERE JOB_NAME='&quot;+ @[User::Job_name] +&quot;';&#xA;&#xA;IF  @filter_criteria='FULL-LOAD' &#xA;  BEGIN&#xA;     SET @condition=';';&#xA;  END&#xA;ELSE IF @filter_criteria&lt;&gt;'' OR ISNULL(@filter_criteria,N'')&lt;&gt;'' &#xA;    BEGIN&#xA;&#x9;    SET @condition=CONCAT('AND ',@filter_criteria,';');&#xA;    END&#xA;; &#xA;&#xA;&#xA;TRUNCATE TABLE &quot;+ @[$Project::RPDW_USR_Initial_Catalog] +&quot;.[dbo].&quot;+ @[User::TgtTableName]+&quot;  &#xA;;&#xA;&#xA;------------------------------------------------------------------------------------------&#xA;-- MAIN EXTRACTION QUERY: &#xA;-- UPDATE THE FOLLOWING ACCORDINGLY&#xA;--   (1) COLUMN NAME1 TO COLUMN NAME 4&#xA;--   (2) SOURCE TABLE NAME&#xA;-- Note: DO NOT CHANGE THE WHERE CLAUSE. IF NEED TO SUBSET, PUT THE CONDITION IN THE ETL_PARM TABLE,&#xA;--       AND THIS QUERY WILL APPEND THE CONDITION ACCORDINGLY.&#xA;------------------------------------------------------------------------------------------  &#xA;-- Begin SET&#xA;SET @query=CONCAT(&#xA;    N'SELECT   &#xA;&#x9;&#x9; a.[Student_ID]&#xA;&#x9;&#x9;,a.[Event_ID]&#xA;&#x9;&#x9;,a.[Qual_Type]&#xA;&#x9;&#x9;,a.[Event_Type]&#xA;&#x9;&#x9;,b.[Actual_Event_Start_Date]&#xA;&#x9;&#x9;,b.Activity_Title&#xA;&#x9;&#x9;,ROW_NUMBER() OVER (PARTITION BY a.Student_ID ,a.Event_ID, a.Qual_Type, b.Actual_Event_Start_Date&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;  ORDER BY a.Student_ID ,a.Event_ID, a.Qual_Type, b.Actual_Event_Start_Date) AS rec_cnt_by_pk&#xA;&#x9;  &#x9;&#x9;&#xA;&#x9;INTO ##TMP_TBL1&#xA;&#x9;&#xA;&#x9;FROM &quot;+ @[$Project::RPDW_Initial_Catalog] +&quot;.dbo.[DW_CCA_ATTENDANCE] a&#xA;&#x9;INNER JOIN &quot;+ @[$Project::RPDW_Initial_Catalog] +&quot;.dbo.[DW_EVENT_SETUP] b&#xA;&#x9;ON a.Event_ID = b.Event_ID  &#xA;&#x9;WHERE b.Event_Status NOT IN (''X'',''I'',''R'')&#xA;    AND a.Qual_Type IN &#x9;&#xA;    ',@QUAL_TYPE&#xA;&#x9;); -- End Set&#x9;&#xA;&#x9;&#xA;  ;&#x9;&#xA;  PRINT (@query);&#xA;  SET @all_queries=CONCAT(N'',@all_queries,@query);  &#xA;  EXEC (@query);&#xA;&#xA;-- Begin SET&#xA;SET @query=CONCAT(&#xA;    N'SELECT &#x9;&#xA;&#x9;&#x9; [Student_ID]&#xA;&#x9;&#x9;,[Event_ID]&#xA;&#x9;&#x9;,[Qual_Type]&#xA;&#x9;&#x9;,[Event_Type]&#xA;&#x9;&#x9;,[Actual_Event_Start_Date]&#xA;&#x9;&#x9;,[Activity_Title]&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;INTO ##TMP_Student_CCA_Details&#xA;&#x9;&#xA;&#x9;FROM ##TMP_TBL1&#xA;&#x9;&#xA;&#x9;WHERE rec_cnt_by_pk = 1&#xA;    ',@condition&#xA;    ); -- End Set&#x9;&#xA;&#x9;&#xA;  PRINT (@query);&#xA;  SET @all_queries=CONCAT(N'',@all_queries,@query);  &#xA;  EXEC (@query);&#xA;&#xA;&#xA;------------------------------------------------------------------------------------------&#xA;-- MAIN INSERTION QUERY: &#xA;-- UPDATE THE FOLLOWING ACCORDINGLY&#xA;--   (1) COLUMN NAME1 TO COLUMN NAME 4&#xA;--   (2) SOURCE TABLE NAME&#xA;-- Note: DO NOT CHANGE THE WHERE CLAUSE. IF NEED TO SUBSET, PUT THE CONDITION IN THE ETL_PARM TABLE,&#xA;--       AND THIS QUERY WILL APPEND THE CONDITION ACCORDINGLY.&#xA;------------------------------------------------------------------------------------------&#xA;  INSERT INTO &quot;+ @[$Project::RPDW_USR_Initial_Catalog] +&quot;.[dbo].&quot;+ @[User::TgtTableName]+&quot;               &#xA;         (  &#xA;&#x9;&#x9; [Student_ID]&#xA;&#x9;&#x9;,[A_EV_EVENT_ID]&#xA;&#x9;&#x9;,[ACAD_CAREER] &#xA;&#x9;&#x9;,[A_EV_EVENT_TYPE]&#xA;&#x9;&#x9;,[Actual_Event_Start_Date]&#xA;&#x9;&#x9;,[Activity_Title] &#xA;&#x9;&#x9;,[CREATED_ON]&#xA;&#x9;&#x9;,[MODIFIED_ON]&#xA;&#x9;     ) &#xA;&#x9;SELECT &#xA;&#x9;&#x9; [Student_ID]&#xA;&#x9;&#x9;,[Event_ID]&#x9;&#x9;&#x9;&#x9;&#x9;    as [A_EV_EVENT_ID]&#xA;&#x9;&#x9;,[Qual_Type]&#x9;&#x9;&#x9;&#x9;&#x9;as [ACAD_CAREER] &#xA;&#x9;&#x9;,[Event_Type]&#x9;&#x9;&#x9;&#x9;&#x9;as [A_EV_EVENT_TYPE]&#xA;&#x9;&#x9;,[Actual_Event_Start_Date]&#xA;&#x9;&#x9;,[Activity_Title]&#xA;&#x9;&#x9;,getdate()&#xA;&#x9;    ,getdate()&#xA;&#x9;FROM ##TMP_Student_CCA_Details&#xA;;&#xA;&#xA;------------------------------------------------------------------------------------------&#xA;-- SOURCE AND TARGET TABLE COUNTS UPDATE: DO NOT CHANGE ANYTHING &#xA;------------------------------------------------------------------------------------------&#xA;-- Check Source Table Count&#xA;SELECT @source_cnt=COUNT(*) FROM ##TMP_Student_CCA_Details;&#xA;&#x9;&#xA;-- Check Tgt Table Count&#xA;SELECT @target_cnt=COUNT(*) FROM &quot;+ @[$Project::RPDW_USR_Initial_Catalog] +&quot;.[dbo].&quot;+ @[User::TgtTableName]+&quot;;&#xA;    &#xA;-- Update Counts&#xA;UPDATE &quot;+ @[$Project::RPDW_USR_Initial_Catalog] +&quot;.[dbo].[ETL_JOB_STATUS] &#xA;   SET [SRC_CNT]=@source_cnt,&#xA;       [TGT_CNT]=@target_cnt,&#xA;&#x9;   [REMARKS]=@all_queries,&#xA;&#x9;   [FILENAME]=@outputfilename&#xA;   WHERE [JOB_STATUS_ID]=@jobstatusid;&#x9;&#xA;    &#xA;    &#xA;&#xA;--------------------------------------&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;&#xA;  INSERT INTO &quot;+ @[$Project::RPDW_USR_Initial_Catalog] + &quot;.[dbo].[ETL_ERROR_LOG](JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,getdate()  as created_on&#xA;&#xA;-- Update SQL QUERIES EXECUTED&#xA;UPDATE &quot;+ @[$Project::RPDW_USR_Initial_Catalog] +&quot;.[dbo].[ETL_JOB_STATUS] &#xA;   SET [REMARKS]=@all_queries&#xA;   WHERE [JOB_STATUS_ID]=@jobstatusid;&#x9;&#xA;   &#xA;END CATCH &#xA;GO&#xA;&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_DM_Load">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+------------
+
+------------------------------------------------------------------------------------------
+-- FRAMEWORK: ADD/REMOVE TEMP TABLE HERE AS NEEDED IN THE PROCESS
+------------------------------------------------------------------------------------------
+IF OBJECT_ID(N'tempdb..##TMP_Student_CCA_Details') IS NOT NULL
+BEGIN
+  DROP TABLE ##TMP_Student_CCA_Details
+END
+
+IF OBJECT_ID(N'tempdb..##TMP_TBL1') IS NOT NULL
+BEGIN
+  DROP TABLE ##TMP_TBL1
+END
+
+------------------------------------------------------------------------------------------
+-- STORED VARIABLE DECLARATION AND SETTING OF INITIAL VALUES: DO NOT CHANGE ANYTHING 
+------------------------------------------------------------------------------------------
+DECLARE @jobstatusid varchar(5)
+,@condition varchar(100)
+,@filter_criteria varchar(100)
+,@QUAL_TYPE varchar(100)
+,@query nvarchar(max)
+,@job_name varchar(100)
+,@source_cnt INT
+,@target_cnt INT
+,@all_queries varchar(4000)
+,@outputfilename varchar(200)
+,@date1 varchar(10)
+;
+
+SET @source_cnt=0;
+SET @target_cnt=0;
+
+
+select @jobstatusid=0;
+select @date1=convert(varchar(10),GETDATE(),112);
+select @outputfilename=CONCAT('DW_CCA_',@date1,'.txt');
+
+------------------------------------------------------------------------------------------
+-- EXTRACTION OF PRE-DEFINED FILTER CRITERIA FROM ETL_PARM: DO NOT CHANGE ANYTHING 
+------------------------------------------------------------------------------------------
+SELECT @filter_criteria=FILTER_CRITERIA, @QUAL_TYPE=QUAL_TYPE_CRITERIA FROM RPDW_USR_PRD.[dbo].[ETL_JOB_PARAMS]  
+WHERE JOB_NAME='DW_ENT_STUDENT_CCA_DETAILS';
+
+IF  @filter_criteria='FULL-LOAD' 
+  BEGIN
+     SET @condition=';';
+  END
+ELSE IF @filter_criteria&lt;&gt;'' OR ISNULL(@filter_criteria,N'')&lt;&gt;'' 
+    BEGIN
+	    SET @condition=CONCAT('AND ',@filter_criteria,';');
+    END
+; 
+
+
+TRUNCATE TABLE RPDW_USR_PRD.[dbo].DW_ENT_STUDENT_CCA_DETAILS  
+;
+
+------------------------------------------------------------------------------------------
+-- MAIN EXTRACTION QUERY: 
+-- UPDATE THE FOLLOWING ACCORDINGLY
+--   (1) COLUMN NAME1 TO COLUMN NAME 4
+--   (2) SOURCE TABLE NAME
+-- Note: DO NOT CHANGE THE WHERE CLAUSE. IF NEED TO SUBSET, PUT THE CONDITION IN THE ETL_PARM TABLE,
+--       AND THIS QUERY WILL APPEND THE CONDITION ACCORDINGLY.
+------------------------------------------------------------------------------------------  
+-- Begin SET
+SET @query=CONCAT(
+    N'SELECT   
+		 a.[Student_ID]
+		,a.[Event_ID]
+		,a.[Qual_Type]
+		,a.[Event_Type]
+		,b.[Actual_Event_Start_Date]
+		,b.Activity_Title
+		,ROW_NUMBER() OVER (PARTITION BY a.Student_ID ,a.Event_ID, a.Qual_Type, b.Actual_Event_Start_Date
+					  ORDER BY a.Student_ID ,a.Event_ID, a.Qual_Type, b.Actual_Event_Start_Date) AS rec_cnt_by_pk
+	  		
+	INTO ##TMP_TBL1
+	
+	FROM RPDW_PRD.dbo.[DW_CCA_ATTENDANCE] a
+	INNER JOIN RPDW_PRD.dbo.[DW_EVENT_SETUP] b
+	ON a.Event_ID = b.Event_ID  
+	WHERE b.Event_Status NOT IN (''X'',''I'',''R'')
+    AND a.Qual_Type IN 	
+    ',@QUAL_TYPE
+	); -- End Set	
+	
+  ;	
+  PRINT (@query);
+  SET @all_queries=CONCAT(N'',@all_queries,@query);  
+  EXEC (@query);
+
+-- Begin SET
+SET @query=CONCAT(
+    N'SELECT 	
+		 [Student_ID]
+		,[Event_ID]
+		,[Qual_Type]
+		,[Event_Type]
+		,[Actual_Event_Start_Date]
+		,[Activity_Title]
+			
+	INTO ##TMP_Student_CCA_Details
+	
+	FROM ##TMP_TBL1
+	
+	WHERE rec_cnt_by_pk = 1
+    ',@condition
+    ); -- End Set	
+	
+  PRINT (@query);
+  SET @all_queries=CONCAT(N'',@all_queries,@query);  
+  EXEC (@query);
+
+
+------------------------------------------------------------------------------------------
+-- MAIN INSERTION QUERY: 
+-- UPDATE THE FOLLOWING ACCORDINGLY
+--   (1) COLUMN NAME1 TO COLUMN NAME 4
+--   (2) SOURCE TABLE NAME
+-- Note: DO NOT CHANGE THE WHERE CLAUSE. IF NEED TO SUBSET, PUT THE CONDITION IN THE ETL_PARM TABLE,
+--       AND THIS QUERY WILL APPEND THE CONDITION ACCORDINGLY.
+------------------------------------------------------------------------------------------
+  INSERT INTO RPDW_USR_PRD.[dbo].DW_ENT_STUDENT_CCA_DETAILS               
+         (  
+		 [Student_ID]
+		,[A_EV_EVENT_ID]
+		,[ACAD_CAREER] 
+		,[A_EV_EVENT_TYPE]
+		,[Actual_Event_Start_Date]
+		,[Activity_Title] 
+		,[CREATED_ON]
+		,[MODIFIED_ON]
+	     ) 
+	SELECT 
+		 [Student_ID]
+		,[Event_ID]					    as [A_EV_EVENT_ID]
+		,[Qual_Type]					as [ACAD_CAREER] 
+		,[Event_Type]					as [A_EV_EVENT_TYPE]
+		,[Actual_Event_Start_Date]
+		,[Activity_Title]
+		,getdate()
+	    ,getdate()
+	FROM ##TMP_Student_CCA_Details
+;
+
+------------------------------------------------------------------------------------------
+-- SOURCE AND TARGET TABLE COUNTS UPDATE: DO NOT CHANGE ANYTHING 
+------------------------------------------------------------------------------------------
+-- Check Source Table Count
+SELECT @source_cnt=COUNT(*) FROM ##TMP_Student_CCA_Details;
+	
+-- Check Tgt Table Count
+SELECT @target_cnt=COUNT(*) FROM RPDW_USR_PRD.[dbo].DW_ENT_STUDENT_CCA_DETAILS;
+    
+-- Update Counts
+UPDATE RPDW_USR_PRD.[dbo].[ETL_JOB_STATUS] 
+   SET [SRC_CNT]=@source_cnt,
+       [TGT_CNT]=@target_cnt,
+	   [REMARKS]=@all_queries,
+	   [FILENAME]=@outputfilename
+   WHERE [JOB_STATUS_ID]=@jobstatusid;	
+    
+    
+
+--------------------------------------
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+  ROLLBACK TRANSACTION
+
+  INSERT INTO RPDW_USR_PRD.[dbo].[ETL_ERROR_LOG](JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,getdate()  as created_on
+
+-- Update SQL QUERIES EXECUTED
+UPDATE RPDW_USR_PRD.[dbo].[ETL_JOB_STATUS] 
+   SET [REMARKS]=@all_queries
+   WHERE [JOB_STATUS_ID]=@jobstatusid;	
+   
+END CATCH 
+GO
+</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{92F5622A-F608-4AA6-95C3-FFB2D9670BFF}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="STAGE">
+      <DTS:VariableValue
+        DTS:DataType="8">DW</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{64CDC51B-1E70-442C-BAAF-B0D8D702F1A2}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::Job_name]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTableName">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_ENT_STUDENT_CCA_DETAILS</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT_ExportDMtoTXT"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{B2D0C018-D638-4322-8519-02BFBC90F64F}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT_ExportDMtoTXT"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput"
+              componentClassID="Microsoft.FlatFileDestination"
+              contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Destination"
+              localeId="1033"
+              name="FF_DST_TextOutput">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether the data will overwrite or append to the destination file."
+                  name="Overwrite">true</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the text to write to the destination file before any data is written."
+                  expressionType="Notify"
+                  name="Header" />
+                <property
+                  dataType="System.Boolean"
+                  description="When text qualifier is enabled, specifies whether the text qualifier in the data written to the destination file will be escaped or not."
+                  name="EscapeQualifier">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[OutputTextFile_Conn]"
+                  connectionManagerRefId="Package.ConnectionManagers[OutputTextFile_Conn]"
+                  name="FlatFileConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input]"
+                  hasSideEffects="true"
+                  name="Flat File Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input].Columns[Student_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="11"
+                      cachedName="Student_ID"
+                      externalMetadataColumnId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input].ExternalColumns[Student_ID]"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[Student_ID]" />
+                    <inputColumn
+                      refId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input].Columns[A_EV_EVENT_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="A_EV_EVENT_ID"
+                      externalMetadataColumnId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input].ExternalColumns[A_EV_EVENT_ID]"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[A_EV_EVENT_ID]" />
+                    <inputColumn
+                      refId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input].Columns[ACAD_CAREER]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="ACAD_CAREER"
+                      externalMetadataColumnId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input].ExternalColumns[ACAD_CAREER]"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[ACAD_CAREER]" />
+                    <inputColumn
+                      refId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input].Columns[A_EV_EVENT_TYPE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="A_EV_EVENT_TYPE"
+                      externalMetadataColumnId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input].ExternalColumns[A_EV_EVENT_TYPE]"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[A_EV_EVENT_TYPE]" />
+                    <inputColumn
+                      refId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input].Columns[DER_Actual_Event_Start_Date]"
+                      cachedDataType="wstr"
+                      cachedLength="18"
+                      cachedName="DER_Actual_Event_Start_Date"
+                      externalMetadataColumnId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input].ExternalColumns[Actual_Event_Start_Date]"
+                      lineageId="Package\DFT_ExportDMtoTXT\XFRM_DateTime.Outputs[Derived Column Output].Columns[DER_Actual_Event_Start_Date]" />
+                    <inputColumn
+                      refId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input].Columns[DER_Activity_Title]"
+                      cachedDataType="wstr"
+                      cachedLength="254"
+                      cachedName="DER_Activity_Title"
+                      externalMetadataColumnId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input].ExternalColumns[Activity_Title]"
+                      lineageId="Package\DFT_ExportDMtoTXT\XFRM_DateTime.Outputs[Derived Column Output].Columns[DER_Activity_Title]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input].ExternalColumns[Student_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      name="Student_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input].ExternalColumns[A_EV_EVENT_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="A_EV_EVENT_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input].ExternalColumns[ACAD_CAREER]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="ACAD_CAREER" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input].ExternalColumns[A_EV_EVENT_TYPE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="A_EV_EVENT_TYPE" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input].ExternalColumns[Actual_Event_Start_Date]"
+                      dataType="dbDate"
+                      name="Actual_Event_Start_Date" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input].ExternalColumns[Activity_Title]"
+                      codePage="1252"
+                      dataType="str"
+                      length="254"
+                      name="Activity_Title" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+            </component>
+            <component
+              refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE_SRC_ReadDM"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT * FROM dbo.DW_ENT_STUDENT_CCA_DETAILS
+-- WHERE</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Connections[OleDbConnection]"
+                  connectionManagerID="{4E74D30E-4295-488F-A407-AD1DC4921EC7}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[RPDW_USR_Conn]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[Student_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].ExternalColumns[Student_ID]"
+                      length="11"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[Student_ID]"
+                      name="Student_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[A_EV_EVENT_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].ExternalColumns[A_EV_EVENT_ID]"
+                      length="10"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[A_EV_EVENT_ID]"
+                      name="A_EV_EVENT_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[ACAD_CAREER]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].ExternalColumns[ACAD_CAREER]"
+                      length="4"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[ACAD_CAREER]"
+                      name="ACAD_CAREER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[A_EV_EVENT_TYPE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].ExternalColumns[A_EV_EVENT_TYPE]"
+                      length="4"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[A_EV_EVENT_TYPE]"
+                      name="A_EV_EVENT_TYPE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[Actual_Event_Start_Date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].ExternalColumns[Actual_Event_Start_Date]"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[Actual_Event_Start_Date]"
+                      name="Actual_Event_Start_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[Activity_Title]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].ExternalColumns[Activity_Title]"
+                      length="254"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[Activity_Title]"
+                      name="Activity_Title"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].ExternalColumns[CREATED_ON]"
+                      dataType="dbTimeStamp"
+                      name="CREATED_ON" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].ExternalColumns[MODIFIED_ON]"
+                      dataType="dbTimeStamp"
+                      name="MODIFIED_ON" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].ExternalColumns[Student_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      name="Student_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].ExternalColumns[A_EV_EVENT_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="A_EV_EVENT_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].ExternalColumns[ACAD_CAREER]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="ACAD_CAREER" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].ExternalColumns[A_EV_EVENT_TYPE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="A_EV_EVENT_TYPE" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].ExternalColumns[Actual_Event_Start_Date]"
+                      dataType="dbDate"
+                      name="Actual_Event_Start_Date" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].ExternalColumns[Activity_Title]"
+                      codePage="1252"
+                      dataType="str"
+                      length="254"
+                      name="Activity_Title" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Error Output].Columns[Student_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Error Output].Columns[Student_ID]"
+                      name="Student_ID" />
+                    <outputColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Error Output].Columns[A_EV_EVENT_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Error Output].Columns[A_EV_EVENT_ID]"
+                      name="A_EV_EVENT_ID" />
+                    <outputColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Error Output].Columns[ACAD_CAREER]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Error Output].Columns[ACAD_CAREER]"
+                      name="ACAD_CAREER" />
+                    <outputColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Error Output].Columns[A_EV_EVENT_TYPE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Error Output].Columns[A_EV_EVENT_TYPE]"
+                      name="A_EV_EVENT_TYPE" />
+                    <outputColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Error Output].Columns[Actual_Event_Start_Date]"
+                      dataType="dbDate"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Error Output].Columns[Actual_Event_Start_Date]"
+                      name="Actual_Event_Start_Date" />
+                    <outputColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Error Output].Columns[Activity_Title]"
+                      codePage="1252"
+                      dataType="str"
+                      length="254"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Error Output].Columns[Activity_Title]"
+                      name="Activity_Title" />
+                    <outputColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_ExportDMtoTXT\XFRM_DateTime"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="XFRM_DateTime"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT_ExportDMtoTXT\XFRM_DateTime.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_ExportDMtoTXT\XFRM_DateTime.Inputs[Derived Column Input].Columns[Actual_Event_Start_Date]"
+                      cachedDataType="dbDate"
+                      cachedName="Actual_Event_Start_Date"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[Actual_Event_Start_Date]" />
+                    <inputColumn
+                      refId="Package\DFT_ExportDMtoTXT\XFRM_DateTime.Inputs[Derived Column Input].Columns[Activity_Title]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="254"
+                      cachedName="Activity_Title"
+                      lineageId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[Activity_Title]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_ExportDMtoTXT\XFRM_DateTime.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DFT_ExportDMtoTXT\XFRM_DateTime.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_ExportDMtoTXT\XFRM_DateTime.Outputs[Derived Column Output].Columns[DER_Actual_Event_Start_Date]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="18"
+                      lineageId="Package\DFT_ExportDMtoTXT\XFRM_DateTime.Outputs[Derived Column Output].Columns[DER_Actual_Event_Start_Date]"
+                      name="DER_Actual_Event_Start_Date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_STR,10,1252)[RIGHT]("0" + (DT_STR,2,1252)[DAY](#{Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[Actual_Event_Start_Date]}),2) + "/" + [RIGHT]("0" + (DT_STR,2,1252)[MONTH](#{Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[Actual_Event_Start_Date]}),2) + "/" + [RIGHT]((DT_STR,4,1252)[YEAR](#{Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[Actual_Event_Start_Date]}),4)</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_STR,10,1252)RIGHT("0" + (DT_STR,2,1252)DAY(Actual_Event_Start_Date),2) + "/" + RIGHT("0" + (DT_STR,2,1252)MONTH(Actual_Event_Start_Date),2) + "/" + RIGHT((DT_STR,4,1252)YEAR(Actual_Event_Start_Date),4)</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_ExportDMtoTXT\XFRM_DateTime.Outputs[Derived Column Output].Columns[DER_Activity_Title]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="254"
+                      lineageId="Package\DFT_ExportDMtoTXT\XFRM_DateTime.Outputs[Derived Column Output].Columns[DER_Activity_Title]"
+                      name="DER_Activity_Title"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACE](#{Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output].Columns[Activity_Title]},"\"","")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACE(Activity_Title,"\"","")</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_ExportDMtoTXT\XFRM_DateTime.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DFT_ExportDMtoTXT\XFRM_DateTime.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_ExportDMtoTXT\XFRM_DateTime.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ExportDMtoTXT\XFRM_DateTime.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_ExportDMtoTXT\XFRM_DateTime.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_ExportDMtoTXT\XFRM_DateTime.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT_ExportDMtoTXT.Paths[Derived Column Output]"
+              endId="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput.Inputs[Flat File Destination Input]"
+              name="Derived Column Output"
+              startId="Package\DFT_ExportDMtoTXT\XFRM_DateTime.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DFT_ExportDMtoTXT.Paths[OLE DB Source Output]"
+              endId="Package\DFT_ExportDMtoTXT\XFRM_DateTime.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\ESQL_CreateETLJobLog"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D55F18C2-A696-41B6-9112-6131FCE62E7C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="ESQL_CreateETLJobLog"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4E74D30E-4295-488F-A407-AD1DC4921EC7}"
+          SQLTask:SqlStatementSource="Exec [dbo].[usp_InsertETLJobLog] ?, ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Job_name"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::STAGE"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::SourceTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::TgtTableName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\ESQL_GetProcessDate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{54B7DA2F-4FDE-4E9E-AD84-2D3C9444AE8B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="ESQL_GetProcessDate"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4E74D30E-4295-488F-A407-AD1DC4921EC7}"
+          SQLTask:SqlStatementSource="Select getdate()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::Process_date" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Process_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="135"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\ESQL_Get_JOB_STATUS_ID"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{BE078D3B-3955-473F-898E-B9A915E441E9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="ESQL_Get_JOB_STATUS_ID"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4E74D30E-4295-488F-A407-AD1DC4921EC7}"
+          SQLTask:SqlStatementSource="SELECT max([JOB_STATUS_ID])&#xA;FROM [dbo].[ETL_JOB_STATUS] where [JOB_NAME]=? &#xA;and convert(varchar(8),CREATED_ON,112)=convert(varchar(8) ,getdate(),112)"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Job_name"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\ESQL_LoadIntoDM"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{20917649-30BE-4D05-8278-F7922EBED799}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="ESQL_LoadIntoDM"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4E74D30E-4295-488F-A407-AD1DC4921EC7}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::SQL_DM_Load" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\ESQL_UpdateJobStatus"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F58C5FA3-5BB6-4213-A077-6F98B452C0BE}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="ESQL_UpdateJobStatus"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4E74D30E-4295-488F-A407-AD1DC4921EC7}"
+          SQLTask:SqlStatementSource="DECLARE &#xA;@jobstatusid INT&#xA;;&#xA;&#xA;select @jobstatusid=?;&#xA;&#xA;IF exists(select * from dbo.ETL_ERROR_LOG where [JOB_STATUS_ID]=@jobstatusid)&#xA; BEGIN&#xA; Update [dbo].[ETL_JOB_STATUS]&#xA;SET [PROCESSED_ON] =getdate(),&#xA;[JOB_STATUS]='Fail'&#xA;where [JOB_STATUS_ID]=@jobstatusid&#xA;  END&#xA;ELSE&#xA;BEGIN&#xA;Update [dbo].[ETL_JOB_STATUS]&#xA;SET [PROCESSED_ON] =getdate(),&#xA;[JOB_STATUS]='Success'&#xA;where [JOB_STATUS_ID]=@jobstatusid&#xA;END&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\ESQL_ValidateCurrentJobStatus"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{91B841B2-BC11-4AA4-A6AE-47DC8FE10681}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="ESQL_ValidateCurrentJobStatus"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4E74D30E-4295-488F-A407-AD1DC4921EC7}"
+          SQLTask:SqlStatementSource="SELECT CASE WHEN JOB_STATUS='Success' then 0 ELSE 1 END AS  JOB_STATUS&#xA;&#xA;from [dbo].[ETL_JOB_STATUS]&#xA;  where JOB_STATUS_ID = ?"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="JOB_STATUS"
+            SQLTask:DtsVariableName="User::Job_Status" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{982CC7AC-517E-4796-BBFE-9BB8A3307562}"
+      DTS:From="Package\ESQL_LoadIntoDM"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\ESQL_UpdateJobStatus" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{A4333F4F-5857-4A98-8543-6926BE53E713}"
+      DTS:From="Package\ESQL_GetProcessDate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\ESQL_LoadIntoDM" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{7186928C-B37D-4E9C-8247-C7B61B0F4F0B}"
+      DTS:From="Package\ESQL_CreateETLJobLog"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\ESQL_Get_JOB_STATUS_ID" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{908B59DA-CA52-40BC-AC4B-928980DC2A36}"
+      DTS:From="Package\ESQL_Get_JOB_STATUS_ID"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\ESQL_GetProcessDate" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{3760F8A8-C957-4E6F-8202-436EEC0776D3}"
+      DTS:From="Package\ESQL_UpdateJobStatus"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\ESQL_ValidateCurrentJobStatus" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{C27784BB-62C3-40D2-B60A-933A24A0DCF9}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::Job_Status]==0"
+      DTS:From="Package\ESQL_ValidateCurrentJobStatus"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\DFT_ExportDMtoTXT" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{9BF70546-4656-4AF0-86CD-3E70DC6ACD73}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{8A8BF147-3134-46BB-9D7E-E44386EC7D4C}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL_ERROR_LOG"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{A59BBD9D-FE98-4043-A33D-2DC47180AA4C}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL_ERROR_LOG">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{4E74D30E-4295-488F-A407-AD1DC4921EC7}"
+              SQLTask:SqlStatementSource="[dbo].[usp_InsertETLErrorLog] ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="131"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="185,42"
+          Id="Package\DFT_ExportDMtoTXT"
+          TopLeft="45,225" />
+        <NodeLayout
+          Size="204,42"
+          Id="Package\ESQL_CreateETLJobLog"
+          TopLeft="17,28" />
+        <NodeLayout
+          Size="226,42"
+          Id="Package\ESQL_Get_JOB_STATUS_ID"
+          TopLeft="283,27" />
+        <NodeLayout
+          Size="195,42"
+          Id="Package\ESQL_GetProcessDate"
+          TopLeft="607,27" />
+        <NodeLayout
+          Size="174,42"
+          Id="Package\ESQL_LoadIntoDM"
+          TopLeft="624,118" />
+        <NodeLayout
+          Size="199,42"
+          Id="Package\ESQL_UpdateJobStatus"
+          TopLeft="292,118" />
+        <NodeLayout
+          Size="240,42"
+          Id="Package\ESQL_ValidateCurrentJobStatus"
+          TopLeft="16,115" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="624,139">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-133,0"
+              Start="0,0"
+              End="-125.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-125.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="707.75,69">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,49"
+              Start="0,0"
+              End="0,41.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="221,48.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="62,0"
+              Start="0,0"
+              End="54.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="54.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="509,48">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="98,0"
+              Start="0,0"
+              End="90.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="90.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="292,137.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-36,0"
+              Start="0,0"
+              End="-28.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-28.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="136.75,157">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,68"
+              Start="0,0"
+              End="0,60.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,60.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,22.25,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="174,42"
+          Id="Package.EventHandlers[OnError]\ETL_ERROR_LOG"
+          TopLeft="5.5,5.5" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\DFT_ExportDMtoTXT">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="180,42"
+          Id="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM"
+          TopLeft="183,63" />
+        <NodeLayout
+          Size="164,42"
+          Id="Package\DFT_ExportDMtoTXT\XFRM_DateTime"
+          TopLeft="189,147" />
+        <NodeLayout
+          Size="181,42"
+          Id="Package\DFT_ExportDMtoTXT\FF_DST_TextOutput"
+          TopLeft="179,230" />
+        <EdgeLayout
+          Id="Package\DFT_ExportDMtoTXT.Paths[OLE DB Source Output]"
+          TopLeft="272,105">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42"
+              Start="0,0"
+              End="0,34.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_ExportDMtoTXT.Paths[Derived Column Output]"
+          TopLeft="270.25,189">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41"
+              Start="0,0"
+              End="0,33.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_ExportDMtoTXT\OLE_SRC_ReadDM">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

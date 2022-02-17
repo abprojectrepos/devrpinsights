@@ -1,0 +1,2111 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/30/2019 1:46:31 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-110119GM22"
+  DTS:CreatorName="NCS\P0500388"
+  DTS:DelayValidation="True"
+  DTS:DTSID="{1CBF36BE-B369-4F84-86C1-1E80FFF0F9FC}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="DW_COURSE_REQUIREMENT"
+  DTS:PackageType="5"
+  DTS:VersionBuild="136"
+  DTS:VersionGUID="{D360999F-9538-41FF-8E51-CB48EAB4B2D8}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{C9A26A0C-4502-4E49-98BB-7EAA5B904670}"
+      DTS:ObjectName="DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.22.2.38;User ID=svc-dw-prod-etl;Initial Catalog=RPDW_PRD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAASYZS2bsJTkCGD6si90oy4QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADqeZIhiPZZpONA0puoDTEgAAAAAASAAACgAAAAEAAAALgh0TTe56DaJJaS2A6YZpQYAAAAUJlnMz/M7VT9Va7xIxy8qLZ5E1pGi8JSFAAAANrYm1YZ6Kj6msKfDneCI3Mq5XDJ</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ErrorLog]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{89D5CEFD-8608-4885-909F-DB1F67607F8F}"
+      DTS:ObjectName="ErrorLog">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.22.2.38;User ID=svc-dw-prod-etl;Initial Catalog=RPDW_PRD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAASYZS2bsJTkCGD6si90oy4QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACeZaJOKSpK9FFCFirmqpUWAAAAAASAAACgAAAAEAAAAHFKE/yy0RU7mJ4OGT8qwmkYAAAAbO5LNGFOOOia+RYhgXo1lYJCIPWdjXDzFAAAAOt6v93uVd1zUmdQ8WwjS03kZnYq</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9856BEDD-CB40-4362-9CAB-94B7C50F2C3D}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Duplicate_Check">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6FD3FC4A-3D2E-4229-B7CD-B5008C924C1C}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_name">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_COURSE_REQUIREMENT</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D9212167-9480-4B7A-A06A-1470162592E0}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_Status">
+      <DTS:VariableValue
+        DTS:DataType="3">1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B6FABB1D-12C4-4E94-A006-3D76953C4C0F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JOB_STATUS_ID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{32CC8A42-C7C2-4AF4-8901-E3E91F09C23A}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Mandatory_constraint_Check">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DF82DB37-19F0-475D-9DF2-315684641EEE}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PreStage">
+      <DTS:VariableValue
+        DTS:DataType="8">STG</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{EE192B2E-7817-4A4A-9989-A118BF65DC06}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Process_date">
+      <DTS:VariableValue
+        DTS:DataType="7">2/1/2019 2:58:00 PM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5E56D68C-001F-4CB1-856A-1D38D6A6B49C}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SourceTable">
+      <DTS:VariableValue
+        DTS:DataType="8">STG_OASIS_REQMT_GROUP_SETUP</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8117A7A5-42D5-442A-9D8A-7C3E933BF8A0}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;&#xA;BEGIN TRY&#xA;&#xA;------------&#xA;&#xA;DECLARE @LastDWProcessdate datetime&#xA;&#xA;,@processeddatetime datetime&#xA;,@jobstatusid varchar(5)&#xA;select @jobstatusid=&quot;+ (DT_STR, 5,1252) @[User::JOB_STATUS_ID] +&quot;&#xA;&#xA;select @LastDWProcessdate= Isnull(max(Modified_on),'1990-01-01 00:00:00.000') from [dbo].[DW_COURSE_REQUIREMENT]--dw table&#xA;&#xA;--select  @processeddatetime=?&#xA;&#xA;--select @LastDWProcessdate&#xA;&#xA;&#xA;;WITH tMP_CATALOG_MODULE (Module_Id,&#xA;Module_Code,Acad_Progress_Units,row_num)&#xA;AS (SELECT DISTINCT ModuleId,Module_Code,Acad_Progress_Units&#xA;, dense_rank()over(partition by ModuleId order by effective_date desc) row_num&#xA;FROM &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.dbo.[STG_OASIS_CATALOG_MODULE]&#xA;WHERE LATEST_IND='Y')&#xA;&#xA;, TMP_DW_COURSE_REQUIREMENT ( [Reqmt_Group]&#xA;&#xA;      ,[Reqmt_Grp_Effective_Date]&#xA;&#xA;      ,[Reqmt_Grp_Setup_Start]&#xA;&#xA;      ,[Reqmt_Grp_Setup_End]&#xA;&#xA;      ,[Reqmt_Grp_Units]&#xA;&#xA;      ,[Reqmt_Grp_Test_Credit_Allowd]&#xA;&#xA;      ,[Reqmt_Grp_Effective_Status]&#xA;&#xA;      ,[Reqmt_Grp_Search_Descr]&#xA;&#xA;      ,[Reqmt_Grp_Usage]&#xA;&#xA;      ,[Reqmt_Grp_Designation]&#xA;&#xA;      ,[Reqmt_Grp_List_Seq]&#xA;&#xA;      ,[Reqmt_Grp_Rpt_Long_Descr]&#xA;&#xA;      ,[Reqmt_Grp_Rpt_Descr]&#xA;&#xA;      ,[Pre_Condition]&#xA;&#xA;      ,[Partition_Sharing]&#xA;&#xA;      ,[Override_Rpt_Long_Descr]&#xA;&#xA;      ,[Othr_Plans_Sub_Plans]&#xA;&#xA;      ,[Reqmt_Grp_Othr_Credit_Allowd]&#xA;&#xA;      ,[Module_Share_Set]&#xA;&#xA;      ,[Reqmt_Grp_Mod_Rank_Schm]&#xA;&#xA;      ,[Reqmt_Grp_Mod_Count]&#xA;&#xA;      ,[Reqmt_Grp_Min_Mod]&#xA;&#xA;      ,[Reqmt_Grp_Min_Gpa]&#xA;&#xA;      ,[Reqmt_Grp_Min_Credits]&#xA;&#xA;      ,[Reqmt_Grp_Min_Units_Mod]&#xA;&#xA;      ,[Reqmt_Grp_Min_Grade_Pts_Unit]&#xA;&#xA;      ,[Reqmt_Grp_Min_Grade_Pts_Credit]&#xA;&#xA;      ,[Reqmt_Grp_Long_Descr]&#xA;&#xA;      ,[Institution]&#xA;&#xA;      ,[Reqmt_Grp_Hide_Status]&#xA;&#xA;      ,[Group_Line_Type]&#xA;&#xA;      ,[Group_Line_Nbr]&#xA;&#xA;      ,[Group_Line]&#xA;&#xA;      ,[Reqmt_Grp_Show_GPA]&#xA;&#xA;      ,[Excl_IP_Credit]&#xA;&#xA;      ,[Enable_Catalog_Print]&#xA;&#xA;      ,[Reqmt_Grp_Display_Ctrl_Rpt]&#xA;&#xA;      ,[Reqmt_Grp_Description]&#xA;&#xA;      ,[Reqmt_Grp_Credit_Incl_Mode]&#xA;&#xA;      ,[Reqmt_Grp_Conn_Type]&#xA;&#xA;      ,[Reqmt_Grp_Choice_Res_Mthd]&#xA;&#xA;      ,[Acad_Sub_Plan]&#xA;&#xA;      ,[Acad_Prog]&#xA;&#xA;      ,[Acad_Plan]&#xA;&#xA;      ,[Acad_Career]&#xA;&#xA;      ,[Requirement_Setup]&#xA;&#xA;      ,[Reqmt_Effective_Date]&#xA;&#xA;      ,[Reqmt_Status]&#xA;&#xA;      ,[Reqmt_Usage]&#xA;&#xA;      ,[Qual_Type]&#xA;&#xA;      ,[Qual_Type_Descr]&#xA;&#xA;      ,[Prog]&#xA;&#xA;      ,[Prog_Descr]&#xA;&#xA;      ,[Specialisation]&#xA;&#xA;      ,[Specialisation_Descr]&#xA;&#xA;      ,[Reqmt_Category]&#xA;&#xA;      ,[Reqmt_Setup_Stage]&#xA;&#xA;      ,[Reqmt_Search_Descr]&#xA;&#xA;      ,[Reqmt_Short_Search_Descr]&#xA;&#xA;      ,[Reqmt_Long_Descr]&#xA;&#xA;      ,[Reqmt_Report_Descr]&#xA;&#xA;      ,[Reqmt_Rpt_Long_Descr]&#xA;&#xA;      ,[Reqmt_Hide_Status]&#xA;&#xA;      ,[Reqmt_Cond_Code]&#xA;&#xA;      ,[Reqmt_Min_Credits]&#xA;&#xA;      ,[Reqmt_Min_GPA]&#xA;&#xA;      ,[Reqmt_Min_Modules]&#xA;&#xA;      ,[Reqmt_Min_Grade_Pts_Credit]&#xA;&#xA;      ,[Reqmt_Mod_Rank_Schm]&#xA;&#xA;      ,[Reqmt_Credit_Incl_Mode]&#xA;&#xA;      ,[Reqmt_Choice_Res_Mthd]&#xA;&#xA;      ,[Reqmt_Conn_Type]&#xA;&#xA;      ,[Reqmt_Display_Ctrl_Rpt]&#xA;&#xA;      ,[Reqmt_Print_Ctrl]&#xA;&#xA;      ,[Reqmt_GPA]&#xA;&#xA;      ,[Reqmt_Units]&#xA;&#xA;      ,[Reqmt_Mod_Cnt]&#xA;&#xA;      ,[Line_Nbr]&#xA;&#xA;      ,[Line_Type]&#xA;&#xA;      ,[Line_Search_Descr]&#xA;&#xA;      ,[Line_Search_Short_Descr]&#xA;&#xA;      ,[Line_Long_Descr]&#xA;&#xA;      ,[Line_Rpt_Descr]&#xA;&#xA;      ,[Line_Rpt_Long_Descr]&#xA;&#xA;      ,[Line_Hide_Status]&#xA;&#xA;      ,[Line_Cond_Code]&#xA;&#xA;      ,[Line_Min_GPA]&#xA;&#xA;      ,[Line_Min_Mod_Credits]&#xA;&#xA;      ,[Line_Min_Modules]&#xA;&#xA;      ,[Line_Min_Grade_Pts_Units]&#xA;&#xA;      ,[Line_Max_Mod_Credit_Allow]&#xA;&#xA;      ,[Line_Max_Mod_Allow]&#xA;&#xA;      ,[Line_Mod_Rank_Schm]&#xA;&#xA;      ,[Line_Credit_Incl_Mode]&#xA;&#xA;      ,[Enable_Splitting]&#xA;&#xA;      ,[Count_Attempts]&#xA;&#xA;      ,[Line_Display_Sel]&#xA;&#xA;      ,[Reporting]&#xA;&#xA;      ,[Line_GPA]&#xA;&#xA;      ,[Line_Units]&#xA;&#xA;      ,[Line_Mod_Count]&#xA;&#xA;      ,[Line_Mod_List]&#xA;&#xA;      ,[Line_Mod_List_Descr]&#xA;&#xA;      ,[Line_Dtls_Seq]&#xA;&#xA;      ,[Line_Dtls_Type]&#xA;&#xA;      ,[Module_ID]&#xA;&#xA;      ,[Module_List]&#xA;&#xA;      ,[Module_Info]&#xA;&#xA;      ,[Mod_List_Setup_End]&#xA;&#xA;      ,[Mod_List_Setup_Begin]&#xA;&#xA;      ,[Topic_ID]&#xA;&#xA;      ,[Setup_Term]&#xA;&#xA;      ,[Associate_Class]&#xA;&#xA;      ,[Effective_Status]&#xA;&#xA;      ,[Reqmt_Designation]&#xA;&#xA;      ,[Module_Seq]&#xA;&#xA;      ,[Incl_GPA_Req]&#xA;&#xA;      ,[Module_List_Attr]&#xA;&#xA;      ,[Mod_List_Min_Units_Mod]&#xA;&#xA;      ,[Mod_List_Description]&#xA;&#xA;      ,[Mod_List_Long_Descr]&#xA;&#xA;      ,[Mod_List_Short_Descr]&#xA;&#xA;      ,[Transfer_Level_Allowed]&#xA;&#xA;      ,[Wildcar_Indicator]&#xA;&#xA;      ,[Incl_Eqiv_Mod]&#xA;&#xA;      ,[Mod_List_Effective_Date]&#xA;&#x9;  ,Acad_Progress_Units&#xA;      )&#xA;&#xA;         as&#xA;&#xA;  (&#xA;&#xA;SELECT  &#xA;&#xA;a.[Reqmt_Group]&#xA;&#xA;,a.[Effective_Date]&#xA;&#xA;,a.[Valid_Begin]&#xA;&#xA;,a.[Valid_End]&#xA;&#xA; ,a.Units&#xA;&#xA; ,a.Test_Credit&#xA;&#xA; ,a.[Status]&#xA;&#xA; ,a.SEARCH_DESCR&#xA;&#xA; ,a.Reqmt_Usage1&#xA;&#xA; ,a.Reqmt_Designation&#xA;&#xA; ,a.Reporting_Seq&#xA;&#xA; ,a.REPORT_LONG_DESCR&#xA;&#xA; ,a.REPORT_DESCR&#xA;&#xA; ,a.Pre_Condition&#xA;&#xA; ,a.Partition_Sharing&#xA;&#xA; ,a.OVERRIDE_REPORT_LONG_DESCR&#xA;&#xA; ,a.Other_Plans_Sub_Plans&#xA;&#xA; ,a.Other_Credit&#xA;&#xA; ,a.Module_Share_Set&#xA;&#xA; ,a.Module_Ranking_Scheme&#xA;&#xA; ,a.Module_COUNT&#xA;&#xA; ,a.Min_Modules&#xA;&#xA; ,a.Min_Gpa&#xA;&#xA; ,a.Min_Credits_1&#xA;&#xA; ,a.Min_Units_Module&#xA;&#xA; ,a.Min_Grade_Points_Unit&#xA;&#xA; ,a.Min_Grade_Points_Credit&#xA;&#xA; ,a.LONG_DESCR&#xA;&#xA; ,a.Inst&#xA;&#xA; ,a.Hide_Status&#xA;&#xA; ,a.Group_Line_Type&#xA;&#xA; ,a.Group_Line_Number&#xA;&#xA; ,a.Group_Line&#xA;&#xA; --,ISNULL(a.Group_Line,'NA') as Group_Line&#xA;&#xA; ,a.Gpa&#xA;&#xA; ,a.Exclude_In_Progress_Credit&#xA;&#xA; ,a.Enable_Catalog_Print&#xA;&#xA; ,a.Display_Control_Reporting&#xA;&#xA; ,a.Descr&#xA;&#xA; ,a.Credit_Include_Mode&#xA;&#xA; ,a.Connector_Type&#xA;&#xA; ,a.Choice_Resolution_Method&#xA;&#xA; ,a.Acad_Sub_Plan&#xA;&#xA; ,a.Acad_Prog&#xA;&#xA; ,a.Acad_Plan&#xA;&#xA; ,a.Acad_Career&#xA;&#xA;  ,b.Rqmt&#xA;&#xA;,b.Effective_Date&#xA;&#xA;,b.Status&#xA;&#xA;,b.Rqmt_Usage&#xA;&#xA;,b.Qual_Type&#xA;&#xA;,d.long_name--d&#xA;&#xA;,b.Prog&#xA;&#xA;,e.Prog_Formal_Descr&#xA;&#xA;,b.Specialisatn&#xA;&#xA;,f.Descr&#xA;&#xA;,b.Rqmt_Category&#xA;&#xA;,b.Stage&#xA;&#xA;,b.Search_Descr&#xA;&#xA;,b.Search_Descr&#xA;&#xA;,b.Long_Descr&#xA;&#xA;,b.Report_Descr&#xA;&#xA;,b.Report_Long_Descr&#xA;&#xA;,b.Hide_Status&#xA;&#xA;,b.Condition_Code&#xA;&#xA;,b.Minimum_Credits&#xA;&#xA;,b.Minimum_GPA&#xA;&#xA;,b.Minimum_Modules&#xA;&#xA;,b.Min_Grade_Points_Credit&#xA;&#xA;,b.Module_Ranking_Scheme&#xA;&#xA;,b.Credit_Include_Mode&#xA;&#xA;,b.Choice_Resolution_Method&#xA;&#xA;,b.Connector_Type&#xA;&#xA;,b.Display_Control_Reporting&#xA;&#xA;,b.Print_Control&#xA;&#xA;,b.GPA&#xA;&#xA;,b.Units&#xA;&#xA;,b.Module_Count&#xA;&#xA;,b.Line_Number&#xA;&#xA;,b.Line_Type&#xA;&#xA;,b.Search_Descr_Line&#xA;&#xA;,b.Short_Search_Descr_Line&#xA;&#xA;,b.Long_Descr_Line&#xA;&#xA;,b.Report_Descr_Line&#xA;&#xA;,b.Report_Long_Descr_Line&#xA;&#xA;,b.Hide_Status_Line&#xA;&#xA;,b.Condition_Code_Line&#xA;&#xA;,b.Min_GPA_Line&#xA;&#xA;,b.Min_Modular_Credits_Line&#xA;&#xA;,b.Min_Modules_Line&#xA;&#xA;,b.Min_Grade_Points_Unit_Line&#xA;&#xA;,b.Max_Modular_Credits_Allowed&#xA;&#xA;,b.Max_Modules_Allowed&#xA;&#xA;,b.Module_Ranking_Scheme_Line&#xA;&#xA;,b.Credit_Include_Mode_Line&#xA;&#xA;,b.Enable_Splitting&#xA;&#xA;,b.Count_Attempts&#xA;&#xA;,b.Display_Select_Line&#xA;&#xA;,b.Reporting&#xA;&#xA;,b.GPA_Line&#xA;&#xA;,b.Units_Line&#xA;&#xA;,b.Module_Count_Line&#xA;&#xA;,b.Module_List&#xA;&#xA;,b.Module_List_Descr&#xA;&#xA;,b.Line_Detail_Sequence&#xA;&#xA;,b.Line_Detail_Type&#xA;&#xA;,c.Module_Id&#xA;&#xA;--,ISNULL(c.Module_Id,'NA') as Module_Id&#xA;&#xA;--,ISNULL(c.Module_List,'NA') as Module_List&#xA;&#xA;,c.Module_List&#xA;&#xA;,c.Module_Information&#xA;&#xA;,c.Valid_End&#xA;&#xA;,c.Valid_Begin&#xA;&#xA;,c.Topic_Id&#xA;&#xA;,c.Term_Associated_Class&#xA;&#xA;,c.Term_Associated_Class1&#xA;&#xA;,c.Status&#xA;&#xA;,c.Reqmt_Designation&#xA;&#xA;,ISNULL(c.Module_Seq,'NA') as Module_Seq&#xA;&#xA;,c.Module_Gpa_Material&#xA;&#xA;,c.Module_List_Attribute&#xA;&#xA;,c.Min_Units_Module&#xA;&#xA;,c.Descr&#xA;&#xA;,c.Long_Desc&#xA;&#xA;,c.Short_Desc&#xA;&#xA;,c.Transfer_Level_Allowed&#xA;&#xA;,c.Wildcar_IndicatoR&#xA;&#xA;,c.Include_Equivalent_Modules&#xA;&#xA;,c.Effective_Date&#xA;,g.Acad_Progress_Units&#xA;&#xA;&#xA;&#xA;&#xA; &#xA;&#xA;&#xA;&#xA;  FROM &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_REQMT_GROUP_SETUP] a Inner JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_RQMT_SETUP] b&#xA;&#xA;  ON a.Group_Line_Number=b.Rqmt and b.Latest_ind='Y' and a.Effective_Date=b.Effective_Date&#xA;&#xA;  INNER JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_MODULE_LISTING_SETUP] c ON c.Module_List=b.Module_List  and c.Latest_ind='Y'&#xA;&#xA;   and c.Effective_Date=b.Effective_Date&#xA;&#xA;  LEFT JOIN &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_MASTER_CODE] d&#xA;&#xA;  on b.Qual_Type=d.FIELD_VALUE and d.FIELD_NAME='ACAD_CAREER' and d.EFFECTIVE_STATUS = 'A'  &#xA;&#xA;&#xA;&#xA;  Left Join ( select  PROG_CODE,Prog_Formal_Descr from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_PROG_TABLE] a1&#xA;&#xA;&#x9;&#x9; where a1.LATEST_IND='Y'  and a1.EFFECTIVE_DATE in (select max(b1.EFFECTIVE_DATE) from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo].[STG_OASIS_PROG_TABLE] b1&#xA;&#xA;&#x9;&#x9; where b1.Prog_Code=a1.PROG_CODE))e  ON b.Prog=e.Prog_Code &#xA;&#xA;LEFT JOIN (select  Specialisatn,Descr from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo]. STG_OASIS_SPECIALISATN b1&#xA;&#xA;&#x9;&#x9; where b1.LATEST_IND='Y'  and b1.EFFECTIVE_DATE in (select max(c1.EFFECTIVE_DATE) from &quot;+ @[$Project::Staging_Initial_Catalog] +&quot;.[dbo]. STG_OASIS_SPECIALISATN c1&#xA;&#xA;&#x9;&#x9; where c1.Specialisatn=b1.Specialisatn))  f on f.Specialisatn=b.Specialisatn&#xA;LEFT JOIN tMP_CATALOG_MODULE g on c.Module_Id=g.Module_Id and g.row_num=1&#xA;  where   a.Latest_ind='Y' and a.[Modified_On]&gt;@LastDWProcessdate)&#xA;&#xA;&#xA;&#xA;       &#xA;&#xA;&#xA;&#xA;MERGE INTO dbo.DW_COURSE_REQUIREMENT AS dst&#xA;&#xA;   USING TMP_DW_COURSE_REQUIREMENT AS src&#xA;&#xA;   ON( dst.Reqmt_Group=src.Reqmt_Group and dst.Reqmt_Grp_Effective_Date=src.Reqmt_Grp_Effective_Date and  dst.Group_Line_Nbr=src.Group_Line_Nbr&#xA;   and dst.Group_Line=src.Group_Line and dst.Requirement_Setup=src.Requirement_Setup and dst.Line_Mod_List=src.Line_Mod_List&#xA;   and dst.Module_ID=Src.Module_ID  and dst.Module_List=src.Module_List and dst.Module_Seq=src.Module_Seq )&#xA;&#xA;&#xA;&#xA;   WHEN NOT MATCHED THEN&#xA;&#xA;   INSERT&#xA;&#xA;         (  [Reqmt_Group]&#xA;&#xA;      ,[Reqmt_Grp_Effective_Date]&#xA;&#xA;      ,[Reqmt_Grp_Setup_Start]&#xA;&#xA;      ,[Reqmt_Grp_Setup_End]&#xA;&#xA;      ,[Reqmt_Grp_Units]&#xA;&#xA;      ,[Reqmt_Grp_Test_Credit_Allowd]&#xA;&#xA;      ,[Reqmt_Grp_Effective_Status]&#xA;&#xA;      ,[Reqmt_Grp_Search_Descr]&#xA;&#xA;      ,[Reqmt_Grp_Usage]&#xA;&#xA;      ,[Reqmt_Grp_Designation]&#xA;&#xA;      ,[Reqmt_Grp_List_Seq]&#xA;&#xA;      ,[Reqmt_Grp_Rpt_Long_Descr]&#xA;&#xA;      ,[Reqmt_Grp_Rpt_Descr]&#xA;&#xA;      ,[Pre_Condition]&#xA;&#xA;      ,[Partition_Sharing]&#xA;&#xA;      ,[Override_Rpt_Long_Descr]&#xA;&#xA;      ,[Othr_Plans_Sub_Plans]&#xA;&#xA;      ,[Reqmt_Grp_Othr_Credit_Allowd]&#xA;&#xA;      ,[Module_Share_Set]&#xA;&#xA;      ,[Reqmt_Grp_Mod_Rank_Schm]&#xA;&#xA;      ,[Reqmt_Grp_Mod_Count]&#xA;&#xA;      ,[Reqmt_Grp_Min_Mod]&#xA;&#xA;      ,[Reqmt_Grp_Min_Gpa]&#xA;&#xA;      ,[Reqmt_Grp_Min_Credits]&#xA;&#xA;      ,[Reqmt_Grp_Min_Units_Mod]&#xA;&#xA;      ,[Reqmt_Grp_Min_Grade_Pts_Unit]&#xA;&#xA;      ,[Reqmt_Grp_Min_Grade_Pts_Credit]&#xA;&#xA;      ,[Reqmt_Grp_Long_Descr]&#xA;&#xA;      ,[Institution]&#xA;&#xA;      ,[Reqmt_Grp_Hide_Status]&#xA;&#xA;      ,[Group_Line_Type]&#xA;&#xA;      ,[Group_Line_Nbr]&#xA;&#xA;      ,[Group_Line]&#xA;&#xA;      ,[Reqmt_Grp_Show_GPA]&#xA;&#xA;      ,[Excl_IP_Credit]&#xA;&#xA;      ,[Enable_Catalog_Print]&#xA;&#xA;      ,[Reqmt_Grp_Display_Ctrl_Rpt]&#xA;&#xA;      ,[Reqmt_Grp_Description]&#xA;&#xA;      ,[Reqmt_Grp_Credit_Incl_Mode]&#xA;&#xA;      ,[Reqmt_Grp_Conn_Type]&#xA;&#xA;      ,[Reqmt_Grp_Choice_Res_Mthd]&#xA;&#xA;      ,[Acad_Sub_Plan]&#xA;&#xA;      ,[Acad_Prog]&#xA;&#xA;      ,[Acad_Plan]&#xA;&#xA;      ,[Acad_Career]&#xA;&#xA;      ,[Requirement_Setup]&#xA;&#xA;      ,[Reqmt_Effective_Date]&#xA;&#xA;      ,[Reqmt_Status]&#xA;&#xA;      ,[Reqmt_Usage]&#xA;&#xA;      ,[Qual_Type]&#xA;&#xA;      ,[Qual_Type_Descr]&#xA;&#xA;      ,[Prog]&#xA;&#xA;      ,[Prog_Descr]&#xA;&#xA;      ,[Specialisation]&#xA;&#xA;      ,[Specialisation_Descr]&#xA;&#xA;      ,[Reqmt_Category]&#xA;&#xA;      ,[Reqmt_Setup_Stage]&#xA;&#xA;      ,[Reqmt_Search_Descr]&#xA;&#xA;      ,[Reqmt_Short_Search_Descr]&#xA;&#xA;      ,[Reqmt_Long_Descr]&#xA;&#xA;      ,[Reqmt_Report_Descr]&#xA;&#xA;      ,[Reqmt_Rpt_Long_Descr]&#xA;&#xA;      ,[Reqmt_Hide_Status]&#xA;&#xA;      ,[Reqmt_Cond_Code]&#xA;&#xA;      ,[Reqmt_Min_Credits]&#xA;&#xA;      ,[Reqmt_Min_GPA]&#xA;&#xA;      ,[Reqmt_Min_Modules]&#xA;&#xA;      ,[Reqmt_Min_Grade_Pts_Credit]&#xA;&#xA;      ,[Reqmt_Mod_Rank_Schm]&#xA;&#xA;      ,[Reqmt_Credit_Incl_Mode]&#xA;&#xA;      ,[Reqmt_Choice_Res_Mthd]&#xA;&#xA;      ,[Reqmt_Conn_Type]&#xA;&#xA;      ,[Reqmt_Display_Ctrl_Rpt]&#xA;&#xA;      ,[Reqmt_Print_Ctrl]&#xA;&#xA;      ,[Reqmt_GPA]&#xA;&#xA;      ,[Reqmt_Units]&#xA;&#xA;      ,[Reqmt_Mod_Cnt]&#xA;&#xA;      ,[Line_Nbr]&#xA;&#xA;      ,[Line_Type]&#xA;&#xA;      ,[Line_Search_Descr]&#xA;&#xA;      ,[Line_Search_Short_Descr]&#xA;&#xA;      ,[Line_Long_Descr]&#xA;&#xA;      ,[Line_Rpt_Descr]&#xA;&#xA;      ,[Line_Rpt_Long_Descr]&#xA;&#xA;      ,[Line_Hide_Status]&#xA;&#xA;      ,[Line_Cond_Code]&#xA;&#xA;      ,[Line_Min_GPA]&#xA;&#xA;      ,[Line_Min_Mod_Credits]&#xA;&#xA;      ,[Line_Min_Modules]&#xA;&#xA;      ,[Line_Min_Grade_Pts_Units]&#xA;&#xA;      ,[Line_Max_Mod_Credit_Allow]&#xA;&#xA;      ,[Line_Max_Mod_Allow]&#xA;&#xA;      ,[Line_Mod_Rank_Schm]&#xA;&#xA;      ,[Line_Credit_Incl_Mode]&#xA;&#xA;      ,[Enable_Splitting]&#xA;&#xA;      ,[Count_Attempts]&#xA;&#xA;      ,[Line_Display_Sel]&#xA;&#xA;      ,[Reporting]&#xA;&#xA;      ,[Line_GPA]&#xA;&#xA;      ,[Line_Units]&#xA;&#xA;      ,[Line_Mod_Count]&#xA;&#xA;      ,[Line_Mod_List]&#xA;&#xA;      ,[Line_Mod_List_Descr]&#xA;&#xA;      ,[Line_Dtls_Seq]&#xA;&#xA;      ,[Line_Dtls_Type]&#xA;&#xA;      ,[Module_ID]&#xA;&#xA;      ,[Module_List]&#xA;&#xA;      ,[Module_Info]&#xA;&#xA;      ,[Mod_List_Setup_End]&#xA;&#xA;      ,[Mod_List_Setup_Begin]&#xA;&#xA;      ,[Topic_ID]&#xA;&#xA;      ,[Setup_Term]&#xA;&#xA;      ,[Associate_Class]&#xA;&#xA;      ,[Effective_Status]&#xA;&#xA;      ,[Reqmt_Designation]&#xA;&#xA;      ,[Module_Seq]&#xA;&#xA;      ,[Incl_GPA_Req]&#xA;&#xA;      ,[Module_List_Attr]&#xA;&#xA;      ,[Mod_List_Min_Units_Mod]&#xA;&#xA;      ,[Mod_List_Description]&#xA;&#xA;      ,[Mod_List_Long_Descr]&#xA;&#xA;      ,[Mod_List_Short_Descr]&#xA;&#xA;      ,[Transfer_Level_Allowed]&#xA;&#xA;      ,[Wildcar_Indicator]&#xA;&#xA;      ,[Incl_Eqiv_Mod]&#xA;&#xA;      ,[Mod_List_Effective_Date]&#xA;&#xA;       ,[Created_On]&#xA;&#xA;      ,[Modified_On]&#xA;&#x9;  ,Acad_Progress_Units)&#xA;&#xA;   VALUES(  &#xA;&#xA;            SRC.[Reqmt_Group]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Effective_Date]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Setup_Start]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Setup_End]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Units]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Test_Credit_Allowd]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Effective_Status]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Search_Descr]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Usage]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Designation]&#xA;&#xA;      ,SRC.[Reqmt_Grp_List_Seq]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Rpt_Long_Descr]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Rpt_Descr]&#xA;&#xA;      ,SRC.[Pre_Condition]&#xA;&#xA;      ,SRC.[Partition_Sharing]&#xA;&#xA;      ,SRC.[Override_Rpt_Long_Descr]&#xA;&#xA;      ,SRC.[Othr_Plans_Sub_Plans]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Othr_Credit_Allowd]&#xA;&#xA;      ,SRC.[Module_Share_Set]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Mod_Rank_Schm]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Mod_Count]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Min_Mod]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Min_Gpa]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Min_Credits]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Min_Units_Mod]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Min_Grade_Pts_Unit]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Min_Grade_Pts_Credit]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Long_Descr]&#xA;&#xA;      ,SRC.[Institution]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Hide_Status]&#xA;&#xA;      ,SRC.[Group_Line_Type]&#xA;&#xA;      ,SRC.[Group_Line_Nbr]&#xA;&#xA;      ,SRC.[Group_Line]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Show_GPA]&#xA;&#xA;      ,SRC.[Excl_IP_Credit]&#xA;&#xA;      ,SRC.[Enable_Catalog_Print]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Display_Ctrl_Rpt]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Description]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Credit_Incl_Mode]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Conn_Type]&#xA;&#xA;      ,SRC.[Reqmt_Grp_Choice_Res_Mthd]&#xA;&#xA;      ,SRC.[Acad_Sub_Plan]&#xA;&#xA;      ,SRC.[Acad_Prog]&#xA;&#xA;      ,SRC.[Acad_Plan]&#xA;&#xA;      ,SRC.[Acad_Career]&#xA;&#xA;      ,SRC.[Requirement_Setup]&#xA;&#xA;      ,SRC.[Reqmt_Effective_Date]&#xA;&#xA;      ,SRC.[Reqmt_Status]&#xA;&#xA;      ,SRC.[Reqmt_Usage]&#xA;&#xA;      ,SRC.[Qual_Type]&#xA;&#xA;      ,SRC.[Qual_Type_Descr]&#xA;&#xA;      ,SRC.[Prog]&#xA;&#xA;      ,SRC.[Prog_Descr]&#xA;&#xA;      ,SRC.[Specialisation]&#xA;&#xA;      ,SRC.[Specialisation_Descr]&#xA;&#xA;      ,SRC.[Reqmt_Category]&#xA;&#xA;      ,SRC.[Reqmt_Setup_Stage]&#xA;&#xA;      ,SRC.[Reqmt_Search_Descr]&#xA;&#xA;      ,SRC.[Reqmt_Short_Search_Descr]&#xA;&#xA;      ,SRC.[Reqmt_Long_Descr]&#xA;&#xA;      ,SRC.[Reqmt_Report_Descr]&#xA;&#xA;      ,SRC.[Reqmt_Rpt_Long_Descr]&#xA;&#xA;      ,SRC.[Reqmt_Hide_Status]&#xA;&#xA;      ,SRC.[Reqmt_Cond_Code]&#xA;&#xA;      ,SRC.[Reqmt_Min_Credits]&#xA;&#xA;      ,SRC.[Reqmt_Min_GPA]&#xA;&#xA;      ,SRC.[Reqmt_Min_Modules]&#xA;&#xA;      ,SRC.[Reqmt_Min_Grade_Pts_Credit]&#xA;&#xA;      ,SRC.[Reqmt_Mod_Rank_Schm]&#xA;&#xA;      ,SRC.[Reqmt_Credit_Incl_Mode]&#xA;&#xA;      ,SRC.[Reqmt_Choice_Res_Mthd]&#xA;&#xA;      ,SRC.[Reqmt_Conn_Type]&#xA;&#xA;      ,SRC.[Reqmt_Display_Ctrl_Rpt]&#xA;&#xA;      ,SRC.[Reqmt_Print_Ctrl]&#xA;&#xA;      ,SRC.[Reqmt_GPA]&#xA;&#xA;      ,SRC.[Reqmt_Units]&#xA;&#xA;      ,SRC.[Reqmt_Mod_Cnt]&#xA;&#xA;      ,SRC.[Line_Nbr]&#xA;&#xA;      ,SRC.[Line_Type]&#xA;&#xA;      ,SRC.[Line_Search_Descr]&#xA;&#xA;      ,SRC.[Line_Search_Short_Descr]&#xA;&#xA;      ,SRC.[Line_Long_Descr]&#xA;&#xA;      ,SRC.[Line_Rpt_Descr]&#xA;&#xA;      ,SRC.[Line_Rpt_Long_Descr]&#xA;&#xA;      ,SRC.[Line_Hide_Status]&#xA;&#xA;      ,SRC.[Line_Cond_Code]&#xA;&#xA;      ,SRC.[Line_Min_GPA]&#xA;&#xA;      ,SRC.[Line_Min_Mod_Credits]&#xA;&#xA;      ,SRC.[Line_Min_Modules]&#xA;&#xA;      ,SRC.[Line_Min_Grade_Pts_Units]&#xA;&#xA;      ,SRC.[Line_Max_Mod_Credit_Allow]&#xA;&#xA;      ,SRC.[Line_Max_Mod_Allow]&#xA;&#xA;      ,SRC.[Line_Mod_Rank_Schm]&#xA;&#xA;      ,SRC.[Line_Credit_Incl_Mode]&#xA;&#xA;      ,SRC.[Enable_Splitting]&#xA;&#xA;      ,SRC.[Count_Attempts]&#xA;&#xA;      ,SRC.[Line_Display_Sel]&#xA;&#xA;      ,SRC.[Reporting]&#xA;&#xA;      ,SRC.[Line_GPA]&#xA;&#xA;      ,SRC.[Line_Units]&#xA;&#xA;      ,SRC.[Line_Mod_Count]&#xA;&#xA;      ,SRC.[Line_Mod_List]&#xA;&#xA;      ,SRC.[Line_Mod_List_Descr]&#xA;&#xA;      ,SRC.[Line_Dtls_Seq]&#xA;&#xA;      ,SRC.[Line_Dtls_Type]&#xA;&#xA;      ,SRC.[Module_ID]&#xA;&#xA;      ,SRC.[Module_List]&#xA;&#xA;      ,SRC.[Module_Info]&#xA;&#xA;      ,SRC.[Mod_List_Setup_End]&#xA;&#xA;      ,SRC.[Mod_List_Setup_Begin]&#xA;&#xA;      ,SRC.[Topic_ID]&#xA;&#xA;      ,SRC.[Setup_Term]&#xA;&#xA;      ,SRC.[Associate_Class]&#xA;&#xA;      ,SRC.[Effective_Status]&#xA;&#xA;      ,SRC.[Reqmt_Designation]&#xA;&#xA;      ,SRC.[Module_Seq]&#xA;&#xA;      ,SRC.[Incl_GPA_Req]&#xA;&#xA;      ,SRC.[Module_List_Attr]&#xA;&#xA;      ,SRC.[Mod_List_Min_Units_Mod]&#xA;&#xA;      ,SRC.[Mod_List_Description]&#xA;&#xA;      ,SRC.[Mod_List_Long_Descr]&#xA;&#xA;      ,SRC.[Mod_List_Short_Descr]&#xA;&#xA;      ,SRC.[Transfer_Level_Allowed]&#xA;&#xA;      ,SRC.[Wildcar_Indicator]&#xA;&#xA;      ,SRC.[Incl_Eqiv_Mod]&#xA;&#xA;      ,SRC.[Mod_List_Effective_Date]&#xA;&#xA;       ,  getdate(),getdate()&#xA;&#x9;   ,SRC.Acad_Progress_Units)&#xA;&#xA;   WHEN MATCHED&#xA;&#xA;   &#xA;&#xA;   THEN UPDATE&#xA;&#xA;   SET        dst.Reqmt_Grp_Setup_Start=src.Reqmt_Grp_Setup_Start&#xA;&#xA;              ,dst.Reqmt_Grp_Setup_End=src.Reqmt_Grp_Setup_End&#xA;&#xA;              ,dst.Reqmt_Grp_Units=src.Reqmt_Grp_Units&#xA;&#xA;              ,dst.Reqmt_Grp_Test_Credit_Allowd=src.Reqmt_Grp_Test_Credit_Allowd&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Effective_Status=src.Reqmt_Grp_Effective_Status&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Search_Descr=src.Reqmt_Grp_Search_Descr&#xA;&#xA;&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Usage=src.Reqmt_Grp_Usage&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Designation=src.Reqmt_Grp_Designation&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_List_Seq=src.Reqmt_Grp_List_Seq&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Rpt_Long_Descr=src.Reqmt_Grp_Rpt_Long_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Rpt_Descr=src.Reqmt_Grp_Rpt_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Pre_Condition=src.Pre_Condition&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Partition_Sharing=src.Partition_Sharing&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Override_Rpt_Long_Descr=src.Override_Rpt_Long_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Othr_Plans_Sub_Plans=src.Othr_Plans_Sub_Plans&#xA;&#xA;&#x9;&#x9;&#x9;   ,dst.Reqmt_Grp_Othr_Credit_Allowd=src.Reqmt_Grp_Othr_Credit_Allowd&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Module_Share_Set=src.Module_Share_Set&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Mod_Rank_Schm=src.Reqmt_Grp_Mod_Rank_Schm&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Mod_Count=src.Reqmt_Grp_Mod_Count&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Min_Mod=src.Reqmt_Grp_Min_Mod&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Min_Gpa=src.Reqmt_Grp_Min_Gpa&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Min_Credits=src.Reqmt_Grp_Min_Credits&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Min_Units_Mod=src.Reqmt_Grp_Min_Units_Mod&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Min_Grade_Pts_Unit=src.Reqmt_Grp_Min_Grade_Pts_Unit&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Min_Grade_Pts_Credit=src.Reqmt_Grp_Min_Grade_Pts_Credit&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Long_Descr=src.Reqmt_Grp_Long_Descr&#xA;&#xA;&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Institution=src.Institution&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Hide_Status=src.Reqmt_Grp_Hide_Status&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Group_Line_Type=src.Group_Line_Type&#xA;&#xA;&#x9;&#x9;&#x9;  --,dst.Group_Line_Nbr=src.Group_Line_Nbr&#xA;&#xA;&#x9;&#x9;&#x9;  --,dst.Group_Line=src.Group_Line&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Show_GPA=src.Reqmt_Grp_Show_GPA&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Excl_IP_Credit=src.Excl_IP_Credit&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Enable_Catalog_Print=src.Enable_Catalog_Print&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Display_Ctrl_Rpt=src.Reqmt_Grp_Display_Ctrl_Rpt&#xA;&#xA;&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Description=src.Reqmt_Grp_Description&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Credit_Incl_Mode=src.Reqmt_Grp_Credit_Incl_Mode&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Conn_Type=src.Reqmt_Grp_Conn_Type&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Grp_Choice_Res_Mthd=src.Reqmt_Grp_Choice_Res_Mthd&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Acad_Sub_Plan=src.Acad_Sub_Plan&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Acad_Prog=src.Acad_Prog&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Acad_Plan=src.Acad_Plan&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Acad_Career=src.Acad_Career&#xA;&#xA;&#xA;&#xA;&#x9;&#x9;&#x9;  --,dst.Requirement_Setup=src.Requirement_Setup&#xA;&#xA;&#x9;&#x9;&#x9;   ,dst.Reqmt_Effective_Date=src.Reqmt_Effective_Date&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Status=src.Reqmt_Status&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Usage=src.Reqmt_Usage&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Qual_Type=src.Qual_Type&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Qual_Type_Descr=src.Qual_Type_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Prog=src.Prog&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Prog_Descr=src.Prog_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Specialisation=src.Specialisation&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Specialisation_Descr=src.Specialisation_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Category=src.Reqmt_Category&#xA;&#xA;&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Setup_Stage=src.Reqmt_Setup_Stage&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Search_Descr=src.Reqmt_Search_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Short_Search_Descr=src.Reqmt_Short_Search_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Long_Descr=src.Reqmt_Long_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Report_Descr=src.Reqmt_Report_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Rpt_Long_Descr=src.Reqmt_Rpt_Long_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Hide_Status=src.Reqmt_Hide_Status&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Cond_Code=src.Reqmt_Cond_Code&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Min_Credits=src.Reqmt_Min_Credits&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Min_GPA=src.Reqmt_Min_GPA&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Min_Modules=src.Reqmt_Min_Modules&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Min_Grade_Pts_Credit=src.Reqmt_Min_Grade_Pts_Credit&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Mod_Rank_Schm=src.Reqmt_Mod_Rank_Schm&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Credit_Incl_Mode=src.Reqmt_Credit_Incl_Mode&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Choice_Res_Mthd=src.Reqmt_Choice_Res_Mthd&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Conn_Type=src.Reqmt_Conn_Type&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Display_Ctrl_Rpt=src.Reqmt_Display_Ctrl_Rpt&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Print_Ctrl=src.Reqmt_Print_Ctrl&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_GPA=src.Reqmt_GPA&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Units=src.Reqmt_Units&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Mod_Cnt=src.Reqmt_Mod_Cnt&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Nbr=src.Line_Nbr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Type=src.Line_Type&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Search_Descr=src.Line_Search_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Search_Short_Descr=src.Line_Search_Short_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Long_Descr=src.Line_Long_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Rpt_Descr=src.Line_Rpt_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Rpt_Long_Descr=src.Line_Rpt_Long_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Hide_Status=src.Line_Hide_Status&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Cond_Code=src.Line_Cond_Code&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Min_GPA=src.Line_Min_GPA&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Min_Mod_Credits=src.Line_Min_Mod_Credits&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Min_Grade_Pts_Units=src.Line_Min_Grade_Pts_Units&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Max_Mod_Credit_Allow=src.Line_Max_Mod_Credit_Allow&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Max_Mod_Allow=src.Line_Max_Mod_Allow&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Mod_Rank_Schm=src.Line_Mod_Rank_Schm&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Credit_Incl_Mode=src.Line_Credit_Incl_Mode&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Enable_Splitting=src.Enable_Splitting&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Display_Sel=src.Line_Display_Sel&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reporting=src.Reporting&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_GPA=src.Line_GPA&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Units=src.Line_Units&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Mod_Count=src.Line_Mod_Count&#xA;&#xA;&#x9;&#x9;&#x9;  --,dst.Line_Mod_List=src.Line_Mod_List&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Mod_List_Descr=src.Line_Mod_List_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Dtls_Seq=src.Line_Dtls_Seq&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Line_Dtls_Type=src.Line_Dtls_Type&#xA;&#xA;&#x9;&#x9;&#x9;  --,dst.Module_List=src.Module_List&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Module_Info=src.Module_Info&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Mod_List_Setup_End=src.Mod_List_Setup_End&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Mod_List_Setup_Begin=src.Mod_List_Setup_Begin&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Topic_ID=src.Topic_ID&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Setup_Term=src.Setup_Term&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Associate_Class=src.Associate_Class&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Effective_Status=src.Effective_Status&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Reqmt_Designation=src.Reqmt_Designation&#xA;&#xA;&#x9;&#x9;&#x9;  --,dst.Module_Seq=src.Module_Seq&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Incl_GPA_Req=src.Incl_GPA_Req&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Module_List_Attr=src.Module_List_Attr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Mod_List_Min_Units_Mod=src.Mod_List_Min_Units_Mod&#xA;&#xA;&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Mod_List_Description=src.Mod_List_Description&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Mod_List_Long_Descr=src.Mod_List_Long_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Mod_List_Short_Descr=src.Mod_List_Short_Descr&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Transfer_Level_Allowed=src.Transfer_Level_Allowed&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Wildcar_Indicator=src.Wildcar_Indicator&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Incl_Eqiv_Mod=src.Incl_Eqiv_Mod&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Mod_List_Effective_Date=src.Mod_List_Effective_Date&#xA;&#xA;&#x9;&#x9;&#x9;  ,dst.Acad_Progress_Units=src.Acad_Progress_Units&#xA;&#xA;&#x9;&#x9;&#x9; ,dst.Modified_On=getdate();&#xA;&#xA;&#x9;&#x9;&#x9; &#xA;&#xA;              &#xA;&#xA;&#xA;&#xA;--------------------------------------&#xA;&#xA;COMMIT TRANSACTION&#xA;&#xA;END TRY&#xA;&#xA;&#xA;&#xA;BEGIN CATCH&#xA;&#xA;  ROLLBACK TRANSACTION&#xA;&#xA;  INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,getdate()  as created_on&#xA;&#xA;  &#xA;&#xA;END CATCH  &#xA;&#xA;GO&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_DW_Load">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+
+BEGIN TRY
+
+------------
+
+DECLARE @LastDWProcessdate datetime
+
+,@processeddatetime datetime
+,@jobstatusid varchar(5)
+select @jobstatusid=0
+
+select @LastDWProcessdate= Isnull(max(Modified_on),'1990-01-01 00:00:00.000') from [dbo].[DW_COURSE_REQUIREMENT]--dw table
+
+--select  @processeddatetime=?
+
+--select @LastDWProcessdate
+
+
+;WITH tMP_CATALOG_MODULE (Module_Id,
+Module_Code,Acad_Progress_Units,row_num)
+AS (SELECT DISTINCT ModuleId,Module_Code,Acad_Progress_Units
+, dense_rank()over(partition by ModuleId order by effective_date desc) row_num
+FROM RPDW_PRD_STG.dbo.[STG_OASIS_CATALOG_MODULE]
+WHERE LATEST_IND='Y')
+
+, TMP_DW_COURSE_REQUIREMENT ( [Reqmt_Group]
+
+      ,[Reqmt_Grp_Effective_Date]
+
+      ,[Reqmt_Grp_Setup_Start]
+
+      ,[Reqmt_Grp_Setup_End]
+
+      ,[Reqmt_Grp_Units]
+
+      ,[Reqmt_Grp_Test_Credit_Allowd]
+
+      ,[Reqmt_Grp_Effective_Status]
+
+      ,[Reqmt_Grp_Search_Descr]
+
+      ,[Reqmt_Grp_Usage]
+
+      ,[Reqmt_Grp_Designation]
+
+      ,[Reqmt_Grp_List_Seq]
+
+      ,[Reqmt_Grp_Rpt_Long_Descr]
+
+      ,[Reqmt_Grp_Rpt_Descr]
+
+      ,[Pre_Condition]
+
+      ,[Partition_Sharing]
+
+      ,[Override_Rpt_Long_Descr]
+
+      ,[Othr_Plans_Sub_Plans]
+
+      ,[Reqmt_Grp_Othr_Credit_Allowd]
+
+      ,[Module_Share_Set]
+
+      ,[Reqmt_Grp_Mod_Rank_Schm]
+
+      ,[Reqmt_Grp_Mod_Count]
+
+      ,[Reqmt_Grp_Min_Mod]
+
+      ,[Reqmt_Grp_Min_Gpa]
+
+      ,[Reqmt_Grp_Min_Credits]
+
+      ,[Reqmt_Grp_Min_Units_Mod]
+
+      ,[Reqmt_Grp_Min_Grade_Pts_Unit]
+
+      ,[Reqmt_Grp_Min_Grade_Pts_Credit]
+
+      ,[Reqmt_Grp_Long_Descr]
+
+      ,[Institution]
+
+      ,[Reqmt_Grp_Hide_Status]
+
+      ,[Group_Line_Type]
+
+      ,[Group_Line_Nbr]
+
+      ,[Group_Line]
+
+      ,[Reqmt_Grp_Show_GPA]
+
+      ,[Excl_IP_Credit]
+
+      ,[Enable_Catalog_Print]
+
+      ,[Reqmt_Grp_Display_Ctrl_Rpt]
+
+      ,[Reqmt_Grp_Description]
+
+      ,[Reqmt_Grp_Credit_Incl_Mode]
+
+      ,[Reqmt_Grp_Conn_Type]
+
+      ,[Reqmt_Grp_Choice_Res_Mthd]
+
+      ,[Acad_Sub_Plan]
+
+      ,[Acad_Prog]
+
+      ,[Acad_Plan]
+
+      ,[Acad_Career]
+
+      ,[Requirement_Setup]
+
+      ,[Reqmt_Effective_Date]
+
+      ,[Reqmt_Status]
+
+      ,[Reqmt_Usage]
+
+      ,[Qual_Type]
+
+      ,[Qual_Type_Descr]
+
+      ,[Prog]
+
+      ,[Prog_Descr]
+
+      ,[Specialisation]
+
+      ,[Specialisation_Descr]
+
+      ,[Reqmt_Category]
+
+      ,[Reqmt_Setup_Stage]
+
+      ,[Reqmt_Search_Descr]
+
+      ,[Reqmt_Short_Search_Descr]
+
+      ,[Reqmt_Long_Descr]
+
+      ,[Reqmt_Report_Descr]
+
+      ,[Reqmt_Rpt_Long_Descr]
+
+      ,[Reqmt_Hide_Status]
+
+      ,[Reqmt_Cond_Code]
+
+      ,[Reqmt_Min_Credits]
+
+      ,[Reqmt_Min_GPA]
+
+      ,[Reqmt_Min_Modules]
+
+      ,[Reqmt_Min_Grade_Pts_Credit]
+
+      ,[Reqmt_Mod_Rank_Schm]
+
+      ,[Reqmt_Credit_Incl_Mode]
+
+      ,[Reqmt_Choice_Res_Mthd]
+
+      ,[Reqmt_Conn_Type]
+
+      ,[Reqmt_Display_Ctrl_Rpt]
+
+      ,[Reqmt_Print_Ctrl]
+
+      ,[Reqmt_GPA]
+
+      ,[Reqmt_Units]
+
+      ,[Reqmt_Mod_Cnt]
+
+      ,[Line_Nbr]
+
+      ,[Line_Type]
+
+      ,[Line_Search_Descr]
+
+      ,[Line_Search_Short_Descr]
+
+      ,[Line_Long_Descr]
+
+      ,[Line_Rpt_Descr]
+
+      ,[Line_Rpt_Long_Descr]
+
+      ,[Line_Hide_Status]
+
+      ,[Line_Cond_Code]
+
+      ,[Line_Min_GPA]
+
+      ,[Line_Min_Mod_Credits]
+
+      ,[Line_Min_Modules]
+
+      ,[Line_Min_Grade_Pts_Units]
+
+      ,[Line_Max_Mod_Credit_Allow]
+
+      ,[Line_Max_Mod_Allow]
+
+      ,[Line_Mod_Rank_Schm]
+
+      ,[Line_Credit_Incl_Mode]
+
+      ,[Enable_Splitting]
+
+      ,[Count_Attempts]
+
+      ,[Line_Display_Sel]
+
+      ,[Reporting]
+
+      ,[Line_GPA]
+
+      ,[Line_Units]
+
+      ,[Line_Mod_Count]
+
+      ,[Line_Mod_List]
+
+      ,[Line_Mod_List_Descr]
+
+      ,[Line_Dtls_Seq]
+
+      ,[Line_Dtls_Type]
+
+      ,[Module_ID]
+
+      ,[Module_List]
+
+      ,[Module_Info]
+
+      ,[Mod_List_Setup_End]
+
+      ,[Mod_List_Setup_Begin]
+
+      ,[Topic_ID]
+
+      ,[Setup_Term]
+
+      ,[Associate_Class]
+
+      ,[Effective_Status]
+
+      ,[Reqmt_Designation]
+
+      ,[Module_Seq]
+
+      ,[Incl_GPA_Req]
+
+      ,[Module_List_Attr]
+
+      ,[Mod_List_Min_Units_Mod]
+
+      ,[Mod_List_Description]
+
+      ,[Mod_List_Long_Descr]
+
+      ,[Mod_List_Short_Descr]
+
+      ,[Transfer_Level_Allowed]
+
+      ,[Wildcar_Indicator]
+
+      ,[Incl_Eqiv_Mod]
+
+      ,[Mod_List_Effective_Date]
+	  ,Acad_Progress_Units
+      )
+
+         as
+
+  (
+
+SELECT  
+
+a.[Reqmt_Group]
+
+,a.[Effective_Date]
+
+,a.[Valid_Begin]
+
+,a.[Valid_End]
+
+ ,a.Units
+
+ ,a.Test_Credit
+
+ ,a.[Status]
+
+ ,a.SEARCH_DESCR
+
+ ,a.Reqmt_Usage1
+
+ ,a.Reqmt_Designation
+
+ ,a.Reporting_Seq
+
+ ,a.REPORT_LONG_DESCR
+
+ ,a.REPORT_DESCR
+
+ ,a.Pre_Condition
+
+ ,a.Partition_Sharing
+
+ ,a.OVERRIDE_REPORT_LONG_DESCR
+
+ ,a.Other_Plans_Sub_Plans
+
+ ,a.Other_Credit
+
+ ,a.Module_Share_Set
+
+ ,a.Module_Ranking_Scheme
+
+ ,a.Module_COUNT
+
+ ,a.Min_Modules
+
+ ,a.Min_Gpa
+
+ ,a.Min_Credits_1
+
+ ,a.Min_Units_Module
+
+ ,a.Min_Grade_Points_Unit
+
+ ,a.Min_Grade_Points_Credit
+
+ ,a.LONG_DESCR
+
+ ,a.Inst
+
+ ,a.Hide_Status
+
+ ,a.Group_Line_Type
+
+ ,a.Group_Line_Number
+
+ ,a.Group_Line
+
+ --,ISNULL(a.Group_Line,'NA') as Group_Line
+
+ ,a.Gpa
+
+ ,a.Exclude_In_Progress_Credit
+
+ ,a.Enable_Catalog_Print
+
+ ,a.Display_Control_Reporting
+
+ ,a.Descr
+
+ ,a.Credit_Include_Mode
+
+ ,a.Connector_Type
+
+ ,a.Choice_Resolution_Method
+
+ ,a.Acad_Sub_Plan
+
+ ,a.Acad_Prog
+
+ ,a.Acad_Plan
+
+ ,a.Acad_Career
+
+  ,b.Rqmt
+
+,b.Effective_Date
+
+,b.Status
+
+,b.Rqmt_Usage
+
+,b.Qual_Type
+
+,d.long_name--d
+
+,b.Prog
+
+,e.Prog_Formal_Descr
+
+,b.Specialisatn
+
+,f.Descr
+
+,b.Rqmt_Category
+
+,b.Stage
+
+,b.Search_Descr
+
+,b.Search_Descr
+
+,b.Long_Descr
+
+,b.Report_Descr
+
+,b.Report_Long_Descr
+
+,b.Hide_Status
+
+,b.Condition_Code
+
+,b.Minimum_Credits
+
+,b.Minimum_GPA
+
+,b.Minimum_Modules
+
+,b.Min_Grade_Points_Credit
+
+,b.Module_Ranking_Scheme
+
+,b.Credit_Include_Mode
+
+,b.Choice_Resolution_Method
+
+,b.Connector_Type
+
+,b.Display_Control_Reporting
+
+,b.Print_Control
+
+,b.GPA
+
+,b.Units
+
+,b.Module_Count
+
+,b.Line_Number
+
+,b.Line_Type
+
+,b.Search_Descr_Line
+
+,b.Short_Search_Descr_Line
+
+,b.Long_Descr_Line
+
+,b.Report_Descr_Line
+
+,b.Report_Long_Descr_Line
+
+,b.Hide_Status_Line
+
+,b.Condition_Code_Line
+
+,b.Min_GPA_Line
+
+,b.Min_Modular_Credits_Line
+
+,b.Min_Modules_Line
+
+,b.Min_Grade_Points_Unit_Line
+
+,b.Max_Modular_Credits_Allowed
+
+,b.Max_Modules_Allowed
+
+,b.Module_Ranking_Scheme_Line
+
+,b.Credit_Include_Mode_Line
+
+,b.Enable_Splitting
+
+,b.Count_Attempts
+
+,b.Display_Select_Line
+
+,b.Reporting
+
+,b.GPA_Line
+
+,b.Units_Line
+
+,b.Module_Count_Line
+
+,b.Module_List
+
+,b.Module_List_Descr
+
+,b.Line_Detail_Sequence
+
+,b.Line_Detail_Type
+
+,c.Module_Id
+
+--,ISNULL(c.Module_Id,'NA') as Module_Id
+
+--,ISNULL(c.Module_List,'NA') as Module_List
+
+,c.Module_List
+
+,c.Module_Information
+
+,c.Valid_End
+
+,c.Valid_Begin
+
+,c.Topic_Id
+
+,c.Term_Associated_Class
+
+,c.Term_Associated_Class1
+
+,c.Status
+
+,c.Reqmt_Designation
+
+,ISNULL(c.Module_Seq,'NA') as Module_Seq
+
+,c.Module_Gpa_Material
+
+,c.Module_List_Attribute
+
+,c.Min_Units_Module
+
+,c.Descr
+
+,c.Long_Desc
+
+,c.Short_Desc
+
+,c.Transfer_Level_Allowed
+
+,c.Wildcar_IndicatoR
+
+,c.Include_Equivalent_Modules
+
+,c.Effective_Date
+,g.Acad_Progress_Units
+
+
+
+
+ 
+
+
+
+  FROM RPDW_PRD_STG.[dbo].[STG_OASIS_REQMT_GROUP_SETUP] a Inner JOIN RPDW_PRD_STG.[dbo].[STG_OASIS_RQMT_SETUP] b
+
+  ON a.Group_Line_Number=b.Rqmt and b.Latest_ind='Y' and a.Effective_Date=b.Effective_Date
+
+  INNER JOIN RPDW_PRD_STG.[dbo].[STG_OASIS_MODULE_LISTING_SETUP] c ON c.Module_List=b.Module_List  and c.Latest_ind='Y'
+
+   and c.Effective_Date=b.Effective_Date
+
+  LEFT JOIN RPDW_PRD_STG.[dbo].[STG_OASIS_MASTER_CODE] d
+
+  on b.Qual_Type=d.FIELD_VALUE and d.FIELD_NAME='ACAD_CAREER' and d.EFFECTIVE_STATUS = 'A'  
+
+
+
+  Left Join ( select  PROG_CODE,Prog_Formal_Descr from RPDW_PRD_STG.[dbo].[STG_OASIS_PROG_TABLE] a1
+
+		 where a1.LATEST_IND='Y'  and a1.EFFECTIVE_DATE in (select max(b1.EFFECTIVE_DATE) from RPDW_PRD_STG.[dbo].[STG_OASIS_PROG_TABLE] b1
+
+		 where b1.Prog_Code=a1.PROG_CODE))e  ON b.Prog=e.Prog_Code 
+
+LEFT JOIN (select  Specialisatn,Descr from RPDW_PRD_STG.[dbo]. STG_OASIS_SPECIALISATN b1
+
+		 where b1.LATEST_IND='Y'  and b1.EFFECTIVE_DATE in (select max(c1.EFFECTIVE_DATE) from RPDW_PRD_STG.[dbo]. STG_OASIS_SPECIALISATN c1
+
+		 where c1.Specialisatn=b1.Specialisatn))  f on f.Specialisatn=b.Specialisatn
+LEFT JOIN tMP_CATALOG_MODULE g on c.Module_Id=g.Module_Id and g.row_num=1
+  where   a.Latest_ind='Y' and a.[Modified_On]&gt;@LastDWProcessdate)
+
+
+
+       
+
+
+
+MERGE INTO dbo.DW_COURSE_REQUIREMENT AS dst
+
+   USING TMP_DW_COURSE_REQUIREMENT AS src
+
+   ON( dst.Reqmt_Group=src.Reqmt_Group and dst.Reqmt_Grp_Effective_Date=src.Reqmt_Grp_Effective_Date and  dst.Group_Line_Nbr=src.Group_Line_Nbr
+   and dst.Group_Line=src.Group_Line and dst.Requirement_Setup=src.Requirement_Setup and dst.Line_Mod_List=src.Line_Mod_List
+   and dst.Module_ID=Src.Module_ID  and dst.Module_List=src.Module_List and dst.Module_Seq=src.Module_Seq )
+
+
+
+   WHEN NOT MATCHED THEN
+
+   INSERT
+
+         (  [Reqmt_Group]
+
+      ,[Reqmt_Grp_Effective_Date]
+
+      ,[Reqmt_Grp_Setup_Start]
+
+      ,[Reqmt_Grp_Setup_End]
+
+      ,[Reqmt_Grp_Units]
+
+      ,[Reqmt_Grp_Test_Credit_Allowd]
+
+      ,[Reqmt_Grp_Effective_Status]
+
+      ,[Reqmt_Grp_Search_Descr]
+
+      ,[Reqmt_Grp_Usage]
+
+      ,[Reqmt_Grp_Designation]
+
+      ,[Reqmt_Grp_List_Seq]
+
+      ,[Reqmt_Grp_Rpt_Long_Descr]
+
+      ,[Reqmt_Grp_Rpt_Descr]
+
+      ,[Pre_Condition]
+
+      ,[Partition_Sharing]
+
+      ,[Override_Rpt_Long_Descr]
+
+      ,[Othr_Plans_Sub_Plans]
+
+      ,[Reqmt_Grp_Othr_Credit_Allowd]
+
+      ,[Module_Share_Set]
+
+      ,[Reqmt_Grp_Mod_Rank_Schm]
+
+      ,[Reqmt_Grp_Mod_Count]
+
+      ,[Reqmt_Grp_Min_Mod]
+
+      ,[Reqmt_Grp_Min_Gpa]
+
+      ,[Reqmt_Grp_Min_Credits]
+
+      ,[Reqmt_Grp_Min_Units_Mod]
+
+      ,[Reqmt_Grp_Min_Grade_Pts_Unit]
+
+      ,[Reqmt_Grp_Min_Grade_Pts_Credit]
+
+      ,[Reqmt_Grp_Long_Descr]
+
+      ,[Institution]
+
+      ,[Reqmt_Grp_Hide_Status]
+
+      ,[Group_Line_Type]
+
+      ,[Group_Line_Nbr]
+
+      ,[Group_Line]
+
+      ,[Reqmt_Grp_Show_GPA]
+
+      ,[Excl_IP_Credit]
+
+      ,[Enable_Catalog_Print]
+
+      ,[Reqmt_Grp_Display_Ctrl_Rpt]
+
+      ,[Reqmt_Grp_Description]
+
+      ,[Reqmt_Grp_Credit_Incl_Mode]
+
+      ,[Reqmt_Grp_Conn_Type]
+
+      ,[Reqmt_Grp_Choice_Res_Mthd]
+
+      ,[Acad_Sub_Plan]
+
+      ,[Acad_Prog]
+
+      ,[Acad_Plan]
+
+      ,[Acad_Career]
+
+      ,[Requirement_Setup]
+
+      ,[Reqmt_Effective_Date]
+
+      ,[Reqmt_Status]
+
+      ,[Reqmt_Usage]
+
+      ,[Qual_Type]
+
+      ,[Qual_Type_Descr]
+
+      ,[Prog]
+
+      ,[Prog_Descr]
+
+      ,[Specialisation]
+
+      ,[Specialisation_Descr]
+
+      ,[Reqmt_Category]
+
+      ,[Reqmt_Setup_Stage]
+
+      ,[Reqmt_Search_Descr]
+
+      ,[Reqmt_Short_Search_Descr]
+
+      ,[Reqmt_Long_Descr]
+
+      ,[Reqmt_Report_Descr]
+
+      ,[Reqmt_Rpt_Long_Descr]
+
+      ,[Reqmt_Hide_Status]
+
+      ,[Reqmt_Cond_Code]
+
+      ,[Reqmt_Min_Credits]
+
+      ,[Reqmt_Min_GPA]
+
+      ,[Reqmt_Min_Modules]
+
+      ,[Reqmt_Min_Grade_Pts_Credit]
+
+      ,[Reqmt_Mod_Rank_Schm]
+
+      ,[Reqmt_Credit_Incl_Mode]
+
+      ,[Reqmt_Choice_Res_Mthd]
+
+      ,[Reqmt_Conn_Type]
+
+      ,[Reqmt_Display_Ctrl_Rpt]
+
+      ,[Reqmt_Print_Ctrl]
+
+      ,[Reqmt_GPA]
+
+      ,[Reqmt_Units]
+
+      ,[Reqmt_Mod_Cnt]
+
+      ,[Line_Nbr]
+
+      ,[Line_Type]
+
+      ,[Line_Search_Descr]
+
+      ,[Line_Search_Short_Descr]
+
+      ,[Line_Long_Descr]
+
+      ,[Line_Rpt_Descr]
+
+      ,[Line_Rpt_Long_Descr]
+
+      ,[Line_Hide_Status]
+
+      ,[Line_Cond_Code]
+
+      ,[Line_Min_GPA]
+
+      ,[Line_Min_Mod_Credits]
+
+      ,[Line_Min_Modules]
+
+      ,[Line_Min_Grade_Pts_Units]
+
+      ,[Line_Max_Mod_Credit_Allow]
+
+      ,[Line_Max_Mod_Allow]
+
+      ,[Line_Mod_Rank_Schm]
+
+      ,[Line_Credit_Incl_Mode]
+
+      ,[Enable_Splitting]
+
+      ,[Count_Attempts]
+
+      ,[Line_Display_Sel]
+
+      ,[Reporting]
+
+      ,[Line_GPA]
+
+      ,[Line_Units]
+
+      ,[Line_Mod_Count]
+
+      ,[Line_Mod_List]
+
+      ,[Line_Mod_List_Descr]
+
+      ,[Line_Dtls_Seq]
+
+      ,[Line_Dtls_Type]
+
+      ,[Module_ID]
+
+      ,[Module_List]
+
+      ,[Module_Info]
+
+      ,[Mod_List_Setup_End]
+
+      ,[Mod_List_Setup_Begin]
+
+      ,[Topic_ID]
+
+      ,[Setup_Term]
+
+      ,[Associate_Class]
+
+      ,[Effective_Status]
+
+      ,[Reqmt_Designation]
+
+      ,[Module_Seq]
+
+      ,[Incl_GPA_Req]
+
+      ,[Module_List_Attr]
+
+      ,[Mod_List_Min_Units_Mod]
+
+      ,[Mod_List_Description]
+
+      ,[Mod_List_Long_Descr]
+
+      ,[Mod_List_Short_Descr]
+
+      ,[Transfer_Level_Allowed]
+
+      ,[Wildcar_Indicator]
+
+      ,[Incl_Eqiv_Mod]
+
+      ,[Mod_List_Effective_Date]
+
+       ,[Created_On]
+
+      ,[Modified_On]
+	  ,Acad_Progress_Units)
+
+   VALUES(  
+
+            SRC.[Reqmt_Group]
+
+      ,SRC.[Reqmt_Grp_Effective_Date]
+
+      ,SRC.[Reqmt_Grp_Setup_Start]
+
+      ,SRC.[Reqmt_Grp_Setup_End]
+
+      ,SRC.[Reqmt_Grp_Units]
+
+      ,SRC.[Reqmt_Grp_Test_Credit_Allowd]
+
+      ,SRC.[Reqmt_Grp_Effective_Status]
+
+      ,SRC.[Reqmt_Grp_Search_Descr]
+
+      ,SRC.[Reqmt_Grp_Usage]
+
+      ,SRC.[Reqmt_Grp_Designation]
+
+      ,SRC.[Reqmt_Grp_List_Seq]
+
+      ,SRC.[Reqmt_Grp_Rpt_Long_Descr]
+
+      ,SRC.[Reqmt_Grp_Rpt_Descr]
+
+      ,SRC.[Pre_Condition]
+
+      ,SRC.[Partition_Sharing]
+
+      ,SRC.[Override_Rpt_Long_Descr]
+
+      ,SRC.[Othr_Plans_Sub_Plans]
+
+      ,SRC.[Reqmt_Grp_Othr_Credit_Allowd]
+
+      ,SRC.[Module_Share_Set]
+
+      ,SRC.[Reqmt_Grp_Mod_Rank_Schm]
+
+      ,SRC.[Reqmt_Grp_Mod_Count]
+
+      ,SRC.[Reqmt_Grp_Min_Mod]
+
+      ,SRC.[Reqmt_Grp_Min_Gpa]
+
+      ,SRC.[Reqmt_Grp_Min_Credits]
+
+      ,SRC.[Reqmt_Grp_Min_Units_Mod]
+
+      ,SRC.[Reqmt_Grp_Min_Grade_Pts_Unit]
+
+      ,SRC.[Reqmt_Grp_Min_Grade_Pts_Credit]
+
+      ,SRC.[Reqmt_Grp_Long_Descr]
+
+      ,SRC.[Institution]
+
+      ,SRC.[Reqmt_Grp_Hide_Status]
+
+      ,SRC.[Group_Line_Type]
+
+      ,SRC.[Group_Line_Nbr]
+
+      ,SRC.[Group_Line]
+
+      ,SRC.[Reqmt_Grp_Show_GPA]
+
+      ,SRC.[Excl_IP_Credit]
+
+      ,SRC.[Enable_Catalog_Print]
+
+      ,SRC.[Reqmt_Grp_Display_Ctrl_Rpt]
+
+      ,SRC.[Reqmt_Grp_Description]
+
+      ,SRC.[Reqmt_Grp_Credit_Incl_Mode]
+
+      ,SRC.[Reqmt_Grp_Conn_Type]
+
+      ,SRC.[Reqmt_Grp_Choice_Res_Mthd]
+
+      ,SRC.[Acad_Sub_Plan]
+
+      ,SRC.[Acad_Prog]
+
+      ,SRC.[Acad_Plan]
+
+      ,SRC.[Acad_Career]
+
+      ,SRC.[Requirement_Setup]
+
+      ,SRC.[Reqmt_Effective_Date]
+
+      ,SRC.[Reqmt_Status]
+
+      ,SRC.[Reqmt_Usage]
+
+      ,SRC.[Qual_Type]
+
+      ,SRC.[Qual_Type_Descr]
+
+      ,SRC.[Prog]
+
+      ,SRC.[Prog_Descr]
+
+      ,SRC.[Specialisation]
+
+      ,SRC.[Specialisation_Descr]
+
+      ,SRC.[Reqmt_Category]
+
+      ,SRC.[Reqmt_Setup_Stage]
+
+      ,SRC.[Reqmt_Search_Descr]
+
+      ,SRC.[Reqmt_Short_Search_Descr]
+
+      ,SRC.[Reqmt_Long_Descr]
+
+      ,SRC.[Reqmt_Report_Descr]
+
+      ,SRC.[Reqmt_Rpt_Long_Descr]
+
+      ,SRC.[Reqmt_Hide_Status]
+
+      ,SRC.[Reqmt_Cond_Code]
+
+      ,SRC.[Reqmt_Min_Credits]
+
+      ,SRC.[Reqmt_Min_GPA]
+
+      ,SRC.[Reqmt_Min_Modules]
+
+      ,SRC.[Reqmt_Min_Grade_Pts_Credit]
+
+      ,SRC.[Reqmt_Mod_Rank_Schm]
+
+      ,SRC.[Reqmt_Credit_Incl_Mode]
+
+      ,SRC.[Reqmt_Choice_Res_Mthd]
+
+      ,SRC.[Reqmt_Conn_Type]
+
+      ,SRC.[Reqmt_Display_Ctrl_Rpt]
+
+      ,SRC.[Reqmt_Print_Ctrl]
+
+      ,SRC.[Reqmt_GPA]
+
+      ,SRC.[Reqmt_Units]
+
+      ,SRC.[Reqmt_Mod_Cnt]
+
+      ,SRC.[Line_Nbr]
+
+      ,SRC.[Line_Type]
+
+      ,SRC.[Line_Search_Descr]
+
+      ,SRC.[Line_Search_Short_Descr]
+
+      ,SRC.[Line_Long_Descr]
+
+      ,SRC.[Line_Rpt_Descr]
+
+      ,SRC.[Line_Rpt_Long_Descr]
+
+      ,SRC.[Line_Hide_Status]
+
+      ,SRC.[Line_Cond_Code]
+
+      ,SRC.[Line_Min_GPA]
+
+      ,SRC.[Line_Min_Mod_Credits]
+
+      ,SRC.[Line_Min_Modules]
+
+      ,SRC.[Line_Min_Grade_Pts_Units]
+
+      ,SRC.[Line_Max_Mod_Credit_Allow]
+
+      ,SRC.[Line_Max_Mod_Allow]
+
+      ,SRC.[Line_Mod_Rank_Schm]
+
+      ,SRC.[Line_Credit_Incl_Mode]
+
+      ,SRC.[Enable_Splitting]
+
+      ,SRC.[Count_Attempts]
+
+      ,SRC.[Line_Display_Sel]
+
+      ,SRC.[Reporting]
+
+      ,SRC.[Line_GPA]
+
+      ,SRC.[Line_Units]
+
+      ,SRC.[Line_Mod_Count]
+
+      ,SRC.[Line_Mod_List]
+
+      ,SRC.[Line_Mod_List_Descr]
+
+      ,SRC.[Line_Dtls_Seq]
+
+      ,SRC.[Line_Dtls_Type]
+
+      ,SRC.[Module_ID]
+
+      ,SRC.[Module_List]
+
+      ,SRC.[Module_Info]
+
+      ,SRC.[Mod_List_Setup_End]
+
+      ,SRC.[Mod_List_Setup_Begin]
+
+      ,SRC.[Topic_ID]
+
+      ,SRC.[Setup_Term]
+
+      ,SRC.[Associate_Class]
+
+      ,SRC.[Effective_Status]
+
+      ,SRC.[Reqmt_Designation]
+
+      ,SRC.[Module_Seq]
+
+      ,SRC.[Incl_GPA_Req]
+
+      ,SRC.[Module_List_Attr]
+
+      ,SRC.[Mod_List_Min_Units_Mod]
+
+      ,SRC.[Mod_List_Description]
+
+      ,SRC.[Mod_List_Long_Descr]
+
+      ,SRC.[Mod_List_Short_Descr]
+
+      ,SRC.[Transfer_Level_Allowed]
+
+      ,SRC.[Wildcar_Indicator]
+
+      ,SRC.[Incl_Eqiv_Mod]
+
+      ,SRC.[Mod_List_Effective_Date]
+
+       ,  getdate(),getdate()
+	   ,SRC.Acad_Progress_Units)
+
+   WHEN MATCHED
+
+   
+
+   THEN UPDATE
+
+   SET        dst.Reqmt_Grp_Setup_Start=src.Reqmt_Grp_Setup_Start
+
+              ,dst.Reqmt_Grp_Setup_End=src.Reqmt_Grp_Setup_End
+
+              ,dst.Reqmt_Grp_Units=src.Reqmt_Grp_Units
+
+              ,dst.Reqmt_Grp_Test_Credit_Allowd=src.Reqmt_Grp_Test_Credit_Allowd
+
+			  ,dst.Reqmt_Grp_Effective_Status=src.Reqmt_Grp_Effective_Status
+
+			  ,dst.Reqmt_Grp_Search_Descr=src.Reqmt_Grp_Search_Descr
+
+
+
+			  ,dst.Reqmt_Grp_Usage=src.Reqmt_Grp_Usage
+
+			  ,dst.Reqmt_Grp_Designation=src.Reqmt_Grp_Designation
+
+			  ,dst.Reqmt_Grp_List_Seq=src.Reqmt_Grp_List_Seq
+
+			  ,dst.Reqmt_Grp_Rpt_Long_Descr=src.Reqmt_Grp_Rpt_Long_Descr
+
+			  ,dst.Reqmt_Grp_Rpt_Descr=src.Reqmt_Grp_Rpt_Descr
+
+			  ,dst.Pre_Condition=src.Pre_Condition
+
+			  ,dst.Partition_Sharing=src.Partition_Sharing
+
+			  ,dst.Override_Rpt_Long_Descr=src.Override_Rpt_Long_Descr
+
+			  ,dst.Othr_Plans_Sub_Plans=src.Othr_Plans_Sub_Plans
+
+			   ,dst.Reqmt_Grp_Othr_Credit_Allowd=src.Reqmt_Grp_Othr_Credit_Allowd
+
+			  ,dst.Module_Share_Set=src.Module_Share_Set
+
+			  ,dst.Reqmt_Grp_Mod_Rank_Schm=src.Reqmt_Grp_Mod_Rank_Schm
+
+			  ,dst.Reqmt_Grp_Mod_Count=src.Reqmt_Grp_Mod_Count
+
+			  ,dst.Reqmt_Grp_Min_Mod=src.Reqmt_Grp_Min_Mod
+
+			  ,dst.Reqmt_Grp_Min_Gpa=src.Reqmt_Grp_Min_Gpa
+
+			  ,dst.Reqmt_Grp_Min_Credits=src.Reqmt_Grp_Min_Credits
+
+			  ,dst.Reqmt_Grp_Min_Units_Mod=src.Reqmt_Grp_Min_Units_Mod
+
+			  ,dst.Reqmt_Grp_Min_Grade_Pts_Unit=src.Reqmt_Grp_Min_Grade_Pts_Unit
+
+			  ,dst.Reqmt_Grp_Min_Grade_Pts_Credit=src.Reqmt_Grp_Min_Grade_Pts_Credit
+
+			  ,dst.Reqmt_Grp_Long_Descr=src.Reqmt_Grp_Long_Descr
+
+
+
+			  ,dst.Institution=src.Institution
+
+			  ,dst.Reqmt_Grp_Hide_Status=src.Reqmt_Grp_Hide_Status
+
+			  ,dst.Group_Line_Type=src.Group_Line_Type
+
+			  --,dst.Group_Line_Nbr=src.Group_Line_Nbr
+
+			  --,dst.Group_Line=src.Group_Line
+
+			  ,dst.Reqmt_Grp_Show_GPA=src.Reqmt_Grp_Show_GPA
+
+			  ,dst.Excl_IP_Credit=src.Excl_IP_Credit
+
+			  ,dst.Enable_Catalog_Print=src.Enable_Catalog_Print
+
+			  ,dst.Reqmt_Grp_Display_Ctrl_Rpt=src.Reqmt_Grp_Display_Ctrl_Rpt
+
+
+
+			  ,dst.Reqmt_Grp_Description=src.Reqmt_Grp_Description
+
+			  ,dst.Reqmt_Grp_Credit_Incl_Mode=src.Reqmt_Grp_Credit_Incl_Mode
+
+			  ,dst.Reqmt_Grp_Conn_Type=src.Reqmt_Grp_Conn_Type
+
+			  ,dst.Reqmt_Grp_Choice_Res_Mthd=src.Reqmt_Grp_Choice_Res_Mthd
+
+			  ,dst.Acad_Sub_Plan=src.Acad_Sub_Plan
+
+			  ,dst.Acad_Prog=src.Acad_Prog
+
+			  ,dst.Acad_Plan=src.Acad_Plan
+
+			  ,dst.Acad_Career=src.Acad_Career
+
+
+
+			  --,dst.Requirement_Setup=src.Requirement_Setup
+
+			   ,dst.Reqmt_Effective_Date=src.Reqmt_Effective_Date
+
+			  ,dst.Reqmt_Status=src.Reqmt_Status
+
+			  ,dst.Reqmt_Usage=src.Reqmt_Usage
+
+			  ,dst.Qual_Type=src.Qual_Type
+
+			  ,dst.Qual_Type_Descr=src.Qual_Type_Descr
+
+			  ,dst.Prog=src.Prog
+
+			  ,dst.Prog_Descr=src.Prog_Descr
+
+			  ,dst.Specialisation=src.Specialisation
+
+			  ,dst.Specialisation_Descr=src.Specialisation_Descr
+
+			  ,dst.Reqmt_Category=src.Reqmt_Category
+
+
+
+			  ,dst.Reqmt_Setup_Stage=src.Reqmt_Setup_Stage
+
+			  ,dst.Reqmt_Search_Descr=src.Reqmt_Search_Descr
+
+			  ,dst.Reqmt_Short_Search_Descr=src.Reqmt_Short_Search_Descr
+
+			  ,dst.Reqmt_Long_Descr=src.Reqmt_Long_Descr
+
+			  ,dst.Reqmt_Report_Descr=src.Reqmt_Report_Descr
+
+			  ,dst.Reqmt_Rpt_Long_Descr=src.Reqmt_Rpt_Long_Descr
+
+			  ,dst.Reqmt_Hide_Status=src.Reqmt_Hide_Status
+
+			  ,dst.Reqmt_Cond_Code=src.Reqmt_Cond_Code
+
+			  ,dst.Reqmt_Min_Credits=src.Reqmt_Min_Credits
+
+			  ,dst.Reqmt_Min_GPA=src.Reqmt_Min_GPA
+
+			  ,dst.Reqmt_Min_Modules=src.Reqmt_Min_Modules
+
+			  ,dst.Reqmt_Min_Grade_Pts_Credit=src.Reqmt_Min_Grade_Pts_Credit
+
+			  ,dst.Reqmt_Mod_Rank_Schm=src.Reqmt_Mod_Rank_Schm
+
+			  ,dst.Reqmt_Credit_Incl_Mode=src.Reqmt_Credit_Incl_Mode
+
+			  ,dst.Reqmt_Choice_Res_Mthd=src.Reqmt_Choice_Res_Mthd
+
+			  ,dst.Reqmt_Conn_Type=src.Reqmt_Conn_Type
+
+			  ,dst.Reqmt_Display_Ctrl_Rpt=src.Reqmt_Display_Ctrl_Rpt
+
+			  ,dst.Reqmt_Print_Ctrl=src.Reqmt_Print_Ctrl
+
+			  ,dst.Reqmt_GPA=src.Reqmt_GPA
+
+			  ,dst.Reqmt_Units=src.Reqmt_Units
+
+			  ,dst.Reqmt_Mod_Cnt=src.Reqmt_Mod_Cnt
+
+			  ,dst.Line_Nbr=src.Line_Nbr
+
+			  ,dst.Line_Type=src.Line_Type
+
+			  ,dst.Line_Search_Descr=src.Line_Search_Descr
+
+			  ,dst.Line_Search_Short_Descr=src.Line_Search_Short_Descr
+
+			  ,dst.Line_Long_Descr=src.Line_Long_Descr
+
+			  ,dst.Line_Rpt_Descr=src.Line_Rpt_Descr
+
+			  ,dst.Line_Rpt_Long_Descr=src.Line_Rpt_Long_Descr
+
+			  ,dst.Line_Hide_Status=src.Line_Hide_Status
+
+			  ,dst.Line_Cond_Code=src.Line_Cond_Code
+
+
+
+
+
+			  ,dst.Line_Min_GPA=src.Line_Min_GPA
+
+			  ,dst.Line_Min_Mod_Credits=src.Line_Min_Mod_Credits
+
+			  ,dst.Line_Min_Grade_Pts_Units=src.Line_Min_Grade_Pts_Units
+
+			  ,dst.Line_Max_Mod_Credit_Allow=src.Line_Max_Mod_Credit_Allow
+
+			  ,dst.Line_Max_Mod_Allow=src.Line_Max_Mod_Allow
+
+			  ,dst.Line_Mod_Rank_Schm=src.Line_Mod_Rank_Schm
+
+			  ,dst.Line_Credit_Incl_Mode=src.Line_Credit_Incl_Mode
+
+			  ,dst.Enable_Splitting=src.Enable_Splitting
+
+			  ,dst.Line_Display_Sel=src.Line_Display_Sel
+
+			  ,dst.Reporting=src.Reporting
+
+			  ,dst.Line_GPA=src.Line_GPA
+
+			  ,dst.Line_Units=src.Line_Units
+
+			  ,dst.Line_Mod_Count=src.Line_Mod_Count
+
+			  --,dst.Line_Mod_List=src.Line_Mod_List
+
+			  ,dst.Line_Mod_List_Descr=src.Line_Mod_List_Descr
+
+			  ,dst.Line_Dtls_Seq=src.Line_Dtls_Seq
+
+			  ,dst.Line_Dtls_Type=src.Line_Dtls_Type
+
+			  --,dst.Module_List=src.Module_List
+
+			  ,dst.Module_Info=src.Module_Info
+
+			  ,dst.Mod_List_Setup_End=src.Mod_List_Setup_End
+
+			  ,dst.Mod_List_Setup_Begin=src.Mod_List_Setup_Begin
+
+			  ,dst.Topic_ID=src.Topic_ID
+
+			  ,dst.Setup_Term=src.Setup_Term
+
+			  ,dst.Associate_Class=src.Associate_Class
+
+			  ,dst.Effective_Status=src.Effective_Status
+
+			  ,dst.Reqmt_Designation=src.Reqmt_Designation
+
+			  --,dst.Module_Seq=src.Module_Seq
+
+			  ,dst.Incl_GPA_Req=src.Incl_GPA_Req
+
+			  ,dst.Module_List_Attr=src.Module_List_Attr
+
+			  ,dst.Mod_List_Min_Units_Mod=src.Mod_List_Min_Units_Mod
+
+
+
+			  ,dst.Mod_List_Description=src.Mod_List_Description
+
+			  ,dst.Mod_List_Long_Descr=src.Mod_List_Long_Descr
+
+			  ,dst.Mod_List_Short_Descr=src.Mod_List_Short_Descr
+
+			  ,dst.Transfer_Level_Allowed=src.Transfer_Level_Allowed
+
+			  ,dst.Wildcar_Indicator=src.Wildcar_Indicator
+
+			  ,dst.Incl_Eqiv_Mod=src.Incl_Eqiv_Mod
+
+			  ,dst.Mod_List_Effective_Date=src.Mod_List_Effective_Date
+
+			  ,dst.Acad_Progress_Units=src.Acad_Progress_Units
+
+			 ,dst.Modified_On=getdate();
+
+			 
+
+              
+
+
+
+--------------------------------------
+
+COMMIT TRANSACTION
+
+END TRY
+
+
+
+BEGIN CATCH
+
+  ROLLBACK TRANSACTION
+
+  INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,getdate()  as created_on
+
+  
+
+END CATCH  
+
+GO
+
+
+
+
+
+
+
+</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6E189A8D-C835-4CF7-A322-FFFAA5715947}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="STAGE">
+      <DTS:VariableValue
+        DTS:DataType="8">DW</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{074437D0-B2F0-417F-8AB6-2C9A1AB0C34A}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTableName">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_COURSE_REQUIREMENT</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create ETL Job Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{92200B9C-938F-44B3-B93E-5484F64989C3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create ETL Job Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{89D5CEFD-8608-4885-909F-DB1F67607F8F}"
+          SQLTask:SqlStatementSource="Exec [dbo].[usp_InsertETLJobLog] ?, ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Job_name"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::STAGE"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::SourceTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::TgtTableName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Error Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{73D7EFA1-2746-4DE1-BE7B-8139A2DC88EC}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Error Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{89D5CEFD-8608-4885-909F-DB1F67607F8F}"
+          SQLTask:SqlStatementSource="UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET&#xA;ERROR_MSG = 'STG table is not completed',&#xA;JOB_STATUS ='Fail'&#xA;--PROCESSED_ON =getdate()&#xA;WHERE JOB_STATUS_ID=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\JOB_STATUS_ID"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3A8AF4F2-5FC4-4540-AC97-AB3F68465C29}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="JOB_STATUS_ID"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{89D5CEFD-8608-4885-909F-DB1F67607F8F}"
+          SQLTask:SqlStatementSource="SELECT max([JOB_STATUS_ID])&#xA;      &#xA;  FROM [dbo].[ETL_JOB_STATUS] where [SOURCE_FILENAME]=? &#xA;---and convert(varchar(8),CREATED_ON,112)=convert--(varchar(8) ,getdate(),112)"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::SourceTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Into DW"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0AFAFE49-979A-4011-BC01-37462A3EC224}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Into DW"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C9A26A0C-4502-4E49-98BB-7EAA5B904670}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::SQL_DW_Load" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Process_Date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F498ABE5-3AC7-4403-A23D-4C65D0CD4B7A}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Process_Date"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C9A26A0C-4502-4E49-98BB-7EAA5B904670}"
+          SQLTask:SqlStatementSource="Select getdate()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::Process_date" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Process_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="135"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update Job Status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{530FDC9B-84C7-4DE3-A452-AC54E2187D9E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Job Status"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{89D5CEFD-8608-4885-909F-DB1F67607F8F}"
+          SQLTask:SqlStatementSource="DECLARE &#xA;@jobstatusid INT &#xA;select @jobstatusid=?&#xA;IF exists(select * from dbo.ETL_ERROR_LOG where [JOB_STATUS_ID]=@jobstatusid)&#xA; BEGIN&#xA; Update [dbo].[ETL_JOB_STATUS]&#xA;SET [PROCESSED_ON] =getdate(),&#xA;[JOB_STATUS]='Fail'&#xA;where [JOB_STATUS_ID]=@jobstatusid&#xA;  END&#xA;ELSE&#xA;BEGIN&#xA;Update [dbo].[ETL_JOB_STATUS]&#xA;SET [PROCESSED_ON] =getdate(),&#xA;[JOB_STATUS]='Success'&#xA;where [JOB_STATUS_ID]=@jobstatusid&#xA;END" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Validate job status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{9A0CD528-8640-4599-876E-773A0DA01890}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Validate job status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{89D5CEFD-8608-4885-909F-DB1F67607F8F}"
+          SQLTask:SqlStatementSource="declare @STAGE varchar(100),&#xA;@TARGET_TABLENAME varchar(100)&#xA;select   @STAGE=?&#xA;select   @TARGET_TABLENAME=?&#xA;&#xA;select CASE WHEN JOB_STATUS='Success' then 0 ELSE 1 END AS  JOB_STATUS&#xA;&#xA;from [dbo].[ETL_JOB_STATUS]&#xA;  where STAGE=@STAGE and TARGET_TABLENAME=@TARGET_TABLENAME and &#xA;  JOB_STATUS_ID in (Select max(JOB_STATUS_ID) from [dbo].[ETL_JOB_STATUS]&#xA;  where STAGE=@STAGE and TARGET_TABLENAME=@TARGET_TABLENAME)"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::Job_Status" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::PreStage"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::SourceTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{2D0B58AA-8548-4A33-B2A0-7A5C2370302D}"
+      DTS:From="Package\Process_Date"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Load Into DW" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{ED34C05D-5EC2-411A-ACF0-A73FD9B9FEA8}"
+      DTS:From="Package\Create ETL Job Log"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\JOB_STATUS_ID" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{CE8A869A-E372-4FBF-9A0F-EC7D66ADDDFD}"
+      DTS:From="Package\JOB_STATUS_ID"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Validate job status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{D1223696-D796-4697-B812-7B8F1AA36AE0}"
+      DTS:From="Package\Load Into DW"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Update Job Status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[False]"
+      DTS:CreationName=""
+      DTS:DTSID="{79DE70DE-6470-4101-9899-DD6BE47F0DB2}"
+      DTS:Expression="@[User::Job_Status]==1"
+      DTS:From="Package\Validate job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="False"
+      DTS:To="Package\Error Log" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[True]"
+      DTS:CreationName=""
+      DTS:DTSID="{5F57AE42-87A6-44AD-97A3-F0E292CA9185}"
+      DTS:Expression="@[User::Job_Status]==0"
+      DTS:From="Package\Validate job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="True"
+      DTS:To="Package\Process_Date" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{16520BD6-CE88-46DE-B4EA-E79D8B09A0B5}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{8DCF577C-3C04-46AE-A4FF-CDF5F41923DD}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL_ERROR_LOG"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{C92912DC-AAEC-4694-9582-4E3107369FC8}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL_ERROR_LOG">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{89D5CEFD-8608-4885-909F-DB1F67607F8F}"
+              SQLTask:SqlStatementSource="[dbo].[usp_InsertETLErrorLog] ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="131"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="157,42"
+          Id="Package\Create ETL Job Log"
+          TopLeft="17,13" />
+        <NodeLayout
+          Size="123,42"
+          Id="Package\Error Log"
+          TopLeft="699,21" />
+        <NodeLayout
+          Size="142,42"
+          Id="Package\JOB_STATUS_ID"
+          TopLeft="230,18" />
+        <NodeLayout
+          Size="144,42"
+          Id="Package\Load Into DW"
+          TopLeft="487,221" />
+        <NodeLayout
+          Size="142,42"
+          Id="Package\Process_Date"
+          TopLeft="487,131" />
+        <NodeLayout
+          Size="165,42"
+          Id="Package\Update Job Status"
+          TopLeft="526,322" />
+        <NodeLayout
+          Size="166,42"
+          Id="Package\Validate job status"
+          TopLeft="446,22" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="558.5,173">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48"
+              Start="0,0"
+              End="0,40.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="174,36.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="56,0"
+              Start="0,0"
+              End="48.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="48.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="372,41">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="74,0"
+              Start="0,0"
+              End="66.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="66.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="559,263">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="49.5,59"
+              Start="0,0"
+              End="49.5,51.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25.5"
+                    Point2="0,29.5"
+                    Point3="4,29.5" />
+                  <mssgle:LineSegment
+                    End="45.5,29.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="45.5,29.5"
+                    Point2="49.5,29.5"
+                    Point3="49.5,33.5" />
+                  <mssgle:LineSegment
+                    End="49.5,51.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[False]"
+          TopLeft="612,42.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="87,0"
+              Start="0,0"
+              End="79.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="79.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="28.01365234375,5,23.4726953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[True]"
+          TopLeft="529,64">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="29,67"
+              Start="0,0"
+              End="29,59.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.5"
+                    Point2="0,33.5"
+                    Point3="4,33.5" />
+                  <mssgle:LineSegment
+                    End="25,33.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="25,33.5"
+                    Point2="29,33.5"
+                    Point3="29,37.5" />
+                  <mssgle:LineSegment
+                    End="29,59.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="3.48755859375,38.5,22.0248828125,9.421875"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="162,42"
+          Id="Package.EventHandlers[OnError]\ETL_ERROR_LOG"
+          TopLeft="370,98" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PrecedenceConstraint
+    design-time-name="Package.PrecedenceConstraints[False]">
+    <ShowAnnotation>ConstraintName</ShowAnnotation>
+  </PrecedenceConstraint>
+  <PrecedenceConstraint
+    design-time-name="Package.PrecedenceConstraints[True]">
+    <ShowAnnotation>ConstraintName</ShowAnnotation>
+  </PrecedenceConstraint>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

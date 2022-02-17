@@ -1,0 +1,1164 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/31/2019 4:40:18 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-140119GM07"
+  DTS:CreatorName="NCS\P0500450"
+  DTS:DTSID="{2F160AD7-C06E-4432-B3B1-6C20334930C5}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="DW_EXT_JPAE_POSTFILE"
+  DTS:PackageType="5"
+  DTS:VersionBuild="144"
+  DTS:VersionGUID="{F0E2E199-9A61-403D-B43C-3868A6B4F456}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{8F8DFE95-C9F1-4B3E-922E-0AF3E5701846}"
+      DTS:ObjectName="RPDW_DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=10.168.212.13;User ID=svc-dw-uat-etl;Initial Catalog=RPDW;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAdGBqS7B1CkWG301g2fxV+wAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAA7ujPKSoPehyAJnu4VR7chAAAAAASAAACgAAAAEAAAABo+85NhedpSP5bXUcv0MtMYAAAAgqq7z1I0WmDXf38zAjE9IHOZWfxluL47FAAAAKLzPhVGWeGjAeoNDGo4MH43a6Gj</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_STG]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{8FD4DBEB-4E50-456D-9BF0-FD0A5D736860}"
+      DTS:ObjectName="RPDW_STG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::Staging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=10.168.212.13;User ID=svc-dw-uat-etl;Initial Catalog=RPDW_STG;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAdGBqS7B1CkWG301g2fxV+wAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADvnaam5MIT2i8A7x3nyQDHAAAAAASAAACgAAAAEAAAAOjHMhyEqAzJR+U/0m15OPkYAAAA4BKVTJwRfrtFcztKaystfBQaIjAgz3pQFAAAAPuPGS3qO4VtG8aeglK5i8UCAqEW</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D74A0A96-3E0B-4514-A955-22148AD73CE0}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;------------&#xA;DECLARE @LastDWProcessdate datetime&#xA;,@processeddatetime datetime&#xA;,@jobstatusid varchar(5)&#xA;select @jobstatusid=&quot;+ (DT_STR, 5,1252) @[User::JobStatusId] +&quot;&#xA;select @LastDWProcessdate=isnull(max(Modified_on),'1900-01-01 00:00:00.000') from [dbo].[DW_EXT_JPAE_POSTFILE]&#xA;select  @processeddatetime= getdate()&#xA;&#xA;;WITH TMP_EXT&#xA;AS&#xA;(&#xA;SELECT &#xA;[NRIC_FIN]&#xA;      ,[Previous_FIN]&#xA;      ,[ITE_Confirmed_FIN]&#xA;      ,[Name]&#xA;      ,[Gender]&#xA;      ,[Race]&#xA;      ,[Date_of_Birth]&#xA;      ,[SG_Citizenship_Status]&#xA;      ,[Country_of_Nationality]&#xA;      ,[NS_Status]&#xA;      ,[ORD_Date]&#xA;      ,[NS_Liable]&#xA;      ,[Address_1]&#xA;      ,[Address_2]&#xA;      ,[Address_3]&#xA;      ,[Address_4]&#xA;      ,[Address_Country]&#xA;      ,[Postal_code]&#xA;      ,[SG_contact_home]&#xA;      ,[SG_contact_mobile]&#xA;      ,[Contact_Other]&#xA;      ,[Email]&#xA;      ,[PPE]&#xA;      ,[Applicant_Type]&#xA;      ,[Applicant_ITE_Course]&#xA;      ,[Applicant_JPAE_Course]&#xA;      ,[ITE_Course_Posting]&#xA;      ,[JPAE_Course_Posting]&#xA;      ,[Net_GPA]&#xA;      ,[Bonus_Net_GPA]&#xA;      ,[Raw_GPA]&#xA;      ,[ITE_CCA_Grade]&#xA;      ,[Overall_BM_Bonus_point_Eligibility]&#xA;      ,[ITE_Year_Complete]&#xA;      ,[ITE_New_Cert_Indicator]&#xA;      ,[Com_Student]&#xA;      ,[ITE_Bmaths_Grade]&#xA;      ,[GCE_O_Eng_Grade]&#xA;      ,[GCE_O_E_Maths_Grade]&#xA;      ,[GCE_O_A_Maths_Grade]&#xA;      ,[Ranking_Type]&#xA;      ,[First_Choice_Ranking]&#xA;      ,[Ch1]&#xA;      ,[Ch1_Elig]&#xA;      ,[Ch2]&#xA;      ,[Ch2_Elig]&#xA;      ,[Ch3]&#xA;      ,[Ch3_Elig]&#xA;      ,[Ch4]&#xA;      ,[Ch4_Elig]&#xA;      ,[Ch5]&#xA;      ,[Ch5_Elig]&#xA;      ,[Ch6]&#xA;      ,[Ch6_Elig]&#xA;      ,[Ch7]&#xA;      ,[Ch7_Elig]&#xA;      ,[Ch8]&#xA;      ,[Ch8_Elig]&#xA;      ,[Ch9]&#xA;      ,[Ch9_Elig]&#xA;      ,[Ch10]&#xA;      ,[Ch10_Elig]&#xA;      ,[Ch11]&#xA;      ,[Ch11_Elig]&#xA;      ,[Ch12]&#xA;      ,[Ch12_Elig]&#xA;      ,[Opt_for_reposting]&#xA;      ,[Posting_Type]&#xA;      ,[NS_Reserve]&#xA;      ,[Posted_Choice_Order]&#xA;      ,[Posted_Course]&#xA;      ,[Posted_Poly]&#xA;      ,[Eligible_courses]&#xA;      ,[Expoly]&#xA;      ,[Blacklisted]&#xA;      ,[Record_not_found]&#xA;      ,[ITE_Course_conflict]&#xA;      ,[GCE_Subject_conflict]&#xA;      ,[ITE_Module_conflict]&#xA;      ,[Overall_Conflict]&#xA;      ,[FILE_NAME_ACADEMIC_YEAR]&#xA;      ,[FILE_NAME_SEMESTER]&#xA;      ,[CREATED_ON]&#xA;      ,[MODIFIED_ON]&#xA;  FROM &quot;+@[$Project::Staging_Initial_Catalog]+&quot;.[dbo].[STG_EXT_JPAE_POSTFILE]&#xA;   where [Latest_Ind] ='Y' &#xA;AND [MODIFIED_ON]&gt;@LastDWProcessdate&#xA;)&#xA;&#xA;&#xA;MERGE INTO [DW_EXT_JPAE_POSTFILE] AS DST&#xA;   USING TMP_EXT AS SRC&#xA;  ON (&#xA;   SRC. [Date_of_Birth] = DST.[Date_of_Birth] AND   SRC. [FILE_NAME_ACADEMIC_YEAR] = DST.[FILE_NAME_ACADEMIC_YEAR] AND   SRC. [FILE_NAME_SEMESTER] = DST.[FILE_NAME_SEMESTER] AND   SRC. [NRIC_FIN] = DST.[NRIC_FIN] &#xA;     )&#xA;&#xA;   WHEN NOT MATCHED THEN&#xA;   INSERT&#xA;&#x9;(&#xA;[NRIC_FIN]&#xA;      ,[Previous_FIN]&#xA;      ,[ITE_Confirmed_FIN]&#xA;      ,[Name]&#xA;      ,[Gender]&#xA;      ,[Race]&#xA;      ,[Date_of_Birth]&#xA;      ,[SG_Citizenship_Status]&#xA;      ,[Country_of_Nationality]&#xA;      ,[NS_Status]&#xA;      ,[ORD_Date]&#xA;      ,[NS_Liable]&#xA;      ,[Address_1]&#xA;      ,[Address_2]&#xA;      ,[Address_3]&#xA;      ,[Address_4]&#xA;      ,[Address_Country]&#xA;      ,[Postal_code]&#xA;      ,[SG_contact_home]&#xA;      ,[SG_contact_mobile]&#xA;      ,[Contact_Other]&#xA;      ,[Email]&#xA;      ,[PPE]&#xA;      ,[Applicant_Type]&#xA;      ,[Applicant_ITE_Course]&#xA;      ,[Applicant_JPAE_Course]&#xA;      ,[ITE_Course_Posting]&#xA;      ,[JPAE_Course_Posting]&#xA;      ,[Net_GPA]&#xA;      ,[Bonus_Net_GPA]&#xA;      ,[Raw_GPA]&#xA;      ,[ITE_CCA_Grade]&#xA;      ,[Overall_BM_Bonus_point_Eligibility]&#xA;      ,[ITE_Year_Complete]&#xA;      ,[ITE_New_Cert_Indicator]&#xA;      ,[Com_Student]&#xA;      ,[ITE_Bmaths_Grade]&#xA;      ,[GCE_O_Eng_Grade]&#xA;      ,[GCE_O_E_Maths_Grade]&#xA;      ,[GCE_O_A_Maths_Grade]&#xA;      ,[Ranking_Type]&#xA;      ,[First_Choice_Ranking]&#xA;      ,[Ch1]&#xA;      ,[Ch1_Elig]&#xA;      ,[Ch2]&#xA;      ,[Ch2_Elig]&#xA;      ,[Ch3]&#xA;      ,[Ch3_Elig]&#xA;      ,[Ch4]&#xA;      ,[Ch4_Elig]&#xA;      ,[Ch5]&#xA;      ,[Ch5_Elig]&#xA;      ,[Ch6]&#xA;      ,[Ch6_Elig]&#xA;      ,[Ch7]&#xA;      ,[Ch7_Elig]&#xA;      ,[Ch8]&#xA;      ,[Ch8_Elig]&#xA;      ,[Ch9]&#xA;      ,[Ch9_Elig]&#xA;      ,[Ch10]&#xA;      ,[Ch10_Elig]&#xA;      ,[Ch11]&#xA;      ,[Ch11_Elig]&#xA;      ,[Ch12]&#xA;      ,[Ch12_Elig]&#xA;      ,[Opt_for_reposting]&#xA;      ,[Posting_Type]&#xA;      ,[NS_Reserve]&#xA;      ,[Posted_Choice_Order]&#xA;      ,[Posted_Course]&#xA;      ,[Posted_Poly]&#xA;      ,[Eligible_courses]&#xA;      ,[Expoly]&#xA;      ,[Blacklisted]&#xA;      ,[Record_not_found]&#xA;      ,[ITE_Course_conflict]&#xA;      ,[GCE_Subject_conflict]&#xA;      ,[ITE_Module_conflict]&#xA;      ,[Overall_Conflict]&#xA;      ,[FILE_NAME_ACADEMIC_YEAR]&#xA;      ,[FILE_NAME_SEMESTER]&#xA;      ,[CREATED_ON]&#xA;      ,[MODIFIED_ON]&#xA;&#x9;  )&#xA;VALUES&#xA;&#x9;(  &#xA;[NRIC_FIN]&#xA;      ,[Previous_FIN]&#xA;      ,[ITE_Confirmed_FIN]&#xA;      ,[Name]&#xA;      ,[Gender]&#xA;      ,[Race]&#xA;      ,[Date_of_Birth]&#xA;      ,[SG_Citizenship_Status]&#xA;      ,[Country_of_Nationality]&#xA;      ,[NS_Status]&#xA;      ,[ORD_Date]&#xA;      ,[NS_Liable]&#xA;      ,[Address_1]&#xA;      ,[Address_2]&#xA;      ,[Address_3]&#xA;      ,[Address_4]&#xA;      ,[Address_Country]&#xA;      ,[Postal_code]&#xA;      ,[SG_contact_home]&#xA;      ,[SG_contact_mobile]&#xA;      ,[Contact_Other]&#xA;      ,[Email]&#xA;      ,[PPE]&#xA;      ,[Applicant_Type]&#xA;      ,[Applicant_ITE_Course]&#xA;      ,[Applicant_JPAE_Course]&#xA;      ,[ITE_Course_Posting]&#xA;      ,[JPAE_Course_Posting]&#xA;      ,[Net_GPA]&#xA;      ,[Bonus_Net_GPA]&#xA;      ,[Raw_GPA]&#xA;      ,[ITE_CCA_Grade]&#xA;      ,[Overall_BM_Bonus_point_Eligibility]&#xA;      ,[ITE_Year_Complete]&#xA;      ,[ITE_New_Cert_Indicator]&#xA;      ,[Com_Student]&#xA;      ,[ITE_Bmaths_Grade]&#xA;      ,[GCE_O_Eng_Grade]&#xA;      ,[GCE_O_E_Maths_Grade]&#xA;      ,[GCE_O_A_Maths_Grade]&#xA;      ,[Ranking_Type]&#xA;      ,[First_Choice_Ranking]&#xA;      ,Left([Ch1],3)&#xA;      ,[Ch1_Elig]&#xA;      ,Left([Ch2],3)&#xA;      ,[Ch2_Elig]&#xA;      ,Left([Ch3],3)&#xA;      ,[Ch3_Elig]&#xA;      ,Left([Ch4],3)&#xA;      ,[Ch4_Elig]&#xA;      ,Left([Ch5],3)&#xA;      ,[Ch5_Elig]&#xA;      ,Left([Ch6],3)&#xA;      ,[Ch6_Elig]&#xA;      ,Left([Ch7],3)&#xA;      ,[Ch7_Elig]&#xA;      ,Left([Ch8],3)&#xA;      ,[Ch8_Elig]&#xA;      ,Left([Ch9],3)&#xA;      ,[Ch9_Elig]&#xA;      ,Left([Ch10],3)&#xA;      ,[Ch10_Elig]&#xA;      ,Left([Ch11],3)&#xA;      ,[Ch11_Elig]&#xA;      ,Left([Ch12],3)&#xA;      ,[Ch12_Elig]&#xA;      ,[Opt_for_reposting]&#xA;      ,[Posting_Type]&#xA;      ,[NS_Reserve]&#xA;      ,[Posted_Choice_Order]&#xA;      ,[Posted_Course]&#xA;      ,[Posted_Poly]&#xA;      ,[Eligible_courses]&#xA;      ,[Expoly]&#xA;      ,[Blacklisted]&#xA;      ,[Record_not_found]&#xA;      ,[ITE_Course_conflict]&#xA;      ,[GCE_Subject_conflict]&#xA;      ,[ITE_Module_conflict]&#xA;      ,[Overall_Conflict]&#xA;      ,[FILE_NAME_ACADEMIC_YEAR]&#xA;      ,[FILE_NAME_SEMESTER]&#xA;      ,[CREATED_ON]&#xA;      ,[MODIFIED_ON]&#xA;&#x9;)&#xA;   WHEN MATCHED&#xA;   &#xA;   THEN UPDATE&#xA;   SET &#xA;   dst.[NRIC_FIN] = isnull(src.[NRIC_FIN],' '),&#xA;dst.[Previous_FIN] = isnull(src.[Previous_FIN],' '),&#xA;dst.[ITE_Confirmed_FIN] = isnull(src.[ITE_Confirmed_FIN],' '),&#xA;dst.[Name] = isnull(src.[Name],' '),&#xA;dst.[Gender] = isnull(src.[Gender],' '),&#xA;dst.[Race] = isnull(src.[Race],' '),&#xA;dst.[Date_of_Birth] = isnull(src.[Date_of_Birth],' '),&#xA;dst.[SG_Citizenship_Status] = isnull(src.[SG_Citizenship_Status],' '),&#xA;dst.[Country_of_Nationality] = isnull(src.[Country_of_Nationality],' '),&#xA;dst.[NS_Status] = isnull(src.[NS_Status],' '),&#xA;dst.[ORD_Date] = isnull(src.[ORD_Date],' '),&#xA;dst.[NS_Liable] = isnull(src.[NS_Liable],' '),&#xA;dst.[Address_1] = isnull(src.[Address_1],' '),&#xA;dst.[Address_2] = isnull(src.[Address_2],' '),&#xA;dst.[Address_3] = isnull(src.[Address_3],' '),&#xA;dst.[Address_4] = isnull(src.[Address_4],' '),&#xA;dst.[Address_Country] = isnull(src.[Address_Country],' '),&#xA;dst.[Postal_code] = isnull(src.[Postal_code],' '),&#xA;dst.[SG_contact_home] = isnull(src.[SG_contact_home],' '),&#xA;dst.[SG_contact_mobile] = isnull(src.[SG_contact_mobile],' '),&#xA;dst.[Contact_Other] = isnull(src.[Contact_Other],' '),&#xA;dst.[Email] = isnull(src.[Email],' '),&#xA;dst.[PPE] = isnull(src.[PPE],' '),&#xA;dst.[Applicant_Type] = isnull(src.[Applicant_Type],' '),&#xA;dst.[Applicant_ITE_Course] = isnull(src.[Applicant_ITE_Course],' '),&#xA;dst.[Applicant_JPAE_Course] = isnull(src.[Applicant_JPAE_Course],' '),&#xA;dst.[ITE_Course_Posting] = isnull(src.[ITE_Course_Posting],' '),&#xA;dst.[JPAE_Course_Posting] = isnull(src.[JPAE_Course_Posting],' '),&#xA;dst.[Net_GPA] = isnull(src.[Net_GPA],' '),&#xA;dst.[Bonus_Net_GPA] = isnull(src.[Bonus_Net_GPA],' '),&#xA;dst.[Raw_GPA] = isnull(src.[Raw_GPA],' '),&#xA;dst.[ITE_CCA_Grade] = isnull(src.[ITE_CCA_Grade],' '),&#xA;dst.[Overall_BM_Bonus_point_Eligibility] = isnull(src.[Overall_BM_Bonus_point_Eligibility],' '),&#xA;dst.[ITE_Year_Complete] = isnull(src.[ITE_Year_Complete],' '),&#xA;dst.[ITE_New_Cert_Indicator] = isnull(src.[ITE_New_Cert_Indicator],' '),&#xA;dst.[Com_Student] = isnull(src.[Com_Student],' '),&#xA;dst.[ITE_Bmaths_Grade] = isnull(src.[ITE_Bmaths_Grade],' '),&#xA;dst.[GCE_O_Eng_Grade] = isnull(src.[GCE_O_Eng_Grade],' '),&#xA;dst.[GCE_O_E_Maths_Grade] = isnull(src.[GCE_O_E_Maths_Grade],' '),&#xA;dst.[GCE_O_A_Maths_Grade] = isnull(src.[GCE_O_A_Maths_Grade],' '),&#xA;dst.[Ranking_Type] = isnull(src.[Ranking_Type],' '),&#xA;dst.[First_Choice_Ranking] = isnull(src.[First_Choice_Ranking],' '),&#xA;dst.[Ch1] = isnull(src.[Ch1],' '),&#xA;dst.[Ch1_Elig] = isnull(src.[Ch1_Elig],' '),&#xA;dst.[Ch2] = isnull(src.[Ch2],' '),&#xA;dst.[Ch2_Elig] = isnull(src.[Ch2_Elig],' '),&#xA;dst.[Ch3] = isnull(src.[Ch3],' '),&#xA;dst.[Ch3_Elig] = isnull(src.[Ch3_Elig],' '),&#xA;dst.[Ch4] = isnull(src.[Ch4],' '),&#xA;dst.[Ch4_Elig] = isnull(src.[Ch4_Elig],' '),&#xA;dst.[Ch5] = isnull(src.[Ch5],' '),&#xA;dst.[Ch5_Elig] = isnull(src.[Ch5_Elig],' '),&#xA;dst.[Ch6] = isnull(src.[Ch6],' '),&#xA;dst.[Ch6_Elig] = isnull(src.[Ch6_Elig],' '),&#xA;dst.[Ch7] = isnull(src.[Ch7],' '),&#xA;dst.[Ch7_Elig] = isnull(src.[Ch7_Elig],' '),&#xA;dst.[Ch8] = isnull(src.[Ch8],' '),&#xA;dst.[Ch8_Elig] = isnull(src.[Ch8_Elig],' '),&#xA;dst.[Ch9] = isnull(src.[Ch9],' '),&#xA;dst.[Ch9_Elig] = isnull(src.[Ch9_Elig],' '),&#xA;dst.[Ch10] = isnull(src.[Ch10],' '),&#xA;dst.[Ch10_Elig] = isnull(src.[Ch10_Elig],' '),&#xA;dst.[Ch11] = isnull(src.[Ch11],' '),&#xA;dst.[Ch11_Elig] = isnull(src.[Ch11_Elig],' '),&#xA;dst.[Ch12] = isnull(src.[Ch12],' '),&#xA;dst.[Ch12_Elig] = isnull(src.[Ch12_Elig],' '),&#xA;dst.[Opt_for_reposting] = isnull(src.[Opt_for_reposting],' '),&#xA;dst.[Posting_Type] = isnull(src.[Posting_Type],' '),&#xA;dst.[NS_Reserve] = isnull(src.[NS_Reserve],' '),&#xA;dst.[Posted_Choice_Order] = isnull(src.[Posted_Choice_Order],' '),&#xA;dst.[Posted_Course] = isnull(src.[Posted_Course],' '),&#xA;dst.[Posted_Poly] = isnull(src.[Posted_Poly],' '),&#xA;dst.[Eligible_courses] = isnull(src.[Eligible_courses],' '),&#xA;dst.[Expoly] = isnull(src.[Expoly],' '),&#xA;dst.[Blacklisted] = isnull(src.[Blacklisted],' '),&#xA;dst.[Record_not_found] = isnull(src.[Record_not_found],' '),&#xA;dst.[ITE_Course_conflict] = isnull(src.[ITE_Course_conflict],' '),&#xA;dst.[GCE_Subject_conflict] = isnull(src.[GCE_Subject_conflict],' '),&#xA;dst.[ITE_Module_conflict] = isnull(src.[ITE_Module_conflict],' '),&#xA;dst.[Overall_Conflict] = isnull(src.[Overall_Conflict],' '),&#xA;dst.[FILE_NAME_ACADEMIC_YEAR] = isnull(src.[FILE_NAME_ACADEMIC_YEAR],' '),&#xA;dst.[FILE_NAME_SEMESTER] = isnull(src.[FILE_NAME_SEMESTER],' '),&#xA;dst.[CREATED_ON] = isnull(src.[CREATED_ON],' '),&#xA;dst.[MODIFIED_ON] = isnull(src.[MODIFIED_ON],' ');&#xA;--------------------------------------&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,@processeddatetime  as created_on&#xA;  &#xA;  &#xA;END CATCH  &#xA;GO&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="InsertQuery">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+------------
+DECLARE @LastDWProcessdate datetime
+,@processeddatetime datetime
+,@jobstatusid varchar(5)
+select @jobstatusid=0
+select @LastDWProcessdate=isnull(max(Modified_on),'1900-01-01 00:00:00.000') from [dbo].[DW_EXT_JPAE_POSTFILE]
+select  @processeddatetime= getdate()
+
+;WITH TMP_EXT
+AS
+(
+SELECT 
+[NRIC_FIN]
+      ,[Previous_FIN]
+      ,[ITE_Confirmed_FIN]
+      ,[Name]
+      ,[Gender]
+      ,[Race]
+      ,[Date_of_Birth]
+      ,[SG_Citizenship_Status]
+      ,[Country_of_Nationality]
+      ,[NS_Status]
+      ,[ORD_Date]
+      ,[NS_Liable]
+      ,[Address_1]
+      ,[Address_2]
+      ,[Address_3]
+      ,[Address_4]
+      ,[Address_Country]
+      ,[Postal_code]
+      ,[SG_contact_home]
+      ,[SG_contact_mobile]
+      ,[Contact_Other]
+      ,[Email]
+      ,[PPE]
+      ,[Applicant_Type]
+      ,[Applicant_ITE_Course]
+      ,[Applicant_JPAE_Course]
+      ,[ITE_Course_Posting]
+      ,[JPAE_Course_Posting]
+      ,[Net_GPA]
+      ,[Bonus_Net_GPA]
+      ,[Raw_GPA]
+      ,[ITE_CCA_Grade]
+      ,[Overall_BM_Bonus_point_Eligibility]
+      ,[ITE_Year_Complete]
+      ,[ITE_New_Cert_Indicator]
+      ,[Com_Student]
+      ,[ITE_Bmaths_Grade]
+      ,[GCE_O_Eng_Grade]
+      ,[GCE_O_E_Maths_Grade]
+      ,[GCE_O_A_Maths_Grade]
+      ,[Ranking_Type]
+      ,[First_Choice_Ranking]
+      ,[Ch1]
+      ,[Ch1_Elig]
+      ,[Ch2]
+      ,[Ch2_Elig]
+      ,[Ch3]
+      ,[Ch3_Elig]
+      ,[Ch4]
+      ,[Ch4_Elig]
+      ,[Ch5]
+      ,[Ch5_Elig]
+      ,[Ch6]
+      ,[Ch6_Elig]
+      ,[Ch7]
+      ,[Ch7_Elig]
+      ,[Ch8]
+      ,[Ch8_Elig]
+      ,[Ch9]
+      ,[Ch9_Elig]
+      ,[Ch10]
+      ,[Ch10_Elig]
+      ,[Ch11]
+      ,[Ch11_Elig]
+      ,[Ch12]
+      ,[Ch12_Elig]
+      ,[Opt_for_reposting]
+      ,[Posting_Type]
+      ,[NS_Reserve]
+      ,[Posted_Choice_Order]
+      ,[Posted_Course]
+      ,[Posted_Poly]
+      ,[Eligible_courses]
+      ,[Expoly]
+      ,[Blacklisted]
+      ,[Record_not_found]
+      ,[ITE_Course_conflict]
+      ,[GCE_Subject_conflict]
+      ,[ITE_Module_conflict]
+      ,[Overall_Conflict]
+      ,[FILE_NAME_ACADEMIC_YEAR]
+      ,[FILE_NAME_SEMESTER]
+      ,[CREATED_ON]
+      ,[MODIFIED_ON]
+  FROM RPDW_STG.[dbo].[STG_EXT_JPAE_POSTFILE]
+   where [Latest_Ind] ='Y' 
+AND [MODIFIED_ON]&gt;@LastDWProcessdate
+)
+
+
+MERGE INTO [DW_EXT_JPAE_POSTFILE] AS DST
+   USING TMP_EXT AS SRC
+  ON (
+   SRC. [Date_of_Birth] = DST.[Date_of_Birth] AND   SRC. [FILE_NAME_ACADEMIC_YEAR] = DST.[FILE_NAME_ACADEMIC_YEAR] AND   SRC. [FILE_NAME_SEMESTER] = DST.[FILE_NAME_SEMESTER] AND   SRC. [NRIC_FIN] = DST.[NRIC_FIN] 
+     )
+
+   WHEN NOT MATCHED THEN
+   INSERT
+	(
+[NRIC_FIN]
+      ,[Previous_FIN]
+      ,[ITE_Confirmed_FIN]
+      ,[Name]
+      ,[Gender]
+      ,[Race]
+      ,[Date_of_Birth]
+      ,[SG_Citizenship_Status]
+      ,[Country_of_Nationality]
+      ,[NS_Status]
+      ,[ORD_Date]
+      ,[NS_Liable]
+      ,[Address_1]
+      ,[Address_2]
+      ,[Address_3]
+      ,[Address_4]
+      ,[Address_Country]
+      ,[Postal_code]
+      ,[SG_contact_home]
+      ,[SG_contact_mobile]
+      ,[Contact_Other]
+      ,[Email]
+      ,[PPE]
+      ,[Applicant_Type]
+      ,[Applicant_ITE_Course]
+      ,[Applicant_JPAE_Course]
+      ,[ITE_Course_Posting]
+      ,[JPAE_Course_Posting]
+      ,[Net_GPA]
+      ,[Bonus_Net_GPA]
+      ,[Raw_GPA]
+      ,[ITE_CCA_Grade]
+      ,[Overall_BM_Bonus_point_Eligibility]
+      ,[ITE_Year_Complete]
+      ,[ITE_New_Cert_Indicator]
+      ,[Com_Student]
+      ,[ITE_Bmaths_Grade]
+      ,[GCE_O_Eng_Grade]
+      ,[GCE_O_E_Maths_Grade]
+      ,[GCE_O_A_Maths_Grade]
+      ,[Ranking_Type]
+      ,[First_Choice_Ranking]
+      ,[Ch1]
+      ,[Ch1_Elig]
+      ,[Ch2]
+      ,[Ch2_Elig]
+      ,[Ch3]
+      ,[Ch3_Elig]
+      ,[Ch4]
+      ,[Ch4_Elig]
+      ,[Ch5]
+      ,[Ch5_Elig]
+      ,[Ch6]
+      ,[Ch6_Elig]
+      ,[Ch7]
+      ,[Ch7_Elig]
+      ,[Ch8]
+      ,[Ch8_Elig]
+      ,[Ch9]
+      ,[Ch9_Elig]
+      ,[Ch10]
+      ,[Ch10_Elig]
+      ,[Ch11]
+      ,[Ch11_Elig]
+      ,[Ch12]
+      ,[Ch12_Elig]
+      ,[Opt_for_reposting]
+      ,[Posting_Type]
+      ,[NS_Reserve]
+      ,[Posted_Choice_Order]
+      ,[Posted_Course]
+      ,[Posted_Poly]
+      ,[Eligible_courses]
+      ,[Expoly]
+      ,[Blacklisted]
+      ,[Record_not_found]
+      ,[ITE_Course_conflict]
+      ,[GCE_Subject_conflict]
+      ,[ITE_Module_conflict]
+      ,[Overall_Conflict]
+      ,[FILE_NAME_ACADEMIC_YEAR]
+      ,[FILE_NAME_SEMESTER]
+      ,[CREATED_ON]
+      ,[MODIFIED_ON]
+	  )
+VALUES
+	(  
+[NRIC_FIN]
+      ,[Previous_FIN]
+      ,[ITE_Confirmed_FIN]
+      ,[Name]
+      ,[Gender]
+      ,[Race]
+      ,[Date_of_Birth]
+      ,[SG_Citizenship_Status]
+      ,[Country_of_Nationality]
+      ,[NS_Status]
+      ,[ORD_Date]
+      ,[NS_Liable]
+      ,[Address_1]
+      ,[Address_2]
+      ,[Address_3]
+      ,[Address_4]
+      ,[Address_Country]
+      ,[Postal_code]
+      ,[SG_contact_home]
+      ,[SG_contact_mobile]
+      ,[Contact_Other]
+      ,[Email]
+      ,[PPE]
+      ,[Applicant_Type]
+      ,[Applicant_ITE_Course]
+      ,[Applicant_JPAE_Course]
+      ,[ITE_Course_Posting]
+      ,[JPAE_Course_Posting]
+      ,[Net_GPA]
+      ,[Bonus_Net_GPA]
+      ,[Raw_GPA]
+      ,[ITE_CCA_Grade]
+      ,[Overall_BM_Bonus_point_Eligibility]
+      ,[ITE_Year_Complete]
+      ,[ITE_New_Cert_Indicator]
+      ,[Com_Student]
+      ,[ITE_Bmaths_Grade]
+      ,[GCE_O_Eng_Grade]
+      ,[GCE_O_E_Maths_Grade]
+      ,[GCE_O_A_Maths_Grade]
+      ,[Ranking_Type]
+      ,[First_Choice_Ranking]
+      ,Left([Ch1],3)
+      ,[Ch1_Elig]
+      ,Left([Ch2],3)
+      ,[Ch2_Elig]
+      ,Left([Ch3],3)
+      ,[Ch3_Elig]
+      ,Left([Ch4],3)
+      ,[Ch4_Elig]
+      ,Left([Ch5],3)
+      ,[Ch5_Elig]
+      ,Left([Ch6],3)
+      ,[Ch6_Elig]
+      ,Left([Ch7],3)
+      ,[Ch7_Elig]
+      ,Left([Ch8],3)
+      ,[Ch8_Elig]
+      ,Left([Ch9],3)
+      ,[Ch9_Elig]
+      ,Left([Ch10],3)
+      ,[Ch10_Elig]
+      ,Left([Ch11],3)
+      ,[Ch11_Elig]
+      ,Left([Ch12],3)
+      ,[Ch12_Elig]
+      ,[Opt_for_reposting]
+      ,[Posting_Type]
+      ,[NS_Reserve]
+      ,[Posted_Choice_Order]
+      ,[Posted_Course]
+      ,[Posted_Poly]
+      ,[Eligible_courses]
+      ,[Expoly]
+      ,[Blacklisted]
+      ,[Record_not_found]
+      ,[ITE_Course_conflict]
+      ,[GCE_Subject_conflict]
+      ,[ITE_Module_conflict]
+      ,[Overall_Conflict]
+      ,[FILE_NAME_ACADEMIC_YEAR]
+      ,[FILE_NAME_SEMESTER]
+      ,[CREATED_ON]
+      ,[MODIFIED_ON]
+	)
+   WHEN MATCHED
+   
+   THEN UPDATE
+   SET 
+   dst.[NRIC_FIN] = isnull(src.[NRIC_FIN],' '),
+dst.[Previous_FIN] = isnull(src.[Previous_FIN],' '),
+dst.[ITE_Confirmed_FIN] = isnull(src.[ITE_Confirmed_FIN],' '),
+dst.[Name] = isnull(src.[Name],' '),
+dst.[Gender] = isnull(src.[Gender],' '),
+dst.[Race] = isnull(src.[Race],' '),
+dst.[Date_of_Birth] = isnull(src.[Date_of_Birth],' '),
+dst.[SG_Citizenship_Status] = isnull(src.[SG_Citizenship_Status],' '),
+dst.[Country_of_Nationality] = isnull(src.[Country_of_Nationality],' '),
+dst.[NS_Status] = isnull(src.[NS_Status],' '),
+dst.[ORD_Date] = isnull(src.[ORD_Date],' '),
+dst.[NS_Liable] = isnull(src.[NS_Liable],' '),
+dst.[Address_1] = isnull(src.[Address_1],' '),
+dst.[Address_2] = isnull(src.[Address_2],' '),
+dst.[Address_3] = isnull(src.[Address_3],' '),
+dst.[Address_4] = isnull(src.[Address_4],' '),
+dst.[Address_Country] = isnull(src.[Address_Country],' '),
+dst.[Postal_code] = isnull(src.[Postal_code],' '),
+dst.[SG_contact_home] = isnull(src.[SG_contact_home],' '),
+dst.[SG_contact_mobile] = isnull(src.[SG_contact_mobile],' '),
+dst.[Contact_Other] = isnull(src.[Contact_Other],' '),
+dst.[Email] = isnull(src.[Email],' '),
+dst.[PPE] = isnull(src.[PPE],' '),
+dst.[Applicant_Type] = isnull(src.[Applicant_Type],' '),
+dst.[Applicant_ITE_Course] = isnull(src.[Applicant_ITE_Course],' '),
+dst.[Applicant_JPAE_Course] = isnull(src.[Applicant_JPAE_Course],' '),
+dst.[ITE_Course_Posting] = isnull(src.[ITE_Course_Posting],' '),
+dst.[JPAE_Course_Posting] = isnull(src.[JPAE_Course_Posting],' '),
+dst.[Net_GPA] = isnull(src.[Net_GPA],' '),
+dst.[Bonus_Net_GPA] = isnull(src.[Bonus_Net_GPA],' '),
+dst.[Raw_GPA] = isnull(src.[Raw_GPA],' '),
+dst.[ITE_CCA_Grade] = isnull(src.[ITE_CCA_Grade],' '),
+dst.[Overall_BM_Bonus_point_Eligibility] = isnull(src.[Overall_BM_Bonus_point_Eligibility],' '),
+dst.[ITE_Year_Complete] = isnull(src.[ITE_Year_Complete],' '),
+dst.[ITE_New_Cert_Indicator] = isnull(src.[ITE_New_Cert_Indicator],' '),
+dst.[Com_Student] = isnull(src.[Com_Student],' '),
+dst.[ITE_Bmaths_Grade] = isnull(src.[ITE_Bmaths_Grade],' '),
+dst.[GCE_O_Eng_Grade] = isnull(src.[GCE_O_Eng_Grade],' '),
+dst.[GCE_O_E_Maths_Grade] = isnull(src.[GCE_O_E_Maths_Grade],' '),
+dst.[GCE_O_A_Maths_Grade] = isnull(src.[GCE_O_A_Maths_Grade],' '),
+dst.[Ranking_Type] = isnull(src.[Ranking_Type],' '),
+dst.[First_Choice_Ranking] = isnull(src.[First_Choice_Ranking],' '),
+dst.[Ch1] = isnull(src.[Ch1],' '),
+dst.[Ch1_Elig] = isnull(src.[Ch1_Elig],' '),
+dst.[Ch2] = isnull(src.[Ch2],' '),
+dst.[Ch2_Elig] = isnull(src.[Ch2_Elig],' '),
+dst.[Ch3] = isnull(src.[Ch3],' '),
+dst.[Ch3_Elig] = isnull(src.[Ch3_Elig],' '),
+dst.[Ch4] = isnull(src.[Ch4],' '),
+dst.[Ch4_Elig] = isnull(src.[Ch4_Elig],' '),
+dst.[Ch5] = isnull(src.[Ch5],' '),
+dst.[Ch5_Elig] = isnull(src.[Ch5_Elig],' '),
+dst.[Ch6] = isnull(src.[Ch6],' '),
+dst.[Ch6_Elig] = isnull(src.[Ch6_Elig],' '),
+dst.[Ch7] = isnull(src.[Ch7],' '),
+dst.[Ch7_Elig] = isnull(src.[Ch7_Elig],' '),
+dst.[Ch8] = isnull(src.[Ch8],' '),
+dst.[Ch8_Elig] = isnull(src.[Ch8_Elig],' '),
+dst.[Ch9] = isnull(src.[Ch9],' '),
+dst.[Ch9_Elig] = isnull(src.[Ch9_Elig],' '),
+dst.[Ch10] = isnull(src.[Ch10],' '),
+dst.[Ch10_Elig] = isnull(src.[Ch10_Elig],' '),
+dst.[Ch11] = isnull(src.[Ch11],' '),
+dst.[Ch11_Elig] = isnull(src.[Ch11_Elig],' '),
+dst.[Ch12] = isnull(src.[Ch12],' '),
+dst.[Ch12_Elig] = isnull(src.[Ch12_Elig],' '),
+dst.[Opt_for_reposting] = isnull(src.[Opt_for_reposting],' '),
+dst.[Posting_Type] = isnull(src.[Posting_Type],' '),
+dst.[NS_Reserve] = isnull(src.[NS_Reserve],' '),
+dst.[Posted_Choice_Order] = isnull(src.[Posted_Choice_Order],' '),
+dst.[Posted_Course] = isnull(src.[Posted_Course],' '),
+dst.[Posted_Poly] = isnull(src.[Posted_Poly],' '),
+dst.[Eligible_courses] = isnull(src.[Eligible_courses],' '),
+dst.[Expoly] = isnull(src.[Expoly],' '),
+dst.[Blacklisted] = isnull(src.[Blacklisted],' '),
+dst.[Record_not_found] = isnull(src.[Record_not_found],' '),
+dst.[ITE_Course_conflict] = isnull(src.[ITE_Course_conflict],' '),
+dst.[GCE_Subject_conflict] = isnull(src.[GCE_Subject_conflict],' '),
+dst.[ITE_Module_conflict] = isnull(src.[ITE_Module_conflict],' '),
+dst.[Overall_Conflict] = isnull(src.[Overall_Conflict],' '),
+dst.[FILE_NAME_ACADEMIC_YEAR] = isnull(src.[FILE_NAME_ACADEMIC_YEAR],' '),
+dst.[FILE_NAME_SEMESTER] = isnull(src.[FILE_NAME_SEMESTER],' '),
+dst.[CREATED_ON] = isnull(src.[CREATED_ON],' '),
+dst.[MODIFIED_ON] = isnull(src.[MODIFIED_ON],' ');
+--------------------------------------
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+  ROLLBACK TRANSACTION
+INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,@processeddatetime  as created_on
+  
+  
+END CATCH  
+GO</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A4F966DD-9380-4C36-9612-887137B82FA0}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JobStatusId">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{81468841-FF77-40A3-9429-241998FCD50D}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_name">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_EXT_JPAE_POSTFILE</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B94C5ECD-B98A-4208-BA26-A395EEE62BB0}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="MndColumncheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{ADBA10C7-6A9D-4993-BA08-B0F6DBF69BA5}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="PrevJobStatus">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4A30B9DC-EE8B-4A93-A4BB-C319D1220543}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprimarykeycheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9162E4DC-A700-4F2D-94A1-A3971AB345E1}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprocesseddate">
+      <DTS:VariableValue
+        DTS:DataType="7">2/27/2019 11:28:00 AM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{99E2D5CE-8163-4866-8D82-A5D0A69FCE76}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SrcTable">
+      <DTS:VariableValue
+        DTS:DataType="8">STG_EXT_JPAE_POSTFILE</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6820F684-DBFE-4177-805F-550980A92097}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Stage">
+      <DTS:VariableValue
+        DTS:DataType="8">DW</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3BD177DD-A6C4-4366-9786-390977DAAB15}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTable">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_EXT_JPAE_POSTFILE</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\check previous job status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D0F129A1-5355-44B9-A1DF-5782DE9BB707}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="check previous job status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8F8DFE95-C9F1-4B3E-922E-0AF3E5701846}"
+          SQLTask:SqlStatementSource="&#xA;SELECT CASE WHEN [JOB_STATUS] ='SUCCESS' THEN 1 ELSE 0 END AS PrevJobStatus&#xA;FROM [DBO].[ETL_JOB_STATUS] WHERE [JOB_STATUS_ID]=&#xA;(SELECT MAX([JOB_STATUS_ID]) FROM [DBO].[ETL_JOB_STATUS]&#xA;WHERE [TARGET_TABLENAME]=?&#xA;AND [STAGE]='STG')&#xA;&#xA;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="PrevJobStatus"
+            SQLTask:DtsVariableName="User::PrevJobStatus" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create ETL Job Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{85B8DA25-1B90-4ADC-AD73-E3F775C95625}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create ETL Job Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8F8DFE95-C9F1-4B3E-922E-0AF3E5701846}"
+          SQLTask:SqlStatementSource="&#xA;EXEC dbo.[usp_InsertETLJobLog]  ?,?,?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Job_name"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::Stage"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\get Job Status Id"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5C18B9DD-D884-4D27-B816-60243BCE9520}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="get Job Status Id"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8F8DFE95-C9F1-4B3E-922E-0AF3E5701846}"
+          SQLTask:SqlStatementSource="declare  @JobstatusID int&#xA;&#xA;select @JobstatusID=max(job_status_id) from [ETL_JOB_STATUS]&#xA;where [TARGET_TABLENAME]=?&#xA;&#xA;&#xA;Select @JobstatusID "
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JobStatusId" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\getprocesseddate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{00B24855-4A0C-47C6-AFCD-7A50582D7C2B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="getprocesseddate"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8F8DFE95-C9F1-4B3E-922E-0AF3E5701846}"
+          SQLTask:SqlStatementSource="SELECT GETDATE()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::sqlprocesseddate" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\insert into main table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{4FF201D7-804E-48DF-B0EF-D5152F36CBA1}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="insert into main table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8F8DFE95-C9F1-4B3E-922E-0AF3E5701846}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::InsertQuery" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Masking"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{8808AB12-D1BA-4436-ACE6-0A4424F99037}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Masking"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8F8DFE95-C9F1-4B3E-922E-0AF3E5701846}"
+          SQLTask:SqlStatementSource="UPDATE A SET  A.MASKED_NATIONAL_ID=U.MASKED_NATIONAL_ID FROM DW_NATIONAL_ID_MASKING U JOIN   DW_EXT_JPAE_POSTFILE A ON A.NRIC_FIN=U.NATIONAL_ID" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\update on failure"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{67669290-3AAF-4450-953F-4DE6B36CF1A2}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="update on failure"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8F8DFE95-C9F1-4B3E-922E-0AF3E5701846}"
+          SQLTask:SqlStatementSource="   UPDATE [DBO].[ETL_JOB_STATUS]&#xA;  SET [JOB_STATUS]='Fail',&#xA;[ERROR_MSG]='Last Job not completed sucessfully'&#xA;  where [JOB_STATUS_ID]=?&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\UpdateJobStatus"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5C060DB3-3B9B-48BC-8557-22220B6C2A1C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="UpdateJobStatus"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8F8DFE95-C9F1-4B3E-922E-0AF3E5701846}"
+          SQLTask:SqlStatementSource="&#xA; &#xA;&#xA;DECLARE &#xA;@jobstatusid INT&#xA;select @jobstatusid=?&#xA;IF EXISTS(SELECT * FROM dbo.ETL_ERROR_LOG WHERE [JOB_STATUS_ID]=@jobstatusid)&#xA;&#xA; BEGIN&#xA;&#xA;&#xA;&#xA; UPDATE [dbo].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='FAIL'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;  END&#xA;&#xA;ELSE&#xA;&#xA;BEGIN&#xA;&#xA;UPDATE [DBO].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='Success'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;END&#xA;&#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{4B292D36-415F-4989-8E33-A6B939857C2F}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::PrevJobStatus]==0"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\update on failure" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{BC94EE60-ECC8-43D9-A81B-5C356655AE26}"
+      DTS:From="Package\Create ETL Job Log"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\get Job Status Id" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{C32F0A73-A259-40D2-8207-10A5686A7A59}"
+      DTS:From="Package\getprocesseddate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\insert into main table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{5C96BBA0-0AB7-40EA-ACBC-EAB30C068F34}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::PrevJobStatus]==1"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\getprocesseddate" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{B20EF9E2-3406-4F4B-ADF7-67C9778DE9BD}"
+      DTS:From="Package\get Job Status Id"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\check previous job status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{5CFA282D-2F98-498E-AF02-E68292283907}"
+      DTS:From="Package\insert into main table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Masking" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{841E1107-CC5E-47B7-BBFD-AA3AB3536F4A}"
+      DTS:From="Package\Masking"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\UpdateJobStatus" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{B05A537A-9317-4F8B-9114-27CE66932788}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{662C2DE6-37D4-4BF9-897C-3732920CE6BC}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\Error Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{0E74E6F7-3023-49A7-8961-312F9CE46756}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Error Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8F8DFE95-C9F1-4B3E-922E-0AF3E5701846}"
+              SQLTask:SqlStatementSource="  insert into [dbo].[ETL_ERROR_LOG]([JOB_STATUS_ID],[ERROR_RECORD])&#xA;  select ?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL Job Status Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{09EE3A4B-B98E-47F1-A1C3-76C435121B00}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL Job Status Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8F8DFE95-C9F1-4B3E-922E-0AF3E5701846}"
+              SQLTask:SqlStatementSource="update [ETL_JOB_STATUS]&#xA;set Job_Status='Fail'&#xA;,Error_Msg=?&#xA;where job_status_id=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{F3674504-EA11-4FD7-85A8-F855F3F15EEE}"
+          DTS:From="Package.EventHandlers[OnError]\Error Log"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package.EventHandlers[OnError]\ETL Job Status Log" />
+      </DTS:PrecedenceConstraints>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="198,42"
+          Id="Package\check previous job status"
+          TopLeft="415,32" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Create ETL Job Log"
+          TopLeft="9,30" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\get Job Status Id"
+          TopLeft="225,31" />
+        <NodeLayout
+          Size="162,42"
+          Id="Package\getprocesseddate"
+          TopLeft="660,29" />
+        <NodeLayout
+          Size="179,42"
+          Id="Package\insert into main table"
+          TopLeft="648,128" />
+        <NodeLayout
+          Size="117,42"
+          Id="Package\Masking"
+          TopLeft="680,203" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\update on failure"
+          TopLeft="418,164" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\UpdateJobStatus"
+          TopLeft="657,284" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="514,74">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-16.5,90"
+              Start="0,0"
+              End="-16.5,82.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,41"
+                    Point2="0,45"
+                    Point3="-4,45" />
+                  <mssgle:LineSegment
+                    End="-12.5,45" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-12.5,45"
+                    Point2="-16.5,45"
+                    Point3="-16.5,49" />
+                  <mssgle:LineSegment
+                    End="-16.5,82.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-16.25,50,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="179,51.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="46,0"
+              Start="0,0"
+              End="38.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="38.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="739.25,71">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,57"
+              Start="0,0"
+              End="0,49.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="613,51.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="47,0"
+              Start="0,0"
+              End="39.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="39.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="11.75,5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="384,52.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="31,0"
+              Start="0,0"
+              End="23.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="23.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="738,170">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33"
+              Start="0,0"
+              End="0,25.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="737.25,245">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39"
+              Start="0,0"
+              End="0,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package.EventHandlers[OnError]\Error Log"
+          TopLeft="60,60" />
+        <NodeLayout
+          Size="169,42"
+          Id="Package.EventHandlers[OnError]\ETL Job Status Log"
+          TopLeft="60,162" />
+        <EdgeLayout
+          Id="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          TopLeft="121.5,102">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="23,60"
+              Start="0,0"
+              End="23,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26"
+                    Point2="0,30"
+                    Point3="4,30" />
+                  <mssgle:LineSegment
+                    End="19,30" />
+                  <mssgle:CubicBezierSegment
+                    Point1="19,30"
+                    Point2="23,30"
+                    Point3="23,34" />
+                  <mssgle:LineSegment
+                    End="23,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

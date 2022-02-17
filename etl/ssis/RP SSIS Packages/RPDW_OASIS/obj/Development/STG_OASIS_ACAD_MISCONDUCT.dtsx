@@ -1,0 +1,2745 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/30/2019 1:46:31 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-110119GM22"
+  DTS:CreatorName="NCS\P0500388"
+  DTS:DelayValidation="True"
+  DTS:DTSID="{CAFE22D3-22D4-4CF8-A30E-517973EBC98A}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="STG_OASIS_ACAD_MISCONDUCT"
+  DTS:PackageType="5"
+  DTS:VersionBuild="121"
+  DTS:VersionGUID="{31DE46E7-5849-418C-987A-63AC917E2465}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ErrorLog]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{0049995D-9A4D-47A4-8D05-D0D0729406D4}"
+      DTS:ObjectName="ErrorLog">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.22.2.38;User ID=svc-dw-prod-etl;Initial Catalog=RPDW_PRD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAArlcb7xltiEGLM7tKs7RrRAAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAB8EXEMVjxoONXcI9jQpvXYAAAAAASAAACgAAAAEAAAAC3sOb2LC+xMhOn0zIVZGHwIAAAASvLRHyU65scUAAAAqowsAc8E221AxMb15KTPZRk1HTA</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PSTG]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{7B20D3BF-4B4D-4D60-AD28-ACD73710120E}"
+      DTS:ObjectName="PSTG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::PreStaging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.22.2.38;User ID=svc-dw-prod-etl;Initial Catalog=RPDW_PRD_PSTG;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAArlcb7xltiEGLM7tKs7RrRAAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACZKa8vyrmU4H42HooxHNNqAAAAAASAAACgAAAAEAAAAPHKzgbWMtLqmgqBX+dOfgIIAAAAWaWCArdCHCkUAAAAw08703DEfaJd3p/tq/BXrro2Efk</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[STG]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{8880AC2F-1082-4038-9A5B-7EE2CFF7D0EF}"
+      DTS:ObjectName="STG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::Staging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=172.22.2.38;User ID=svc-dw-prod-etl;Initial Catalog=RPDW_PRD_STG;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAArlcb7xltiEGLM7tKs7RrRAAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABqnc94PLFevXm2cxIKWaHNAAAAAASAAACgAAAAEAAAAGPKF9/xBQWr5o2O3c1ids4IAAAAzXB064JgLXMUAAAAJ9OFAg/mq/yXnkwMsk84593Jk6M</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{EA996BA7-274C-465B-9703-71CAC7426C90}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Duplicate_Check">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4C2817CE-9FE3-4547-A8A6-69E8CAC15347}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_name">
+      <DTS:VariableValue
+        DTS:DataType="8">STG_OASIS_ACAD_MISCONDUCT</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CB649DD7-B9F9-4E39-BF4D-5DB3A1E7861C}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_Status">
+      <DTS:VariableValue
+        DTS:DataType="3">1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{52890390-4891-4BA3-843B-E35BD47A7E37}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JOB_STATUS_ID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7E4D02ED-19B9-4EBE-BBD9-1CFD08ED35C4}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Mandatory_constraint_Check">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1993F9A2-9D09-4161-8482-5CB1692FF7E5}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PreStage">
+      <DTS:VariableValue
+        DTS:DataType="8">PSTG</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C326EC77-4E8C-47F0-942C-AAABC601543C}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Process_date">
+      <DTS:VariableValue
+        DTS:DataType="7">2/1/2019 2:58:47 PM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{72B357BC-A5FB-4737-B791-8ADC7B4CC462}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SourceTable">
+      <DTS:VariableValue
+        DTS:DataType="8">PSTG_OASIS_ACAD_MISCONDUCT</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B4E13747-5111-40F0-BA6D-EF1C0BD075F9}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;--------------------------------------&#xA;&#xA;declare @MandColValidation int,&#xA;@NoDuplicates int,&#xA;@Job_Status_ID int&#xA;SELECT  @NoDuplicates=?&#xA;SELECT @MandColValidation=?&#xA;SELECT @Job_Status_ID=?&#xA;&#xA;if(@NoDuplicates&lt;&gt;0 or @MandColValidation&lt;&gt;0)&#xA;&#xA;begin &#xA;insert into [dbo].[ETL_ERROR_LOG](JOB_STATUS_ID,ERROR_RECORD) &#xA;SELECT  @Job_Status_ID JOB_STATUS_ID, ''+Student_ID+', '+Qual_Type +', '+Term +' , '+Type_Misconduct +', '+Fraudlent_MC_Start_Date +', '+Module_ID +', '+Affected_Lesson_Assessmt +' ,is duplicate primary key in source file' as ErrorColValues&#xA;FROM &quot;+ @[$Project::PreStaging_Initial_Catalog] +&quot;.[dbo].[PSTG_OASIS_ACAD_MISCONDUCT]&#xA;GROUP&#xA;BY  Student_ID,Qual_Type, Term,Type_Misconduct,Fraudlent_MC_Start_Date,Module_ID,Affected_Lesson_Assessmt&#xA;having count(1)&gt;1&#xA;union all&#xA;SELECT  @Job_Status_ID JOB_STATUS_ID, ''+Student_ID+', '+Qual_Type +', '+Term +' , '+Type_Misconduct +' ,Mandatory columns Issues'  as ErrorColValues&#xA;FROM &quot;+ @[$Project::PreStaging_Initial_Catalog] +&quot;.[dbo].[PSTG_OASIS_ACAD_MISCONDUCT]&#xA;where  (Student_ID='' or Qual_Type='' Or Term='' or Type_Misconduct=''   &#xA;or Student_ID IS NULL or Qual_Type IS NULL  OR Term IS NULL or Type_Misconduct IS NUL)&#xA;GROUP BY  Student_ID,Qual_Type,Term,Type_Misconduct&#xA;END&#xA;else&#xA;select 'Unknown Error','Check the file and rerun the package'&#xA;&#xA;&#xA;IF @NoDuplicates&lt;&gt;0&#xA;&#xA;UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET [JOB_STATUS]='Fail',&#xA;[ERROR_MSG]='Duplicate primary key found in PSTG table'&#xA;WHERE JOB_STATUS_ID=@Job_Status_ID&#xA;&#xA;ELSE IF @MandColValidation&lt;&gt;0&#xA;UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET [JOB_STATUS]='Fail',&#xA;[ERROR_MSG]='Mandatory Columns constraint in PSTG table'&#xA;WHERE JOB_STATUS_ID=@Job_Status_ID&#xA;&#xA;ELSE&#xA;SELECT 'UNKNOWN'&#xA;&#xA;&#xA;--------------------------------------&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;END CATCH  &#xA;GO&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Script_Constraint">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+--------------------------------------
+
+declare @MandColValidation int,
+@NoDuplicates int,
+@Job_Status_ID int
+SELECT  @NoDuplicates=?
+SELECT @MandColValidation=?
+SELECT @Job_Status_ID=?
+
+if(@NoDuplicates&lt;&gt;0 or @MandColValidation&lt;&gt;0)
+
+begin 
+insert into [dbo].[ETL_ERROR_LOG](JOB_STATUS_ID,ERROR_RECORD) 
+SELECT  @Job_Status_ID JOB_STATUS_ID, ''+Student_ID+', '+Qual_Type +', '+Term +' , '+Type_Misconduct +', '+Fraudlent_MC_Start_Date +', '+Module_ID +', '+Affected_Lesson_Assessmt +' ,is duplicate primary key in source file' as ErrorColValues
+FROM RPDW_PRD_PSTG.[dbo].[PSTG_OASIS_ACAD_MISCONDUCT]
+GROUP
+BY  Student_ID,Qual_Type, Term,Type_Misconduct,Fraudlent_MC_Start_Date,Module_ID,Affected_Lesson_Assessmt
+having count(1)&gt;1
+union all
+SELECT  @Job_Status_ID JOB_STATUS_ID, ''+Student_ID+', '+Qual_Type +', '+Term +' , '+Type_Misconduct +' ,Mandatory columns Issues'  as ErrorColValues
+FROM RPDW_PRD_PSTG.[dbo].[PSTG_OASIS_ACAD_MISCONDUCT]
+where  (Student_ID='' or Qual_Type='' Or Term='' or Type_Misconduct=''   
+or Student_ID IS NULL or Qual_Type IS NULL  OR Term IS NULL or Type_Misconduct IS NUL)
+GROUP BY  Student_ID,Qual_Type,Term,Type_Misconduct
+END
+else
+select 'Unknown Error','Check the file and rerun the package'
+
+
+IF @NoDuplicates&lt;&gt;0
+
+UPDATE [dbo].[ETL_JOB_STATUS]
+SET [JOB_STATUS]='Fail',
+[ERROR_MSG]='Duplicate primary key found in PSTG table'
+WHERE JOB_STATUS_ID=@Job_Status_ID
+
+ELSE IF @MandColValidation&lt;&gt;0
+UPDATE [dbo].[ETL_JOB_STATUS]
+SET [JOB_STATUS]='Fail',
+[ERROR_MSG]='Mandatory Columns constraint in PSTG table'
+WHERE JOB_STATUS_ID=@Job_Status_ID
+
+ELSE
+SELECT 'UNKNOWN'
+
+
+--------------------------------------
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+  ROLLBACK TRANSACTION
+END CATCH  
+GO</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{56C962EA-E174-4184-87F6-7E463A8993BE}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="STAGE">
+      <DTS:VariableValue
+        DTS:DataType="8">STG</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B35E75B5-43EB-4FAB-B314-A1420969CE62}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;--------------------------------------&#xA;DECLARE&#xA;@jobstatusid varchar(5)&#xA;select @jobstatusid=&quot;+ (DT_STR, 5,1252) @[User::JOB_STATUS_ID] +&quot;&#xA;&#xA;INSERT INTO [dbo].[STG_OASIS_ACAD_MISCONDUCT] (Student_ID&#xA;,Qual_Type&#xA;,Term&#xA;,Type_Misconduct&#xA;,Fraudlent_MC_Start_Date&#xA;,Fraudlent_MC_End_Date&#xA;,Module_ID&#xA;,Affected_Lesson_Assessmt&#xA;,Lesson_Assessmt_Date&#xA;,Penalty&#xA;, Latest_Ind, Created_On,Modified_On)&#xA;SELECT Student_ID&#xA;,Qual_Type&#xA;,Term&#xA;,Type_Misconduct&#xA;,Fraudlent_MC_Start_Date&#xA;,Fraudlent_MC_End_Date&#xA;,Module_ID&#xA;,Affected_Lesson_Assessmt&#xA;,Lesson_Assessmt_Date&#xA;,Penalty,  'Y', getdate(),getdate()&#xA;FROM&#xA;(&#xA;-- Merge statement&#xA;MERGE INTO [dbo].[STG_OASIS_ACAD_MISCONDUCT] AS DST&#xA;USING [dbo].[TMP_STG_OASIS_ACAD_MISCONDUCT] AS SRC&#xA;ON (SRC.Student_ID = DST.Student_ID and SRC.Qual_Type = DST.Qual_Type and SRC.Term = DST.Term and SRC.Type_Misconduct=DST.Type_Misconduct&#xA;AND  SRC.Fraudlent_MC_Start_Date=DST.Fraudlent_MC_Start_Date AND SRC.Module_ID=DST.Module_ID and SRC.Affected_Lesson_Assessmt=DST.Affected_Lesson_Assessmt )&#xA;-- New records inserted&#xA;WHEN NOT MATCHED THEN &#xA;INSERT (Student_ID&#xA;,Qual_Type&#xA;,Term&#xA;,Type_Misconduct&#xA;,Fraudlent_MC_Start_Date&#xA;,Fraudlent_MC_End_Date&#xA;,Module_ID&#xA;,Affected_Lesson_Assessmt&#xA;,Lesson_Assessmt_Date&#xA;,Penalty&#xA;,  Latest_Ind, Created_On,Modified_On)&#xA;VALUES (SRC.Student_ID&#xA;,SRC.Qual_Type&#xA;,SRC.Term&#xA;,SRC.Type_Misconduct&#xA;,SRC.Fraudlent_MC_Start_Date&#xA;,SRC.Fraudlent_MC_End_Date&#xA;,SRC.Module_ID&#xA;,SRC.Affected_Lesson_Assessmt&#xA;,SRC.Lesson_Assessmt_Date&#xA;,SRC.Penalty,  'Y', getdate(),getdate())&#xA;-- Existing records updated if data changes&#xA;WHEN MATCHED &#xA;AND Latest_Ind = 'Y'&#xA;AND (&#xA; ISNULL(DST.Fraudlent_MC_End_Date,'') &lt;&gt; ISNULL(SRC.Fraudlent_MC_End_Date,'') &#xA; OR ISNULL(DST.Lesson_Assessmt_Date,'') &lt;&gt; ISNULL(SRC.Lesson_Assessmt_Date,'') &#xA; OR ISNULL(DST.Penalty,'') &lt;&gt; ISNULL(SRC.Penalty,'')&#xA; &#xA;&#xA;&#xA; )&#xA;-- Update statement for a changed dimension record, to flag as no longer active&#xA;THEN UPDATE &#xA;SET DST.Latest_Ind = 'N', Modified_On=getdate()&#xA;OUTPUT SRC.Student_ID&#xA;,SRC.Qual_Type&#xA;,SRC.Term&#xA;,SRC.Type_Misconduct&#xA;,SRC.Fraudlent_MC_Start_Date&#xA;,SRC.Fraudlent_MC_End_Date&#xA;,SRC.Module_ID&#xA;,SRC.Affected_Lesson_Assessmt&#xA;,SRC.Lesson_Assessmt_Date&#xA;,SRC.Penalty,  $Action AS MergeAction&#xA;) AS MRG&#xA;WHERE MRG.MergeAction = 'UPDATE'&#xA;;&#xA;&#xA;--------------------------------------&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;ROLLBACK TRANSACTION&#xA;&#xA;  INSERT INTO &quot;+ @[$Project::DW_Initial_Catalog]+&quot;.[dbo].[ETL_ERROR_LOG](JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,getdate()  as created_on&#xA;END CATCH  &#xA;GO&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="stg_load">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+--------------------------------------
+DECLARE
+@jobstatusid varchar(5)
+select @jobstatusid=0
+
+INSERT INTO [dbo].[STG_OASIS_ACAD_MISCONDUCT] (Student_ID
+,Qual_Type
+,Term
+,Type_Misconduct
+,Fraudlent_MC_Start_Date
+,Fraudlent_MC_End_Date
+,Module_ID
+,Affected_Lesson_Assessmt
+,Lesson_Assessmt_Date
+,Penalty
+, Latest_Ind, Created_On,Modified_On)
+SELECT Student_ID
+,Qual_Type
+,Term
+,Type_Misconduct
+,Fraudlent_MC_Start_Date
+,Fraudlent_MC_End_Date
+,Module_ID
+,Affected_Lesson_Assessmt
+,Lesson_Assessmt_Date
+,Penalty,  'Y', getdate(),getdate()
+FROM
+(
+-- Merge statement
+MERGE INTO [dbo].[STG_OASIS_ACAD_MISCONDUCT] AS DST
+USING [dbo].[TMP_STG_OASIS_ACAD_MISCONDUCT] AS SRC
+ON (SRC.Student_ID = DST.Student_ID and SRC.Qual_Type = DST.Qual_Type and SRC.Term = DST.Term and SRC.Type_Misconduct=DST.Type_Misconduct
+AND  SRC.Fraudlent_MC_Start_Date=DST.Fraudlent_MC_Start_Date AND SRC.Module_ID=DST.Module_ID and SRC.Affected_Lesson_Assessmt=DST.Affected_Lesson_Assessmt )
+-- New records inserted
+WHEN NOT MATCHED THEN 
+INSERT (Student_ID
+,Qual_Type
+,Term
+,Type_Misconduct
+,Fraudlent_MC_Start_Date
+,Fraudlent_MC_End_Date
+,Module_ID
+,Affected_Lesson_Assessmt
+,Lesson_Assessmt_Date
+,Penalty
+,  Latest_Ind, Created_On,Modified_On)
+VALUES (SRC.Student_ID
+,SRC.Qual_Type
+,SRC.Term
+,SRC.Type_Misconduct
+,SRC.Fraudlent_MC_Start_Date
+,SRC.Fraudlent_MC_End_Date
+,SRC.Module_ID
+,SRC.Affected_Lesson_Assessmt
+,SRC.Lesson_Assessmt_Date
+,SRC.Penalty,  'Y', getdate(),getdate())
+-- Existing records updated if data changes
+WHEN MATCHED 
+AND Latest_Ind = 'Y'
+AND (
+ ISNULL(DST.Fraudlent_MC_End_Date,'') &lt;&gt; ISNULL(SRC.Fraudlent_MC_End_Date,'') 
+ OR ISNULL(DST.Lesson_Assessmt_Date,'') &lt;&gt; ISNULL(SRC.Lesson_Assessmt_Date,'') 
+ OR ISNULL(DST.Penalty,'') &lt;&gt; ISNULL(SRC.Penalty,'')
+ 
+
+
+ )
+-- Update statement for a changed dimension record, to flag as no longer active
+THEN UPDATE 
+SET DST.Latest_Ind = 'N', Modified_On=getdate()
+OUTPUT SRC.Student_ID
+,SRC.Qual_Type
+,SRC.Term
+,SRC.Type_Misconduct
+,SRC.Fraudlent_MC_Start_Date
+,SRC.Fraudlent_MC_End_Date
+,SRC.Module_ID
+,SRC.Affected_Lesson_Assessmt
+,SRC.Lesson_Assessmt_Date
+,SRC.Penalty,  $Action AS MergeAction
+) AS MRG
+WHERE MRG.MergeAction = 'UPDATE'
+;
+
+--------------------------------------
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+ROLLBACK TRANSACTION
+
+  INSERT INTO RPDW_PRD.[dbo].[ETL_ERROR_LOG](JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,getdate()  as created_on
+END CATCH  
+GO</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{63592C04-154A-477A-8E40-19BF5D59F87D}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTableName">
+      <DTS:VariableValue
+        DTS:DataType="8">STG_OASIS_ACAD_MISCONDUCT</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create ETL Job Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D2C5E217-04B6-49DB-9480-AB21D6929079}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create ETL Job Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{0049995D-9A4D-47A4-8D05-D0D0729406D4}"
+          SQLTask:SqlStatementSource="Exec [dbo].[usp_InsertETLJobLog] ?, ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Job_name"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::STAGE"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::SourceTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::TgtTableName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Error Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E345DF5E-BD58-479E-8377-762DC5DFE7ED}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Error Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{0049995D-9A4D-47A4-8D05-D0D0729406D4}"
+          SQLTask:SqlStatementSource="&#xA;  UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET&#xA;ERROR_MSG = 'PSTG table is not completed',&#xA;JOB_STATUS ='Fail'&#xA;--PROCESSED_ON =getdate()&#xA;WHERE JOB_STATUS_ID=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\JOB_STATUS_ID"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{4A5DB82F-CF8D-48F4-96C2-DB8E489D30CD}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="JOB_STATUS_ID"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{0049995D-9A4D-47A4-8D05-D0D0729406D4}"
+          SQLTask:SqlStatementSource="SELECT max([JOB_STATUS_ID])&#xA;      &#xA;  FROM [dbo].[ETL_JOB_STATUS] where [SOURCE_FILENAME]=? &#xA;---and convert(varchar(8),CREATED_ON,112)=convert--(varchar(8) ,getdate(),112)"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::SourceTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Into STG"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{52EFA9FE-EF10-4212-89CD-908B2817887D}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Into STG"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8880AC2F-1082-4038-9A5B-7EE2CFF7D0EF}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::stg_load" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load_INTO_TEMP"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{02FD6E40-E2EB-45B5-9BB0-A488501E2100}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load_INTO_TEMP"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load_INTO_TEMP\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load_INTO_TEMP\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Data Conversion.Inputs[Data Conversion Input].Columns[Der_STUDENT_ID]"
+                      cachedDataType="wstr"
+                      cachedLength="11"
+                      cachedName="Der_STUDENT_ID"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_STUDENT_ID]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Data Conversion.Inputs[Data Conversion Input].Columns[Der_Qual_Type]"
+                      cachedDataType="wstr"
+                      cachedLength="11"
+                      cachedName="Der_Qual_Type"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Qual_Type]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Data Conversion.Inputs[Data Conversion Input].Columns[Der_Term]"
+                      cachedDataType="wstr"
+                      cachedLength="4"
+                      cachedName="Der_Term"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Term]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Data Conversion.Inputs[Data Conversion Input].Columns[Der_Type_Misconduct]"
+                      cachedDataType="wstr"
+                      cachedLength="4"
+                      cachedName="Der_Type_Misconduct"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Type_Misconduct]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Data Conversion.Inputs[Data Conversion Input].Columns[Der_Module_ID]"
+                      cachedDataType="wstr"
+                      cachedLength="6"
+                      cachedName="Der_Module_ID"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Module_ID]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Data Conversion.Inputs[Data Conversion Input].Columns[Der_Affected_Lesson_Assessmt]"
+                      cachedDataType="wstr"
+                      cachedLength="7"
+                      cachedName="Der_Affected_Lesson_Assessmt"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Affected_Lesson_Assessmt]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Data Conversion.Inputs[Data Conversion Input].Columns[Der_Lesson_Assessmt_Date]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="Der_Lesson_Assessmt_Date"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Lesson_Assessmt_Date]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Data Conversion.Inputs[Data Conversion Input].Columns[Penalty]"
+                      cachedDataType="nText"
+                      cachedName="Penalty"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Penalty]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Load_INTO_TEMP\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_STUDENT_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_STUDENT_ID]"
+                      name="Copy of Der_STUDENT_ID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_STUDENT_ID]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_Qual_Type]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_Qual_Type]"
+                      name="Copy of Der_Qual_Type"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Qual_Type]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_Term]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_Term]"
+                      name="Copy of Der_Term"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Term]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_Type_Misconduct]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_Type_Misconduct]"
+                      name="Copy of Der_Type_Misconduct"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Type_Misconduct]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_Module_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_Module_ID]"
+                      name="Copy of Der_Module_ID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Module_ID]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_Affected_Lesson_Assessmt]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_Affected_Lesson_Assessmt]"
+                      name="Copy of Der_Affected_Lesson_Assessmt"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Affected_Lesson_Assessmt]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_Lesson_Assessmt_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_Lesson_Assessmt_Date]"
+                      name="Copy of Der_Lesson_Assessmt_Date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Lesson_Assessmt_Date]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Penalty]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Penalty]"
+                      name="Copy of Penalty"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Penalty]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Load_INTO_TEMP\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load_INTO_TEMP\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load_INTO_TEMP\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Inputs[Derived Column Input].Columns[Student_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="11"
+                      cachedName="Student_ID"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Student_ID]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Inputs[Derived Column Input].Columns[Term]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="Term"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Term]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Inputs[Derived Column Input].Columns[Module_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="6"
+                      cachedName="Module_ID"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Module_ID]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Inputs[Derived Column Input].Columns[Qual_Type]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="11"
+                      cachedName="Qual_Type"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Qual_Type]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Inputs[Derived Column Input].Columns[Type_Misconduct]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="Type_Misconduct"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Type_Misconduct]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Inputs[Derived Column Input].Columns[Fraudlent_MC_Start_Date]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="Fraudlent_MC_Start_Date"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Fraudlent_MC_Start_Date]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Inputs[Derived Column Input].Columns[Fraudlent_MC_End_Date]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="Fraudlent_MC_End_Date"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Fraudlent_MC_End_Date]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Inputs[Derived Column Input].Columns[Affected_Lesson_Assessmt]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="7"
+                      cachedName="Affected_Lesson_Assessmt"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Affected_Lesson_Assessmt]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Inputs[Derived Column Input].Columns[Lesson_Assessmt_Date]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="Lesson_Assessmt_Date"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Lesson_Assessmt_Date]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Load_INTO_TEMP\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_STUDENT_ID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="11"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_STUDENT_ID]"
+                      name="Der_STUDENT_ID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[LTRIM]([RTRIM]([REPLACE]([REPLACE](#{Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Student_ID]},"\""," "),"NULL"," ")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">LTRIM(RTRIM(REPLACE(REPLACE(Student_ID,"\""," "),"NULL"," ")))</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Qual_Type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="11"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Qual_Type]"
+                      name="Der_Qual_Type"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[LTRIM]([RTRIM]([REPLACE]([REPLACE](#{Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Qual_Type]},"\""," "),"NULL"," ")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">LTRIM(RTRIM(REPLACE(REPLACE(Qual_Type,"\""," "),"NULL"," ")))</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Term]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="4"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Term]"
+                      name="Der_Term"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[LTRIM]([RTRIM]([REPLACE]([REPLACE](#{Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Term]},"\""," "),"NULL"," ")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">LTRIM(RTRIM(REPLACE(REPLACE(Term,"\""," "),"NULL"," ")))</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Type_Misconduct]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="4"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Type_Misconduct]"
+                      name="Der_Type_Misconduct"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[LTRIM]([RTRIM]([REPLACE]([REPLACE](#{Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Type_Misconduct]},"\""," "),"NULL"," ")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">LTRIM(RTRIM(REPLACE(REPLACE(Type_Misconduct,"\""," "),"NULL"," ")))</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Fraudlent_MC_Start_Date]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="30"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Fraudlent_MC_Start_Date]"
+                      name="Der_Fraudlent_MC_Start_Date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[LTRIM]([RTRIM]([REPLACE]([REPLACE](#{Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Fraudlent_MC_Start_Date]},"\""," "),"NULL"," ")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">LTRIM(RTRIM(REPLACE(REPLACE(Fraudlent_MC_Start_Date,"\""," "),"NULL"," ")))</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Fraudlent_MC_End_Date]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="30"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Fraudlent_MC_End_Date]"
+                      name="Der_Fraudlent_MC_End_Date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[LTRIM]([RTRIM]([REPLACE]([REPLACE](#{Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Fraudlent_MC_End_Date]},"\""," "),"NULL"," ")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">LTRIM(RTRIM(REPLACE(REPLACE(Fraudlent_MC_End_Date,"\""," "),"NULL"," ")))</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Module_ID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="6"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Module_ID]"
+                      name="Der_Module_ID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[LTRIM]([RTRIM]([REPLACE]([REPLACE](#{Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Module_ID]},"\""," "),"NULL"," ")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">LTRIM(RTRIM(REPLACE(REPLACE(Module_ID,"\""," "),"NULL"," ")))</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Affected_Lesson_Assessmt]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="7"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Affected_Lesson_Assessmt]"
+                      name="Der_Affected_Lesson_Assessmt"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[LTRIM]([RTRIM]([REPLACE]([REPLACE](#{Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Affected_Lesson_Assessmt]},"\""," "),"NULL"," ")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">LTRIM(RTRIM(REPLACE(REPLACE(Affected_Lesson_Assessmt,"\""," "),"NULL"," ")))</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Lesson_Assessmt_Date]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="30"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Lesson_Assessmt_Date]"
+                      name="Der_Lesson_Assessmt_Date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[LTRIM]([RTRIM]([REPLACE]([REPLACE](#{Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Lesson_Assessmt_Date]},"\""," "),"NULL"," ")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">LTRIM(RTRIM(REPLACE(REPLACE(Lesson_Assessmt_Date,"\""," "),"NULL"," ")))</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Load_INTO_TEMP\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load_INTO_TEMP\Derived Column 1"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column 1"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load_INTO_TEMP\Derived Column 1.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column 1.Inputs[Derived Column Input].Columns[Der_Fraudlent_MC_End_Date]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="Der_Fraudlent_MC_End_Date"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Fraudlent_MC_End_Date]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column 1.Inputs[Derived Column Input].Columns[Der_Fraudlent_MC_Start_Date]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="Der_Fraudlent_MC_Start_Date"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Fraudlent_MC_Start_Date]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column 1.Inputs[Derived Column Input].Columns[Der_Lesson_Assessmt_Date]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="Der_Lesson_Assessmt_Date"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Lesson_Assessmt_Date]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load_INTO_TEMP\Derived Column 1.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Load_INTO_TEMP\Derived Column 1.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column 1.Outputs[Derived Column Output].Columns[Der2_Fraudlent_MC_Start_Date]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="30"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column 1.Outputs[Derived Column Output].Columns[Der2_Fraudlent_MC_Start_Date]"
+                      name="Der2_Fraudlent_MC_Start_Date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Fraudlent_MC_Start_Date]} == "" ? "9999-12-31" : #{Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Fraudlent_MC_Start_Date]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">Der_Fraudlent_MC_Start_Date == "" ? "9999-12-31" : Der_Fraudlent_MC_Start_Date</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column 1.Outputs[Derived Column Output].Columns[Der2_Fraudlent_MC_End_Date]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column 1.Outputs[Derived Column Output].Columns[Der2_Fraudlent_MC_End_Date]"
+                      name="Der2_Fraudlent_MC_End_Date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Fraudlent_MC_End_Date]} == "" ? NULL(DT_WSTR,50) : #{Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Fraudlent_MC_End_Date]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">Der_Fraudlent_MC_End_Date == "" ? NULL(DT_WSTR,50) : Der_Fraudlent_MC_End_Date</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column 1.Outputs[Derived Column Output].Columns[Der2_Lesson_Assessmt_Date]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column 1.Outputs[Derived Column Output].Columns[Der2_Lesson_Assessmt_Date]"
+                      name="Der2_Lesson_Assessmt_Date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Lesson_Assessmt_Date]} == "" ? NULL(DT_WSTR,50) : #{Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output].Columns[Der_Lesson_Assessmt_Date]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">Der_Lesson_Assessmt_Date == "" ? NULL(DT_WSTR,50) : Der_Lesson_Assessmt_Date</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load_INTO_TEMP\Derived Column 1.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Load_INTO_TEMP\Derived Column 1.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load_INTO_TEMP\Insert into Temp table"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Insert into Temp table"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[TMP_STG_OASIS_ACAD_MISCONDUCT]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load_INTO_TEMP\Insert into Temp table.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[STG]"
+                  connectionManagerRefId="Package.ConnectionManagers[STG]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].Columns[Copy of Der_STUDENT_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of Der_STUDENT_ID"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Student_ID]"
+                      lineageId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_STUDENT_ID]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].Columns[Copy of Der_Qual_Type]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of Der_Qual_Type"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Qual_Type]"
+                      lineageId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_Qual_Type]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].Columns[Copy of Der_Term]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of Der_Term"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Term]"
+                      lineageId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_Term]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].Columns[Copy of Der_Type_Misconduct]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of Der_Type_Misconduct"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Type_Misconduct]"
+                      lineageId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_Type_Misconduct]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].Columns[Copy of Der_Module_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of Der_Module_ID"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Module_ID]"
+                      lineageId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_Module_ID]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].Columns[Copy of Der_Affected_Lesson_Assessmt]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of Der_Affected_Lesson_Assessmt"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Affected_Lesson_Assessmt]"
+                      lineageId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Der_Affected_Lesson_Assessmt]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].Columns[Der2_Fraudlent_MC_Start_Date]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="Der2_Fraudlent_MC_Start_Date"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Fraudlent_MC_Start_Date]"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column 1.Outputs[Derived Column Output].Columns[Der2_Fraudlent_MC_Start_Date]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].Columns[Der2_Fraudlent_MC_End_Date]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Der2_Fraudlent_MC_End_Date"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Fraudlent_MC_End_Date]"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column 1.Outputs[Derived Column Output].Columns[Der2_Fraudlent_MC_End_Date]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].Columns[Der2_Lesson_Assessmt_Date]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Der2_Lesson_Assessmt_Date"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Lesson_Assessmt_Date]"
+                      lineageId="Package\Load_INTO_TEMP\Derived Column 1.Outputs[Derived Column Output].Columns[Der2_Lesson_Assessmt_Date]" />
+                    <inputColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].Columns[Penalty]"
+                      cachedDataType="nText"
+                      cachedName="Penalty"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Penalty]"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Penalty]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Student_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      name="Student_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Qual_Type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      name="Qual_Type" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Term]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="Term" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Type_Misconduct]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="Type_Misconduct" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Fraudlent_MC_Start_Date]"
+                      dataType="dbDate"
+                      name="Fraudlent_MC_Start_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Fraudlent_MC_End_Date]"
+                      dataType="dbDate"
+                      name="Fraudlent_MC_End_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Module_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="Module_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Affected_Lesson_Assessmt]"
+                      codePage="1252"
+                      dataType="str"
+                      length="7"
+                      name="Affected_Lesson_Assessmt" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Lesson_Assessmt_Date]"
+                      dataType="dbDate"
+                      name="Lesson_Assessmt_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input].ExternalColumns[Penalty]"
+                      dataType="nText"
+                      name="Penalty" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load_INTO_TEMP\Insert into Temp table.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load_INTO_TEMP\Insert into Temp table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\Insert into Temp table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load_INTO_TEMP\Insert into Temp table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load_INTO_TEMP\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[PSTG_OASIS_ACAD_MISCONDUCT]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load_INTO_TEMP\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PSTG]"
+                  connectionManagerRefId="Package.ConnectionManagers[PSTG]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Student_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Student_ID]"
+                      length="11"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Student_ID]"
+                      name="Student_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Qual_Type]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Qual_Type]"
+                      length="11"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Qual_Type]"
+                      name="Qual_Type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Term]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Term]"
+                      length="4"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Term]"
+                      name="Term"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Type_Misconduct]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Type_Misconduct]"
+                      length="4"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Type_Misconduct]"
+                      name="Type_Misconduct"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Fraudlent_MC_Start_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Fraudlent_MC_Start_Date]"
+                      length="30"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Fraudlent_MC_Start_Date]"
+                      name="Fraudlent_MC_Start_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Fraudlent_MC_End_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Fraudlent_MC_End_Date]"
+                      length="30"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Fraudlent_MC_End_Date]"
+                      name="Fraudlent_MC_End_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Module_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Module_ID]"
+                      length="6"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Module_ID]"
+                      name="Module_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Affected_Lesson_Assessmt]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Affected_Lesson_Assessmt]"
+                      length="7"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Affected_Lesson_Assessmt]"
+                      name="Affected_Lesson_Assessmt"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Lesson_Assessmt_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Lesson_Assessmt_Date]"
+                      length="30"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Lesson_Assessmt_Date]"
+                      name="Lesson_Assessmt_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Penalty]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Penalty]"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].Columns[Penalty]"
+                      name="Penalty"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Student_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      name="Student_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Qual_Type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      name="Qual_Type" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Term]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="Term" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Type_Misconduct]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="Type_Misconduct" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Fraudlent_MC_Start_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="Fraudlent_MC_Start_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Fraudlent_MC_End_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="Fraudlent_MC_End_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Module_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="Module_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Affected_Lesson_Assessmt]"
+                      codePage="1252"
+                      dataType="str"
+                      length="7"
+                      name="Affected_Lesson_Assessmt" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Lesson_Assessmt_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="Lesson_Assessmt_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Penalty]"
+                      dataType="nText"
+                      name="Penalty" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Created_On]"
+                      dataType="dbTimeStamp"
+                      name="Created_On" />
+                    <externalMetadataColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Modified_On]"
+                      dataType="dbTimeStamp"
+                      name="Modified_On" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Student_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Student_ID]"
+                      name="Student_ID" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Qual_Type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Qual_Type]"
+                      name="Qual_Type" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Term]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Term]"
+                      name="Term" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Type_Misconduct]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Type_Misconduct]"
+                      name="Type_Misconduct" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Fraudlent_MC_Start_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Fraudlent_MC_Start_Date]"
+                      name="Fraudlent_MC_Start_Date" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Fraudlent_MC_End_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Fraudlent_MC_End_Date]"
+                      name="Fraudlent_MC_End_Date" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Module_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Module_ID]"
+                      name="Module_ID" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Affected_Lesson_Assessmt]"
+                      codePage="1252"
+                      dataType="str"
+                      length="7"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Affected_Lesson_Assessmt]"
+                      name="Affected_Lesson_Assessmt" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Lesson_Assessmt_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Lesson_Assessmt_Date]"
+                      name="Lesson_Assessmt_Date" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Penalty]"
+                      dataType="nText"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Penalty]"
+                      name="Penalty" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load_INTO_TEMP.Paths[Data Conversion Output]"
+              endId="Package\Load_INTO_TEMP\Insert into Temp table.Inputs[OLE DB Destination Input]"
+              name="Data Conversion Output"
+              startId="Package\Load_INTO_TEMP\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Load_INTO_TEMP.Paths[Derived Column Output]"
+              endId="Package\Load_INTO_TEMP\Derived Column 1.Inputs[Derived Column Input]"
+              name="Derived Column Output"
+              startId="Package\Load_INTO_TEMP\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load_INTO_TEMP.Paths[Derived Column Output1]"
+              endId="Package\Load_INTO_TEMP\Data Conversion.Inputs[Data Conversion Input]"
+              name="Derived Column Output"
+              startId="Package\Load_INTO_TEMP\Derived Column 1.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load_INTO_TEMP.Paths[OLE DB Source Output]"
+              endId="Package\Load_INTO_TEMP\Derived Column.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load_INTO_TEMP\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\log to job status table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3BDA751A-B8FC-4BA1-BE22-F00DCAA87EF1}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="log to job status table"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{0049995D-9A4D-47A4-8D05-D0D0729406D4}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::SQL_Script_Constraint" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Duplicate_Check"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::Mandatory_constraint_Check"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Process_Date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3B408AC6-3B98-4070-B416-FF62A23978A9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Process_Date"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8880AC2F-1082-4038-9A5B-7EE2CFF7D0EF}"
+          SQLTask:SqlStatementSource="Select getdate()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::Process_date" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Temp Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{39036A57-B8B2-493A-9587-A4B261FED01E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Temp Table"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8880AC2F-1082-4038-9A5B-7EE2CFF7D0EF}"
+          SQLTask:SqlStatementSource="Truncate table [dbo].[TMP_STG_OASIS_ACAD_MISCONDUCT]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update Succes"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9B8E077F-6B5C-4116-9356-AFB0E73DF61F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Succes"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{0049995D-9A4D-47A4-8D05-D0D0729406D4}"
+          SQLTask:SqlStatementSource="DECLARE &#xA;@jobstatusid INT &#xA;select @jobstatusid=?&#xA;IF exists(select * from dbo.ETL_ERROR_LOG where [JOB_STATUS_ID]=@jobstatusid)&#xA; BEGIN&#xA; Update [dbo].[ETL_JOB_STATUS]&#xA;SET [PROCESSED_ON] =getdate(),&#xA;[JOB_STATUS]='Fail'&#xA;where [JOB_STATUS_ID]=@jobstatusid&#xA;  END&#xA;ELSE&#xA;BEGIN&#xA;Update [dbo].[ETL_JOB_STATUS]&#xA;SET [PROCESSED_ON] =getdate(),&#xA;[JOB_STATUS]='Success'&#xA;where [JOB_STATUS_ID]=@jobstatusid&#xA;END" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="131"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Validate job status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5FD67D77-BE16-4D56-8CE1-7197A23CBD44}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Validate job status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{0049995D-9A4D-47A4-8D05-D0D0729406D4}"
+          SQLTask:SqlStatementSource="declare @STAGE varchar(100),&#xA;@TARGET_TABLENAME varchar(100)&#xA;select   @STAGE=?&#xA;select   @TARGET_TABLENAME=?&#xA;&#xA;select CASE WHEN JOB_STATUS='Success' then 0 ELSE 1 END AS  JOB_STATUS&#xA;&#xA;from [dbo].[ETL_JOB_STATUS]&#xA;  where STAGE=@STAGE and TARGET_TABLENAME=@TARGET_TABLENAME and &#xA;  JOB_STATUS_ID in (Select max(JOB_STATUS_ID) from [dbo].[ETL_JOB_STATUS]&#xA;  where STAGE=@STAGE and TARGET_TABLENAME=@TARGET_TABLENAME)"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::Job_Status" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::PreStage"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::SourceTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Validate mandatory constraint"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E62F3296-86E3-44D5-B855-79BB7DA8E39E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Validate mandatory constraint"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7B20D3BF-4B4D-4D60-AD28-ACD73710120E}"
+          SQLTask:SqlStatementSource="WITH PSTG_VALIDATION1 &#xA;AS&#xA;(&#xA;SELECT &#xA;&#xA;LTRIM(RTRIM(REPLACE(REPLACE(Student_ID,'NULL',''),'&quot;&quot;',''))) Student_ID,&#xA;LTRIM(RTRIM(REPLACE(REPLACE(Qual_Type,'NULL',''),'&quot;&quot;',''))) Qual_Type,&#xA;LTRIM(RTRIM(REPLACE(REPLACE(Term,'NULL',''),'&quot;&quot;',''))) Term,&#xA;LTRIM(RTRIM(REPLACE(REPLACE(Type_Misconduct,'NULL',''),'&quot;&quot;',''))) Type_Misconduct&#xA;--LTRIM(RTRIM(REPLACE(REPLACE(Fraudlent_MC_Start_Date,'NULL',''),'&quot;&quot;',''))) Fraudlent_MC_Start_Date,&#xA;--LTRIM(RTRIM(REPLACE(REPLACE(Module_ID,'NULL',''),'&quot;&quot;',''))) Module_ID,&#xA;--LTRIM(RTRIM(REPLACE(REPLACE(Affected_Lesson_Assessmt,'NULL',''),'&quot;&quot;',''))) Affected_Lesson_Assessmt&#xA;&#xA;FROM [dbo].[PSTG_OASIS_ACAD_MISCONDUCT])&#xA;SELECT&#xA; CASE WHEN EXISTS(select * from  PSTG_VALIDATION1&#xA;where (Student_ID='' or Qual_Type='' Or Term='' or Type_Misconduct=''   &#xA;or Student_ID IS NULL or Qual_Type IS NULL  OR Term IS NULL or Type_Misconduct IS NULL  ))&#xA;THEN 1 &#xA;ELSE 0&#xA;END  as MandColValidation"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="MandColValidation"
+            SQLTask:DtsVariableName="User::Mandatory_constraint_Check" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Validate primary key constraint"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{575D2C7F-2FB3-4590-8002-8371E110DF14}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Validate primary key constraint"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7B20D3BF-4B4D-4D60-AD28-ACD73710120E}"
+          SQLTask:SqlStatementSource="WITH PSTG_VALIDATION&#xA;&#xA;AS&#xA;(&#xA;SELECT &#xA;&#xA;LTRIM(RTRIM(REPLACE(REPLACE(Student_ID,'NULL',''),'&quot;&quot;',''))) Student_ID,&#xA;LTRIM(RTRIM(REPLACE(REPLACE(Qual_Type,'NULL',''),'&quot;&quot;',''))) Qual_Type,&#xA;LTRIM(RTRIM(REPLACE(REPLACE(Term,'NULL',''),'&quot;&quot;',''))) Term,&#xA;LTRIM(RTRIM(REPLACE(REPLACE(Type_Misconduct,'NULL',''),'&quot;&quot;',''))) Type_Misconduct,&#xA;LTRIM(RTRIM(REPLACE(REPLACE(Fraudlent_MC_Start_Date,'NULL',''),'&quot;&quot;',''))) Fraudlent_MC_Start_Date,&#xA;LTRIM(RTRIM(REPLACE(REPLACE(Module_ID,'NULL',''),'&quot;&quot;',''))) Module_ID,&#xA;LTRIM(RTRIM(REPLACE(REPLACE(Affected_Lesson_Assessmt,'NULL',''),'&quot;&quot;',''))) Affected_Lesson_Assessmt&#xA;&#xA;FROM [dbo].[PSTG_OASIS_ACAD_MISCONDUCT])&#xA;&#xA;SELECT&#xA;CASE WHEN EXISTS (SELECT  COUNT(1) COUNTOFPK,Student_ID,Qual_Type, Term,Type_Misconduct,Fraudlent_MC_Start_Date,Module_ID,Affected_Lesson_Assessmt&#xA;FROM PSTG_VALIDATION&#xA;GROUP&#xA;BY Student_ID,Qual_Type, Term,Type_Misconduct,Fraudlent_MC_Start_Date,Module_ID,Affected_Lesson_Assessmt&#xA;HAVING COUNT(1)&gt;1)&#xA;THEN 1 &#xA;ELSE 0  &#xA;END Duplicate_Check"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="Duplicate_Check"
+            SQLTask:DtsVariableName="User::Duplicate_Check" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{48E56B5B-8B52-4AA3-8BF7-B7944DC8E80C}"
+      DTS:From="Package\Load Into STG"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Truncate Temp Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{7FA531E7-B935-4669-9B82-300CE4EA6E70}"
+      DTS:From="Package\Validate primary key constraint"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Validate mandatory constraint" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{783A7E45-8609-474E-99A1-527FA97AF176}"
+      DTS:From="Package\Truncate Temp Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Update Succes" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{B906AC33-1082-445D-8C07-E28978815E77}"
+      DTS:From="Package\Create ETL Job Log"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\JOB_STATUS_ID" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{37BA5A45-98A1-4848-917E-929DB93C2838}"
+      DTS:From="Package\Process_Date"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Validate primary key constraint" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{54670592-9CC4-43FE-A94E-54F0E0CF908A}"
+      DTS:From="Package\Load_INTO_TEMP"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Load Into STG" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{3435B950-89B7-4877-B6AF-E293F0FE9A5C}"
+      DTS:From="Package\JOB_STATUS_ID"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\Validate job status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[FALSE]"
+      DTS:CreationName=""
+      DTS:DTSID="{4D93C6D3-30B5-47A8-A2D7-881320D61B5A}"
+      DTS:EvalOp="1"
+      DTS:Expression="(@[User::Duplicate_Check]==1 || @[User::Mandatory_constraint_Check]==1)"
+      DTS:From="Package\Validate mandatory constraint"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="FALSE"
+      DTS:To="Package\log to job status table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[False]"
+      DTS:CreationName=""
+      DTS:DTSID="{D14C714C-4097-41C5-B387-772C3B23E322}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::Job_Status]==1"
+      DTS:From="Package\Validate job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="False"
+      DTS:To="Package\Error Log" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[TRUE]"
+      DTS:CreationName=""
+      DTS:DTSID="{4EF118FD-7C33-4EAD-A7AD-CED1B40B2E17}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::Mandatory_constraint_Check]==0 &amp;&amp;  @[User::Duplicate_Check]==0"
+      DTS:From="Package\Validate mandatory constraint"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="TRUE"
+      DTS:To="Package\Load_INTO_TEMP" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[TRUE1]"
+      DTS:CreationName=""
+      DTS:DTSID="{7838BAA0-060C-4AAE-BFC6-EAF13E0F7A24}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::Job_Status]==0"
+      DTS:From="Package\Validate job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="TRUE"
+      DTS:To="Package\Process_Date" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{E5E2B932-B37D-46E3-AE5B-8329ABD52186}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{4A35AD4E-A1DC-4B13-B986-A9AD39335115}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL_ERROR_LOG"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{F2A4E9A0-6C1C-4F14-A441-66617EB6F556}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL_ERROR_LOG">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{0049995D-9A4D-47A4-8D05-D0D0729406D4}"
+              SQLTask:SqlStatementSource="[dbo].[usp_InsertETLErrorLog] ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JOB_STATUS_ID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="131"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="157,42"
+          Id="Package\Create ETL Job Log"
+          TopLeft="4,29" />
+        <NodeLayout
+          Size="123,42"
+          Id="Package\Error Log"
+          TopLeft="717,35" />
+        <NodeLayout
+          Size="142,42"
+          Id="Package\JOB_STATUS_ID"
+          TopLeft="192,25" />
+        <NodeLayout
+          Size="147,42"
+          Id="Package\Load Into STG"
+          TopLeft="163,388" />
+        <NodeLayout
+          Size="164,42"
+          Id="Package\Load_INTO_TEMP"
+          TopLeft="131,312" />
+        <NodeLayout
+          Size="182,42"
+          Id="Package\log to job status table"
+          TopLeft="623,197" />
+        <NodeLayout
+          Size="142,42"
+          Id="Package\Process_Date"
+          TopLeft="463,117" />
+        <NodeLayout
+          Size="180,42"
+          Id="Package\Truncate Temp Table"
+          TopLeft="425,321" />
+        <NodeLayout
+          Size="148,42"
+          Id="Package\Update Succes"
+          TopLeft="729,306" />
+        <NodeLayout
+          Size="166,42"
+          Id="Package\Validate job status"
+          TopLeft="424,20" />
+        <NodeLayout
+          Size="220,42"
+          Id="Package\Validate mandatory constraint"
+          TopLeft="296,227" />
+        <NodeLayout
+          Size="225,42"
+          Id="Package\Validate primary key constraint"
+          TopLeft="158,167" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="259.666666666667,388">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="255.333333333333,-25"
+              Start="0,0"
+              End="255.333333333333,-17.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-6.16150740242261" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-6.16150740242261"
+                    Point2="0,-10.1615074024226"
+                    Point3="4,-10.1615074024226" />
+                  <mssgle:LineSegment
+                    End="251.333333333333,-10.1615074024226" />
+                  <mssgle:CubicBezierSegment
+                    Point1="251.333333333333,-10.1615074024226"
+                    Point2="255.333333333333,-10.1615074024226"
+                    Point3="255.333333333333,-14.1615074024226" />
+                  <mssgle:LineSegment
+                    End="255.333333333333,-17.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="383,193.666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="23,33.3333333333333"
+              Start="0,0"
+              End="23,25.8333333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="19,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="19,0"
+                    Point2="23,0"
+                    Point3="23,4" />
+                  <mssgle:LineSegment
+                    End="23,25.8333333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="605,342">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="124,-15"
+              Start="0,0"
+              End="116.5,-15">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="58,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="58,0"
+                    Point2="62,0"
+                    Point3="62,-4" />
+                  <mssgle:LineSegment
+                    End="62,-11" />
+                  <mssgle:CubicBezierSegment
+                    Point1="62,-11"
+                    Point2="62,-15"
+                    Point3="66,-15" />
+                  <mssgle:LineSegment
+                    End="116.5,-15" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="161,48">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="31,0"
+              Start="0,0"
+              End="23.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="23.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="463,138">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-80,44.3333333333333"
+              Start="0,0"
+              End="-72.5,44.3333333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-42.2385321100917,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-42.2385321100917,0"
+                    Point2="-46.2385321100917,0"
+                    Point3="-46.2385321100917,4" />
+                  <mssgle:LineSegment
+                    End="-46.2385321100917,40.3333333333333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-46.2385321100917,40.3333333333333"
+                    Point2="-46.2385321100917,44.3333333333333"
+                    Point3="-50.2385321100917,44.3333333333333" />
+                  <mssgle:LineSegment
+                    End="-72.5,44.3333333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="213.166666666667,354">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34"
+              Start="0,0"
+              End="0,26.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="334,43.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="90,0"
+              Start="0,0"
+              End="82.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="82.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[FALSE]"
+          TopLeft="516,248">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="107,-30"
+              Start="0,0"
+              End="99.5,-30">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="49.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="49.5,0"
+                    Point2="53.5,0"
+                    Point3="53.5,-4" />
+                  <mssgle:LineSegment
+                    End="53.5,-26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="53.5,-26"
+                    Point2="53.5,-30"
+                    Point3="57.5,-30" />
+                  <mssgle:LineSegment
+                    End="99.5,-30" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="30.4783984375,1,46.043203125,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[False]"
+          TopLeft="590,41">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="127,15"
+              Start="0,0"
+              End="119.5,15">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="59.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="59.5,0"
+                    Point2="63.5,0"
+                    Point3="63.5,4" />
+                  <mssgle:LineSegment
+                    End="63.5,11" />
+                  <mssgle:CubicBezierSegment
+                    Point1="63.5,11"
+                    Point2="63.5,15"
+                    Point3="67.5,15" />
+                  <mssgle:LineSegment
+                    End="119.5,15" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="42.895,-22,41.21,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[TRUE]"
+          TopLeft="406,269">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-193,43"
+              Start="0,0"
+              End="-193,35.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.5"
+                    Point2="0,21.5"
+                    Point3="-4,21.5" />
+                  <mssgle:LineSegment
+                    End="-189,21.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-189,21.5"
+                    Point2="-193,21.5"
+                    Point3="-193,25.5" />
+                  <mssgle:LineSegment
+                    End="-193,35.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-117.9466015625,26.5,42.893203125,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[TRUE1]"
+          TopLeft="507,62">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="27,55"
+              Start="0,0"
+              End="27,47.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.5"
+                    Point2="0,27.5"
+                    Point3="4,27.5" />
+                  <mssgle:LineSegment
+                    End="23,27.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="23,27.5"
+                    Point2="27,27.5"
+                    Point3="27,31.5" />
+                  <mssgle:LineSegment
+                    End="27,47.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-7.9466015625,32.5,42.893203125,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="162,42"
+          Id="Package.EventHandlers[OnError]\ETL_ERROR_LOG"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\Load_INTO_TEMP">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Load_INTO_TEMP\OLE DB Source"
+          TopLeft="145,20" />
+        <NodeLayout
+          Size="184,42"
+          Id="Package\Load_INTO_TEMP\Insert into Temp table"
+          TopLeft="247,265" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\Load_INTO_TEMP\Derived Column"
+          TopLeft="174,100" />
+        <NodeLayout
+          Size="156,42"
+          Id="Package\Load_INTO_TEMP\Data Conversion"
+          TopLeft="187,184" />
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Load_INTO_TEMP\Derived Column 1"
+          TopLeft="488,127" />
+        <EdgeLayout
+          Id="Package\Load_INTO_TEMP.Paths[Derived Column Output1]"
+          TopLeft="488,153.666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-145,51.3333333333333"
+              Start="0,0"
+              End="-137.5,51.3333333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-57.1926605504587,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-57.1926605504587,0"
+                    Point2="-61.1926605504587,0"
+                    Point3="-61.1926605504587,4" />
+                  <mssgle:LineSegment
+                    End="-61.1926605504587,47.3333333333333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-61.1926605504587,47.3333333333333"
+                    Point2="-61.1926605504587,51.3333333333333"
+                    Point3="-65.1926605504587,51.3333333333333" />
+                  <mssgle:LineSegment
+                    End="-137.5,51.3333333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load_INTO_TEMP.Paths[Derived Column Output]"
+          TopLeft="328,121">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="160,27"
+              Start="0,0"
+              End="152.5,27">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="76,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="76,0"
+                    Point2="80,0"
+                    Point3="80,4" />
+                  <mssgle:LineSegment
+                    End="80,23" />
+                  <mssgle:CubicBezierSegment
+                    Point1="80,23"
+                    Point2="80,27"
+                    Point3="84,27" />
+                  <mssgle:LineSegment
+                    End="152.5,27" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load_INTO_TEMP.Paths[Data Conversion Output]"
+          TopLeft="265,226">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="74,39"
+              Start="0,0"
+              End="74,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.5"
+                    Point2="0,19.5"
+                    Point3="4,19.5" />
+                  <mssgle:LineSegment
+                    End="70,19.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="70,19.5"
+                    Point2="74,19.5"
+                    Point3="74,23.5" />
+                  <mssgle:LineSegment
+                    End="74,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load_INTO_TEMP.Paths[OLE DB Source Output]"
+          TopLeft="220,62">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="31,38"
+              Start="0,0"
+              End="31,30.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15"
+                    Point2="0,19"
+                    Point3="4,19" />
+                  <mssgle:LineSegment
+                    End="27,19" />
+                  <mssgle:CubicBezierSegment
+                    Point1="27,19"
+                    Point2="31,19"
+                    Point3="31,23" />
+                  <mssgle:LineSegment
+                    End="31,30.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load_INTO_TEMP\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load_INTO_TEMP\Insert into Temp table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PrecedenceConstraint
+    design-time-name="Package.PrecedenceConstraints[FALSE]">
+    <ShowAnnotation>ConstraintName</ShowAnnotation>
+  </PrecedenceConstraint>
+  <PrecedenceConstraint
+    design-time-name="Package.PrecedenceConstraints[False]">
+    <ShowAnnotation>ConstraintName</ShowAnnotation>
+  </PrecedenceConstraint>
+  <PrecedenceConstraint
+    design-time-name="Package.PrecedenceConstraints[TRUE]">
+    <ShowAnnotation>ConstraintName</ShowAnnotation>
+  </PrecedenceConstraint>
+  <PrecedenceConstraint
+    design-time-name="Package.PrecedenceConstraints[TRUE1]">
+    <ShowAnnotation>ConstraintName</ShowAnnotation>
+  </PrecedenceConstraint>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

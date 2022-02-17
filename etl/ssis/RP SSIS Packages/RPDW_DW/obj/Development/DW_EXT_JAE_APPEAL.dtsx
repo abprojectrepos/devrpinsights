@@ -1,0 +1,1922 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/31/2019 4:40:18 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-140119GM07"
+  DTS:CreatorName="NCS\P0500450"
+  DTS:DTSID="{C4C91823-8650-490E-B98D-3B29A53F1465}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="DW_EXT_JAE_APPEAL"
+  DTS:PackageType="5"
+  DTS:VersionBuild="144"
+  DTS:VersionGUID="{AE925368-9305-4E8B-B24A-DAFD181940B5}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{D1ACDA7B-D5F1-4C1A-9987-911E180DDB17}"
+      DTS:ObjectName="RPDW_DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT;Provider=SQLNCLI11.1;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_STG]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{D5B937F7-41DE-41A0-BB18-6D88F00AECEE}"
+      DTS:ObjectName="RPDW_STG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::Staging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT_STG;Provider=SQLNCLI11.1;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{153281A0-6E05-4473-B154-B7966B519F63}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;------------&#xA;DECLARE @LastDWProcessdate datetime&#xA;,@processeddatetime datetime&#xA;,@jobstatusid varchar(5)&#xA;select @jobstatusid=&quot;+ (DT_STR, 5,1252) @[User::JobStatusId] +&quot;&#xA;select @LastDWProcessdate=isnull(max(Modified_on),'1900-01-01 00:00:00.000') from [dbo].[DW_EXT_DPAEAE_JAE]&#xA;select  @processeddatetime= getdate()&#xA;&#xA;;WITH TMP_EXT_DPAEAE_JAE2&#xA;AS&#xA;(&#xA;SELECT [UIN]&#xA;      ,[STATUTORY_NM]&#xA;      ,[POSTED_COURSE_CD]&#xA;      ,[JAE_SUBJECT_CD_1]&#xA;      ,[JAE_GRADE_1]&#xA;      ,[BETTER_GRADE _1]&#xA;      ,[JAE_SUBJECT_CD_2]&#xA;      ,[JAE_GRADE_2]&#xA;      ,[BETTER_GRADE_2]&#xA;      ,[JAE_SUBJECT_CD_3]&#xA;      ,[JAE_GRADE_3]&#xA;      ,[BETTER_GRADE _3]&#xA;      ,[JAE_SUBJECT_CD_4]&#xA;      ,[JAE_GRADE_4]&#xA;      ,[BETTER_GRADE _4]&#xA;      ,[JAE_SUBJECT_CD_5]&#xA;      ,[JAE_GRADE_5]&#xA;      ,[BETTER_GRADE _5]&#xA;      ,[JAE_SUBJECT_CD_6]&#xA;      ,[JAE_GRADE_6]&#xA;      ,[BETTER_GRADE_6]&#xA;      ,[JAE_SUBJECT_CD_7]&#xA;      ,[JAE_GRADE_7]&#xA;      ,[BETTER_GRADE_7]&#xA;      ,[JAE_SUBJECT_CD_8]&#xA;      ,[JAE_GRADE_8]&#xA;      ,[BETTER_GRADE_8]&#xA;      ,[JAE_SUBJECT_CD_9]&#xA;      ,[JAE_GRADE_9]&#xA;      ,[BETTER_GRADE_9]&#xA;      ,[JAE_SUBJECT_CD_10]&#xA;      ,[JAE_GRADE_10]&#xA;      ,[BETTER_GRADE_10]&#xA;      ,[JAE_SUBJECT_CD_11]&#xA;      ,[JAE_GRADE_11]&#xA;      ,[BETTER_GRADE_11]&#xA;      ,[JAE_SUBJECT_CD_12]&#xA;      ,[JAE_GRADE_12]&#xA;      ,[BETTER_GRADE_12]&#xA;      ,[ECA_GRADE]&#xA;      ,[YR_FIRST_SITTING]&#xA;      ,[YR_SECOND_SITTING]&#xA;      ,[RAW_AGGREGATE]&#xA;      ,[NET_AGGREGATE]&#xA;      ,[DPA_IND]&#xA;      ,[COMBINED_SITTING]&#xA;      ,[CREATED_ON]&#xA;      ,[MODIFIED_ON]&#xA;      ,[AY_YEAR]&#xA;      ,[AY_SEM]&#xA;   FROM &quot;+@[$Project::Staging_Initial_Catalog]+&quot;.[dbo].[STG_EXT_DPAEAE_JAE2]&#xA;   where [Latest_Ind] ='Y' &#xA;AND [MODIFIED_ON]&gt;@LastDWProcessdate&#xA;)&#xA;&#xA;&#xA;MERGE INTO [DW_EXT_DPAEAE_JAE] AS dst&#xA;   USING TMP_EXT_DPAEAE_JAE2 AS src&#xA;  ON (&#xA;  SRC. [AY_SEM] = DST.[AY_SEM] AND   &#xA;  SRC. [AY_YEAR] = DST.[AY_YEAR] AND   &#xA;  SRC. [UIN] = DST.[UIN]&#xA;     )&#xA;&#xA;   WHEN NOT MATCHED THEN&#xA;   INSERT&#xA;&#x9;(&#xA;&#x9;   [UIN]&#xA;      ,[STATUTORY_NM]&#xA;      ,[POSTED_COURSE_CD]&#xA;      ,[JAE_SUBJECT_CD_1]&#xA;      ,[JAE_GRADE_1]&#xA;      ,[BETTER_GRADE _1]&#xA;      ,[JAE_SUBJECT_CD_2]&#xA;      ,[JAE_GRADE_2]&#xA;      ,[BETTER_GRADE_2]&#xA;      ,[JAE_SUBJECT_CD_3]&#xA;      ,[JAE_GRADE_3]&#xA;      ,[BETTER_GRADE _3]&#xA;      ,[JAE_SUBJECT_CD_4]&#xA;      ,[JAE_GRADE_4]&#xA;      ,[BETTER_GRADE _4]&#xA;      ,[JAE_SUBJECT_CD_5]&#xA;      ,[JAE_GRADE_5]&#xA;      ,[BETTER_GRADE _5]&#xA;      ,[JAE_SUBJECT_CD_6]&#xA;      ,[JAE_GRADE_6]&#xA;      ,[BETTER_GRADE_6]&#xA;      ,[JAE_SUBJECT_CD_7]&#xA;      ,[JAE_GRADE_7]&#xA;      ,[BETTER_GRADE_7]&#xA;      ,[JAE_SUBJECT_CD_8]&#xA;      ,[JAE_GRADE_8]&#xA;      ,[BETTER_GRADE_8]&#xA;      ,[JAE_SUBJECT_CD_9]&#xA;      ,[JAE_GRADE_9]&#xA;      ,[BETTER_GRADE_9]&#xA;      ,[JAE_SUBJECT_CD_10]&#xA;      ,[JAE_GRADE_10]&#xA;      ,[BETTER_GRADE_10]&#xA;      ,[JAE_SUBJECT_CD_11]&#xA;      ,[JAE_GRADE_11]&#xA;      ,[BETTER_GRADE_11]&#xA;      ,[JAE_SUBJECT_CD_12]&#xA;      ,[JAE_GRADE_12]&#xA;      ,[BETTER_GRADE_12]&#xA;      ,[ECA_GRADE]&#xA;      ,[YR_FIRST_SITTING]&#xA;      ,[YR_SECOND_SITTING]&#xA;      ,[RAW_AGGREGATE]&#xA;      ,[NET_AGGREGATE]&#xA;      ,[DPA_IND]&#xA;      ,[COMBINED_SITTING]&#xA;      ,[CREATED_ON]&#xA;      ,[MODIFIED_ON]&#xA;      ,[AY_YEAR]&#xA;      ,[AY_SEM]&#xA;&#x9;  )&#xA;VALUES&#xA;&#x9;(  &#xA;       SRC.[UIN]&#xA;      ,SRC.[STATUTORY_NM]&#xA;      ,SRC.[POSTED_COURSE_CD]&#xA;      ,SRC.[JAE_SUBJECT_CD_1]&#xA;      ,SRC.[JAE_GRADE_1]&#xA;      ,SRC.[BETTER_GRADE _1]&#xA;      ,SRC.[JAE_SUBJECT_CD_2]&#xA;      ,SRC.[JAE_GRADE_2]&#xA;      ,SRC.[BETTER_GRADE_2]&#xA;      ,SRC.[JAE_SUBJECT_CD_3]&#xA;      ,SRC.[JAE_GRADE_3]&#xA;      ,SRC.[BETTER_GRADE _3]&#xA;      ,SRC.[JAE_SUBJECT_CD_4]&#xA;      ,SRC.[JAE_GRADE_4]&#xA;      ,SRC.[BETTER_GRADE _4]&#xA;      ,SRC.[JAE_SUBJECT_CD_5]&#xA;      ,SRC.[JAE_GRADE_5]&#xA;      ,SRC.[BETTER_GRADE _5]&#xA;      ,SRC.[JAE_SUBJECT_CD_6]&#xA;      ,SRC.[JAE_GRADE_6]&#xA;      ,SRC.[BETTER_GRADE_6]&#xA;      ,SRC.[JAE_SUBJECT_CD_7]&#xA;      ,SRC.[JAE_GRADE_7]&#xA;      ,SRC.[BETTER_GRADE_7]&#xA;      ,SRC.[JAE_SUBJECT_CD_8]&#xA;      ,SRC.[JAE_GRADE_8]&#xA;      ,SRC.[BETTER_GRADE_8]&#xA;      ,SRC.[JAE_SUBJECT_CD_9]&#xA;      ,SRC.[JAE_GRADE_9]&#xA;      ,SRC.[BETTER_GRADE_9]&#xA;      ,SRC.[JAE_SUBJECT_CD_10]&#xA;      ,SRC.[JAE_GRADE_10]&#xA;      ,SRC.[BETTER_GRADE_10]&#xA;      ,SRC.[JAE_SUBJECT_CD_11]&#xA;      ,SRC.[JAE_GRADE_11]&#xA;      ,SRC.[BETTER_GRADE_11]&#xA;      ,SRC.[JAE_SUBJECT_CD_12]&#xA;      ,SRC.[JAE_GRADE_12]&#xA;      ,SRC.[BETTER_GRADE_12]&#xA;      ,SRC.[ECA_GRADE]&#xA;      ,SRC.[YR_FIRST_SITTING]&#xA;      ,SRC.[YR_SECOND_SITTING]&#xA;      ,SRC.[RAW_AGGREGATE]&#xA;      ,SRC.[NET_AGGREGATE]&#xA;      ,SRC.[DPA_IND]&#xA;      ,SRC.[COMBINED_SITTING]&#xA;      ,SRC.[CREATED_ON]&#xA;      ,SRC.[MODIFIED_ON]&#xA;      ,SRC.[AY_YEAR]&#xA;      ,SRC.[AY_SEM]&#xA;&#x9;)&#xA;   WHEN MATCHED&#xA;   &#xA;   THEN UPDATE&#xA;   SET &#x9; &#xA;   DST.[AY_SEM] =  ISNULL(SRC.[AY_SEM],'')  ,  &#xA;   DST.[AY_YEAR] =  ISNULL(SRC.[AY_YEAR],'')  ,  &#xA;   DST.[BETTER_GRADE _1] =  ISNULL(SRC.[BETTER_GRADE _1],'')  ,  &#xA;   DST.[BETTER_GRADE _3] =  ISNULL(SRC.[BETTER_GRADE _3],'')  ,  &#xA;   DST.[BETTER_GRADE _4] =  ISNULL(SRC.[BETTER_GRADE _4],'')  ,  &#xA;   DST.[BETTER_GRADE _5] =  ISNULL(SRC.[BETTER_GRADE _5],'')  ,  &#xA;   DST.[BETTER_GRADE_10] =  ISNULL(SRC.[BETTER_GRADE_10],'')  ,  &#xA;   DST.[BETTER_GRADE_11] =  ISNULL(SRC.[BETTER_GRADE_11],'')  ,  &#xA;   DST.[BETTER_GRADE_12] =  ISNULL(SRC.[BETTER_GRADE_12],'')  ,  &#xA;   DST.[BETTER_GRADE_2] =  ISNULL(SRC.[BETTER_GRADE_2],'')  ,  &#xA;   DST.[BETTER_GRADE_6] =  ISNULL(SRC.[BETTER_GRADE_6],'')  ,  &#xA;   DST.[BETTER_GRADE_7] =  ISNULL(SRC.[BETTER_GRADE_7],'')  ,  &#xA;   DST.[BETTER_GRADE_8] =  ISNULL(SRC.[BETTER_GRADE_8],'')  ,  &#xA;   DST.[BETTER_GRADE_9] =  ISNULL(SRC.[BETTER_GRADE_9],'')  ,  &#xA;   DST.[COMBINED_SITTING] =  ISNULL(SRC.[COMBINED_SITTING],'')  ,  &#xA;   DST.[CREATED_ON] =  ISNULL(SRC.[CREATED_ON],'')  ,  &#xA;   DST.[DPA_IND] =  ISNULL(SRC.[DPA_IND],'')  ,  &#xA;   DST.[ECA_GRADE] =  ISNULL(SRC.[ECA_GRADE],'')  ,  &#xA;   DST.[JAE_GRADE_1] =  ISNULL(SRC.[JAE_GRADE_1],'')  ,  &#xA;   DST.[JAE_GRADE_10] =  ISNULL(SRC.[JAE_GRADE_10],'')  ,  &#xA;   DST.[JAE_GRADE_11] =  ISNULL(SRC.[JAE_GRADE_11],'')  ,  &#xA;   DST.[JAE_GRADE_12] =  ISNULL(SRC.[JAE_GRADE_12],'')  ,  &#xA;   DST.[JAE_GRADE_2] =  ISNULL(SRC.[JAE_GRADE_2],'')  ,  &#xA;   DST.[JAE_GRADE_3] =  ISNULL(SRC.[JAE_GRADE_3],'')  ,  &#xA;   DST.[JAE_GRADE_4] =  ISNULL(SRC.[JAE_GRADE_4],'')  ,  &#xA;   DST.[JAE_GRADE_5] =  ISNULL(SRC.[JAE_GRADE_5],'')  ,  &#xA;   DST.[JAE_GRADE_6] =  ISNULL(SRC.[JAE_GRADE_6],'')  ,  &#xA;   DST.[JAE_GRADE_7] =  ISNULL(SRC.[JAE_GRADE_7],'')  ,  &#xA;   DST.[JAE_GRADE_8] =  ISNULL(SRC.[JAE_GRADE_8],'')  ,  &#xA;   DST.[JAE_GRADE_9] =  ISNULL(SRC.[JAE_GRADE_9],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_1] =  ISNULL(SRC.[JAE_SUBJECT_CD_1],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_10] =  ISNULL(SRC.[JAE_SUBJECT_CD_10],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_11] =  ISNULL(SRC.[JAE_SUBJECT_CD_11],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_12] =  ISNULL(SRC.[JAE_SUBJECT_CD_12],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_2] =  ISNULL(SRC.[JAE_SUBJECT_CD_2],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_3] =  ISNULL(SRC.[JAE_SUBJECT_CD_3],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_4] =  ISNULL(SRC.[JAE_SUBJECT_CD_4],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_5] =  ISNULL(SRC.[JAE_SUBJECT_CD_5],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_6] =  ISNULL(SRC.[JAE_SUBJECT_CD_6],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_7] =  ISNULL(SRC.[JAE_SUBJECT_CD_7],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_8] =  ISNULL(SRC.[JAE_SUBJECT_CD_8],'')  ,  &#xA;   DST.[JAE_SUBJECT_CD_9] =  ISNULL(SRC.[JAE_SUBJECT_CD_9],'')  ,  &#xA;   DST.[MODIFIED_ON] =  ISNULL(SRC.[MODIFIED_ON],'')  ,  &#xA;   DST.[NET_AGGREGATE] =  ISNULL(SRC.[NET_AGGREGATE],'')  ,  &#xA;   DST.[POSTED_COURSE_CD] =  ISNULL(SRC.[POSTED_COURSE_CD],'')  , &#xA;   DST.[RAW_AGGREGATE] =  ISNULL(SRC.[RAW_AGGREGATE],'')  ,  &#xA;   DST.[STATUTORY_NM] =  ISNULL(SRC.[STATUTORY_NM],'')  ,  &#xA;   DST.[UIN] =  ISNULL(SRC.[UIN],'')  , &#xA;   DST.[YR_FIRST_SITTING] =  ISNULL(SRC.[YR_FIRST_SITTING],'')  ,  &#xA;   DST.[YR_SECOND_SITTING] =  ISNULL(SRC.[YR_SECOND_SITTING],'') ; &#xA;&#x9;&#xA;&#xA;--------------------------------------&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,@processeddatetime  as created_on&#xA;  &#xA;  &#xA;END CATCH  &#xA;GO&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="InsertQuery">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+------------
+DECLARE @LastDWProcessdate datetime
+,@processeddatetime datetime
+,@jobstatusid varchar(5)
+select @jobstatusid=0
+select @LastDWProcessdate=isnull(max(Modified_on),'1900-01-01 00:00:00.000') from [dbo].[DW_EXT_DPAEAE_JAE]
+select  @processeddatetime= getdate()
+
+;WITH TMP_EXT_DPAEAE_JAE2
+AS
+(
+SELECT [UIN]
+      ,[STATUTORY_NM]
+      ,[POSTED_COURSE_CD]
+      ,[JAE_SUBJECT_CD_1]
+      ,[JAE_GRADE_1]
+      ,[BETTER_GRADE _1]
+      ,[JAE_SUBJECT_CD_2]
+      ,[JAE_GRADE_2]
+      ,[BETTER_GRADE_2]
+      ,[JAE_SUBJECT_CD_3]
+      ,[JAE_GRADE_3]
+      ,[BETTER_GRADE _3]
+      ,[JAE_SUBJECT_CD_4]
+      ,[JAE_GRADE_4]
+      ,[BETTER_GRADE _4]
+      ,[JAE_SUBJECT_CD_5]
+      ,[JAE_GRADE_5]
+      ,[BETTER_GRADE _5]
+      ,[JAE_SUBJECT_CD_6]
+      ,[JAE_GRADE_6]
+      ,[BETTER_GRADE_6]
+      ,[JAE_SUBJECT_CD_7]
+      ,[JAE_GRADE_7]
+      ,[BETTER_GRADE_7]
+      ,[JAE_SUBJECT_CD_8]
+      ,[JAE_GRADE_8]
+      ,[BETTER_GRADE_8]
+      ,[JAE_SUBJECT_CD_9]
+      ,[JAE_GRADE_9]
+      ,[BETTER_GRADE_9]
+      ,[JAE_SUBJECT_CD_10]
+      ,[JAE_GRADE_10]
+      ,[BETTER_GRADE_10]
+      ,[JAE_SUBJECT_CD_11]
+      ,[JAE_GRADE_11]
+      ,[BETTER_GRADE_11]
+      ,[JAE_SUBJECT_CD_12]
+      ,[JAE_GRADE_12]
+      ,[BETTER_GRADE_12]
+      ,[ECA_GRADE]
+      ,[YR_FIRST_SITTING]
+      ,[YR_SECOND_SITTING]
+      ,[RAW_AGGREGATE]
+      ,[NET_AGGREGATE]
+      ,[DPA_IND]
+      ,[COMBINED_SITTING]
+      ,[CREATED_ON]
+      ,[MODIFIED_ON]
+      ,[AY_YEAR]
+      ,[AY_SEM]
+   FROM RPDW_UAT_STG.[dbo].[STG_EXT_DPAEAE_JAE2]
+   where [Latest_Ind] ='Y' 
+AND [MODIFIED_ON]&gt;@LastDWProcessdate
+)
+
+
+MERGE INTO [DW_EXT_DPAEAE_JAE] AS dst
+   USING TMP_EXT_DPAEAE_JAE2 AS src
+  ON (
+  SRC. [AY_SEM] = DST.[AY_SEM] AND   
+  SRC. [AY_YEAR] = DST.[AY_YEAR] AND   
+  SRC. [UIN] = DST.[UIN]
+     )
+
+   WHEN NOT MATCHED THEN
+   INSERT
+	(
+	   [UIN]
+      ,[STATUTORY_NM]
+      ,[POSTED_COURSE_CD]
+      ,[JAE_SUBJECT_CD_1]
+      ,[JAE_GRADE_1]
+      ,[BETTER_GRADE _1]
+      ,[JAE_SUBJECT_CD_2]
+      ,[JAE_GRADE_2]
+      ,[BETTER_GRADE_2]
+      ,[JAE_SUBJECT_CD_3]
+      ,[JAE_GRADE_3]
+      ,[BETTER_GRADE _3]
+      ,[JAE_SUBJECT_CD_4]
+      ,[JAE_GRADE_4]
+      ,[BETTER_GRADE _4]
+      ,[JAE_SUBJECT_CD_5]
+      ,[JAE_GRADE_5]
+      ,[BETTER_GRADE _5]
+      ,[JAE_SUBJECT_CD_6]
+      ,[JAE_GRADE_6]
+      ,[BETTER_GRADE_6]
+      ,[JAE_SUBJECT_CD_7]
+      ,[JAE_GRADE_7]
+      ,[BETTER_GRADE_7]
+      ,[JAE_SUBJECT_CD_8]
+      ,[JAE_GRADE_8]
+      ,[BETTER_GRADE_8]
+      ,[JAE_SUBJECT_CD_9]
+      ,[JAE_GRADE_9]
+      ,[BETTER_GRADE_9]
+      ,[JAE_SUBJECT_CD_10]
+      ,[JAE_GRADE_10]
+      ,[BETTER_GRADE_10]
+      ,[JAE_SUBJECT_CD_11]
+      ,[JAE_GRADE_11]
+      ,[BETTER_GRADE_11]
+      ,[JAE_SUBJECT_CD_12]
+      ,[JAE_GRADE_12]
+      ,[BETTER_GRADE_12]
+      ,[ECA_GRADE]
+      ,[YR_FIRST_SITTING]
+      ,[YR_SECOND_SITTING]
+      ,[RAW_AGGREGATE]
+      ,[NET_AGGREGATE]
+      ,[DPA_IND]
+      ,[COMBINED_SITTING]
+      ,[CREATED_ON]
+      ,[MODIFIED_ON]
+      ,[AY_YEAR]
+      ,[AY_SEM]
+	  )
+VALUES
+	(  
+       SRC.[UIN]
+      ,SRC.[STATUTORY_NM]
+      ,SRC.[POSTED_COURSE_CD]
+      ,SRC.[JAE_SUBJECT_CD_1]
+      ,SRC.[JAE_GRADE_1]
+      ,SRC.[BETTER_GRADE _1]
+      ,SRC.[JAE_SUBJECT_CD_2]
+      ,SRC.[JAE_GRADE_2]
+      ,SRC.[BETTER_GRADE_2]
+      ,SRC.[JAE_SUBJECT_CD_3]
+      ,SRC.[JAE_GRADE_3]
+      ,SRC.[BETTER_GRADE _3]
+      ,SRC.[JAE_SUBJECT_CD_4]
+      ,SRC.[JAE_GRADE_4]
+      ,SRC.[BETTER_GRADE _4]
+      ,SRC.[JAE_SUBJECT_CD_5]
+      ,SRC.[JAE_GRADE_5]
+      ,SRC.[BETTER_GRADE _5]
+      ,SRC.[JAE_SUBJECT_CD_6]
+      ,SRC.[JAE_GRADE_6]
+      ,SRC.[BETTER_GRADE_6]
+      ,SRC.[JAE_SUBJECT_CD_7]
+      ,SRC.[JAE_GRADE_7]
+      ,SRC.[BETTER_GRADE_7]
+      ,SRC.[JAE_SUBJECT_CD_8]
+      ,SRC.[JAE_GRADE_8]
+      ,SRC.[BETTER_GRADE_8]
+      ,SRC.[JAE_SUBJECT_CD_9]
+      ,SRC.[JAE_GRADE_9]
+      ,SRC.[BETTER_GRADE_9]
+      ,SRC.[JAE_SUBJECT_CD_10]
+      ,SRC.[JAE_GRADE_10]
+      ,SRC.[BETTER_GRADE_10]
+      ,SRC.[JAE_SUBJECT_CD_11]
+      ,SRC.[JAE_GRADE_11]
+      ,SRC.[BETTER_GRADE_11]
+      ,SRC.[JAE_SUBJECT_CD_12]
+      ,SRC.[JAE_GRADE_12]
+      ,SRC.[BETTER_GRADE_12]
+      ,SRC.[ECA_GRADE]
+      ,SRC.[YR_FIRST_SITTING]
+      ,SRC.[YR_SECOND_SITTING]
+      ,SRC.[RAW_AGGREGATE]
+      ,SRC.[NET_AGGREGATE]
+      ,SRC.[DPA_IND]
+      ,SRC.[COMBINED_SITTING]
+      ,SRC.[CREATED_ON]
+      ,SRC.[MODIFIED_ON]
+      ,SRC.[AY_YEAR]
+      ,SRC.[AY_SEM]
+	)
+   WHEN MATCHED
+   
+   THEN UPDATE
+   SET 	 
+   DST.[AY_SEM] =  ISNULL(SRC.[AY_SEM],'')  ,  
+   DST.[AY_YEAR] =  ISNULL(SRC.[AY_YEAR],'')  ,  
+   DST.[BETTER_GRADE _1] =  ISNULL(SRC.[BETTER_GRADE _1],'')  ,  
+   DST.[BETTER_GRADE _3] =  ISNULL(SRC.[BETTER_GRADE _3],'')  ,  
+   DST.[BETTER_GRADE _4] =  ISNULL(SRC.[BETTER_GRADE _4],'')  ,  
+   DST.[BETTER_GRADE _5] =  ISNULL(SRC.[BETTER_GRADE _5],'')  ,  
+   DST.[BETTER_GRADE_10] =  ISNULL(SRC.[BETTER_GRADE_10],'')  ,  
+   DST.[BETTER_GRADE_11] =  ISNULL(SRC.[BETTER_GRADE_11],'')  ,  
+   DST.[BETTER_GRADE_12] =  ISNULL(SRC.[BETTER_GRADE_12],'')  ,  
+   DST.[BETTER_GRADE_2] =  ISNULL(SRC.[BETTER_GRADE_2],'')  ,  
+   DST.[BETTER_GRADE_6] =  ISNULL(SRC.[BETTER_GRADE_6],'')  ,  
+   DST.[BETTER_GRADE_7] =  ISNULL(SRC.[BETTER_GRADE_7],'')  ,  
+   DST.[BETTER_GRADE_8] =  ISNULL(SRC.[BETTER_GRADE_8],'')  ,  
+   DST.[BETTER_GRADE_9] =  ISNULL(SRC.[BETTER_GRADE_9],'')  ,  
+   DST.[COMBINED_SITTING] =  ISNULL(SRC.[COMBINED_SITTING],'')  ,  
+   DST.[CREATED_ON] =  ISNULL(SRC.[CREATED_ON],'')  ,  
+   DST.[DPA_IND] =  ISNULL(SRC.[DPA_IND],'')  ,  
+   DST.[ECA_GRADE] =  ISNULL(SRC.[ECA_GRADE],'')  ,  
+   DST.[JAE_GRADE_1] =  ISNULL(SRC.[JAE_GRADE_1],'')  ,  
+   DST.[JAE_GRADE_10] =  ISNULL(SRC.[JAE_GRADE_10],'')  ,  
+   DST.[JAE_GRADE_11] =  ISNULL(SRC.[JAE_GRADE_11],'')  ,  
+   DST.[JAE_GRADE_12] =  ISNULL(SRC.[JAE_GRADE_12],'')  ,  
+   DST.[JAE_GRADE_2] =  ISNULL(SRC.[JAE_GRADE_2],'')  ,  
+   DST.[JAE_GRADE_3] =  ISNULL(SRC.[JAE_GRADE_3],'')  ,  
+   DST.[JAE_GRADE_4] =  ISNULL(SRC.[JAE_GRADE_4],'')  ,  
+   DST.[JAE_GRADE_5] =  ISNULL(SRC.[JAE_GRADE_5],'')  ,  
+   DST.[JAE_GRADE_6] =  ISNULL(SRC.[JAE_GRADE_6],'')  ,  
+   DST.[JAE_GRADE_7] =  ISNULL(SRC.[JAE_GRADE_7],'')  ,  
+   DST.[JAE_GRADE_8] =  ISNULL(SRC.[JAE_GRADE_8],'')  ,  
+   DST.[JAE_GRADE_9] =  ISNULL(SRC.[JAE_GRADE_9],'')  ,  
+   DST.[JAE_SUBJECT_CD_1] =  ISNULL(SRC.[JAE_SUBJECT_CD_1],'')  ,  
+   DST.[JAE_SUBJECT_CD_10] =  ISNULL(SRC.[JAE_SUBJECT_CD_10],'')  ,  
+   DST.[JAE_SUBJECT_CD_11] =  ISNULL(SRC.[JAE_SUBJECT_CD_11],'')  ,  
+   DST.[JAE_SUBJECT_CD_12] =  ISNULL(SRC.[JAE_SUBJECT_CD_12],'')  ,  
+   DST.[JAE_SUBJECT_CD_2] =  ISNULL(SRC.[JAE_SUBJECT_CD_2],'')  ,  
+   DST.[JAE_SUBJECT_CD_3] =  ISNULL(SRC.[JAE_SUBJECT_CD_3],'')  ,  
+   DST.[JAE_SUBJECT_CD_4] =  ISNULL(SRC.[JAE_SUBJECT_CD_4],'')  ,  
+   DST.[JAE_SUBJECT_CD_5] =  ISNULL(SRC.[JAE_SUBJECT_CD_5],'')  ,  
+   DST.[JAE_SUBJECT_CD_6] =  ISNULL(SRC.[JAE_SUBJECT_CD_6],'')  ,  
+   DST.[JAE_SUBJECT_CD_7] =  ISNULL(SRC.[JAE_SUBJECT_CD_7],'')  ,  
+   DST.[JAE_SUBJECT_CD_8] =  ISNULL(SRC.[JAE_SUBJECT_CD_8],'')  ,  
+   DST.[JAE_SUBJECT_CD_9] =  ISNULL(SRC.[JAE_SUBJECT_CD_9],'')  ,  
+   DST.[MODIFIED_ON] =  ISNULL(SRC.[MODIFIED_ON],'')  ,  
+   DST.[NET_AGGREGATE] =  ISNULL(SRC.[NET_AGGREGATE],'')  ,  
+   DST.[POSTED_COURSE_CD] =  ISNULL(SRC.[POSTED_COURSE_CD],'')  , 
+   DST.[RAW_AGGREGATE] =  ISNULL(SRC.[RAW_AGGREGATE],'')  ,  
+   DST.[STATUTORY_NM] =  ISNULL(SRC.[STATUTORY_NM],'')  ,  
+   DST.[UIN] =  ISNULL(SRC.[UIN],'')  , 
+   DST.[YR_FIRST_SITTING] =  ISNULL(SRC.[YR_FIRST_SITTING],'')  ,  
+   DST.[YR_SECOND_SITTING] =  ISNULL(SRC.[YR_SECOND_SITTING],'') ; 
+	
+
+--------------------------------------
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+  ROLLBACK TRANSACTION
+INSERT INTO ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,@processeddatetime  as created_on
+  
+  
+END CATCH  
+GO</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A741B767-F357-47A9-9D79-A0C9A00EEEB3}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JobStatusId">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{37BBA94B-9E68-45E8-919D-EC74FC98DE61}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_name">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_EXT_JAE_APPEAL</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C8AAC376-FDEF-4A4C-AD79-10BD6C9F6FA2}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="MndColumncheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F0E7D14E-E201-4719-BA95-CC70E1B254CE}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="PrevJobStatus">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0D019A87-9E59-400F-9419-F2C4338A85DD}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprimarykeycheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{857F6F8F-0743-45B1-9238-76DE27E7EB05}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprocesseddate">
+      <DTS:VariableValue
+        DTS:DataType="7">2/27/2019 11:28:00 AM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{310F3F7F-3712-4FA3-A1FF-E1EA27FA9BFB}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SrcTable">
+      <DTS:VariableValue
+        DTS:DataType="8">STG_EXT_JAE_APPEAL</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DA6F29A0-B7B4-4074-A628-405ED60FDE41}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Stage">
+      <DTS:VariableValue
+        DTS:DataType="8">DW</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{EAE157FF-FCB8-411C-93CD-03D19D1454C7}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTable">
+      <DTS:VariableValue
+        DTS:DataType="8">DW_EXT_JAE_APPEAL</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\check previous job status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{277F6F1A-7BA9-47A8-82F8-B5533F6D50D4}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="check previous job status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D1ACDA7B-D5F1-4C1A-9987-911E180DDB17}"
+          SQLTask:SqlStatementSource="&#xA;SELECT CASE WHEN [JOB_STATUS] ='SUCCESS' THEN 1 ELSE 0 END AS PrevJobStatus&#xA;FROM [DBO].[ETL_JOB_STATUS] WHERE [JOB_STATUS_ID]=&#xA;(SELECT MAX([JOB_STATUS_ID]) FROM [DBO].[ETL_JOB_STATUS]&#xA;WHERE [TARGET_TABLENAME]=?&#xA;AND [STAGE]='STG')&#xA;&#xA;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="PrevJobStatus"
+            SQLTask:DtsVariableName="User::PrevJobStatus" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create ETL Job Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C3200E76-D5CF-4C40-8914-ED87F73D35BD}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create ETL Job Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D1ACDA7B-D5F1-4C1A-9987-911E180DDB17}"
+          SQLTask:SqlStatementSource="&#xA;EXEC dbo.[usp_InsertETLJobLog]  ?,?,?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::Stage"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{EDFF722D-2601-4223-818D-28B830DA940E}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[DW_EXT_JAE_APPEAL]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[RPDW_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[RPDW_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[NRIC]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="9"
+                      cachedName="NRIC"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NRIC]"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[NRIC]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Choice1]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="Choice1"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Choice1]"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[Choice1]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Choice2]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="Choice2"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Choice2]"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[Choice2]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Choice3]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="Choice3"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Choice3]"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[Choice3]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Result]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="Result"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Result]"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[Result]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CREATED_ON]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="CREATED_ON"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_ON]"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CREATED_ON]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MODIFIED_ON]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="MODIFIED_ON"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MODIFIED_ON]"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[MODIFIED_ON]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FILE_NAME_ACADEMIC_YEAR]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="FILE_NAME_ACADEMIC_YEAR"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FILE_NAME_ACADEMIC_YEAR]"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[FILE_NAME_ACADEMIC_YEAR]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FILE_NAME_SEMESTER]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="FILE_NAME_SEMESTER"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FILE_NAME_SEMESTER]"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[FILE_NAME_SEMESTER]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="32"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DOB]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="DOB" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NRIC]"
+                      codePage="1252"
+                      dataType="str"
+                      length="9"
+                      name="NRIC" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Password]"
+                      codePage="1252"
+                      dataType="str"
+                      length="9"
+                      name="Password" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Mobile]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="Mobile" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[HomePhone]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="HomePhone" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Email]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Email" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[HouseNo]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="HouseNo" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[UnitNo]"
+                      codePage="1252"
+                      dataType="str"
+                      length="12"
+                      name="UnitNo" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Street]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="Street" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PostalCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="PostalCode" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Agg_T]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="Agg_T" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Agg_B]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="Agg_B" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Agg_A]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="Agg_A" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Agg_S]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="Agg_S" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ECA]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="ECA" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Choice1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="Choice1" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Choice2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="Choice2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Choice3]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="Choice3" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Result]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="Result" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Update_On]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="Update_On" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[T_Eli]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="T_Eli" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NT_Eli]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="NT_Eli" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[S_Eli]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="S_Eli" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[A_Eli]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="A_Eli" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Posted_Agg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="Posted_Agg" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Eligibl_List]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="Eligibl_List" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Citizenship]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="Citizenship" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Choice1_Net_Agg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="Choice1_Net_Agg" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Choice2_Net_Agg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="Choice2_Net_Agg" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Choice3_Net_Agg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="Choice3_Net_Agg" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Choice1_Ranking]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="Choice1_Ranking" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Choice2_Ranking]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="Choice2_Ranking" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Choice3_Ranking]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="Choice3_Ranking" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Posted_Choice_No]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="Posted_Choice_No" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Maths_Grade]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="Maths_Grade" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Eng_Grade]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="Eng_Grade" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[No_A1s]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="No_A1s" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[No_A2s]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="No_A2s" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[No_B3s]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="No_B3s" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[No_B4s]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="No_B4s" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[No_C5s]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="No_C5s" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[No_C6s]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="No_C6s" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[L1R5]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="L1R5" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[L1R4]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="L1R4" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[JAE_Posted]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="JAE_Posted" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_ON]"
+                      dataType="dbTimeStamp"
+                      name="CREATED_ON" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MODIFIED_ON]"
+                      dataType="dbTimeStamp"
+                      name="MODIFIED_ON" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MASKED_NATIONAL_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="MASKED_NATIONAL_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FILE_NAME_ACADEMIC_YEAR]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="FILE_NAME_ACADEMIC_YEAR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FILE_NAME_SEMESTER]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="FILE_NAME_SEMESTER" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select distinct NRIC
+      ,[Choice1] 
+      ,[Choice2] 
+      ,[Choice3] 
+      ,[Result]  
+      ,[FILE_NAME_ACADEMIC_YEAR]
+      ,[FILE_NAME_SEMESTER]
+      ,[CREATED_ON]
+      ,[MODIFIED_ON]
+  FROM [dbo].[STG_EXT_JAE_APPEAL]</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[RPDW_STG]"
+                  connectionManagerRefId="Package.ConnectionManagers[RPDW_STG]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[NRIC]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NRIC]"
+                      length="9"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[NRIC]"
+                      name="NRIC"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[Choice1]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Choice1]"
+                      length="3"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[Choice1]"
+                      name="Choice1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[Choice2]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Choice2]"
+                      length="3"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[Choice2]"
+                      name="Choice2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[Choice3]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Choice3]"
+                      length="3"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[Choice3]"
+                      name="Choice3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[Result]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Result]"
+                      length="3"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[Result]"
+                      name="Result"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[FILE_NAME_ACADEMIC_YEAR]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FILE_NAME_ACADEMIC_YEAR]"
+                      length="4"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[FILE_NAME_ACADEMIC_YEAR]"
+                      name="FILE_NAME_ACADEMIC_YEAR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[FILE_NAME_SEMESTER]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FILE_NAME_SEMESTER]"
+                      length="4"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[FILE_NAME_SEMESTER]"
+                      name="FILE_NAME_SEMESTER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CREATED_ON]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CREATED_ON]"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CREATED_ON]"
+                      name="CREATED_ON"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[MODIFIED_ON]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MODIFIED_ON]"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[MODIFIED_ON]"
+                      name="MODIFIED_ON"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NRIC]"
+                      codePage="1252"
+                      dataType="str"
+                      length="9"
+                      name="NRIC" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Choice1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="Choice1" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Choice2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="Choice2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Choice3]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="Choice3" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Result]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="Result" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FILE_NAME_ACADEMIC_YEAR]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="FILE_NAME_ACADEMIC_YEAR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FILE_NAME_SEMESTER]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="FILE_NAME_SEMESTER" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CREATED_ON]"
+                      dataType="dbTimeStamp"
+                      name="CREATED_ON" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MODIFIED_ON]"
+                      dataType="dbTimeStamp"
+                      name="MODIFIED_ON" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NRIC]"
+                      codePage="1252"
+                      dataType="str"
+                      length="9"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NRIC]"
+                      name="NRIC" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Choice1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Choice1]"
+                      name="Choice1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Choice2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Choice2]"
+                      name="Choice2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Choice3]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Choice3]"
+                      name="Choice3" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Result]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Result]"
+                      name="Result" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FILE_NAME_ACADEMIC_YEAR]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FILE_NAME_ACADEMIC_YEAR]"
+                      name="FILE_NAME_ACADEMIC_YEAR" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FILE_NAME_SEMESTER]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FILE_NAME_SEMESTER]"
+                      name="FILE_NAME_SEMESTER" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CREATED_ON]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CREATED_ON]"
+                      name="CREATED_ON" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MODIFIED_ON]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MODIFIED_ON]"
+                      name="MODIFIED_ON" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task.Paths[OLE DB Source Output]"
+              endId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\get Job Status Id"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9B207AAD-9E55-46B6-9B68-60C082EEC447}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="get Job Status Id"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D1ACDA7B-D5F1-4C1A-9987-911E180DDB17}"
+          SQLTask:SqlStatementSource="declare  @JobstatusID int&#xA;&#xA;select @JobstatusID=max(job_status_id) from [ETL_JOB_STATUS]&#xA;where [TARGET_TABLENAME]=?&#xA;&#xA;&#xA;Select @JobstatusID "
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JobStatusId" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\getprocesseddate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{30079127-D405-4F91-ABBA-3B3E734C25DE}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="getprocesseddate"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D1ACDA7B-D5F1-4C1A-9987-911E180DDB17}"
+          SQLTask:SqlStatementSource="SELECT GETDATE()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::sqlprocesseddate" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Masking"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{7EDB12CB-9374-4D52-9C63-171DF6F0A5E4}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Masking"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D1ACDA7B-D5F1-4C1A-9987-911E180DDB17}"
+          SQLTask:SqlStatementSource="UPDATE A SET  A.MASKED_NATIONAL_ID=U.MASKED_NATIONAL_ID FROM DW_NATIONAL_ID_MASKING U JOIN   DW_EXT_JAE_APPEAL A ON A.NRIC=U.NATIONAL_ID" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{277F32D0-895D-4BD9-899E-4B4AE389F9D6}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D1ACDA7B-D5F1-4C1A-9987-911E180DDB17}"
+          SQLTask:SqlStatementSource="Truncate table DW_EXT_JAE_APPEAL" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\update on failure"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5014A174-97FF-449A-82E4-E78F988E1333}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="update on failure"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D1ACDA7B-D5F1-4C1A-9987-911E180DDB17}"
+          SQLTask:SqlStatementSource="   UPDATE [DBO].[ETL_JOB_STATUS]&#xA;  SET [JOB_STATUS]='Fail',&#xA;[ERROR_MSG]='Last Job not completed sucessfully'&#xA;  where [JOB_STATUS_ID]=?&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\UpdateJobStatus"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{FC1FA09E-9624-4C58-931E-143FC6A82AFC}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="UpdateJobStatus"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D1ACDA7B-D5F1-4C1A-9987-911E180DDB17}"
+          SQLTask:SqlStatementSource="&#xA; &#xA;&#xA;DECLARE &#xA;@jobstatusid INT&#xA;select @jobstatusid=?&#xA;IF EXISTS(SELECT * FROM dbo.ETL_ERROR_LOG WHERE [JOB_STATUS_ID]=@jobstatusid)&#xA;&#xA; BEGIN&#xA;&#xA;&#xA;&#xA; UPDATE [dbo].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='FAIL'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;  END&#xA;&#xA;ELSE&#xA;&#xA;BEGIN&#xA;&#xA;UPDATE [DBO].[ETL_JOB_STATUS]&#xA;&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;&#xA;[JOB_STATUS]='Success'&#xA;&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;&#xA;END&#xA;&#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{9DEF517A-DD16-485C-A08D-55297D5FF563}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::PrevJobStatus]==0"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\update on failure" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{FE49CAD5-9270-4C61-AFE5-0944A1D7CE29}"
+      DTS:From="Package\Create ETL Job Log"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\get Job Status Id" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{7C221C9F-85FA-467C-97A0-5B8FFA47590C}"
+      DTS:From="Package\getprocesseddate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Truncate" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{052C9C6A-B06B-4BE0-902E-C0E127FDB981}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::PrevJobStatus]==1"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\getprocesseddate" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{7505D731-5F22-45AB-A7FB-BCF0913FBD1B}"
+      DTS:From="Package\get Job Status Id"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\check previous job status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{7623D642-AAFC-4702-9004-C0010F24489E}"
+      DTS:From="Package\Data Flow Task"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Masking" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{BAA8C2FF-E052-4EEF-8DFC-AC295674F34C}"
+      DTS:From="Package\Masking"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\UpdateJobStatus" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{E91E9FB7-79EA-44B3-B8A8-17372F5EE677}"
+      DTS:From="Package\Truncate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\Data Flow Task" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{DE8223D7-EAD4-4CB6-8E51-6745920DE099}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{41510760-B26D-4D9A-813B-BC26B5ABBA6C}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\Error Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{71E1F2BE-5D2A-4C18-B0E1-2937843FA849}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Error Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{D1ACDA7B-D5F1-4C1A-9987-911E180DDB17}"
+              SQLTask:SqlStatementSource="  insert into [dbo].[ETL_ERROR_LOG]([JOB_STATUS_ID],[ERROR_RECORD])&#xA;  select ?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL Job Status Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{0CB90EDB-FA45-4300-893C-B2AB7961C11F}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL Job Status Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{D1ACDA7B-D5F1-4C1A-9987-911E180DDB17}"
+              SQLTask:SqlStatementSource="update [ETL_JOB_STATUS]&#xA;set Job_Status='Fail'&#xA;,Error_Msg=?&#xA;where job_status_id=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{68466717-ED26-42EE-B44E-E16EB8FAE8DB}"
+          DTS:From="Package.EventHandlers[OnError]\Error Log"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package.EventHandlers[OnError]\ETL Job Status Log" />
+      </DTS:PrecedenceConstraints>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="198,42"
+          Id="Package\check previous job status"
+          TopLeft="415,32" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Create ETL Job Log"
+          TopLeft="9,30" />
+        <NodeLayout
+          Size="151,42"
+          Id="Package\Data Flow Task"
+          TopLeft="667.5,178.5" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\get Job Status Id"
+          TopLeft="225,31" />
+        <NodeLayout
+          Size="162,42"
+          Id="Package\getprocesseddate"
+          TopLeft="660,29" />
+        <NodeLayout
+          Size="117,42"
+          Id="Package\Masking"
+          TopLeft="686,246" />
+        <NodeLayout
+          Size="121,42"
+          Id="Package\Truncate"
+          TopLeft="687,108" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\update on failure"
+          TopLeft="418,164" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\UpdateJobStatus"
+          TopLeft="665,339" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="514,74">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-16.5,90"
+              Start="0,0"
+              End="-16.5,82.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,41"
+                    Point2="0,45"
+                    Point3="-4,45" />
+                  <mssgle:LineSegment
+                    End="-12.5,45" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-12.5,45"
+                    Point2="-16.5,45"
+                    Point3="-16.5,49" />
+                  <mssgle:LineSegment
+                    End="-16.5,82.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-16.25,50,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="179,51.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="46,0"
+              Start="0,0"
+              End="38.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="38.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="744.25,71">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37"
+              Start="0,0"
+              End="0,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="613,51.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="47,0"
+              Start="0,0"
+              End="39.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="39.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="11.75,5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="384,52.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="31,0"
+              Start="0,0"
+              End="23.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="23.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="743.75,220.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,25.5"
+              Start="0,0"
+              End="0,18">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="744.25,288">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,51"
+              Start="0,0"
+              End="0,43.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="745.25,150">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,28.5"
+              Start="0,0"
+              End="0,21">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package.EventHandlers[OnError]\Error Log"
+          TopLeft="60,60" />
+        <NodeLayout
+          Size="169,42"
+          Id="Package.EventHandlers[OnError]\ETL Job Status Log"
+          TopLeft="60,162" />
+        <EdgeLayout
+          Id="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          TopLeft="121.5,102">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="23,60"
+              Start="0,0"
+              End="23,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26"
+                    Point2="0,30"
+                    Point3="4,30" />
+                  <mssgle:LineSegment
+                    End="19,30" />
+                  <mssgle:CubicBezierSegment
+                    Point1="19,30"
+                    Point2="23,30"
+                    Point3="23,34" />
+                  <mssgle:LineSegment
+                    End="23,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Data Flow Task\OLE DB Source"
+          TopLeft="370.5,37.5" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Data Flow Task\OLE DB Destination"
+          TopLeft="353.5,130.5" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[OLE DB Source Output]"
+          TopLeft="442.25,79.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,51"
+              Start="0,0"
+              End="0,43.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

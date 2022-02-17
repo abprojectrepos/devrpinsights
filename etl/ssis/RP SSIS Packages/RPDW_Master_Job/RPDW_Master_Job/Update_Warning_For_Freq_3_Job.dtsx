@@ -1,0 +1,76 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="3/26/2020 6:56:07 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="RP-ETL-DW-UAT"
+  DTS:CreatorName="RP\svc-dw-uat-etl"
+  DTS:DTSID="{AA529CB2-8FAF-44D1-9EF5-5C4D4D98C4C4}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Update_Warning_For_Freq_3_Job"
+  DTS:PackageType="5"
+  DTS:VersionBuild="9"
+  DTS:VersionGUID="{0BC53A31-3167-419F-879C-A0AF0B0CFC86}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{4780F25C-7FB6-4987-8AEB-FFC2DBDB74B1}"
+      DTS:ObjectName="RPDW">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT;Provider=SQLNCLI11.1;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiAXqJL5xwkap+hp6D6sPxwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAA39NIH2IaLAsef1ZPaw6xxqrM4I0HyCrHVCaaruFnY2gAAAAAOgAAAAAIAACAAAACgPOJ5pf0UQ4woIy9f0QXtQcwp+LmVNjo01CohVXS1ojAAAADLg9o3IAl9wbIs5VlvaO4VvuVll52K/spx2Cpuh8XA6Mq2wRKlzv+4nTVSENUWjPFAAAAAyNdhDOjiT4rJWzaHkKYnVwaJJQ5eRB8NPP7SuGWX8roZPJCVi78zxhekqJAJR0bYIthC49ZnN1E0bujqNaRfjw</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Update Warning in ETL Job Status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{2E53545A-D0CA-4A27-890A-3CD73E46DCC0}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Warning in ETL Job Status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4780F25C-7FB6-4987-8AEB-FFC2DBDB74B1}"
+          SQLTask:SqlStatementSource="WAITFOR DELAY '00:01:10'&#xA;&#xA;update ETL_JOB_STATUS&#xA;set JOB_STATUS='Warning'&#xA;where JOB_STATUS='Fail' and (ERROR_MSG like'%Input file missing%' &#xA;or ERROR_MSG like '%PSTG table is not%' or ERROR_MSG like '%STG table is not%' or  ERROR_MSG like'%Previous%'or ERROR_MSG like'%Last Job not completed sucessfully%')&#xA;and TARGET_TABLENAME in ('PSTG_OASIS_APP_DATA',&#xA;'PSTG_OASIS_APP_DATA_SKILLS','PSTG_OASIS_APP_PROG_DATA',&#xA;'PSTG_OASIS_APP_SCHOOL_RECRUITING','PSTG_OASIS_EVALUATION_SUMMARY'&#xA;,'PSTG_OASIS_HEALTH_TEST','PSTG_OASIS_HOUSEHOLD_DETAILS','PSTG_OASIS_OFFENCES','PSTG_OASIS_OTHR_QUAL_AND_TEST_RESULT'&#xA;,'PSTG_OASIS_RESULTS_TERITARY_ITE','PSTG_OASIS_SAT_TOFEL_TEST','PSTG_OASIS_SPECIALISATN'&#xA;,'PSTG_OASIS_SPECIALISATN_OTHER_TABS','PSTG_OASIS_STUDENT_ADDRS_EMAIL_ADDRS','PSTG_OASIS_STUDENT_BIRTH_INFO',&#xA;'PSTG_OASIS_STUDENT_DETAILS','PSTG_OASIS_STUDENT_NATIONAL_INFO','PSTG_OASIS_TALENT_SUMMARY'&#xA;,'PSTG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA','PSTG_OASIS_TEST_RESULTS_EXAM_DETAILS','PSTG_OASIS_TEST_RESULTS_TEST_COMPONENTS'&#xA;,'STG_OASIS_APP_DATA',&#xA;'STG_OASIS_APP_DATA_SKILLS','STG_OASIS_APP_PROG_DATA',&#xA;'STG_OASIS_APP_SCHOOL_RECRUITING','STG_OASIS_EVALUATION_SUMMARY'&#xA;,'STG_OASIS_HEALTH_TEST','STG_OASIS_HOUSEHOLD_DETAILS','STG_OASIS_OFFENCES','STG_OASIS_OTHR_QUAL_AND_TEST_RESULT'&#xA;,'STG_OASIS_RESULTS_TERITARY_ITE','STG_OASIS_SAT_TOFEL_TEST','STG_OASIS_SPECIALISATN'&#xA;,'STG_OASIS_SPECIALISATN_OTHER_TABS','STG_OASIS_STUDENT_ADDRS_EMAIL_ADDRS','STG_OASIS_STUDENT_BIRTH_INFO',&#xA;'STG_OASIS_STUDENT_DETAILS','STG_OASIS_STUDENT_NATIONAL_INFO','STG_OASIS_TALENT_SUMMARY'&#xA;,'STG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA','STG_OASIS_TEST_RESULTS_EXAM_DETAILS','STG_OASIS_TEST_RESULTS_TEST_COMPONENTS'&#xA;,'DW_APPLICANT_DETAILS','DW_APPLICANT_HEALTH_TEST','DW_APPLICANT_TEST_RESULTS','DW_SAT_TOFEL_TEST','DW_STUDENT_DETAILS'&#xA;,'DW_APPLICANT_PROGRAM_STATUS','DW_APPLICANT_HOUSEHOLD_DETAILS','STG_OASIS_STUDENT_VISA_PERMIT_DATA','PSTG_OASIS_STUDENT_VISA_PERMIT_DATA')&#xA;&#xA;and convert(varchar(8),CREATED_ON,112)=CONVERT(varchar(8),getdate(),112)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="240,42"
+          Id="Package\Update Warning in ETL Job Status"
+          TopLeft="312,85" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

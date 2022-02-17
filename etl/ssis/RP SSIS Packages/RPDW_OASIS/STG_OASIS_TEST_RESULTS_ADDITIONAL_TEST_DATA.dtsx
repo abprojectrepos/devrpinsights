@@ -1,0 +1,2593 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/31/2019 4:40:18 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NCS-140119GM07"
+  DTS:CreatorName="NCS\P0500450"
+  DTS:DTSID="{1B45582E-9C70-4F8A-B1AF-428C77B25324}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="18441"
+  DTS:ObjectName="STG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA"
+  DTS:PackageType="5"
+  DTS:VersionBuild="143"
+  DTS:VersionGUID="{09D55A34-96B1-44CD-9925-3611591C1C63}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{65ED3A30-F122-40A4-A8D2-438F254E5FB4}"
+      DTS:ObjectName="RPDW_DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=10.168.212.13;User ID=svc-dw-uat-etl;Initial Catalog=RPDW;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAdGBqS7B1CkWG301g2fxV+wAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAChFSWboFgLVmzctOX5RZwvAAAAAASAAACgAAAAEAAAAM4Img5RrPjOFTNuZ2CYLaUYAAAAEbeUrcushVToNuzrhzls0Qw7ciuWWMvXFAAAANtXLk1rE7cQmAf9eHjCp2dBjv0J</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_PSTG]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{13DF7884-9FE0-42D7-A12C-792DB5818987}"
+      DTS:ObjectName="RPDW_PSTG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::PreStaging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=10.168.212.13;User ID=svc-dw-uat-etl;Initial Catalog=RPDW_PSTG;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAdGBqS7B1CkWG301g2fxV+wAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAC1hk0gS7hvDhnfFXGYjbz+AAAAAASAAACgAAAAEAAAAJmUiWkFomYJmCGGoIYp5aUYAAAA9HPcnOJeFFHyAXDUo4zRdh+2uZlrc1DeFAAAAJvPpASp92RWu9V0ymNeRRgcsZdc</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RPDW_STG]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{46E5FFDA-43CE-46E1-AE11-9DFB565C5F66}"
+      DTS:ObjectName="RPDW_STG">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::Staging_Initial_Catalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=10.168.212.13;User ID=svc-dw-uat-etl;Initial Catalog=RPDW_STG;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAdGBqS7B1CkWG301g2fxV+wAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAC6Dts4RQKtkVpsV5kW9Uv2AAAAAASAAACgAAAAEAAAANlH11Kre68AkF2p7hUh02gYAAAAZOyMGZZME+s1EHa2Ej/eo3TqgLgnElRMFAAAAHvjWZi6Jx/4PKgaUrMBiAtAKc3d</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8696F6E7-4651-4340-9D2D-190F40617BFD}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;BEGIN TRANSACTION&#xA;BEGIN TRY&#xA;------------&#xA;DECLARE @LastDWProcessdate datetime&#xA;,@processeddatetime datetime&#xA;,@jobstatusid varchar(5)&#xA;select @jobstatusid=&quot;+ (DT_STR, 5,1252) @[User::JobStatusId] +&quot;&#xA;----------------------------------------------------------&#xA;&#xA;INSERT INTO &#xA;[dbo].[STG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA]&#xA;([APPLICANT_ID]&#xA;,[TEST_ID]&#xA;,[TEST_DATE]&#xA;,[FIELD]&#xA;,[ATTRIBUTE_VAL]&#xA;,[DESCR]&#xA;,[ATTRIBUTE_TVAL]&#xA;,[NUMERIC_VALUE]&#xA;,[DATE_VALUE]&#xA;,[TIME_VALUE]&#xA;,[YES_NO_VALUE]&#xA;,[LONG_TEXT_VALUE]&#xA;,[TRANSFER_TO]&#xA;      ,[Latest_Ind]&#xA;      ,[Created_On]&#xA;      ,[Modified_On])&#xA;SELECT [APPLICANT_ID]&#xA;,[TEST_ID]&#xA;,[TEST_DATE]&#xA;,[FIELD]&#xA;,[ATTRIBUTE_VAL]&#xA;,[DESCR]&#xA;,[ATTRIBUTE_TVAL]&#xA;,[NUMERIC_VALUE]&#xA;,[DATE_VALUE]&#xA;,[TIME_VALUE]&#xA;,[YES_NO_VALUE]&#xA;,[LONG_TEXT_VALUE]&#xA;,[TRANSFER_TO]&#xA;    ,'Y', GETDATE(),GETDATE()&#xA;   FROM&#xA;   (&#xA;   MERGE INTO STG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA AS dst&#xA;   USING TMP_STG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA AS src&#xA;   ON( dst.[Applicant_ID]=src.[Applicant_ID] &#xA;   and dst.[Test_ID]=src.[Test_ID] &#xA;   AND DST.TEST_DATE=SRC.TEST_DATE)&#xA;    &#xA;&#x9;&#xA;   WHEN NOT MATCHED THEN&#xA;   INSERT&#xA;   ([APPLICANT_ID]&#xA;,[TEST_ID]&#xA;,[TEST_DATE]&#xA;,[FIELD]&#xA;,[ATTRIBUTE_VAL]&#xA;,[DESCR]&#xA;,[ATTRIBUTE_TVAL]&#xA;,[NUMERIC_VALUE]&#xA;,[DATE_VALUE]&#xA;,[TIME_VALUE]&#xA;,[YES_NO_VALUE]&#xA;,[LONG_TEXT_VALUE]&#xA;,[TRANSFER_TO]&#xA;      ,[Latest_Ind]&#xA;      ,[Created_On]&#xA;      ,[Modified_On])&#xA;   VALUES(&#xA;   &#xA; SRC.[APPLICANT_ID]&#xA;,SRC.[TEST_ID]&#xA;,SRC.[TEST_DATE]&#xA;,SRC.[FIELD]&#xA;,SRC.[ATTRIBUTE_VAL]&#xA;,SRC.[DESCR]&#xA;,SRC.[ATTRIBUTE_TVAL]&#xA;,SRC.[NUMERIC_VALUE]&#xA;,SRC.[DATE_VALUE]&#xA;,SRC.[TIME_VALUE]&#xA;,SRC.[YES_NO_VALUE]&#xA;,SRC.[LONG_TEXT_VALUE]&#xA;,SRC.[TRANSFER_TO]&#xA; ,'Y', GETDATE(),GETDATE())&#xA;   WHEN MATCHED&#xA;   AND dst.Latest_Ind='Y'&#xA;   and( &#xA;   ISNULL(src.[FIELD],'')&lt;&gt;isnull(dst.[FIELD],'')&#xA;OR ISNULL(src.[ATTRIBUTE_VAL] ,'')&lt;&gt;isnull( dst.[ATTRIBUTE_VAL],'')&#xA;OR ISNULL(src.[DESCR],'')&lt;&gt;isnull(dst.[DESCR],'')&#xA;OR ISNULL(src.[ATTRIBUTE_TVAL],'')&lt;&gt;isnull(dst.[ATTRIBUTE_TVAL],'')&#xA;OR ISNULL(src.[NUMERIC_VALUE] ,0)&lt;&gt;isnull( dst.[NUMERIC_VALUE],0)&#xA;OR ISNULL(src.[DATE_VALUE],'')&lt;&gt;isnull(dst.[DATE_VALUE],'')&#xA;OR ISNULL(src.[TIME_VALUE],'')&lt;&gt;isnull(dst.[TIME_VALUE],'')&#xA;OR ISNULL(src.[YES_NO_VALUE],'')&lt;&gt;isnull(dst.[YES_NO_VALUE],'')&#xA;OR ISNULL(src.[LONG_TEXT_VALUE],'')&lt;&gt;isnull(dst.[LONG_TEXT_VALUE],'')&#xA;OR ISNULL(src.[TRANSFER_TO],'')&lt;&gt;isnull(dst.[TRANSFER_TO],'')&#xA;      )&#xA;   THEN UPDATE&#xA;   SET DST.Latest_Ind = 'N', Modified_On=GETDATE()&#xA;OUTPUT    &#xA; SRC.[APPLICANT_ID]&#xA;,SRC.[TEST_ID]&#xA;,SRC.[TEST_DATE]&#xA;,SRC.[FIELD]&#xA;,SRC.[ATTRIBUTE_VAL]&#xA;,SRC.[DESCR]&#xA;,SRC.[ATTRIBUTE_TVAL]&#xA;,SRC.[NUMERIC_VALUE]&#xA;,SRC.[DATE_VALUE]&#xA;,SRC.[TIME_VALUE]&#xA;,SRC.[YES_NO_VALUE]&#xA;,SRC.[LONG_TEXT_VALUE]&#xA;,SRC.[TRANSFER_TO],  $Action AS MergeAction&#xA;) AS MRG&#xA;WHERE MRG.MergeAction = 'UPDATE'&#xA;;&#xA;--------------------------------------&#xA;COMMIT TRANSACTION&#xA;END TRY&#xA;&#xA;BEGIN CATCH&#xA;  ROLLBACK TRANSACTION&#xA;INSERT INTO  &quot;+@[$Project::DW_Initial_Catalog]+&quot;..ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)&#xA;  SELECT   &#xA;         CAST(@jobstatusid as int) as JOB_STATUS_ID&#xA;        ,ERROR_MESSAGE() AS ErrorMessage&#xA;&#x9;&#x9;,@processeddatetime  as created_on&#xA;  &#xA;  &#xA;END CATCH  &#xA;GO&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="InsertQuery">
+      <DTS:VariableValue
+        DTS:DataType="8">BEGIN TRANSACTION
+BEGIN TRY
+------------
+DECLARE @LastDWProcessdate datetime
+,@processeddatetime datetime
+,@jobstatusid varchar(5)
+select @jobstatusid=0
+----------------------------------------------------------
+
+INSERT INTO 
+[dbo].[STG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA]
+([APPLICANT_ID]
+,[TEST_ID]
+,[TEST_DATE]
+,[FIELD]
+,[ATTRIBUTE_VAL]
+,[DESCR]
+,[ATTRIBUTE_TVAL]
+,[NUMERIC_VALUE]
+,[DATE_VALUE]
+,[TIME_VALUE]
+,[YES_NO_VALUE]
+,[LONG_TEXT_VALUE]
+,[TRANSFER_TO]
+      ,[Latest_Ind]
+      ,[Created_On]
+      ,[Modified_On])
+SELECT [APPLICANT_ID]
+,[TEST_ID]
+,[TEST_DATE]
+,[FIELD]
+,[ATTRIBUTE_VAL]
+,[DESCR]
+,[ATTRIBUTE_TVAL]
+,[NUMERIC_VALUE]
+,[DATE_VALUE]
+,[TIME_VALUE]
+,[YES_NO_VALUE]
+,[LONG_TEXT_VALUE]
+,[TRANSFER_TO]
+    ,'Y', GETDATE(),GETDATE()
+   FROM
+   (
+   MERGE INTO STG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA AS dst
+   USING TMP_STG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA AS src
+   ON( dst.[Applicant_ID]=src.[Applicant_ID] 
+   and dst.[Test_ID]=src.[Test_ID] 
+   AND DST.TEST_DATE=SRC.TEST_DATE)
+    
+	
+   WHEN NOT MATCHED THEN
+   INSERT
+   ([APPLICANT_ID]
+,[TEST_ID]
+,[TEST_DATE]
+,[FIELD]
+,[ATTRIBUTE_VAL]
+,[DESCR]
+,[ATTRIBUTE_TVAL]
+,[NUMERIC_VALUE]
+,[DATE_VALUE]
+,[TIME_VALUE]
+,[YES_NO_VALUE]
+,[LONG_TEXT_VALUE]
+,[TRANSFER_TO]
+      ,[Latest_Ind]
+      ,[Created_On]
+      ,[Modified_On])
+   VALUES(
+   
+ SRC.[APPLICANT_ID]
+,SRC.[TEST_ID]
+,SRC.[TEST_DATE]
+,SRC.[FIELD]
+,SRC.[ATTRIBUTE_VAL]
+,SRC.[DESCR]
+,SRC.[ATTRIBUTE_TVAL]
+,SRC.[NUMERIC_VALUE]
+,SRC.[DATE_VALUE]
+,SRC.[TIME_VALUE]
+,SRC.[YES_NO_VALUE]
+,SRC.[LONG_TEXT_VALUE]
+,SRC.[TRANSFER_TO]
+ ,'Y', GETDATE(),GETDATE())
+   WHEN MATCHED
+   AND dst.Latest_Ind='Y'
+   and( 
+   ISNULL(src.[FIELD],'')&lt;&gt;isnull(dst.[FIELD],'')
+OR ISNULL(src.[ATTRIBUTE_VAL] ,'')&lt;&gt;isnull( dst.[ATTRIBUTE_VAL],'')
+OR ISNULL(src.[DESCR],'')&lt;&gt;isnull(dst.[DESCR],'')
+OR ISNULL(src.[ATTRIBUTE_TVAL],'')&lt;&gt;isnull(dst.[ATTRIBUTE_TVAL],'')
+OR ISNULL(src.[NUMERIC_VALUE] ,0)&lt;&gt;isnull( dst.[NUMERIC_VALUE],0)
+OR ISNULL(src.[DATE_VALUE],'')&lt;&gt;isnull(dst.[DATE_VALUE],'')
+OR ISNULL(src.[TIME_VALUE],'')&lt;&gt;isnull(dst.[TIME_VALUE],'')
+OR ISNULL(src.[YES_NO_VALUE],'')&lt;&gt;isnull(dst.[YES_NO_VALUE],'')
+OR ISNULL(src.[LONG_TEXT_VALUE],'')&lt;&gt;isnull(dst.[LONG_TEXT_VALUE],'')
+OR ISNULL(src.[TRANSFER_TO],'')&lt;&gt;isnull(dst.[TRANSFER_TO],'')
+      )
+   THEN UPDATE
+   SET DST.Latest_Ind = 'N', Modified_On=GETDATE()
+OUTPUT    
+ SRC.[APPLICANT_ID]
+,SRC.[TEST_ID]
+,SRC.[TEST_DATE]
+,SRC.[FIELD]
+,SRC.[ATTRIBUTE_VAL]
+,SRC.[DESCR]
+,SRC.[ATTRIBUTE_TVAL]
+,SRC.[NUMERIC_VALUE]
+,SRC.[DATE_VALUE]
+,SRC.[TIME_VALUE]
+,SRC.[YES_NO_VALUE]
+,SRC.[LONG_TEXT_VALUE]
+,SRC.[TRANSFER_TO],  $Action AS MergeAction
+) AS MRG
+WHERE MRG.MergeAction = 'UPDATE'
+;
+--------------------------------------
+COMMIT TRANSACTION
+END TRY
+
+BEGIN CATCH
+  ROLLBACK TRANSACTION
+INSERT INTO  RPDW..ETL_ERROR_LOG(JOB_STATUS_ID,ERROR_RECORD,created_on)
+  SELECT   
+         CAST(@jobstatusid as int) as JOB_STATUS_ID
+        ,ERROR_MESSAGE() AS ErrorMessage
+		,@processeddatetime  as created_on
+  
+  
+END CATCH  
+GO</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E65BB626-0901-497D-9E77-7D6C2A653140}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="JobStatusId">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{60B1A86F-B67C-4DB6-98EE-7F2262954BB6}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Job_name">
+      <DTS:VariableValue
+        DTS:DataType="8">STG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{EFA7F08D-856C-49DE-942E-756783F6EEF9}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="MndColumncheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E95B1A61-73DC-409C-A3A2-11E224018CE4}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="PrevJobStatus">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C1EB3D92-1C11-4AA3-91EB-9F63A8E61936}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;&#xA;declare @MandColValidation int,&#xA;@NoDuplicates int,&#xA;@Job_Status_ID int&#xA;SELECT  @NoDuplicates=?&#xA;SELECT @MandColValidation=?&#xA;SELECT @Job_Status_ID=?&#xA; &#xA;if(@NoDuplicates&lt;&gt;0 or @MandColValidation&lt;&gt;0)&#xA;&#xA;begin &#xA;insert into [dbo].[ETL_ERROR_LOG](JOB_STATUS_ID,ERROR_RECORD,created_on) &#xA;SELECT  @Job_Status_ID JOB_STATUS_ID, 'Applicant_ID='+[Applicant_ID]+',Test_ID='+[Test_ID]+',Test_DATE='+[Test_DATE]+'&#xA;is duplicate primary key in source file' as ErrorColValues,GETDATE() AS CREATED_ON&#xA;FROM &quot;+ @[$Project::PreStaging_Initial_Catalog] +&quot;.[dbo].[PSTG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA]&#xA;GROUP&#xA;BY   [Test_ID],[Applicant_ID],Test_DATE&#xA;having count(1)&gt;1&#xA;union all&#xA;SELECT  @Job_Status_ID JOB_STATUS_ID, 'Applicant_ID='+[Applicant_ID]+',Test_ID='+[Test_ID]+',Test_DATE='+[Test_DATE]+'&#xA;is Mandatory key Violatione' as ErrorColValues,GETDATE() AS CREATED_ON&#xA;FROM &quot;+ @[$Project::PreStaging_Initial_Catalog] +&quot;.[dbo].[PSTG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA]&#xA;where  (&#xA; [Applicant_ID]=''  or [Applicant_ID] IS NULL&#xA;   or [Test_ID] IS NULL or [Test_ID]='' OR TEST_DATE IS  NULL OR TEST_DATE ='' &#xA;    &#xA;&#x9; &#xA; )&#xA;GROUP BY  [Test_ID],[Applicant_ID]&#xA;END&#xA;else&#xA;select 'Unknown Error','Check the file and rerun the package'&#xA;&#xA;&#xA;IF @NoDuplicates&lt;&gt;0&#xA;&#xA;UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET [JOB_STATUS]='Fail',&#xA;[ERROR_MSG]='Duplicate primary key found in PSTG table'&#xA;WHERE JOB_STATUS_ID=@Job_Status_ID&#xA;&#xA;ELSE IF @MandColValidation&lt;&gt;0&#xA;UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET [JOB_STATUS]='Fail',&#xA;[ERROR_MSG]='Mandatory Column constraint failed in PSTG table'&#xA;WHERE JOB_STATUS_ID=@Job_Status_ID&#xA;&#xA;ELSE&#xA;&#xA;UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET [JOB_STATUS]='Fail',&#xA;[ERROR_MSG]='Please refer the Error Table for details'&#xA;WHERE JOB_STATUS_ID=@Job_Status_ID&#xA;&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="QryErrorLog">
+      <DTS:VariableValue
+        DTS:DataType="8">
+declare @MandColValidation int,
+@NoDuplicates int,
+@Job_Status_ID int
+SELECT  @NoDuplicates=?
+SELECT @MandColValidation=?
+SELECT @Job_Status_ID=?
+ 
+if(@NoDuplicates&lt;&gt;0 or @MandColValidation&lt;&gt;0)
+
+begin 
+insert into [dbo].[ETL_ERROR_LOG](JOB_STATUS_ID,ERROR_RECORD,created_on) 
+SELECT  @Job_Status_ID JOB_STATUS_ID, 'Applicant_ID='+[Applicant_ID]+',Test_ID='+[Test_ID]+',Test_DATE='+[Test_DATE]+'
+is duplicate primary key in source file' as ErrorColValues,GETDATE() AS CREATED_ON
+FROM RPDW_PSTG.[dbo].[PSTG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA]
+GROUP
+BY   [Test_ID],[Applicant_ID],Test_DATE
+having count(1)&gt;1
+union all
+SELECT  @Job_Status_ID JOB_STATUS_ID, 'Applicant_ID='+[Applicant_ID]+',Test_ID='+[Test_ID]+',Test_DATE='+[Test_DATE]+'
+is Mandatory key Violatione' as ErrorColValues,GETDATE() AS CREATED_ON
+FROM RPDW_PSTG.[dbo].[PSTG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA]
+where  (
+ [Applicant_ID]=''  or [Applicant_ID] IS NULL
+   or [Test_ID] IS NULL or [Test_ID]='' OR TEST_DATE IS  NULL OR TEST_DATE ='' 
+    
+	 
+ )
+GROUP BY  [Test_ID],[Applicant_ID]
+END
+else
+select 'Unknown Error','Check the file and rerun the package'
+
+
+IF @NoDuplicates&lt;&gt;0
+
+UPDATE [dbo].[ETL_JOB_STATUS]
+SET [JOB_STATUS]='Fail',
+[ERROR_MSG]='Duplicate primary key found in PSTG table'
+WHERE JOB_STATUS_ID=@Job_Status_ID
+
+ELSE IF @MandColValidation&lt;&gt;0
+UPDATE [dbo].[ETL_JOB_STATUS]
+SET [JOB_STATUS]='Fail',
+[ERROR_MSG]='Mandatory Column constraint failed in PSTG table'
+WHERE JOB_STATUS_ID=@Job_Status_ID
+
+ELSE
+
+UPDATE [dbo].[ETL_JOB_STATUS]
+SET [JOB_STATUS]='Fail',
+[ERROR_MSG]='Please refer the Error Table for details'
+WHERE JOB_STATUS_ID=@Job_Status_ID
+</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B59D91F5-94BE-4CFE-95D1-85761D50448B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprimarykeycheck">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9D73B8AA-E0FC-4890-9FF7-6D3BEB7147E3}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sqlprocesseddate">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F133841C-0907-4CE6-883D-4A2F3FF594B5}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SrcTable">
+      <DTS:VariableValue
+        DTS:DataType="8">PSTG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{EED2A9C4-A720-4EE9-A3A5-5326D94CDC1E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Stage">
+      <DTS:VariableValue
+        DTS:DataType="8">STG</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B987FBAB-6723-4C76-B5D4-8A1A477868D3}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TgtTable">
+      <DTS:VariableValue
+        DTS:DataType="8">STG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\check previous job status"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{374099C6-E584-4ABF-AFC6-1CCC340C3373}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="check previous job status"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{65ED3A30-F122-40A4-A8D2-438F254E5FB4}"
+          SQLTask:SqlStatementSource="&#xA;SELECT CASE WHEN [JOB_STATUS] ='SUCCESS' THEN 1 ELSE 0 END AS PrevJobStatus&#xA;FROM [DBO].[ETL_JOB_STATUS] WHERE [JOB_STATUS_ID]=&#xA;(SELECT MAX([JOB_STATUS_ID]) FROM [DBO].[ETL_JOB_STATUS]&#xA;WHERE [TARGET_TABLENAME]=?&#xA;AND [STAGE]='PSTG')&#xA;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::PrevJobStatus" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create ETL Job Log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{707DB1FD-7A52-462B-804D-0F854F8660BE}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create ETL Job Log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{65ED3A30-F122-40A4-A8D2-438F254E5FB4}"
+          SQLTask:SqlStatementSource="&#xA;EXEC dbo.[usp_InsertETLJobLog]  ?,?,?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::Job_name"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::Stage"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::SrcTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Error Log On Key Violation"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{77879E01-C73B-4E60-B4CF-5F1D82572CEF}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Error Log On Key Violation"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{65ED3A30-F122-40A4-A8D2-438F254E5FB4}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::QryErrorLog" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::sqlprimarykeycheck"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::MndColumncheck"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Error Log On PSTG job fail"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9051A7F5-1F9E-4018-BF1C-3DDB8A233E4E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Error Log On PSTG job fail"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{65ED3A30-F122-40A4-A8D2-438F254E5FB4}"
+          SQLTask:SqlStatementSource="update [ETL_JOB_STATUS]&#xA;set Job_Status='Fail'&#xA;,Error_Msg='&quot;Previous PSTG load is not complete&quot;'&#xA;where job_status_id=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\get Job Status Id"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{11E7E508-31E5-4460-A5DC-EFBAB048CC86}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="get Job Status Id"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{65ED3A30-F122-40A4-A8D2-438F254E5FB4}"
+          SQLTask:SqlStatementSource="declare  @JobstatusID int&#xA;&#xA;select @JobstatusID=max(job_status_id) from [ETL_JOB_STATUS]&#xA;where [TARGET_TABLENAME]=?&#xA;&#xA;&#xA;Select @JobstatusID "
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::JobStatusId" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::TgtTable"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\getprocesseddate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{726B26EB-F16E-4CBF-B1AF-9286FD519E17}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="getprocesseddate"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{13DF7884-9FE0-42D7-A12C-792DB5818987}"
+          SQLTask:SqlStatementSource="SELECT GETDATE()"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::sqlprocesseddate" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert in Temp table"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{1D049BCB-B707-4F86-8E72-32F964A15500}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert in Temp table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Insert in Temp table\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Insert in Temp table\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert in Temp table\Derived Column.Inputs[Derived Column Input].Columns[APPLICANT_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="11"
+                      cachedName="APPLICANT_ID"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[APPLICANT_ID]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[APPLICANT_ID]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(APPLICANT_ID,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Insert in Temp table\Derived Column.Inputs[Derived Column Input].Columns[TEST_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="11"
+                      cachedName="TEST_ID"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_ID]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_ID]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(TEST_ID,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Insert in Temp table\Derived Column.Inputs[Derived Column Input].Columns[TEST_DATE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="TEST_DATE"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_DATE]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_DATE]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(TEST_DATE,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Insert in Temp table\Derived Column.Inputs[Derived Column Input].Columns[FIELD]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="FIELD"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[FIELD]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[FIELD]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(FIELD,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Insert in Temp table\Derived Column.Inputs[Derived Column Input].Columns[ATTRIBUTE_VAL]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="ATTRIBUTE_VAL"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[ATTRIBUTE_VAL]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[ATTRIBUTE_VAL]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(ATTRIBUTE_VAL,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Insert in Temp table\Derived Column.Inputs[Derived Column Input].Columns[ATTRIBUTE_TVAL]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="ATTRIBUTE_TVAL"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[ATTRIBUTE_TVAL]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[ATTRIBUTE_TVAL]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(ATTRIBUTE_TVAL,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Insert in Temp table\Derived Column.Inputs[Derived Column Input].Columns[NUMERIC_VALUE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="NUMERIC_VALUE"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[NUMERIC_VALUE]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[NUMERIC_VALUE]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(NUMERIC_VALUE,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Insert in Temp table\Derived Column.Inputs[Derived Column Input].Columns[DATE_VALUE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="DATE_VALUE"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[DATE_VALUE]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[DATE_VALUE]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(DATE_VALUE,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Insert in Temp table\Derived Column.Inputs[Derived Column Input].Columns[TIME_VALUE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="15"
+                      cachedName="TIME_VALUE"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TIME_VALUE]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TIME_VALUE]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(TIME_VALUE,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Insert in Temp table\Derived Column.Inputs[Derived Column Input].Columns[YES_NO_VALUE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="YES_NO_VALUE"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[YES_NO_VALUE]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[YES_NO_VALUE]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(YES_NO_VALUE,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Insert in Temp table\Derived Column.Inputs[Derived Column Input].Columns[TRANSFER_TO]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="TRANSFER_TO"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TRANSFER_TO]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TRANSFER_TO]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(TRANSFER_TO,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Insert in Temp table\Derived Column.Inputs[Derived Column Input].Columns[DESCR]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="DESCR"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[DESCR]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM]([REPLACE]([REPLACE](#{Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[DESCR]},"\""," "),"NULL","")))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM(REPLACE(REPLACE(DESCR,"\""," "),"NULL","")))</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert in Temp table\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Insert in Temp table\Derived Column.Inputs[Derived Column Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert in Temp table\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Insert in Temp table\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert in Temp table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert in Temp table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert in Temp table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert in Temp table\Derived Column 1"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column 1"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Insert in Temp table\Derived Column 1.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert in Temp table\Derived Column 1.Inputs[Derived Column Input].Columns[TEST_DATE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="TEST_DATE"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_DATE]" />
+                    <inputColumn
+                      refId="Package\Insert in Temp table\Derived Column 1.Inputs[Derived Column Input].Columns[NUMERIC_VALUE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="NUMERIC_VALUE"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[NUMERIC_VALUE]" />
+                    <inputColumn
+                      refId="Package\Insert in Temp table\Derived Column 1.Inputs[Derived Column Input].Columns[DATE_VALUE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="DATE_VALUE"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[DATE_VALUE]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert in Temp table\Derived Column 1.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Insert in Temp table\Derived Column 1.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert in Temp table\Derived Column 1.Outputs[Derived Column Output].Columns[Der_TEST_DATE]"
+                      dataType="date"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Insert in Temp table\Derived Column 1.Outputs[Derived Column Output].Columns[Der_TEST_DATE]"
+                      name="Der_TEST_DATE"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_DATE]} == "" ? NULL(DT_DATE) : (DT_DATE)#{Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_DATE]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">TEST_DATE == "" ? NULL(DT_DATE) : (DT_DATE)TEST_DATE</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Insert in Temp table\Derived Column 1.Outputs[Derived Column Output].Columns[Der_DATE_VALUE]"
+                      dataType="date"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Insert in Temp table\Derived Column 1.Outputs[Derived Column Output].Columns[Der_DATE_VALUE]"
+                      name="Der_DATE_VALUE"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[DATE_VALUE]} == "" ? NULL(DT_DATE) : (DT_DATE)#{Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[DATE_VALUE]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">DATE_VALUE == "" ? NULL(DT_DATE) : (DT_DATE)DATE_VALUE</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Insert in Temp table\Derived Column 1.Outputs[Derived Column Output].Columns[Der_NUMERIC_VALUE]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Insert in Temp table\Derived Column 1.Outputs[Derived Column Output].Columns[Der_NUMERIC_VALUE]"
+                      name="Der_NUMERIC_VALUE"
+                      precision="32"
+                      scale="11"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[NUMERIC_VALUE]} == "" ? NULL(DT_NUMERIC,32,11) : (DT_NUMERIC,32,11)#{Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[NUMERIC_VALUE]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">NUMERIC_VALUE == "" ? NULL(DT_NUMERIC,32,11) : (DT_NUMERIC,32,11)NUMERIC_VALUE</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Insert in Temp table\Derived Column 1.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Insert in Temp table\Derived Column 1.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert in Temp table\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert in Temp table\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert in Temp table\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert in Temp table\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[TMP_STG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert in Temp table\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[RPDW_STG]"
+                  connectionManagerRefId="Package.ConnectionManagers[RPDW_STG]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[APPLICANT_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="11"
+                      cachedName="APPLICANT_ID"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APPLICANT_ID]"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[APPLICANT_ID]" />
+                    <inputColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TEST_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="11"
+                      cachedName="TEST_ID"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TEST_ID]"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_ID]" />
+                    <inputColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FIELD]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="FIELD"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FIELD]"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[FIELD]" />
+                    <inputColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ATTRIBUTE_VAL]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="ATTRIBUTE_VAL"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ATTRIBUTE_VAL]"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[ATTRIBUTE_VAL]" />
+                    <inputColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ATTRIBUTE_TVAL]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="ATTRIBUTE_TVAL"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ATTRIBUTE_TVAL]"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[ATTRIBUTE_TVAL]" />
+                    <inputColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[YES_NO_VALUE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="YES_NO_VALUE"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[YES_NO_VALUE]"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[YES_NO_VALUE]" />
+                    <inputColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LONG_TEXT_VALUE]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="LONG_TEXT_VALUE"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LONG_TEXT_VALUE]"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[LONG_TEXT_VALUE]" />
+                    <inputColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TRANSFER_TO]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="TRANSFER_TO"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TRANSFER_TO]"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TRANSFER_TO]" />
+                    <inputColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DESCR]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="DESCR"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DESCR]"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[DESCR]" />
+                    <inputColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Der_TEST_DATE]"
+                      cachedDataType="date"
+                      cachedName="Der_TEST_DATE"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DATE_VALUE]"
+                      lineageId="Package\Insert in Temp table\Derived Column 1.Outputs[Derived Column Output].Columns[Der_TEST_DATE]" />
+                    <inputColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Der_NUMERIC_VALUE]"
+                      cachedDataType="numeric"
+                      cachedName="Der_NUMERIC_VALUE"
+                      cachedPrecision="32"
+                      cachedScale="11"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NUMERIC_VALUE]"
+                      lineageId="Package\Insert in Temp table\Derived Column 1.Outputs[Derived Column Output].Columns[Der_NUMERIC_VALUE]" />
+                    <inputColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Der_DATE_VALUE]"
+                      cachedDataType="date"
+                      cachedName="Der_DATE_VALUE"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TEST_DATE]"
+                      lineageId="Package\Insert in Temp table\Derived Column 1.Outputs[Derived Column Output].Columns[Der_DATE_VALUE]" />
+                    <inputColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TIME_VALUE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="15"
+                      cachedName="TIME_VALUE"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TIME_VALUE]"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TIME_VALUE]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APPLICANT_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      name="APPLICANT_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TEST_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      name="TEST_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TEST_DATE]"
+                      dataType="dbDate"
+                      name="TEST_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FIELD]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="FIELD" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ATTRIBUTE_VAL]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="ATTRIBUTE_VAL" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ATTRIBUTE_TVAL]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="ATTRIBUTE_TVAL" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NUMERIC_VALUE]"
+                      dataType="numeric"
+                      name="NUMERIC_VALUE"
+                      precision="32"
+                      scale="11" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DATE_VALUE]"
+                      dataType="dbDate"
+                      name="DATE_VALUE" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TIME_VALUE]"
+                      dataType="dbTimeStamp"
+                      name="TIME_VALUE" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[YES_NO_VALUE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="YES_NO_VALUE" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LONG_TEXT_VALUE]"
+                      codePage="1252"
+                      dataType="text"
+                      name="LONG_TEXT_VALUE" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TRANSFER_TO]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="TRANSFER_TO" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DESCR]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="DESCR" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert in Temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert in Temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert in Temp table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert in Temp table\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[PSTG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT  [Applicant_ID]
+      ,[No_of_Siblings]
+      ,[Household_Size]
+      ,[Type_of_residence]
+      ,[House_Ownership]
+      ,[Total_Mth_Family_Household_Income]
+      ,[Place_of_Birth]
+  
+
+  FROM  [dbo].PSTG_OASIS_CET_APPLICANT_DATA</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert in Temp table\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[RPDW_PSTG]"
+                  connectionManagerRefId="Package.ConnectionManagers[RPDW_PSTG]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[CREATED_ON]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CREATED_ON]"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[CREATED_ON]"
+                      name="CREATED_ON"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[MODIFIED_ON]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MODIFIED_ON]"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[MODIFIED_ON]"
+                      name="MODIFIED_ON"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[APPLICANT_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[APPLICANT_ID]"
+                      length="11"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[APPLICANT_ID]"
+                      name="APPLICANT_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TEST_ID]"
+                      length="11"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_ID]"
+                      name="TEST_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_DATE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TEST_DATE]"
+                      length="10"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_DATE]"
+                      name="TEST_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[FIELD]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FIELD]"
+                      length="20"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[FIELD]"
+                      name="FIELD"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[ATTRIBUTE_VAL]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ATTRIBUTE_VAL]"
+                      length="20"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[ATTRIBUTE_VAL]"
+                      name="ATTRIBUTE_VAL"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[ATTRIBUTE_TVAL]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ATTRIBUTE_TVAL]"
+                      length="50"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[ATTRIBUTE_TVAL]"
+                      name="ATTRIBUTE_TVAL"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[NUMERIC_VALUE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NUMERIC_VALUE]"
+                      length="50"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[NUMERIC_VALUE]"
+                      name="NUMERIC_VALUE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[DATE_VALUE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DATE_VALUE]"
+                      length="10"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[DATE_VALUE]"
+                      name="DATE_VALUE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TIME_VALUE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TIME_VALUE]"
+                      length="15"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TIME_VALUE]"
+                      name="TIME_VALUE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[YES_NO_VALUE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[YES_NO_VALUE]"
+                      length="1"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[YES_NO_VALUE]"
+                      name="YES_NO_VALUE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[LONG_TEXT_VALUE]"
+                      codePage="1252"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LONG_TEXT_VALUE]"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[LONG_TEXT_VALUE]"
+                      name="LONG_TEXT_VALUE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TRANSFER_TO]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TRANSFER_TO]"
+                      length="2"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[TRANSFER_TO]"
+                      name="TRANSFER_TO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[DESCR]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DESCR]"
+                      length="50"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].Columns[DESCR]"
+                      name="DESCR"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CREATED_ON]"
+                      dataType="dbTimeStamp"
+                      name="CREATED_ON" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MODIFIED_ON]"
+                      dataType="dbTimeStamp"
+                      name="MODIFIED_ON" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[APPLICANT_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      name="APPLICANT_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TEST_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      name="TEST_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TEST_DATE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="TEST_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FIELD]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="FIELD" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ATTRIBUTE_VAL]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="ATTRIBUTE_VAL" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ATTRIBUTE_TVAL]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="ATTRIBUTE_TVAL" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[NUMERIC_VALUE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="NUMERIC_VALUE" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DATE_VALUE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="DATE_VALUE" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TIME_VALUE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="15"
+                      name="TIME_VALUE" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[YES_NO_VALUE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="YES_NO_VALUE" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LONG_TEXT_VALUE]"
+                      codePage="1252"
+                      dataType="text"
+                      name="LONG_TEXT_VALUE" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TRANSFER_TO]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="TRANSFER_TO" />
+                    <externalMetadataColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DESCR]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="DESCR" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[APPLICANT_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[APPLICANT_ID]"
+                      name="APPLICANT_ID" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TEST_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TEST_ID]"
+                      name="TEST_ID" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TEST_DATE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TEST_DATE]"
+                      name="TEST_DATE" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FIELD]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FIELD]"
+                      name="FIELD" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ATTRIBUTE_VAL]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ATTRIBUTE_VAL]"
+                      name="ATTRIBUTE_VAL" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DESCR]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DESCR]"
+                      name="DESCR" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ATTRIBUTE_TVAL]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ATTRIBUTE_TVAL]"
+                      name="ATTRIBUTE_TVAL" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NUMERIC_VALUE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[NUMERIC_VALUE]"
+                      name="NUMERIC_VALUE" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DATE_VALUE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DATE_VALUE]"
+                      name="DATE_VALUE" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TIME_VALUE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="15"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TIME_VALUE]"
+                      name="TIME_VALUE" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[YES_NO_VALUE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[YES_NO_VALUE]"
+                      name="YES_NO_VALUE" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LONG_TEXT_VALUE]"
+                      codePage="1252"
+                      dataType="text"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LONG_TEXT_VALUE]"
+                      name="LONG_TEXT_VALUE" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TRANSFER_TO]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TRANSFER_TO]"
+                      name="TRANSFER_TO" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CREATED_ON]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CREATED_ON]"
+                      name="CREATED_ON" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MODIFIED_ON]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MODIFIED_ON]"
+                      name="MODIFIED_ON" />
+                    <outputColumn
+                      refId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Insert in Temp table.Paths[Derived Column Output]"
+              endId="Package\Insert in Temp table\Derived Column 1.Inputs[Derived Column Input]"
+              name="Derived Column Output"
+              startId="Package\Insert in Temp table\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Insert in Temp table.Paths[Derived Column Output1]"
+              endId="Package\Insert in Temp table\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Insert in Temp table\Derived Column 1.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Insert in Temp table.Paths[OLE DB Source Output]"
+              endId="Package\Insert in Temp table\Derived Column.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\Insert in Temp table\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\insert into main table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{7AD25CD0-DBDA-4C65-9A57-5056802F19BB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="insert into main table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{46E5FFDA-43CE-46E1-AE11-9DFB565C5F66}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::InsertQuery" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PSTG Primary Key Validation"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{45914B20-35C9-4E5F-8F3E-0DBA61DF72CE}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PSTG Primary Key Validation"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{13DF7884-9FE0-42D7-A12C-792DB5818987}"
+          SQLTask:SqlStatementSource="&#xA;&#xA;WITH PSTG_VALIDATION&#xA;&#xA;AS&#xA;(&#xA;SELECT  REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [Applicant_ID])),''),'NULL','') [Applicant_ID],&#xA;  REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [Test_ID])),''),'NULL','')[Test_ID],&#xA;    REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM TEST_DATE)),''),'NULL','') TEST_DATE&#xA;FROM [PSTG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA])&#xA;&#xA;, PSTG_VALIDATION1 &#xA;AS&#xA;(&#xA;SELECT REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [Applicant_ID])),''),'NULL','') [Applicant_ID],&#xA;  REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM [Test_ID])),''),'NULL','')[Test_ID],&#xA;      REPLACE (ISNULL(TRIM(TRIM('&quot;' FROM TEST_DATE)),''),'NULL','') TEST_DATE&#xA;FROM  [PSTG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA])&#xA;SELECT&#xA;CASE WHEN EXISTS (SELECT  COUNT(1) COUNTOFPK, [Applicant_ID],[Test_ID]&#xA;FROM PSTG_VALIDATION&#xA;GROUP&#xA;BY  [Applicant_ID],[Test_ID],TEST_DATE&#xA;HAVING COUNT(1)&gt;1)&#xA;THEN 1 &#xA;ELSE 0  &#xA;END NoDuplicates&#xA;,&#xA; CASE WHEN EXISTS(select * from  PSTG_VALIDATION1&#xA;where ([Applicant_ID]='' or [Applicant_ID] is null or [Test_ID]='' or [Test_ID]is null OR TEST_DATE IS  NULL OR TEST_DATE ='' ))&#xA;THEN 1 &#xA;ELSE 0&#xA;END  as MandColValidation&#xA;&#xA;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="NoDuplicates"
+            SQLTask:DtsVariableName="User::sqlprimarykeycheck" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="MandColValidation"
+            SQLTask:DtsVariableName="User::MndColumncheck" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Temp Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{CF2ABC6D-73B5-4999-B1B2-21ED32993380}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Temp Table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{46E5FFDA-43CE-46E1-AE11-9DFB565C5F66}"
+          SQLTask:SqlStatementSource="Truncate Table TMP_STG_OASIS_TEST_RESULTS_ADDITIONAL_TEST_DATA" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\update ETL Job log"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E29A3E4D-0747-4E5F-87BA-FF97726E23FD}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="update ETL Job log"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{65ED3A30-F122-40A4-A8D2-438F254E5FB4}"
+          SQLTask:SqlStatementSource="&#xA;&#xA;&#xA;&#xA;DECLARE &#xA;@jobstatusid INT&#xA;SELECT @jobstatusid=?&#xA;IF EXISTS(SELECT * FROM dbo.ETL_ERROR_LOG WHERE [JOB_STATUS_ID]=@jobstatusid)&#xA;&#xA;BEGIN&#xA;UPDATE [dbo].[ETL_JOB_STATUS]&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;[JOB_STATUS]='FAIL'&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;END&#xA;&#xA;ELSE&#xA;&#xA;BEGIN&#xA;UPDATE [DBO].[ETL_JOB_STATUS]&#xA;SET [PROCESSED_ON] =GETDATE(),&#xA;[JOB_STATUS]='Success'&#xA;WHERE [JOB_STATUS_ID]=@jobstatusid&#xA;END&#xA;&#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::JobStatusId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{9BEAF76C-3118-4405-B904-6CFF7DC2BAA1}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::PrevJobStatus]==0"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Error Log On PSTG job fail" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{0BB6379E-4AA8-488D-92E5-C844C2A51CC3}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::PrevJobStatus]==1"
+      DTS:From="Package\check previous job status"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\getprocesseddate" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{1D5696B9-7B54-4835-848D-3AFDF7D87245}"
+      DTS:From="Package\getprocesseddate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\PSTG Primary Key Validation" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{E74239CB-8510-4921-A482-0786C64F01F6}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::MndColumncheck]==0  &amp;&amp; @[User::sqlprimarykeycheck]==0"
+      DTS:From="Package\PSTG Primary Key Validation"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Insert in Temp table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{1CDFE8ED-D38C-4FF2-AE6D-DE526908B4F1}"
+      DTS:From="Package\Insert in Temp table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\insert into main table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{73E9E1E8-2561-4FA1-A170-77EF8DA37D64}"
+      DTS:From="Package\insert into main table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Truncate Temp Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{80092104-5CDA-4559-9A73-900FF88ABE09}"
+      DTS:From="Package\Create ETL Job Log"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\get Job Status Id" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{9BCBA9FA-3EFF-4552-B36A-E98092383717}"
+      DTS:From="Package\get Job Status Id"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\check previous job status" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 9]"
+      DTS:CreationName=""
+      DTS:DTSID="{30821666-AF82-4FB3-8D96-45FE96A7B4F9}"
+      DTS:From="Package\Truncate Temp Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 9"
+      DTS:To="Package\update ETL Job log" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Fail on duplicate primary key]"
+      DTS:CreationName=""
+      DTS:DTSID="{2ACD5B96-BEE4-426E-A7B6-A572C11537F6}"
+      DTS:EvalOp="1"
+      DTS:Expression="@[User::sqlprimarykeycheck]==1 ||  @[User::sqlprimarykeycheck]==1"
+      DTS:From="Package\PSTG Primary Key Validation"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Fail on duplicate primary key"
+      DTS:To="Package\Error Log On Key Violation" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{356F37AC-D835-49F1-A27B-0EF9A7DB3A36}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{6F6C19C5-748D-41F7-9EC4-6B65D0424C0B}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\Error Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{D91DD9D2-1DB3-4EB2-8434-A19007934DF3}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Error Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{65ED3A30-F122-40A4-A8D2-438F254E5FB4}"
+              SQLTask:SqlStatementSource="  insert into [dbo].[ETL_ERROR_LOG]([JOB_STATUS_ID],[ERROR_RECORD],[CREATED_ON] )&#xA;  select ?,?,getdate()" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\ETL Job Status Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{97FD22FE-929F-429E-AE57-4AF20FD31D55}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ETL Job Status Log">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{65ED3A30-F122-40A4-A8D2-438F254E5FB4}"
+              SQLTask:SqlStatementSource="update [ETL_JOB_STATUS]&#xA;set Job_Status='Fail'&#xA;,Error_Msg=?&#xA;where job_status_id=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::JobStatusId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{937BEB87-697A-41A7-94E2-570F12AE6986}"
+          DTS:From="Package.EventHandlers[OnError]\ETL Job Status Log"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package.EventHandlers[OnError]\Error Log" />
+      </DTS:PrecedenceConstraints>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="198,42"
+          Id="Package\check previous job status"
+          TopLeft="390,42" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Create ETL Job Log"
+          TopLeft="0,46" />
+        <NodeLayout
+          Size="204,42"
+          Id="Package\Error Log On Key Violation"
+          TopLeft="537,166" />
+        <NodeLayout
+          Size="203,42"
+          Id="Package\Error Log On PSTG job fail"
+          TopLeft="304,162" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\get Job Status Id"
+          TopLeft="208,49" />
+        <NodeLayout
+          Size="162,42"
+          Id="Package\getprocesseddate"
+          TopLeft="620,45" />
+        <NodeLayout
+          Size="175,42"
+          Id="Package\Insert in Temp table"
+          TopLeft="894,151" />
+        <NodeLayout
+          Size="179,42"
+          Id="Package\insert into main table"
+          TopLeft="881,234" />
+        <NodeLayout
+          Size="213,42"
+          Id="Package\PSTG Primary Key Validation"
+          TopLeft="835,50" />
+        <NodeLayout
+          Size="180,42"
+          Id="Package\Truncate Temp Table"
+          TopLeft="879,307" />
+        <NodeLayout
+          Size="169,42"
+          Id="Package\update ETL Job log"
+          TopLeft="879,373" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="489,84">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-83.5,78"
+              Start="0,0"
+              End="-83.5,70.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,35"
+                    Point2="0,39"
+                    Point3="-4,39" />
+                  <mssgle:LineSegment
+                    End="-79.5,39" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-79.5,39"
+                    Point2="-83.5,39"
+                    Point3="-83.5,43" />
+                  <mssgle:LineSegment
+                    End="-83.5,70.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-49.75,44,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="588,64.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="32,0"
+              Start="0,0"
+              End="24.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="24.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="4.25,5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="782,68.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="53,0"
+              Start="0,0"
+              End="45.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="45.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="978.583333333333,92">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59"
+              Start="0,0"
+              End="0,51.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,17.75,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="981.5,193">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-11,41"
+              Start="0,0"
+              End="-11,33.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.5"
+                    Point2="0,20.5"
+                    Point3="-4,20.5" />
+                  <mssgle:LineSegment
+                    End="-7,20.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-7,20.5"
+                    Point2="-11,20.5"
+                    Point3="-11,24.5" />
+                  <mssgle:LineSegment
+                    End="-11,33.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="969.75,276">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,31"
+              Start="0,0"
+              End="0,23.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="170,68.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="38,0"
+              Start="0,0"
+              End="30.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="30.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="367,66.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="23,0"
+              Start="0,0"
+              End="15.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="15.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 9]"
+          TopLeft="966.25,349">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,24"
+              Start="0,0"
+              End="0,16.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Fail on duplicate primary key]"
+          TopLeft="907.333333333333,92">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-268.333333333333,74"
+              Start="0,0"
+              End="-268.333333333333,66.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.9310344827586" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25.9310344827586"
+                    Point2="0,29.9310344827586"
+                    Point3="-4,29.9310344827586" />
+                  <mssgle:LineSegment
+                    End="-264.333333333333,29.9310344827586" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-264.333333333333,29.9310344827586"
+                    Point2="-268.333333333333,29.9310344827586"
+                    Point3="-268.333333333333,33.9310344827586" />
+                  <mssgle:LineSegment
+                    End="-268.333333333333,66.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-207.212252604167,34.9310344827586,146.091171875,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package.EventHandlers[OnError]\Error Log"
+          TopLeft="247,157" />
+        <NodeLayout
+          Size="169,42"
+          Id="Package.EventHandlers[OnError]\ETL Job Status Log"
+          TopLeft="61,59" />
+        <EdgeLayout
+          Id="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
+          TopLeft="145.5,101">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="163,56"
+              Start="0,0"
+              End="163,48.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24"
+                    Point2="0,28"
+                    Point3="4,28" />
+                  <mssgle:LineSegment
+                    End="159,28" />
+                  <mssgle:CubicBezierSegment
+                    Point1="159,28"
+                    Point2="163,28"
+                    Point3="163,32" />
+                  <mssgle:LineSegment
+                    End="163,48.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\Insert in Temp table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Insert in Temp table\OLE DB Destination"
+          TopLeft="195,301" />
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Insert in Temp table\OLE DB Source"
+          TopLeft="60,60" />
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Insert in Temp table\Derived Column 1"
+          TopLeft="366,209" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\Insert in Temp table\Derived Column"
+          TopLeft="344,85" />
+        <EdgeLayout
+          Id="Package\Insert in Temp table.Paths[OLE DB Source Output]"
+          TopLeft="210,81">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="134,25"
+              Start="0,0"
+              End="126.5,25">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="63,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="63,0"
+                    Point2="67,0"
+                    Point3="67,4" />
+                  <mssgle:LineSegment
+                    End="67,21" />
+                  <mssgle:CubicBezierSegment
+                    Point1="67,21"
+                    Point2="67,25"
+                    Point3="71,25" />
+                  <mssgle:LineSegment
+                    End="126.5,25" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert in Temp table.Paths[Derived Column Output1]"
+          TopLeft="447.5,251">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-167,50"
+              Start="0,0"
+              End="-167,42.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21"
+                    Point2="0,25"
+                    Point3="-4,25" />
+                  <mssgle:LineSegment
+                    End="-163,25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-163,25"
+                    Point2="-167,25"
+                    Point3="-167,29" />
+                  <mssgle:LineSegment
+                    End="-167,42.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert in Temp table.Paths[Derived Column Output]"
+          TopLeft="421,127">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="26.5,82"
+              Start="0,0"
+              End="26.5,74.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,37"
+                    Point2="0,41"
+                    Point3="4,41" />
+                  <mssgle:LineSegment
+                    End="22.5,41" />
+                  <mssgle:CubicBezierSegment
+                    Point1="22.5,41"
+                    Point2="26.5,41"
+                    Point3="26.5,45" />
+                  <mssgle:LineSegment
+                    End="26.5,74.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert in Temp table\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert in Temp table\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PrecedenceConstraint
+    design-time-name="Package.PrecedenceConstraints[Fail on duplicate primary key]">
+    <ShowAnnotation>ConstraintName</ShowAnnotation>
+  </PrecedenceConstraint>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
