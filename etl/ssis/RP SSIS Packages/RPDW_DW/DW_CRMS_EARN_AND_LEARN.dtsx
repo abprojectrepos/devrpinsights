@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="1/30/2019 1:46:31 PM"
@@ -8,12 +8,13 @@
   DTS:DelayValidation="True"
   DTS:DTSID="{574DDBCE-934E-4B84-B2A2-78E53E2A2E7F}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
   DTS:LocaleID="18441"
   DTS:ObjectName="DW_CRMS_EARN_AND_LEARN"
   DTS:PackageType="5"
-  DTS:VersionBuild="155"
-  DTS:VersionGUID="{6D0E46C7-E9AD-43CB-8009-08AA4D422530}">
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="157"
+  DTS:VersionGUID="{23C7359C-729B-43C8-BAC2-7140CBEEB50B}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -25,16 +26,19 @@
       <DTS:PropertyExpression
         DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
       <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
         DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
       <DTS:PropertyExpression
         DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=10.168.212.13;User ID=svc-dw-uat-etl;Initial Catalog=RPDW;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT;Provider=SQLNCLI11.1;Auto Translate=False;">
           <DTS:Password
             DTS:Name="Password"
-            Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAaWxmieQHR0Cme0HeyBNmlwAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACIHSSiFT1hTS+jtN0V17PUAAAAAASAAACgAAAAEAAAADk7e8p/ZkGQwV00bPuaIfoYAAAAu4SixCGNKVz3b1r24kRHzbWf/xCO/ARhFAAAAH9iPWTXBtaAYVXCE8/pJTI1Den/</DTS:Password>
+            Sensitive="1"></DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -46,16 +50,19 @@
       <DTS:PropertyExpression
         DTS:Name="InitialCatalog">@[$Project::DW_Initial_Catalog]</DTS:PropertyExpression>
       <DTS:PropertyExpression
+        DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
         DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
       <DTS:PropertyExpression
         DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=10.168.212.13;User ID=svc-dw-uat-etl;Initial Catalog=RPDW;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT;Provider=SQLNCLI11.1;Auto Translate=False;">
           <DTS:Password
             DTS:Name="Password"
-            Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAaWxmieQHR0Cme0HeyBNmlwAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABez0TtYDCt4g4XRW/K5Sn2AAAAAASAAACgAAAAEAAAAEpXY0kbcOmCl54y5Bsj9N4YAAAA8s/FMTZYk/t/w17xK7WPV8PXc9rB6UopFAAAAG+eEXbQCn0rP+nT+myfFu5E+tW0</DTS:Password>
+            Sensitive="1"></DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -179,7 +186,7 @@ SELECT
 		,[End_Date]
 		,[CRMS_Created_On]
 		,[CRMS_Modified_On]
-  FROM RPDW_STG.[dbo].[STG_CRMS_EARN_AND_LEARN]
+  FROM RPDW_UAT_STG.[dbo].[STG_CRMS_EARN_AND_LEARN]
   where [Latest_Ind]='Y' and [Modified_On]&gt;@LastDWProcessdate)
 
 
