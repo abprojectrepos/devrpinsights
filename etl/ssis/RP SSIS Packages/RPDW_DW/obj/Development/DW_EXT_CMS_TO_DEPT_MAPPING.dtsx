@@ -8,7 +8,7 @@
   DTS:DelayValidation="True"
   DTS:DTSID="{24AFFEE7-09DE-4DEA-8891-C23F778FA3BF}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
   DTS:LocaleID="18441"
   DTS:ObjectName="DW_EXT_CMS_TO_DEPT_MAPPING"
   DTS:PackageType="5"
@@ -30,7 +30,9 @@
         DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT;Provider=SQLNCLI11.1;Auto Translate=False;" />
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -46,7 +48,9 @@
         DTS:Name="UserName">@[$Project::UserName]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT;Provider=SQLNCLI11.1;Auto Translate=False;" />
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=abeamrpdev.7006065fdbb7.database.windows.net;User ID=dbadmin;Initial Catalog=RPDW_UAT;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -152,8 +156,8 @@ SELECT a.[Business_Unit]
       ,a.[Dept]
 	  ,b.Descr
       
-  FROM RPDW_PRD_STG.[dbo].[STG_EXT_CMS_MAPPING] a
-  LEFT JOIN RPDW_PRD_STG.[dbo].STG_EXT_DEPARTMENT b on a.Dept=b.Department
+  FROM RPDW_UAT_STG.[dbo].[STG_EXT_CMS_MAPPING] a
+  LEFT JOIN RPDW_UAT_STG.[dbo].STG_EXT_DEPARTMENT b on a.Dept=b.Department
  where a.[Latest_Ind]='Y' 
  and a.[Modified_On]&gt;@LastDWProcessdate)
 
